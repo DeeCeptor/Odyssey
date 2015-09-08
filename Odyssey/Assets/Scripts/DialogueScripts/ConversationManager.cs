@@ -38,6 +38,18 @@ public class ConversationManager : MonoBehaviour
 			Finish_Conversation();
 		}
 	}
+	
+	public void GoToNode(int nodeNum)
+	{
+		cur_node = nodeNum;
+		
+		if (cur_node < all_nodes.Length)
+			Start_Node();
+		else
+		{
+			Finish_Conversation();
+		}
+	}
 	// Runs the current node
 	void Start_Node()
 	{
