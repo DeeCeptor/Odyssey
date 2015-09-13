@@ -7,8 +7,13 @@ public class EventManagement : MonoBehaviour {
 	public ResourceManager resourceController;
 	public PlayerBoatController playerController;
 	public GameObject currentEvent;
+	public GameObject islandEventIsOn;
 
-	public GameObject[] SeaEventList;
+	public GameObject[] seaEventList;
+	public GameObject[] campingEventList;
+	public GameObject[] forestExploreEventList;
+	public GameObject[] desertExploreEventList;
+	public GameObject[] tropicalExploreEventList;
 	
 	public int framesPerCheckRegular = 240;
 	public int framesPerCheck = 240;
@@ -33,7 +38,7 @@ public class EventManagement : MonoBehaviour {
 				framesPerCheck = framesPerCheckRegular + Random.Range(0,121);
 				if(Random.Range (0,100) <eventChance)
 				{
-				HaveEvent();
+					HaveEvent(seaEventList[Random.Range (0,seaEventList.Length)]);
 				}
 				
 				}
@@ -41,10 +46,42 @@ public class EventManagement : MonoBehaviour {
 			}
 	}
 	
-	public void HaveEvent()
+	public void HaveEvent(GameObject eventToHave)
 	{
-		currentEvent = Instantiate(SeaEventList[0]);
+		currentEvent = Instantiate(eventToHave);
 		Pause();
+	}
+	
+	
+	
+	public void HaveIslandEvent(GameObject eventToHave,GameObject island)
+	{
+		islandEventIsOn = island;
+		currentEvent = Instantiate(eventToHave);
+		Pause();
+	}
+	
+	public void ExploreForestIsland()
+	{
+		islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
+		HaveEvent(forestExploreEventList[Random.Range (0,forestExploreEventList.Length)]);
+	}
+	
+	public void ExploreDesertIsland()
+	{
+		islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
+		HaveEvent(desertExploreEventList[Random.Range (0,desertExploreEventList.Length)]);
+	}
+	
+	public void ExploreTropicalIsland()
+	{
+		islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
+		HaveEvent(tropicalExploreEventList[Random.Range (0,tropicalExploreEventList.Length)]);
+	}
+	
+	public void CampEvent()
+	{
+		HaveEvent(campingEventList[Random.Range (0,campingEventList.Length)]);
 	}
 	
 	public void EndEvent()

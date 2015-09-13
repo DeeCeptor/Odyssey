@@ -7,11 +7,22 @@ public GameObject[] Units;
 public GameObject[] Heroes;
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+	
+	public void AddTroop(GameObject unit)
+	{
+	unit.transform.SetParent(transform);
+	Units[Units.Length] = unit;
+	}
+	
+	public void AddHero(GameObject hero)
+	{
+		hero.transform.SetParent(transform);
+		Units[Units.Length] = hero;
 	}
 }

@@ -52,6 +52,9 @@ public int sailors = 100;
 public float stamina = 100f;
 public float morale = 100f;
 public float health = 100f;
+public int gold = 50;
+
+//god's favours
 public float poseidonsFavour = 0f;
 public float zeusFavour = 0f;
 public float hadesFavour = 0f;
