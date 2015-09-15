@@ -15,6 +15,15 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     public int g_score = 0;
     public Hex came_from;
 
+    public string h_name;
+    public string h_description;
+    //List<Effects> effects_on_hex;
+
+    public void GetEffectsOnHex()
+    {
+
+    }
+
 
     void Start ()
     {
@@ -30,7 +39,29 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 
     void OnMouseDown()
     {
-        PlayerInterface.player_interface.TeleportUnit(this);
+        
+    }
+
+
+    void OnMouseOver()
+    {
+        PlayerInterface.player_interface.MousedOverHex(this);
+
+        if (Input.GetMouseButtonDown(0))    // left click
+        {
+            Debug.Log("Left click on this object");
+
+            if (PlayerInterface.player_interface.selected_unit != null)
+                PlayerInterface.player_interface.selected_unit.HexClicked(this);
+        }
+        if (Input.GetMouseButtonDown(1))    // right click
+        {
+            Debug.Log("Right click on this object");
+        }
+        if (Input.GetMouseButtonDown(2))    // middle click
+        {
+            Debug.Log("Middle click on this object");
+        }
     }
 
 

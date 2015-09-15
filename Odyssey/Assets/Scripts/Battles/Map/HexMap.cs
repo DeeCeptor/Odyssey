@@ -1,12 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class HexMap : MonoBehaviour
 {
     public static HexMap hex_map;
 
-    List<Hex> all_hexes;
+    List<Hex> all_hexes = new List<Hex>();
+    Dictionary<String, Hex> hex_dictionary = new Dictionary<String, Hex>();
+
+
+    public Hex GetHex(int x, int y)
+    {
+        Hex val;
+        hex_dictionary.TryGetValue(x + "," + y, out val);
+        return val;
+    }
 
 
 	void Start ()
@@ -33,6 +43,9 @@ public class HexMap : MonoBehaviour
                 instance.transform.position = new Vector3(x, 0, y);
                 Hex hex = instance.GetComponent<Hex>();
                 hex.coordinate = new Vector2((int) x, (int) y);
+                all_hexes.Add(hex);
+                hex_dictionary.Add((int) x + "," + (int) y, hex);
+
                 x++;
             }
         }
