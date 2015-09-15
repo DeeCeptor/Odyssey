@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class TroopManager : MonoBehaviour {
@@ -25,4 +25,16 @@ public GameObject[] Heroes;
 		hero.transform.SetParent(transform);
 		Units[Units.Length] = hero;
 	}
+	
+	public float getFoodConsumption()
+	{
+	return 0;
+	}
+	
+	public float getWaterConsumption()
+	{
+	return 0;
+	}
+	
+	
 }
