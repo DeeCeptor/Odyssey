@@ -14,8 +14,11 @@ public class PlayerInterface : MonoBehaviour
     public Text terrain_name;
     public Text terrain_description;
 
-    public Unit selected_unit;
 
+    [HideInInspector]
+    public Unit selected_unit;
+    [HideInInspector]
+    public Hex highlighted_hex;
 
 	void Start () 
 	{
@@ -40,14 +43,49 @@ public class PlayerInterface : MonoBehaviour
         {
             selected_unit = unit;
         }
+
+        UnhighlightHexes();
+
+        unit.HighlightHexesWeCanMoveTo();
+    }
+    // Dehighlights any hexes that may have been highlighted
+    public void UnitDeselected()
+    {
+        UnhighlightHexes();
+
+        selected_unit = null;
+    }
+
+
+    public bool SelectedUnitAvailableToControl()
+    {
+        return (selected_unit != null
+            && selected_unit.IsControllable());
+    }
+
+
+    public void UnhighlightHexes()
+    {
+        foreach (Hex hex in HexMap.hex_map.all_hexes)
+        {
+            hex.UnhighlightHex();
+        }
     }
 
 
     public void MousedOverHex(Hex hex)
     {
+        if (highlighted_hex != hex && !hex.IsHighlighted())
+        {
+            if (highlighted_hex != null)
+                highlighted_hex.UnMouseHighlight();
+            highlighted_hex = hex;
+            highlighted_hex.MouseHighlight();
+        }
+
         // Set the hex title, description
         terrain_name.text = hex.h_name;
-        terrain_description.text = "<i>" + hex.h_description + "</i>";
+        terrain_description.text = "<i>" + hex.h_description + hex.coordinate + "</i>";
     }
 
 

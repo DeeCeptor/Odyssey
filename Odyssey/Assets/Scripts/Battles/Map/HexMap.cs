@@ -7,8 +7,10 @@ public class HexMap : MonoBehaviour
 {
     public static HexMap hex_map;
 
-    List<Hex> all_hexes = new List<Hex>();
+    [HideInInspector]
+    public List<Hex> all_hexes = new List<Hex>();
     Dictionary<String, Hex> hex_dictionary = new Dictionary<String, Hex>();
+    int x_max, y_max;
 
 
     public Hex GetHex(int x, int y)
@@ -45,10 +47,39 @@ public class HexMap : MonoBehaviour
                 hex.coordinate = new Vector2((int) x, (int) y);
                 all_hexes.Add(hex);
                 hex_dictionary.Add((int) x + "," + (int) y, hex);
+                if (x > x_max)
+                    x_max = (int) x;
+                if (y > y_max)
+                    y_max = y;
 
                 x++;
             }
         }
+    }
+
+
+    // Checks if from is within range of to with the given range
+    public bool InRange(Hex from, Hex to, int range)
+    {
+        int dist_x = (int) Mathf.Abs(from.coordinate.x - to.coordinate.x);
+        int dist_y = (int) Mathf.Abs(from.coordinate.y - to.coordinate.y);
+        
+        return (dist_x + dist_y <= range);
+    }
+    public bool HexRange(Hex from, Hex to, int range)
+    {
+        int delta_x = (int) Mathf.Abs(from.coordinate.x - to.coordinate.x);
+        int delta_y = (int)Mathf.Abs(from.coordinate.y - to.coordinate.y);
+
+        return range > ((delta_x + delta_y + (delta_x - delta_y)) / 2);
+    }
+    public bool HexRange(Vector2 from, Vector2 to, int range)
+    {
+        int delta_x = (int)Mathf.Abs(from.x - to.x);
+        int delta_y = (int)Mathf.Abs(from.y - to.y);
+
+        int dist = ((delta_x + delta_y + (delta_x - delta_y)) / 2);
+        return dist < range;
     }
 
 
@@ -62,6 +93,7 @@ public class HexMap : MonoBehaviour
     public List<Hex> AStarFindPath(Hex start, Hex finish, int movementAllowed)
     {
         // Reset hex search scores
+        resetCellSearchScores();
 
         List<Hex> closedSet = new List<Hex>();
         List<Hex> openSet = new List<Hex>();
@@ -91,7 +123,8 @@ public class HexMap : MonoBehaviour
             {
                 int tentative_g_score = current.g_score + neighbourEdge.cost;
 
-                if (closedSet.Contains(neighbourEdge.destination) && tentative_g_score >= neighbourEdge.destination.g_score)
+                // Check if have exceeded our allowed movement
+                if (current.g_score >= movementAllowed || (closedSet.Contains(neighbourEdge.destination) && tentative_g_score >= neighbourEdge.destination.g_score))
                 {
                     continue;
                 }
@@ -115,7 +148,7 @@ public class HexMap : MonoBehaviour
 
         // Return failure
         Debug.Log("Failed to find path between " + start.coordinate + " and " + finish.coordinate);
-        return null;
+        return new List<Hex>();
     }
 
 
@@ -151,6 +184,216 @@ public class HexMap : MonoBehaviour
         all_hexes.ToList().ForEach(c => { c.f_score = 0; c.g_score = 0; });
     }
 
+
+
+    List<Hex> hexes_in_range = new List<Hex>();
+
+    public List<Hex> GetMovableHexesWithinRange(Hex location, int range)
+    {
+        hexes_in_range = new List<Hex>();
+
+        int x = (int) location.coordinate.x;
+        int xMin = Mathf.Max(0, x - range);
+        int xMax = Mathf.Min(x_max, x + range);
+
+        int y = (int) location.coordinate.y;
+        int yMin = Mathf.Max(0, y - range);
+        int yMax = Mathf.Min(y_max, y + range);
+
+        for (int cur_x = xMin; cur_x <= xMax; cur_x++)
+        {
+            for (int cur_y = yMin; cur_y <= yMax; cur_y++)
+            {
+                Hex cur_hex;
+                hex_dictionary.TryGetValue(cur_x + "," + cur_y, out cur_hex);
+                if (cur_hex.occupying_unit == null && !hexes_in_range.Contains(cur_hex))
+                    AStarPathableToRecordHexes(location, cur_hex, range);
+            }
+        }
+        // Remove duplicate hexes
+        hexes_in_range = hexes_in_range.Distinct().ToList();
+
+        /*
+        for (int cur_x = xMin; cur_x < x; cur_x++)
+        {
+            for (int cur_y = yMin; cur_y < y; cur_y++)
+            {
+                // Remove duplicate hexes
+                hexes_in_range = hexes_in_range.Distinct().ToList();
+
+                Debug.Log(cur_x + "," + cur_y);
+                Hex cur_hex;
+                hex_dictionary.TryGetValue(cur_x + "," + cur_y, out cur_hex);
+                if (cur_hex.occupying_unit == null && !hexes_in_range.Contains(cur_hex))
+                    AStarPathableToRecordHexes(location, cur_hex, range);
+            }
+        }
+        for (int cur_x = xMax; cur_x < x; cur_x--)
+        {
+            for (int cur_y = yMax; cur_y < y; cur_y--)
+            {
+                // Remove duplicate hexes
+                hexes_in_range = hexes_in_range.Distinct().ToList();
+
+                Debug.Log(cur_x + "," + cur_y);
+                Hex cur_hex;
+                hex_dictionary.TryGetValue(cur_x + "," + cur_y, out cur_hex);
+                if (cur_hex.occupying_unit == null && !hexes_in_range.Contains(cur_hex))
+                    AStarPathableToRecordHexes(location, cur_hex, range);
+            }
+        }*/
+
+        return hexes_in_range;
+    }
+    // Checks if we can move between two hexes. Records all hexes checked for this path
+    public List<Hex> AStarPathableToRecordHexes(Hex start, Hex finish, int movementAllowed)
+    {
+        // Reset hex search scores
+
+        List<Hex> closedSet = new List<Hex>();
+        List<Hex> openSet = new List<Hex>();
+        openSet.Add(start);
+
+        start.came_from = null;
+        start.g_score = 0;  // Cost of best known path
+        start.f_score = start.g_score + estimatedCost(start.coordinate, finish.coordinate);  // Estimated cost of path from start to finish
+
+
+        // Keep going until openset is empty
+        while (openSet.Count > 0)
+        {
+            openSet.Sort();
+            Hex current = openSet[0];
+
+            // Check if we found the goal
+            if (current == finish)
+            {
+                if (current.occupying_unit == null)
+                {
+                    hexes_in_range.Add(current);
+                }
+                return null;
+            }
+
+            openSet.Remove(current);
+            closedSet.Add(current);
+
+            foreach (Edge neighbourEdge in current.neighbours)
+            {
+                int tentative_g_score = current.g_score + neighbourEdge.cost;
+
+                // Check if have exceeded our allowed movement
+                if (current.g_score >= movementAllowed || (closedSet.Contains(neighbourEdge.destination) && tentative_g_score >= neighbourEdge.destination.g_score))
+                {
+                    continue;
+                }
+
+                if (current.occupying_unit == null)
+                {
+                    hexes_in_range.Add(current);
+                }
+
+                if (!openSet.Contains(neighbourEdge.destination) || tentative_g_score < neighbourEdge.destination.g_score)
+                {
+                    neighbourEdge.destination.came_from = current;
+
+                    neighbourEdge.destination.g_score = tentative_g_score;
+                    neighbourEdge.destination.f_score = neighbourEdge.destination.g_score +
+                        estimatedCost(neighbourEdge.destination.coordinate, finish.coordinate);
+
+                    if (!openSet.Contains(neighbourEdge.destination))
+                    {
+                        openSet.Add(neighbourEdge.destination);
+                        neighbourEdge.destination.came_from = current;
+                    }
+                }
+            }
+        }
+
+        // Return failure
+        return null;
+    }
+
+
+    public List<Hex> HexesWithinRange(Hex location, int range)
+    {
+        List<Hex> hexes_in_range = new List<Hex>();
+
+        int x = (int)location.coordinate.x;
+        int xMin = Mathf.Max(0, x - range);
+        int xMax = Mathf.Min(x_max, x + range);
+
+        int y = (int)location.coordinate.y;
+        int yMin = Mathf.Max(0, y - range);
+        int yMax = Mathf.Min(y_max, y + range);
+
+        for (int cur_x = xMin; cur_x <= xMax; cur_x++)
+        {
+            for (int cur_y = yMin; cur_y <= yMax; cur_y++)
+            {
+                Hex cur_hex;
+                hex_dictionary.TryGetValue(cur_x + "," + cur_y, out cur_hex);
+                hexes_in_range.Add(cur_hex);
+            }
+        }
+
+        return hexes_in_range;
+    }
+    public List<Hex> HexesWithinRangeContainingEnemies(Hex location, int range, Faction faction)
+    {
+        List<Hex> hexes_in_range = new List<Hex>();
+
+        int x = (int)location.coordinate.x;
+        int xMin = Mathf.Max(0, x - range);
+        int xMax = Mathf.Min(x_max, x + range);
+
+        int y = (int)location.coordinate.y;
+        int yMin = Mathf.Max(0, y - range);
+        int yMax = Mathf.Min(y_max, y + range);
+
+        for (int cur_x = xMin; cur_x <= xMax; cur_x++)
+        {
+            for (int cur_y = yMin; cur_y <= yMax; cur_y++)
+            {
+                if (HexRange(location.coordinate, new Vector2(cur_x, cur_y), range))
+                {
+                    Hex cur_hex;
+                    hex_dictionary.TryGetValue(cur_x + "," + cur_y, out cur_hex);
+                    if (cur_hex.occupying_unit != null && faction.IsEnemy(cur_hex.occupying_unit))
+                    {
+                        hexes_in_range.Add(cur_hex);
+                    }
+                }
+            }
+        }
+
+        return hexes_in_range;
+    }
+    public List<Hex> HexesWithinRangeContainingAllies(Hex location, int range, Faction faction)
+    {
+        List<Hex> hexes_in_range = new List<Hex>();
+
+        int x = (int)location.coordinate.x;
+        int xMin = Mathf.Max(0, x - range);
+        int xMax = Mathf.Min(x_max, x + range);
+
+        int y = (int)location.coordinate.y;
+        int yMin = Mathf.Max(0, y - range);
+        int yMax = Mathf.Min(y_max, y + range);
+
+        for (int cur_x = xMin; cur_x <= xMax; cur_x++)
+        {
+            for (int cur_y = yMin; cur_y <= yMax; cur_y++)
+            {
+                Hex cur_hex;
+                hex_dictionary.TryGetValue(cur_x + "," + cur_y, out cur_hex);
+                if (cur_hex.occupying_unit != null && faction.IsAlly(cur_hex.occupying_unit))
+                    hexes_in_range.Add(cur_hex);
+            }
+        }
+
+        return hexes_in_range;
+    }
 
 
     public void WarpUnitTo(Unit unit, Hex destination)

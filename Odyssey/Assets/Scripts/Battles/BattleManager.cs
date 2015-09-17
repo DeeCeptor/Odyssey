@@ -13,6 +13,8 @@ public class BattleManager : MonoBehaviour
     Queue<Faction> players_waiting_for_turn = new Queue<Faction>();     // FIFO queue showing what player's are waiting to do their turn this round
     List<Faction> factions = new List<Faction>();   // The sides that are fighting in this fight
 
+    AIController AI;
+
 
     void Start()
     {
@@ -37,26 +39,32 @@ public class BattleManager : MonoBehaviour
         instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
         unit = instance.GetComponent<Unit>();
         unit.owner = player_team;
-        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(1, 2));
+        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(2, 5));
         player_team.units.Add(unit);
 
 
 
 
-        Faction enemy_team = new Faction("Enemies", true);
+        Faction enemy_team = new Faction("Enemies", false);
+        AI = new AIController(enemy_team);
         factions.Add(enemy_team);
 
         instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-        unit = instance.GetComponent<Unit>();
-        unit.owner = enemy_team;
-        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(5, 2));
-        enemy_team.units.Add(unit);
+        Unit unit2 = instance.GetComponent<Unit>();
+        unit2.owner = enemy_team;
+        HexMap.hex_map.WarpUnitTo(unit2, HexMap.hex_map.GetHex(5, 4));
+        enemy_team.units.Add(unit2);
 
         instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
         unit = instance.GetComponent<Unit>();
         unit.owner = enemy_team;
-        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(5, 1));
+        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(6, 9));
         enemy_team.units.Add(unit);
+
+
+        // Set enemies
+        player_team.enemies.Add(enemy_team);
+        enemy_team.enemies.Add(player_team);
 
 
         StartRound();
@@ -75,6 +83,7 @@ public class BattleManager : MonoBehaviour
 
         current_player = players_waiting_for_turn.Dequeue();
         round_number++;
+        SetUnitsMovableTiles();
 
         StartTurn();
     }
@@ -89,6 +98,12 @@ public class BattleManager : MonoBehaviour
 
         human_turn = current_player.human_controlled;
         PlayerInterface.player_interface.turn_text.text = current_player.faction_name + ", Round " + round_number;
+
+        if (!current_player.human_controlled)
+        {
+            // AI player. Let the AI play for them
+            AI.Do_Turn();
+        }
     }
 
 
@@ -105,6 +120,20 @@ public class BattleManager : MonoBehaviour
             // Everyone's had a turn. Start a new round
             CheckVictoryAndDefeat();
             StartRound();
+        }
+    }
+
+
+    // Called after any unit moves, resets what tiles each unit can move to
+    public void SetUnitsMovableTiles()
+    {
+        foreach (Faction faction in factions)
+        {
+            foreach (Unit unit in faction.units)
+            {
+                // Get all the hexes within range
+                unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement());
+            }
         }
     }
 

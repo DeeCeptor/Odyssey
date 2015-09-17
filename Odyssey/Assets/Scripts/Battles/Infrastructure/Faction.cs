@@ -24,4 +24,29 @@ public class Faction
     {
         return enemies.Contains(unit.owner);
     }
+    public bool IsAlly(Faction faction)
+    {
+        return (faction == this);
+    }
+    public bool IsAlly(Unit unit)
+    {
+        return (unit.owner == this);
+    }
+
+
+    public List<Unit> GetAllEnemyUnits()
+    {
+        List<Unit> units = new List<Unit>();
+
+        foreach (Faction enemy in enemies)
+        {
+            units.AddRange(enemy.units);
+        }
+
+        return units;
+    }
+    public List<Unit> GetAllAllyUnits()
+    {
+        return units;
+    }
 }
