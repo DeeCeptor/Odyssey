@@ -1,16 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &119236
+--- !u!1 &111742
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 405820}
-  - 114: {fileID: 11418712}
+  - 4: {fileID: 400552}
+  - 114: {fileID: 11436374}
   m_Layer: 0
-  m_Name: CargoManager
+  m_Name: Wood
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &122456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 488772}
+  - 114: {fileID: 11467308}
+  m_Layer: 0
+  m_Name: Wood (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,6 +44,7 @@ GameObject:
   - 92: {fileID: 9214572}
   - 124: {fileID: 12486034}
   - 81: {fileID: 8131362}
+  - 114: {fileID: 11424558}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -35,17 +52,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &153178
+--- !u!1 &159884
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 448644}
-  - 114: {fileID: 11413604}
+  - 4: {fileID: 489206}
+  - 114: {fileID: 11406224}
   m_Layer: 0
-  m_Name: Wood
+  m_Name: Odysseus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +116,7 @@ GameObject:
   - 114: {fileID: 11400594}
   m_Layer: 0
   m_Name: TroopManager
-  m_TagString: Untagged
+  m_TagString: TroopManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,17 +137,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &405820
+--- !u!4 &400552
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119236}
+  m_GameObject: {fileID: 111742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.5060196, y: -87.0314636, z: 80.4195328}
-  m_LocalScale: {x: 1, y: 1, z: .5}
-  m_Children:
-  - {fileID: 448644}
+  m_LocalPosition: {x: -47.5060196, y: 87.0314636, z: -160.839066}
+  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_Children: []
   m_Father: {fileID: 459694}
   m_RootOrder: 2
 --- !u!4 &442500
@@ -145,20 +161,9 @@ Transform:
   m_Children:
   - {fileID: 459566}
   - {fileID: 466006}
+  - {fileID: 489206}
   m_Father: {fileID: 459694}
   m_RootOrder: 1
---- !u!4 &448644
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153178}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -47.5060196, y: 87.0314636, z: -160.839066}
-  m_LocalScale: {x: 1, y: 1, z: 2}
-  m_Children: []
-  m_Father: {fileID: 405820}
-  m_RootOrder: 0
 --- !u!4 &459566
 Transform:
   m_ObjectHideFlags: 1
@@ -183,7 +188,8 @@ Transform:
   m_Children:
   - {fileID: 471406}
   - {fileID: 442500}
-  - {fileID: 405820}
+  - {fileID: 400552}
+  - {fileID: 488772}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &466006
@@ -210,6 +216,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 459694}
   m_RootOrder: 0
+--- !u!4 &488772
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122456}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -47.5060196, y: 87.0314636, z: -160.839066}
+  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_Children: []
+  m_Father: {fileID: 459694}
+  m_RootOrder: 3
+--- !u!4 &489206
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159884}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -47.5060196, y: 87.0314636, z: -160.839066}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 442500}
+  m_RootOrder: 2
 --- !u!20 &2003346
 Camera:
   m_ObjectHideFlags: 1
@@ -328,10 +358,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTroops: 100
-  Units:
+  units:
   - {fileID: 177604}
   - {fileID: 195188}
-  Heroes: []
+  heroes:
+  - {fileID: 159884}
 --- !u!114 &11405218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -349,30 +380,20 @@ MonoBehaviour:
   totalLiving: 10
   foodConsumptionPerSoldier: .00499999989
   waterConsumptionPerSoldier: .00999999978
---- !u!114 &11413604
+--- !u!114 &11406224
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153178}
+  m_GameObject: {fileID: 159884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46ca2ccdddd18bc45a945836a7c668c0, type: 3}
+  m_Script: {fileID: 11500000, guid: b5e7b08df3195da438823820b78cebd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  display: {fileID: 0}
-  Value: 0
---- !u!114 &11418712
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9390f47c9beade643b16455fba5ddb95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  hitpoints: 10
+  foodConsumption: .00499999989
+  waterConsumption: .00999999978
 --- !u!114 &11420036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,6 +411,32 @@ MonoBehaviour:
   totalLiving: 10
   foodConsumptionPerSoldier: .00499999989
   waterConsumptionPerSoldier: .00999999978
+--- !u!114 &11424558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88a53697a47aa694bab5dc640ec5f748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSpeed: 3
+--- !u!114 &11436374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ca2ccdddd18bc45a945836a7c668c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  display: {fileID: 0}
+  Value: 0
+  weight: 5
 --- !u!114 &11448596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -406,6 +453,20 @@ MonoBehaviour:
   slowSpeed: .5
   turnSpeed: .200000003
   paused: 0
+--- !u!114 &11467308
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ca2ccdddd18bc45a945836a7c668c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  display: {fileID: 0}
+  Value: 0
+  weight: 5
 --- !u!114 &11487838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -422,14 +483,16 @@ MonoBehaviour:
   moraleText: {fileID: 0}
   staminaText: {fileID: 0}
   sailorText: {fileID: 0}
+  healthText: {fileID: 0}
+  hullText: {fileID: 0}
+  goldText: {fileID: 0}
+  troopManager: {fileID: 0}
   paused: 0
   framesPerConsuption: 120
   foodPerSailorPerConsumption: .00499999989
-  lowRationFoodPerSailorPerConsumption: .00249999994
-  highRationFoodPerSailorPerConsumption: .00749999983
+  lowRationRate: .5
+  highRationRate: 1.5
   waterPerSailorPerConsumption: .00999999978
-  lowRationWaterPerSailorPerConsumption: .00499999989
-  highRationWaterPerSailorPerConsumption: .0149999997
   rationRate: 1
   moveRate: 1
   moraleLossFromLowRations: .5
@@ -445,12 +508,17 @@ MonoBehaviour:
   healthGainNaturally: .25
   healthGainFromSlowSpeed: .25
   healthGainFromHighRations: .5
-  food: 200
-  water: 200
-  sailors: 100
+  food: 100
+  water: 100
+  sailors: 50
   stamina: 100
   morale: 100
   health: 100
+  gold: 50
+  shipHealth: 100
+  weight: 200
+  maxWeight: 500
+  cargo: []
   poseidonsFavour: 0
   zeusFavour: 0
   hadesFavour: 0

@@ -4,6 +4,7 @@ using System.Collections;
 public class EventManagement : MonoBehaviour {
 	
 	public GameObject player;
+	public GameObject[] enemies;
 	public ResourceManager resourceController;
 	public PlayerBoatController playerController;
 	public GameObject currentEvent;
@@ -26,6 +27,7 @@ public class EventManagement : MonoBehaviour {
 	player = GameObject.FindGameObjectWithTag("Player");
 	resourceController = player.GetComponent<ResourceManager>();
 	playerController = player.GetComponent<PlayerBoatController>();
+	enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
 	}
 	
 	// Update is called once per frame
@@ -48,6 +50,7 @@ public class EventManagement : MonoBehaviour {
 	
 	public void HaveEvent(GameObject eventToHave)
 	{
+		enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
 		currentEvent = Instantiate(eventToHave);
 		Pause();
 	}
@@ -86,6 +89,7 @@ public class EventManagement : MonoBehaviour {
 	
 	public void EndEvent()
 	{
+	enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
 	Unpause();
 	Destroy(currentEvent);
 	}
@@ -95,6 +99,10 @@ public class EventManagement : MonoBehaviour {
 		paused = true;
 		resourceController.Pause();
 		playerController.Pause();
+		for(int i = 0; i < enemies.Length;i++)
+		{
+		enemies[i].GetComponent<OverworldEnemyScript>().Pause();
+		}
 	}
 	
 	public void Unpause()
@@ -102,6 +110,10 @@ public class EventManagement : MonoBehaviour {
 		paused = false;
 		resourceController.Unpause();
 		playerController.Unpause();
+		for(int i = 0; i < enemies.Length;i++)
+		{
+			enemies[i].GetComponent<OverworldEnemyScript>().Unpause();
+		}
 	}
 	
 }

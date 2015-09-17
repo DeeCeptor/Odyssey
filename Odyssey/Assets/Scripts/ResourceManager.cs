@@ -9,6 +9,11 @@ public GameObject foodText;
 public GameObject moraleText;
 public GameObject staminaText;
 public GameObject sailorText;
+public GameObject healthText;
+public GameObject hullText;
+public GameObject goldText;
+
+public TroopManager troopManager;
 
 public bool paused = false;
 
@@ -18,11 +23,9 @@ private int frameIterator = 0;
 
 //rates of food and water consumption
 public float foodPerSailorPerConsumption = 0.005f;
-public float lowRationFoodPerSailorPerConsumption = 0.0025f;
-public float highRationFoodPerSailorPerConsumption = 0.0075f;
+public float lowRationRate = 0.5f;
+public float highRationRate = 1.5f;
 public float waterPerSailorPerConsumption = 0.01f;
-public float lowRationWaterPerSailorPerConsumption = 0.005f;
-public float highRationWaterPerSailorPerConsumption = 0.015f;
 
 //for ration and movement rates the lowest number is the lowest amount of rations and the lowest move rate is the slowest movement rate
 public int rationRate = 1;
@@ -48,11 +51,15 @@ public float healthGainFromHighRations = 0.5f;
 //amount of resources
 public float food = 100f;
 public float water = 100f;
-public int sailors = 100;
+public int sailors = 50;
 public float stamina = 100f;
 public float morale = 100f;
 public float health = 100f;
 public int gold = 50;
+public int shipHealth = 100;
+public float weight = 200f;
+public float maxWeight = 500;
+public CargoStats[] cargo;
 
 //god's favours
 public float poseidonsFavour = 0f;
@@ -65,11 +72,24 @@ public float athenasFavour = 0f;
 
 	// Use this for initialization
 	void Start () {
-	waterText.GetComponent<Text>().text = "water: " + water.ToString() + "L";
-	foodText.GetComponent<Text>().text = "food: " + food.ToString() + "Kg";
+	waterText = GameObject.Find("WaterMonitor");
+	foodText = GameObject.Find("FoodMonitor");
+	moraleText = GameObject.Find("MoraleMonitor");
+	sailorText = GameObject.Find("SailorsMonitor");
+	staminaText = GameObject.Find("StaminaMonitor");
+	healthText = GameObject.Find("HealthMonitor");
+	hullText = GameObject.Find("HullMonitor");
+	goldText = GameObject.Find("GoldMonitor");
+	
+	waterText.GetComponent<Text>().text = "water: " + water.ToString("F1") + "L";
+	foodText.GetComponent<Text>().text = "food: " + food.ToString("F1") + "Kg";
 	moraleText.GetComponent<Text>().text = "morale: " + morale.ToString() + "%";
 	staminaText.GetComponent<Text>().text = "stamina: " + stamina.ToString() + "%";
 	sailorText.GetComponent<Text>().text = "sailors: " + sailors.ToString();
+	healthText.GetComponent<Text>().text = "health: " + health.ToString() + "%";
+	hullText.GetComponent<Text>().text = "hull: " + shipHealth.ToString() + "%";
+	goldText.GetComponent<Text>().text = "gold: " + gold.ToString();
+	troopManager = GameObject.FindGameObjectWithTag("TroopManager").GetComponent<TroopManager>();
 	}
 	
 	// Update is called once per frame
@@ -80,14 +100,17 @@ public float athenasFavour = 0f;
 		{
 			frameIterator = 0;
 			Consume(1);
-			
+			CalcWeight();
 		}
 		frameIterator = frameIterator + 1;
-		waterText.GetComponent<Text>().text = "water: " + water.ToString() + "L";
-		foodText.GetComponent<Text>().text = "food: " + food.ToString() + "Kg";
+		waterText.GetComponent<Text>().text = "water: " + water.ToString("F1") + "L";
+		foodText.GetComponent<Text>().text = "food: " + food.ToString("F1") + "Kg";
 		moraleText.GetComponent<Text>().text = "morale: " + morale.ToString() + "%";
 		staminaText.GetComponent<Text>().text = "stamina: " + stamina.ToString() + "%";
 		sailorText.GetComponent<Text>().text = "sailors: " + sailors.ToString();
+		healthText.GetComponent<Text>().text = "health: " + health.ToString() + "%";
+		hullText.GetComponent<Text>().text = "hull: " + shipHealth.ToString() + "%";
+		goldText.GetComponent<Text>().text = "gold: " + gold.ToString();
 	}
 	}
 	
@@ -134,8 +157,10 @@ public float athenasFavour = 0f;
 	
 		if(rationRate == 0)
 		{
-			food = food - (sailors*lowRationFoodPerSailorPerConsumption);
-			water = water - (sailors*lowRationWaterPerSailorPerConsumption);
+			food = food - (sailors*foodPerSailorPerConsumption*lowRationRate);
+			food = food - (troopManager.getFoodConsumption()*lowRationRate);
+			water = water - (sailors*waterPerSailorPerConsumption*lowRationRate);
+			water = water - (troopManager.getWaterConsumption()*lowRationRate);
 			morale = morale - moraleLossFromLowRations;
 			stamina = stamina - staminaLossFromLowRations;
 		}
@@ -143,13 +168,17 @@ public float athenasFavour = 0f;
 		if(rationRate == 1)
 		{
 			food = food - (sailors*foodPerSailorPerConsumption);
+			food = food - (troopManager.getFoodConsumption());
 			water = water - (sailors*waterPerSailorPerConsumption);
+			water = water - (troopManager.getWaterConsumption());
 		}
 		
 		if(rationRate == 2)
 		{
-			food = food - (sailors*highRationFoodPerSailorPerConsumption);
-			water = water - (sailors*highRationWaterPerSailorPerConsumption);
+			food = food - (sailors*foodPerSailorPerConsumption*highRationRate);
+			food = food - (troopManager.getFoodConsumption()*highRationRate);
+			water = water - (sailors*waterPerSailorPerConsumption*highRationRate);
+			water = water - (troopManager.getWaterConsumption()*highRationRate);
 			morale = morale + moraleGainFromHighRations;
 			stamina = stamina + staminaGainFromHighRations;
 		}
@@ -255,9 +284,45 @@ public float athenasFavour = 0f;
 		}
 	}
 	
+	public void CalcWeight()
+	{
+		weight = 0f;
+		cargo = GetComponentsInChildren<CargoStats>();
+		for(int i = 0; i< cargo.Length; i++)
+		{
+			weight = weight + cargo[i].weight;
+		}
+		weight = weight + food;
+		weight = weight + water;
+	}
+	
+	public void AddCargo(GameObject cargoToAdd)
+	{
+		CargoStats newCargoStats = cargoToAdd.GetComponent<CargoStats>();
+		cargoToAdd.transform.SetParent(transform);
+		weight = weight + newCargoStats.weight;
+	}
+	
+	public void DeleteCargo(GameObject cargoToDestroy)
+	{
+		CargoStats oldCargoStats = cargoToDestroy.GetComponent<CargoStats>();
+		weight = weight - oldCargoStats.weight;
+		Destroy(cargoToDestroy);
+	}
+	
+	//used to see if a new item will fit in the cargo hold
+	public bool checkIfOver(float newObjectWeight)
+	{
+		if(weight + newObjectWeight > maxWeight)
+		{
+		return true;
+		}
+		else return false;
+	}
+	
 	public void Pause()
 	{
-	paused = true;
+		paused = true;
 	}
 	
 	public void Unpause()

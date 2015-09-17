@@ -1,60 +1,47 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &103382
+--- !u!1 &162892
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 446076}
-  - 114: {fileID: 11410462}
+  - 4: {fileID: 437412}
+  - 114: {fileID: 11411340}
   m_Layer: 0
-  m_Name: RandomEventManager
-  m_TagString: EventController
+  m_Name: Odysseus
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &446076
+--- !u!4 &437412
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103382}
+  m_GameObject: {fileID: 162892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.3980865, y: 109.758438, z: 115.649948}
+  m_LocalPosition: {x: -47.5060196, y: 87.0314636, z: -160.839066}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11410462
+--- !u!114 &11411340
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103382}
+  m_GameObject: {fileID: 162892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5d2d7eb96a072b4aa37d8b5dcb3144a, type: 3}
+  m_Script: {fileID: 11500000, guid: b5e7b08df3195da438823820b78cebd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  enemies: []
-  resourceController: {fileID: 0}
-  playerController: {fileID: 0}
-  currentEvent: {fileID: 0}
-  islandEventIsOn: {fileID: 0}
-  seaEventList:
-  - {fileID: 130888, guid: d8ac96ee9472e2d41b883f8c104e0968, type: 2}
-  campingEventList: []
-  forestExploreEventList: []
-  desertExploreEventList: []
-  tropicalExploreEventList: []
-  framesPerCheckRegular: 240
-  framesPerCheck: 240
-  eventChance: 25
-  paused: 0
+  hitpoints: 10
+  foodConsumption: .00499999989
+  waterConsumption: .00999999978
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -64,5 +51,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 103382}
+  m_RootGameObject: {fileID: 162892}
   m_IsPrefabParent: 1

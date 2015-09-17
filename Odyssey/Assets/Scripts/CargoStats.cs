@@ -7,7 +7,7 @@ public class CargoStats : MonoBehaviour {
 public GameObject display;
 //rough money value of the cargo
 public int Value;
-
+public float weight = 5f;
 	// Use this for initialization
 	void Start () {
 	

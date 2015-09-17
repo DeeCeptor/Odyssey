@@ -3,8 +3,8 @@ using System.Collections;
 
 public class TroopManager : MonoBehaviour {
 public int totalTroops = 100;
-public GameObject[] Units;
-public GameObject[] Heroes;
+public GameObject[] units;
+public GameObject[] heroes;
 	// Use this for initialization
 	void Start () {
 	}
@@ -16,24 +16,58 @@ public GameObject[] Heroes;
 	
 	public void AddTroop(GameObject unit)
 	{
-	unit.transform.SetParent(transform);
-	Units[Units.Length] = unit;
+		unit.transform.SetParent(transform);
+		units[units.Length] = unit;
 	}
 	
 	public void AddHero(GameObject hero)
 	{
 		hero.transform.SetParent(transform);
-		Units[Units.Length] = hero;
+		heroes[heroes.Length] = hero;
 	}
 	
 	public float getFoodConsumption()
 	{
-	return 0;
+		float consumption = 0f;
+		TroopStats curTroop;
+	
+		for(int i = 0; i<units.Length; i++)
+		{
+			curTroop = units[i].GetComponent<TroopStats>();
+			consumption = consumption + (curTroop.foodConsumptionPerSoldier*curTroop.totalLiving);
+		}
+	
+	
+		HeroStats curHero;
+		
+		for(int i = 0; i<heroes.Length; i++)
+		{
+			curHero = heroes[i].GetComponent<HeroStats>();
+			consumption = consumption + (curHero.foodConsumption);
+		}
+		return consumption;
 	}
 	
 	public float getWaterConsumption()
 	{
-	return 0;
+		float consumption = 0f;
+		TroopStats curTroop;
+		
+		for(int i = 0; i<units.Length; i++)
+		{
+			curTroop = units[i].GetComponent<TroopStats>();
+			consumption = consumption + (curTroop.waterConsumptionPerSoldier*curTroop.totalLiving);
+		}
+		
+		
+		HeroStats curHero;
+		
+		for(int i = 0; i<heroes.Length; i++)
+		{
+			curHero = heroes[i].GetComponent<HeroStats>();
+			consumption = consumption + (curHero.waterConsumption);
+		}
+		return consumption;
 	}
 	
 	
