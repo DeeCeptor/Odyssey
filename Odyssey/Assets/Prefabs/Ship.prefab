@@ -452,6 +452,7 @@ MonoBehaviour:
   fastSpeed: 1.5
   slowSpeed: .5
   turnSpeed: .200000003
+  encounterRange: 5
   paused: 0
 --- !u!114 &11467308
 MonoBehaviour:
@@ -488,6 +489,7 @@ MonoBehaviour:
   goldText: {fileID: 0}
   troopManager: {fileID: 0}
   paused: 0
+  anchored: 0
   framesPerConsuption: 120
   foodPerSailorPerConsumption: .00499999989
   lowRationRate: .5
@@ -497,10 +499,12 @@ MonoBehaviour:
   moveRate: 1
   moraleLossFromLowRations: .5
   moraleGainFromHighRations: .5
-  staminaLossFromHighSpeed: .5
+  staminaLossFromHighSpeed: 1
+  staminaLossFromNormalSpeed: .5
   staminaLossFromLowRations: .5
-  staminaGainFromLowSpeed: .5
+  staminaGainFromLowSpeed: 0
   staminaGainFromHighRations: .5
+  staminaGainFromAnchor: 1
   healthLossFromStarvation: .5
   healthLossFromDehydration: 1.5
   healthLossFromLowRations: .5
@@ -508,6 +512,7 @@ MonoBehaviour:
   healthGainNaturally: .25
   healthGainFromSlowSpeed: .25
   healthGainFromHighRations: .5
+  healthGainFromAnchoring: 1
   food: 100
   water: 100
   sailors: 50

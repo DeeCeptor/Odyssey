@@ -16,6 +16,7 @@ public GameObject goldText;
 public TroopManager troopManager;
 
 public bool paused = false;
+public bool anchored = false;
 
 //how frequently your sailors must eat
 public int framesPerConsuption = 120;
@@ -34,19 +35,22 @@ public int moveRate = 1;
 //rates of morale and stamina loss/gain
 public float moraleLossFromLowRations = 0.5f;
 public float moraleGainFromHighRations = 0.5f;
-public float staminaLossFromHighSpeed = 0.5f;
+public float staminaLossFromHighSpeed = 1f;
+public float staminaLossFromNormalSpeed = 1f;
 public float staminaLossFromLowRations= 0.5f;
 public float staminaGainFromLowSpeed = 0.5f;
 public float staminaGainFromHighRations= 0.5f;
+public float staminaGainFromAnchor = 1f;
 
 //rates of health loss
-public float healthLossFromStarvation = 0.5f;
-public float healthLossFromDehydration = 1.5f;
-public float healthLossFromLowRations = 0.5f;
-public float healthLossFromExhaustion = 0.01f; //health loss is per each percent stamina below 50
-public float healthGainNaturally = 0.25f;
-public float healthGainFromSlowSpeed = 0.25f;
+public float healthLossFromStarvation = 1f;
+public float healthLossFromDehydration = 3f;
+public float healthLossFromLowRations = 1f;
+public float healthLossFromExhaustion = 0.02f; //health loss is per each percent stamina below 50
+public float healthGainNaturally = 0.5f;
+public float healthGainFromSlowSpeed = 0.5f;
 public float healthGainFromHighRations = 0.5f;
+public float healthGainFromAnchoring = 1;
 
 //amount of resources
 public float food = 100f;
@@ -183,14 +187,27 @@ public float athenasFavour = 0f;
 			stamina = stamina + staminaGainFromHighRations;
 		}
 		
+		if(!anchored)
+		{
 		if(moveRate == 0)
 		{
 			stamina = stamina + staminaGainFromLowSpeed;
 		}
 		
+		if(moveRate == 1)
+		{
+			stamina = stamina - staminaLossFromNormalSpeed;
+		}
+		
 		if(moveRate == 2)
 		{
 			stamina = stamina - staminaLossFromHighSpeed;
+		}
+		}
+		
+		if(anchored)
+		{
+		stamina = stamina + staminaGainFromAnchor;
 		}
 		
 		//increment health
@@ -235,10 +252,16 @@ public float athenasFavour = 0f;
 		health = health + healthGainFromHighRations;
 		}
 		
-		if(moveRate == 0)
+		if(moveRate == 0 && !anchored)
 		{
 			health = health + healthGainFromSlowSpeed;
 		}
+		
+		if(anchored)
+		{
+			health = health + healthGainFromAnchoring;
+		}
+		
 	}
 	
 	public void FollowLimits()
@@ -328,5 +351,18 @@ public float athenasFavour = 0f;
 	public void Unpause()
 	{
 		paused = false;
+	}
+	
+	public void toggleAnchor()
+	{
+		if(anchored)
+		{
+			anchored = false;
+		}
+		
+		else if(!anchored)
+		{
+			anchored = true;
+		}
 	}
 }

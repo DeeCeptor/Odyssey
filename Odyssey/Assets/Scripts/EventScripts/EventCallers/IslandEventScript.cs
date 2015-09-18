@@ -18,7 +18,7 @@ public EventManagement eventHandler;
 	
 	}
 	
-	void OnTriggerEnter(Collider other)
+	public void HaveEvent()
 	{
 		eventHandler.HaveEvent(eventToCall);
 	}
