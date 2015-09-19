@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &149850
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   location: {fileID: 0}
   movement_path: []
+  attack_target: {fileID: 0}
   tiles_I_can_move_to: []
   ready_to_be_controlled: 0
   u_name: Hoplite

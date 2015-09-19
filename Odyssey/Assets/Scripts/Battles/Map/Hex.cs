@@ -14,10 +14,10 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     [HideInInspector]
     public Unit occupying_unit;     // Unit that's on this hex, if there is one
 
-    public Material highlighted_material;
-    public Material mouse_highlighted_material;
-    private Material previous_material;
-    Material regular_material;
+	private Color highlighted_color = Color.blue;
+	private Color mouse_highlighted_color = Color.green;
+	private Color previous_color;
+	Color regular_color = Color.white;
 
     // Graph traversing cost functions
     [HideInInspector]
@@ -38,7 +38,8 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 
     void Start ()
     {
-        regular_material = this.GetComponent<MeshRenderer>().material;
+        //regular_material = this.GetComponent<MeshRenderer>().material;
+		//regular_color = this.GetComponent<SpriteRenderer>().color;
     }
 
 	
@@ -64,24 +65,31 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 
     public void HighlightHex()
     {
-        this.GetComponent<MeshRenderer>().material = highlighted_material;
+		this.GetComponent<SpriteRenderer>().color = highlighted_color;
+        //this.GetComponent<MeshRenderer>().material = highlighted_material;
     }
     public void UnhighlightHex()
     {
-        this.GetComponent<MeshRenderer>().material = regular_material;
+		this.GetComponent<SpriteRenderer>().color = regular_color;
+        //this.GetComponent<MeshRenderer>().material = regular_material;
     }
     public void MouseHighlight()
     {
-        previous_material = this.GetComponent<MeshRenderer>().material;
-        this.GetComponent<MeshRenderer>().material = mouse_highlighted_material;
+		previous_color = this.GetComponent<SpriteRenderer>().color;
+		this.GetComponent<SpriteRenderer>().color = mouse_highlighted_color;
+        //previous_material = this.GetComponent<MeshRenderer>().material;
+        //this.GetComponent<MeshRenderer>().material = mouse_highlighted_material;
     }
     public void UnMouseHighlight()
     {
-        this.GetComponent<MeshRenderer>().material = previous_material;
+		this.GetComponent<SpriteRenderer>().color = previous_color;
+        //this.GetComponent<MeshRenderer>().material = previous_material;
     }
     public bool IsHighlighted()
     {
-        return this.GetComponent<MeshRenderer>().material == highlighted_material;
+        //return this.GetComponent<MeshRenderer>().material == highlighted_material;
+		return this.GetComponent<SpriteRenderer>().color == Color.blue;
+
     }
 
 
@@ -136,7 +144,7 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     }
 
 
-    void OnTriggerEnter(Collider collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Hex")// && !neighbours.Contains(collision.gameObject.GetComponent<Hex>()))
         {

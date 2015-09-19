@@ -13,8 +13,8 @@ public class CameraController : MonoBehaviour
 	void Update () 
 	{
         float x = Input.GetAxis("Horizontal");  // left-right
-        float y = Input.GetAxis("Mouse ScrollWheel");   // zoom
-        float z = Input.GetAxis("Vertical");    // up-down
+		float y = Input.GetAxis("Vertical");   // zoom
+		float z = Input.GetAxis("Mouse ScrollWheel");    // up-down
         //Debug.Log(y);
         /*
         cur_zoom += Input.GetAxis("Mouse ScrollWheel") * 10;
@@ -25,9 +25,10 @@ public class CameraController : MonoBehaviour
 
         if (Camera.current != null)
         {
-            this.gameObject.transform.position = new Vector3(Mathf.Clamp(gameObject.transform.position.x + x, 0, 10),
-                cur_zoom,//Mathf.Clamp(gameObject.transform.position.y + y, 0, 10),
-                Mathf.Clamp(gameObject.transform.position.z + z, -3, 8)    );
+            this.gameObject.transform.position = new Vector3(
+				Mathf.Clamp(gameObject.transform.position.x + x, 0, HexMap.hex_map.x_cam),
+				Mathf.Clamp(gameObject.transform.position.y + y, 0, HexMap.hex_map.y_cam),
+				-5);//Mathf.Clamp(gameObject.transform.position.z + z, -3, 8)    );
             //Camera.current.transform.Translate(new Vector3(
             /*this.gameObject.transform.Translate(new Vector3(
                 x,

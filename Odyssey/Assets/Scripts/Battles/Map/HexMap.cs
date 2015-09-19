@@ -11,7 +11,9 @@ public class HexMap : MonoBehaviour
     public List<Hex> all_hexes = new List<Hex>();
     Dictionary<String, Hex> hex_dictionary = new Dictionary<String, Hex>();
     int x_max, y_max;
-
+	public float x_cam, y_cam;
+	float x_offset = 3.29f;
+	float y_offset = 1.89f;
 
     public Hex GetHex(int x, int y)
     {
@@ -31,7 +33,7 @@ public class HexMap : MonoBehaviour
     void InitializeMap()
     {
         float x = 0;
-        for (int y = 0; y < 10; y++)
+        for (int y = 0; y < 20; y++)
         {
             // Get hex offset of rows
             if (y % 2 == 0)
@@ -42,16 +44,24 @@ public class HexMap : MonoBehaviour
             while (x < 10.6)
             {
                 GameObject instance = Instantiate(Resources.Load("Battles/Hex", typeof(GameObject))) as GameObject;
-                instance.transform.position = new Vector3(x, 0, y);
+				//float width = instance.GetComponent<Sprite>().texture.width;
+				float x_pos = x * x_offset;
+				float y_pos = y * y_offset / 2;
+                instance.transform.position = new Vector3(x_pos, y_pos, 0);
                 Hex hex = instance.GetComponent<Hex>();
                 hex.coordinate = new Vector2((int) x, (int) y);
                 all_hexes.Add(hex);
                 hex_dictionary.Add((int) x + "," + (int) y, hex);
-                if (x > x_max)
-                    x_max = (int) x;
-                if (y > y_max)
-                    y_max = y;
-
+                if (x_pos > x_max)
+				{
+					x_max = (int) x;
+                    x_cam = x_pos;
+				}
+                if (y_pos > y_max)
+				{
+					y_max = (int) y;
+                    y_cam = y_pos;
+				}
                 x++;
             }
         }
@@ -193,12 +203,12 @@ public class HexMap : MonoBehaviour
         hexes_in_range = new List<Hex>();
 
         int x = (int) location.coordinate.x;
-        int xMin = Mathf.Max(0, x - range);
-        int xMax = Mathf.Min(x_max, x + range);
+        int xMin = Mathf.Max(0, x - range * 2);
+        int xMax = Mathf.Min(x_max, x + range * 2);
 
         int y = (int) location.coordinate.y;
-        int yMin = Mathf.Max(0, y - range);
-        int yMax = Mathf.Min(y_max, y + range);
+        int yMin = Mathf.Max(0, y - range * 2);
+        int yMax = Mathf.Min(y_max, y + range * 2);
 
         for (int cur_x = xMin; cur_x <= xMax; cur_x++)
         {
