@@ -7,12 +7,12 @@ public class PlayerBoatController : MonoBehaviour {
 	public float slowSpeed = 0.5f;
 	public float turnSpeed = 0.2f;
 	private int moveRate = 1;
+	public float encounterRange = 5;
 	
 	public bool paused = false;
 	
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -63,5 +63,28 @@ public class PlayerBoatController : MonoBehaviour {
 	public void Unpause()
 	{
 		paused = false;
+	}
+	
+	//used for anchoring
+	public void togglePause()
+	{
+		if(paused)
+		{
+			paused = false;
+		}
+		
+		else if(!paused)
+		{
+			paused = true;
+			Collider[] objectsNear = Physics.OverlapSphere(transform.position, encounterRange);
+			for(int i = 0; i< objectsNear.Length;i++)
+			{
+				if (objectsNear[i].gameObject.tag.Equals("Island"))
+				{
+				objectsNear[i].GetComponent<IslandEventScript>().HaveEvent();
+				}
+			
+			}
+		}
 	}
 }

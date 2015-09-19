@@ -10,6 +10,12 @@ public class PlayerInterface : MonoBehaviour
 
     public Text unit_name;
     public Text unit_description;
+    public Text health_text;
+    public Slider health_bar;
+    public Text defence_text;
+    public Slider defence_bar;
+    public Text ranged_defence_text;
+    public Slider ranged_defence_bar;
 
     public Text terrain_name;
     public Text terrain_description;
@@ -38,6 +44,9 @@ public class PlayerInterface : MonoBehaviour
         // Set the unit title, description and stats
         unit_name.text = unit.u_name;
         unit_description.text = "<i>" + unit.u_description + "</i>";
+        SetHealthText(unit);
+        SetDefenceText(unit);
+        SetRangedDefenceText(unit);
 
         if (unit.owner == BattleManager.battle_manager.current_player)
         {
@@ -56,6 +65,22 @@ public class PlayerInterface : MonoBehaviour
         selected_unit = null;
     }
 
+
+    public void SetHealthText(Unit unit)
+    {
+        health_text.text = "Health: " + unit.GetHealth();
+        health_bar.value = unit.GetHealth() / unit.GetMaxHealth();
+    }
+    public void SetDefenceText(Unit unit)
+    {
+        defence_text.text = "Defence: " + unit.GetDefence();
+        defence_bar.value = unit.GetDefence();
+    }
+    public void SetRangedDefenceText(Unit unit)
+    {
+        ranged_defence_text.text = "Ranged Defence: " + unit.GetDefence();
+        ranged_defence_bar.value = unit.GetDefence();
+    }
 
     public bool SelectedUnitAvailableToControl()
     {

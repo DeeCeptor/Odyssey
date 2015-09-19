@@ -57,6 +57,7 @@ public class OverworldEnemyScript : MonoBehaviour {
 	public void Pause()
 	{
 		paused = true;
+		gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
 	}
 	
 	public void Unpause()

@@ -6,6 +6,8 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 {
     public Vector2 coordinate;      // Grid coordinate
 
+    public List<Effect> effects_on_hex = new List<Effect>();
+
     [HideInInspector]
     public List<Edge> neighbours = new List<Edge>();     // List of adjacent and movable-to hexes
 
@@ -46,9 +48,17 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 	}
 
 
-    public void GetEffectsOnHex()
+    // Clones the effects on this hex and returns a list of the effects to be applied to the unit.
+    public List<Effect> GetEffectsOnHex(Unit unit_standing_on_hex)
     {
+        List<Effect> effects = new List<Effect>();
 
+        foreach (Effect effect in effects_on_hex)
+        {
+            effects.Add(effect.Clone(unit_standing_on_hex));
+        }
+
+        return effects;
     }
 
 
