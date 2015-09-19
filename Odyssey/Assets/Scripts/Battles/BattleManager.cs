@@ -58,7 +58,7 @@ public class BattleManager : MonoBehaviour
         instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
         unit = instance.GetComponent<Unit>();
         unit.owner = enemy_team;
-        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(6, 9));
+        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(6, 10));
         enemy_team.units.Add(unit);
 
 

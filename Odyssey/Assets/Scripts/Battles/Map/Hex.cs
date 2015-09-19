@@ -105,10 +105,10 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 
         if (Input.GetMouseButtonDown(0))    // left click
         {
-            Debug.Log("Left click on this object");
+            //Debug.Log("Left click on this object");
 
-            if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
-                PlayerInterface.player_interface.selected_unit.HexClicked(this);
+            //if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
+            //    PlayerInterface.player_interface.selected_unit.HexClicked(this);
         }
         if (Input.GetMouseButtonDown(1))    // right click
         {

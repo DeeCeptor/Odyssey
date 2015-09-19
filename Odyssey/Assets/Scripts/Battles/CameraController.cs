@@ -4,36 +4,28 @@ using System.Collections;
 public class CameraController : MonoBehaviour 
 {
     float cur_zoom = 5;
+    private float camera_z = -10;
 
 	void Start () 
 	{
-        cur_zoom = this.transform.position.y;
+
 	}
 	
 	void Update () 
 	{
         float x = Input.GetAxis("Horizontal");  // left-right
-		float y = Input.GetAxis("Vertical");   // zoom
-		float z = Input.GetAxis("Mouse ScrollWheel");    // up-down
-        //Debug.Log(y);
-        /*
-        cur_zoom += Input.GetAxis("Mouse ScrollWheel") * 10;
-        Vector3 cur_position = new Vector3(this.transform.position.x + x, cur_zoom, this.transform.position.y + y);
-        this.transform.position = cur_position;*/
+		float y = Input.GetAxis("Vertical");   // up-down
+		float z = Input.GetAxis("Mouse ScrollWheel");    // zoom
 
-        cur_zoom = Mathf.Clamp(cur_zoom - y, 1, 10);
+        cur_zoom = Mathf.Clamp(cur_zoom - z, 3, 10);    // Limit how far and how close we can zoom
 
         if (Camera.current != null)
         {
             this.gameObject.transform.position = new Vector3(
 				Mathf.Clamp(gameObject.transform.position.x + x, 0, HexMap.hex_map.x_cam),
 				Mathf.Clamp(gameObject.transform.position.y + y, 0, HexMap.hex_map.y_cam),
-				-5);//Mathf.Clamp(gameObject.transform.position.z + z, -3, 8)    );
-            //Camera.current.transform.Translate(new Vector3(
-            /*this.gameObject.transform.Translate(new Vector3(
-                x,
-                y,
-                0));*/
+                camera_z);  // Z of camera never changes
+            Camera.current.orthographicSize = cur_zoom;     // Set zoom level of camera
         }
     }
 }

@@ -19,21 +19,13 @@ public class AIController
         foreach (Unit unit in faction.units)
         {
             Hex best_hex = unit.location;   // Start off assuming where they are is the best location
-            best_hex.hex_score = 0;
+            best_hex.hex_score = EvaluateHexScore(unit, best_hex);
+            Debug.Log(best_hex.hex_score);
 
             // Go through each unit, evaluate every hex it could move to
             foreach (Hex hex in unit.tiles_I_can_move_to)
             {
-                // Add the bonuses this hex gives
-                hex.hex_score = hex.defense_score;
-
-                // Add score based on the damage we can do to enemies from this hex
-                hex.hex_score += EnemyScoreOnHex(unit, hex);
-
-                // Add score based on the number of allies around this hex
-                hex.hex_score += AllyScoreOnHex(unit, hex);
-                if (hex.hex_score > 0)
-                    Debug.Log(hex.coordinate + ", " + hex.hex_score);
+                hex.hex_score = EvaluateHexScore(unit, hex);
 
                 if (hex.hex_score > best_hex.hex_score)
                     best_hex = hex;
@@ -73,6 +65,22 @@ public class AIController
         BattleManager.battle_manager.EndTurn();
     }
 
+    
+    // Returns the value of this hex to the AI player. High value is good.
+    public float EvaluateHexScore(Unit unit, Hex hex)
+    {
+        // Add the bonuses this hex gives
+        float hex_score = hex.defense_score;
+
+        // Add score based on the damage we can do to enemies from this hex
+        hex_score += EnemyScoreOnHex(unit, hex);
+
+        // Add score based on the number of allies around this hex
+        hex_score += AllyScoreOnHex(unit, hex);
+
+        return hex_score;
+    }
+
 
     // Check how much damage we can do to an enemy from this hex
     public float EnemyScoreOnHex(Unit cur_unit, Hex hex)
@@ -100,7 +108,7 @@ public class AIController
         foreach (Hex target_hex in potential_targets)
         {
             if (target_hex.occupying_unit != cur_unit)
-                score += 0.3f;
+                score += 0.1f;
         }
 
         return score;
