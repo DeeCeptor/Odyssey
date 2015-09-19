@@ -42,6 +42,31 @@ public class AIController
             // We've gone through each hex. Move to that hex
             Debug.Log("Moving unit to " + best_hex.coordinate + ", " + best_hex.hex_score);
             unit.PathTo(best_hex);
+
+            // Now that we know where we're ending up, evaluate the best target we can attack from there
+            Unit target = null;
+            float best_target_score = 0;
+            foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
+            {
+                // Check if we're in range. If we're not in range, we can't attack the unit
+                if (HexMap.hex_map.InRange(unit.location, enemy.location, unit.GetRange()))
+                {
+                    float cur_score = enemy.CalculateDamage(unit);
+
+                    if (cur_score > best_target_score)
+                    {
+                        // This is our best target to attack so far. Record it.
+                        target = enemy;
+                        best_target_score = cur_score;
+                    }
+                }
+            }
+
+            // If there's a suitable target, have the unit attack it once it gets to the right hex
+            if (best_target_score > 0)  
+            {
+                unit.attack_target = target;
+            }
         }
 
         Debug.Log("Finished AI turn");

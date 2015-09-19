@@ -8,6 +8,8 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public List<Hex> movement_path = new List<Hex>();      // When ordered to move, this path is populated with the hexes this unit will traverse
     [HideInInspector]
+    public Unit attack_target;  // Used for AI units. Who they will attack when they've reached their destination
+    [HideInInspector]
     public List<Hex> tiles_I_can_move_to;   // Tiles that will be highlighted when the user clicks on the unit
 
     bool active = false;    // Set to true when it's this unit's turn
@@ -16,15 +18,21 @@ public class Unit : MonoBehaviour
     bool has_moved = false; // Can only move if this is set to false
     bool has_attacked = false;  // Can only attack once per round
 
-    float maximum_health;
-    float health;
-    float normal_defense;
-    float defense;
+
+    protected List<Effect> effects_on_unit = new List<Effect>();
+    protected List<Effect> remove_effects = new List<Effect>();     // Effects to be removed shortly
+
+    float maximum_health = 20;
+    float health = 20;
+    float normal_defence = 0.3f;
+    float defence = 0.3f;
+    float normal_ranged_defence = 0.3f;
+    float ranged_defence = 0.3f;
     int normal_attack_range = 1;
     int attack_range = 1;
-    float normal_damage;
-    float damage;
-    int normal_movement;
+    float normal_damage = 10;
+    float damage = 10;
+    int normal_movement = 3;
     int movement = 3;
 
     public string u_name = ""; // Name at the top of the unit panel
@@ -32,7 +40,6 @@ public class Unit : MonoBehaviour
     public Texture portrait;    // Unit portrait
 
     // List<Ability> abilities;
-    // List<Effects> current_effects;
     public Faction owner;
 
 
@@ -58,6 +65,12 @@ public class Unit : MonoBehaviour
                 movement_path.RemoveAt(0);
             }
         }
+        else if (attack_target != null)
+        {
+            // Initiate an attack on the target once we're done moving
+            this.Attack(attack_target);
+            attack_target = null;
+        }
 	}
 
 
@@ -80,23 +93,64 @@ public class Unit : MonoBehaviour
     {
         return health;
     }
+    public virtual float GetMaxHealth()
+    {
+        return maximum_health;
+    }
+
     // Returns the attack damage of the unit
     public virtual float GetDamage()
     {
         return damage;
     }
+    // Adds to the units damage.
+    // Percent is 0-1. 0.10 means add 10% of its normal damage
+    public virtual void AdjustDamage(float constant_amount, float percent)
+    {
+        damage += constant_amount;
+        damage += normal_damage * percent;
+    }
+
     public virtual int GetRange()
     {
         return attack_range;
     }
-    // Returns the defense of the unit
-    public virtual float GetDefense()
+    public virtual void AdjustRange(int amount)
     {
-        return defense;
+        attack_range = Mathf.Min(1, attack_range + amount);
     }
+
+    // Returns the defence of the unit
+    public virtual float GetDefence()
+    {
+        return defence;
+    }
+    // Adds to the units damage.
+    // Percent is 0-1. 0.10 means add 10% of its normal defence
+    public virtual void AdjustDefence(float constant_amount)
+    {
+        defence = Mathf.Min(0.95f, Mathf.Max(0, defence + constant_amount));
+    }
+
+    // Returns the defence of the unit
+    public virtual float GetRangedDefence()
+    {
+        return ranged_defence;
+    }
+    // Adds to the units damage.
+    // Percent is 0-1. 0.10 means add 10% of its normal defence
+    public virtual void AdjustRangedDefence(float constant_amount)
+    {
+        ranged_defence = Mathf.Min(0.95f, Mathf.Max(0, ranged_defence + constant_amount));
+    }
+
     public virtual int GetMovement()
     {
         return movement;
+    }
+    public virtual void AdjustMovement(int amount)
+    {
+        movement = Mathf.Max(0, movement + amount);
     }
 
 
@@ -205,9 +259,78 @@ public class Unit : MonoBehaviour
 
     public void SetLocation(Hex hex)
     {
+        // Remove the effects from this 
+        UnitMovedChangeEffects();
+
         this.location.occupying_unit = null;
         this.location = hex;
         hex.occupying_unit = this;
+
+        // Get the effects on this hex
+        GetHexEffects(hex);
+    }
+    // Add the bonuses conferred by the hex to this unit
+    public void GetHexEffects(Hex hex)
+    {
+        effects_on_unit.AddRange(hex.GetEffectsOnHex(this));
+        EvaluateEffects();
+    }
+
+
+    // Resets units to the 'normal' stats. Called before appyling the effects on a unit
+    public void ResetStats()
+    {
+        movement = normal_movement;
+        defence = normal_defence;
+        ranged_defence = normal_ranged_defence;
+        damage = normal_damage;
+        attack_range = normal_attack_range;
+    }
+    public void EvaluateEffects()
+    {
+        ResetStats();
+
+        foreach (Effect effect in effects_on_unit)
+        {
+            effect.ApplyEffect();
+        }
+    }
+
+
+    // Called when the unit has moved to remove the old hex's effect
+    public void UnitMovedChangeEffects()
+    {
+        foreach (Effect effect in effects_on_unit)
+        {
+            if (effect.UnitMoved())
+            {
+                remove_effects.Add(effect);
+            }
+        }
+        RemoveEffects();
+    }
+    // Called at the start of the turn to remove time sensitive effects
+    public void TurnStartEffects()
+    {
+        foreach (Effect effect in effects_on_unit)
+        {
+            if (effect.TurnStart())
+            {
+                remove_effects.Add(effect);
+            }
+        }
+        RemoveEffects();
+    }
+    // Removes effects in the remove_effects list
+    public void RemoveEffects()
+    {
+        while (remove_effects.Count > 0)
+        {
+            Effect effect = remove_effects[0];
+            effects_on_unit.Remove(effect);
+        }
+
+        remove_effects.Clear();
     }
 
 
@@ -235,10 +358,12 @@ public class Unit : MonoBehaviour
 
         return health;
     }
+
+    // Returns how much damage the attacker would do to this unit
     public float CalculateDamage(Unit attacker)
     {
-        // Modify the damage by the defense percentage. 10% defense means 90% of the damage is inflicted.
+        // Modify the damage by the defence percentage. 10% defence means 90% of the damage is inflicted.
         // Always do a minimum of 1 damage.
-        return Mathf.Max(1, attacker.GetDamage() - (attacker.GetDamage() * this.GetDefense()));
+        return Mathf.Max(1, attacker.GetDamage() - (attacker.GetDamage() * this.GetDefence()));
     }
 }
