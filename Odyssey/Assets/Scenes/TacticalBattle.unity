@@ -1542,8 +1542,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   all_hexes: []
-  x_cam: 0
-  y_cam: 0
+  x_max_cam: 0
+  y_max_cam: 0
+  x_min_cam: 0
+  y_min_cam: 0
 --- !u!4 &946252004
 Transform:
   m_ObjectHideFlags: 0
@@ -2929,7 +2931,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 437488, guid: df7a4e65d89c3f44ba57fb21cfa98ae4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -6.7906189
+      value: -24.8999996
       objectReference: {fileID: 0}
     - target: {fileID: 437488, guid: df7a4e65d89c3f44ba57fb21cfa98ae4, type: 2}
       propertyPath: m_LocalPosition.y

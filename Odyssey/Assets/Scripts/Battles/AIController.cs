@@ -94,6 +94,25 @@ public class AIController
             score = Mathf.Max(score, target_hex.occupying_unit.CalculateDamage(cur_unit));
         }
 
+        // If we can't attack someone from this hex, 
+        if (score == 0 && cur_unit.offensive_AI_score > 0)
+        {
+            float closest_enemy_distance = 1000;
+            // Find the closest enemy unit, and make this score higher the closer we are to it
+            foreach (Unit enemy in cur_unit.owner.GetAllEnemyUnits())
+            {
+                int dist = HexMap.hex_map.DistanceBetweenHexes(cur_unit.location.coordinate, enemy.location.coordinate);
+
+                if (dist < closest_enemy_distance)
+                    closest_enemy_distance = dist;
+            }
+
+            if (closest_enemy_distance < 1000)
+                score = (20f - closest_enemy_distance) / 20f;
+
+            Debug.Log(score);
+        }
+
         return score;
     }
 

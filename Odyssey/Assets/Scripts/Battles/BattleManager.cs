@@ -26,7 +26,7 @@ public class BattleManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1); 
 
-        Faction player_team = new Faction("Player", true);
+        Faction player_team = new Faction("Player", true, 1);
         factions.Add(player_team);
 
         // Place units and add them to the faction unit list
@@ -47,7 +47,7 @@ public class BattleManager : MonoBehaviour
 
 
 
-        Faction enemy_team = new Faction("Enemies", false);
+        Faction enemy_team = new Faction("Enemies", false, 2);
         AI = new AIController(enemy_team);
         factions.Add(enemy_team);
 
@@ -131,12 +131,22 @@ public class BattleManager : MonoBehaviour
     // Called after any unit moves, resets what tiles each unit can move to
     public void SetUnitsMovableTiles()
     {
+        HexMap.hex_map.ResetEdgeScores();
+
+        foreach (Faction faction in factions)
+        {
+            foreach (Unit unit in faction.units)
+            {
+                unit.location.SetZoneOfControl(unit);
+            }
+        }
+
         foreach (Faction faction in factions)
         {
             foreach (Unit unit in faction.units)
             {
                 // Get all the hexes within range
-                unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement());
+                unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
             }
         }
     }

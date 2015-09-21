@@ -6,11 +6,13 @@ public class Faction
     public string faction_name;
     public List<Faction> enemies = new List<Faction>();
     public List<Unit> units = new List<Unit>();
-
+    public int faction_ID;  // Used for pathing. Each team needs its own ID
     public bool human_controlled;  // Used by the human player?
 
-    public Faction(string name, bool controlled_by_human)
+
+    public Faction(string name, bool controlled_by_human, int ID)
     {
+        faction_ID = ID;
         human_controlled = controlled_by_human;
         faction_name = name;
     }

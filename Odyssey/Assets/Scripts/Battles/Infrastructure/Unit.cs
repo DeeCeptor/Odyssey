@@ -34,6 +34,7 @@ public class Unit : MonoBehaviour
     float damage = 10;
     int normal_movement = 3;
     int movement = 3;
+    public float offensive_AI_score = 1;  // If this is an AI unit, this value indicates how agressively we should advance towards the enemy
 
     public string u_name = ""; // Name at the top of the unit panel
     public string u_description = "";  // Short description of the unit
@@ -251,7 +252,7 @@ public class Unit : MonoBehaviour
             // Pathfind to the correct spot
             if (this.movement_path.Count == 0)
             {
-                this.movement_path = HexMap.hex_map.AStarFindPath(this.location, to, movement);
+                this.movement_path = HexMap.hex_map.AStarFindPath(this.location, to, movement, this.owner);
                 if (movement_path.Count > 0)
                 {
                     SetLocation(to);
@@ -268,9 +269,15 @@ public class Unit : MonoBehaviour
         // Remove the effects from this 
         UnitMovedChangeEffects();
 
-        this.location.occupying_unit = null;
+        if (this.location != null)
+        {
+           // hex.ResetZoneOfControl();
+            this.location.occupying_unit = null;
+        }
         this.location = hex;
         hex.occupying_unit = this;
+
+       // hex.SetZoneOfControl(this);
 
         // Get the effects on this hex
         GetHexEffects(hex);

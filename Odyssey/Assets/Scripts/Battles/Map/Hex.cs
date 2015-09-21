@@ -63,6 +63,40 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     }
 
 
+    // Set the cost of all edges from adjacent hexes leading to adjacent hexes and all edges leading to this hex to be high,
+    // as this unit is exerting a zone of control.
+    public void SetZoneOfControl(Unit occupying_unit)
+    {
+        foreach (Edge edge in neighbours)
+        {
+            Hex cur_hex = edge.destination;
+
+            foreach (Edge cur_edge in cur_hex.neighbours)
+            {
+                if (cur_edge.destination == this || HexMap.hex_map.InRange(cur_edge.destination, this, 1))
+                {
+                    //Debug.Log("Control from : " + cur_edge.source.coordinate + " to: " + cur_edge.destination.coordinate);
+                    cur_edge.SetZoneOfControl(occupying_unit.owner);
+                }
+            }
+        }
+    }
+    public void ResetZoneOfControl()
+    {
+        foreach (Edge edge in neighbours)
+        {
+            edge.ResetCost();
+            Hex cur_hex = edge.destination;
+
+            foreach (Edge cur_edge in cur_hex.neighbours)
+            {
+                if (cur_edge.destination == this || HexMap.hex_map.InRange(cur_edge.destination, this, 1))
+                    cur_edge.ResetCost();
+            }
+        }
+    }
+
+
     public void HighlightHex()
     {
 		this.GetComponent<SpriteRenderer>().color = highlighted_color;
@@ -137,6 +171,19 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     }
 
 
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Hex")// && !neighbours.Contains(collision.gameObject.GetComponent<Hex>()))
+        {
+            GameObject neighbour = collision.gameObject;
+            Edge edge = new Edge(neighbour.GetComponent<Hex>(), this, 1);
+            neighbours.Add(edge);
+            HexMap.hex_map.all_edges.Add(edge);
+            Debug.DrawLine(this.transform.position, neighbour.transform.position, Color.red, 500);
+        }
+    }
+
+
     /**
      * Method used for list.Sort() functionality in graph map. Sorts lowest to highest (ascending).
      * Returns the ordering when comparing two Hexes with their f_cost.
@@ -151,17 +198,5 @@ public class Hex : MonoBehaviour, IComparable<Hex>
         // Else they're equal
         else
             return 0;
-    }
-
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Hex")// && !neighbours.Contains(collision.gameObject.GetComponent<Hex>()))
-        {
-            GameObject neighbour = collision.gameObject;
-            //neighbours.Add(neighbour.GetComponent<Hex>());
-            neighbours.Add(new Edge(neighbour.GetComponent<Hex>(), this, 1));
-            Debug.DrawLine(this.transform.position, neighbour.transform.position, Color.red, 500);
-        }
     }
 }
