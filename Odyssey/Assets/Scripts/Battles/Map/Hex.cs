@@ -99,12 +99,26 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     }
 
 
+    void OnMouseEnter()
+    {
+        
+    }
+    void OnMouseExit()
+    {
+        PlayerInterface.player_interface.HideTerrainStatsPanel();
+    }
+
+
     void OnMouseOver()
     {
         PlayerInterface.player_interface.MousedOverHex(this);
 
         if (Input.GetMouseButtonDown(0))    // left click
         {
+            if (this.occupying_unit != null)    // Select the unit on this hex
+                PlayerInterface.player_interface.UnitSelected(this.occupying_unit);
+            else
+                PlayerInterface.player_interface.UnitDeselected();
             //Debug.Log("Left click on this object");
 
             //if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
@@ -112,15 +126,11 @@ public class Hex : MonoBehaviour, IComparable<Hex>
         }
         if (Input.GetMouseButtonDown(1))    // right click
         {
-            Debug.Log("Right click on this object");
-
             if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
                 PlayerInterface.player_interface.selected_unit.HexClicked(this);
         }
         if (Input.GetMouseButtonDown(2))    // middle click
         {
-            Debug.Log("Middle click on this object");
-
             if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
                 PlayerInterface.player_interface.selected_unit.HexClicked(this);
         }

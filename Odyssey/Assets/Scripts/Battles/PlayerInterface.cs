@@ -8,6 +8,7 @@ public class PlayerInterface : MonoBehaviour
 
     public Text turn_text;
 
+    public GameObject unit_panel;
     public Text unit_name;
     public Text unit_description;
     public Text health_text;
@@ -17,6 +18,7 @@ public class PlayerInterface : MonoBehaviour
     public Text ranged_defence_text;
     public Slider ranged_defence_bar;
 
+    public GameObject terrain_panel;
     public Text terrain_name;
     public Text terrain_description;
 
@@ -26,9 +28,11 @@ public class PlayerInterface : MonoBehaviour
     [HideInInspector]
     public Hex highlighted_hex;
 
+
 	void Start () 
 	{
         player_interface = this;
+
 	}
 	
 
@@ -41,28 +45,56 @@ public class PlayerInterface : MonoBehaviour
     // Player left clicked on the unit
     public void UnitSelected(Unit unit)
     {
-        // Set the unit title, description and stats
-        unit_name.text = unit.u_name;
-        unit_description.text = "<i>" + unit.u_description + "</i>";
-        SetHealthText(unit);
-        SetDefenceText(unit);
-        SetRangedDefenceText(unit);
+        ShowUnitStatsPanel(unit);
 
         if (unit.owner == BattleManager.battle_manager.current_player)
         {
             selected_unit = unit;
+
+            unit.unit_menu.SetActive(true);
         }
 
         UnhighlightHexes();
 
         unit.HighlightHexesWeCanMoveTo();
     }
+
+
     // Dehighlights any hexes that may have been highlighted
     public void UnitDeselected()
     {
+        HideUnitStatsPanel();
         UnhighlightHexes();
 
+        if (selected_unit != null)
+            selected_unit.unit_menu.SetActive(false);
         selected_unit = null;
+    }
+
+
+    public void ShowUnitStatsPanel(Unit unit)
+    {
+        unit_panel.gameObject.SetActive(true);
+
+        // Set the unit title, description and stats
+        unit_name.text = unit.u_name;
+        unit_description.text = "<i>" + unit.u_description + "</i>";
+        SetHealthText(unit);
+        SetDefenceText(unit);
+        SetRangedDefenceText(unit);
+    }
+    public void HideUnitStatsPanel()
+    {
+        unit_panel.gameObject.SetActive(false);
+    }
+    public void RefreshUnitStatsPanel()
+    {
+        if (selected_unit != null && selected_unit.GetHealth() > 0)
+        {
+            ShowUnitStatsPanel(selected_unit);
+        }
+        else
+            HideUnitStatsPanel();
     }
 
 
@@ -108,9 +140,19 @@ public class PlayerInterface : MonoBehaviour
             highlighted_hex.MouseHighlight();
         }
 
+        ShowTerrainStatsPanel(hex);
+    }
+    public void ShowTerrainStatsPanel(Hex hex)
+    {
+        terrain_panel.gameObject.SetActive(true);
+
         // Set the hex title, description
         terrain_name.text = hex.h_name;
         terrain_description.text = "<i>" + hex.h_description + hex.coordinate + "</i>";
+    }
+    public void HideTerrainStatsPanel()
+    {
+        terrain_panel.gameObject.SetActive(false);
     }
 
 

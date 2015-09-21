@@ -13,8 +13,8 @@ public class HexMap : MonoBehaviour
     int x_max, y_max;
     [HideInInspector]
 	public float x_cam, y_cam;
-	float x_offset = 3.29f;
-	float y_offset = 1.89f;
+    float x_offset = 1.88f;//3.29f;
+    float y_offset = 1.622f;//1.89f;
     List<Hex> hexes_in_range = new List<Hex>();
 
 
@@ -46,10 +46,10 @@ public class HexMap : MonoBehaviour
 
             while (x < 10.6)
             {
-                GameObject instance = Instantiate(Resources.Load("Battles/Hex", typeof(GameObject))) as GameObject;
+                GameObject instance = Instantiate(Resources.Load("Battles/Hexes/Hex", typeof(GameObject))) as GameObject;
 				//float width = instance.GetComponent<Sprite>().texture.width;
 				float x_pos = x * x_offset;
-				float y_pos = y * y_offset / 2;
+				float y_pos = y * y_offset;
                 instance.transform.position = new Vector3(x_pos, y_pos, 0);
                 Hex hex = instance.GetComponent<Hex>();
                 hex.coordinate = new Vector2((int) x, (int) y);
@@ -71,27 +71,23 @@ public class HexMap : MonoBehaviour
     }
 
 
-    // Checks if from is within range of to with the given range
+    // Checks if the two hexes are within range of eachother. No blocking line of sight is calculated
     public bool InRange(Hex from, Hex to, int range)
     {
-        /*
-        int dist_x = (int) Mathf.Abs(from.coordinate.x - to.coordinate.x);
-        int dist_y = (int) Mathf.Abs(from.coordinate.y - to.coordinate.y);
-        
-        return (range >= dist_x + dist_y);*/
-        return HexRange(from, to, range);
+        return InRange(from.coordinate, to.coordinate, range);
     }
-    public bool HexRange(Hex from, Hex to, int range)
+    public bool InRange(Vector2 from, Vector2 to, int range)
     {
-        return HexRange(from.coordinate, to.coordinate, range);
+        return range >= DistanceBetweenHexes(from, to);
     }
-    public bool HexRange(Vector2 from, Vector2 to, int range)
+
+    // Returns the number of hexes needed to get from A to B
+    public int DistanceBetweenHexes(Vector2 from, Vector2 to)
     {
         int delta_x = (int)Mathf.Abs(from.x - to.x);
         int delta_y = (int)Mathf.Abs(from.y - to.y);
-
-        int dist = ((delta_x + delta_y + (delta_x - delta_y)) / 2);
-        return range > dist;
+        int delta_diff = delta_x + delta_y;     // Difference between delta x and delta y.
+        return Mathf.Max(delta_x, delta_y, delta_diff);
     }
 
 
@@ -326,9 +322,8 @@ public class HexMap : MonoBehaviour
 
         foreach (Unit enemy in faction.GetAllEnemyUnits())
         {
-            if (this.HexRange(location, enemy.location, range))
+            if (this.InRange(location, enemy.location, range))
             {
-                Debug.Log(location.coordinate + " " + enemy.location.coordinate);
                 hexes_in_range.Add(enemy.location);
             }
         }

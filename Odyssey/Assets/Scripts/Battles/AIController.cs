@@ -20,7 +20,6 @@ public class AIController
         {
             Hex best_hex = unit.location;   // Start off assuming where they are is the best location
             best_hex.hex_score = EvaluateHexScore(unit, best_hex);
-            Debug.Log(best_hex.hex_score);
 
             // Go through each unit, evaluate every hex it could move to
             foreach (Hex hex in unit.tiles_I_can_move_to)
@@ -57,6 +56,7 @@ public class AIController
             // If there's a suitable target, have the unit attack it once it gets to the right hex
             if (best_target_score > 0)  
             {
+                Debug.Log(unit.u_name + " attacking " + target.u_name);
                 unit.attack_target = target;
             }
         }

@@ -22,8 +22,8 @@ public class CameraController : MonoBehaviour
         if (Camera.current != null)
         {
             this.gameObject.transform.position = new Vector3(
-				Mathf.Clamp(gameObject.transform.position.x + x, 0, HexMap.hex_map.x_cam),
-				Mathf.Clamp(gameObject.transform.position.y + y, 0, HexMap.hex_map.y_cam),
+				Mathf.Clamp(this.gameObject.transform.position.x + x, 0, HexMap.hex_map.x_cam),
+				Mathf.Clamp(this.gameObject.transform.position.y + y, 0, HexMap.hex_map.y_cam),
                 camera_z);  // Z of camera never changes
             Camera.current.orthographicSize = cur_zoom;     // Set zoom level of camera
         }

@@ -38,6 +38,8 @@ public class Unit : MonoBehaviour
     public string u_name = ""; // Name at the top of the unit panel
     public string u_description = "";  // Short description of the unit
     public Texture portrait;    // Unit portrait
+    [HideInInspector]
+    public GameObject unit_menu;
 
     // List<Ability> abilities;
     public Faction owner;
@@ -45,8 +47,8 @@ public class Unit : MonoBehaviour
 
 	void Start ()
     {
-	
-	}
+        unit_menu = this.transform.FindChild("UnitMenu").gameObject;
+    }
 
 
 	void Update ()
@@ -83,8 +85,6 @@ public class Unit : MonoBehaviour
 
         if (owner.human_controlled)
             ready_to_be_controlled = true;
-        //else
-
     }
 
 
@@ -162,6 +162,10 @@ public class Unit : MonoBehaviour
         // Check victory/defeat conditions
         BattleManager.battle_manager.CheckVictoryAndDefeat();
 
+        this.location.occupying_unit = null;
+
+        BattleManager.battle_manager.SetUnitsMovableTiles();
+
         // Remove game object
         Destroy(this.gameObject);
     }
@@ -174,35 +178,38 @@ public class Unit : MonoBehaviour
     }
 
 
+    // Show the stats of this unit when the user mouses over
+    void OnMouseEnter()
+    {
+        PlayerInterface.player_interface.ShowUnitStatsPanel(this);
+    }
+    void OnMouseExit()
+    {
+        if (PlayerInterface.player_interface.selected_unit != null)// && PlayerInterface.player_interface.selected_unit != this)
+            PlayerInterface.player_interface.ShowUnitStatsPanel(PlayerInterface.player_interface.selected_unit);
+        else
+            PlayerInterface.player_interface.HideUnitStatsPanel();
+    }
+
+
     void OnMouseDown()
     {
-        // Attack if we clicked on an enemy unit
-        if (PlayerInterface.player_interface.SelectedUnitAvailableToControl()
-            && PlayerInterface.player_interface.selected_unit != this
-            && !PlayerInterface.player_interface.selected_unit.has_attacked
-            && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this)
-            && HexMap.hex_map.InRange(PlayerInterface.player_interface.selected_unit.location, this.location, attack_range))
-        {
-            PlayerInterface.player_interface.selected_unit.Attack(this);
-        }
-        else
+        if (Input.GetMouseButtonDown(0))    // Left click
         {
             // Deselect other unit
             PlayerInterface.player_interface.UnitDeselected();
 
             // Select the unit
             PlayerInterface.player_interface.UnitSelected(this);
-
-            // If the unit hasn't moved, is owned by the player and is active, highlight where it can move to
-            /*if (PlayerInterface.player_interface.selected_unit.active
-                && !PlayerInterface.player_interface.selected_unit.has_moved)
-            {
-                // Highlight each hex
-                foreach (Hex hex in tiles_I_can_move_to)
-                {
-                    hex.HighlightHex();
-                }
-            }*/
+        }
+        // Attack if we clicked on an enemy unit
+        else if (Input.GetMouseButtonDown(1)     // Right click
+            && PlayerInterface.player_interface.SelectedUnitAvailableToControl()
+            && !PlayerInterface.player_interface.selected_unit.has_attacked
+            && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this)
+            && HexMap.hex_map.InRange(PlayerInterface.player_interface.selected_unit.location, this.location, attack_range))
+        {
+            PlayerInterface.player_interface.selected_unit.Attack(this);
         }
     }
 
@@ -220,16 +227,15 @@ public class Unit : MonoBehaviour
     {
         if (this.owner == BattleManager.battle_manager.current_player 
             && BattleManager.battle_manager.current_player.human_controlled
-            && this.active
-            && !this.has_moved)
+            && this.active )
         {
             // Check if that's a valid spot. Can't have more than one unit sit on the same spot, can't move to the spot we're already on
-            if (hex.occupying_unit == null && hex != location)
+            if (hex.occupying_unit == null && hex != location && !this.has_moved)
             {
                 PlayerInterface.player_interface.UnhighlightHexes();
                 PathTo(hex);
             }
-            else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit))
+            else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
             {
                 Attack(hex.occupying_unit);
             }
@@ -355,6 +361,8 @@ public class Unit : MonoBehaviour
 
         if (health <= 0)
             Die();
+
+        PlayerInterface.player_interface.RefreshUnitStatsPanel();
 
         return health;
     }

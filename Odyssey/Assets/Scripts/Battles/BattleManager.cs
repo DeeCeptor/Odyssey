@@ -32,15 +32,17 @@ public class BattleManager : MonoBehaviour
         // Place units and add them to the faction unit list
         GameObject instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
         Unit unit = instance.GetComponent<Unit>();
+        unit.u_name = "P1";
         unit.owner = player_team;
         HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(1,1));
         player_team.units.Add(unit);
 
         instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-        unit = instance.GetComponent<Unit>();
-        unit.owner = player_team;
-        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(2, 5));
-        player_team.units.Add(unit);
+        Unit unit3 = instance.GetComponent<Unit>();
+        unit3.u_name = "P2";
+        unit3.owner = player_team;
+        HexMap.hex_map.WarpUnitTo(unit3, HexMap.hex_map.GetHex(2, 5));
+        player_team.units.Add(unit3);
 
 
 
@@ -52,14 +54,16 @@ public class BattleManager : MonoBehaviour
         instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
         Unit unit2 = instance.GetComponent<Unit>();
         unit2.owner = enemy_team;
+        unit2.u_name = "E1";
         HexMap.hex_map.WarpUnitTo(unit2, HexMap.hex_map.GetHex(5, 4));
         enemy_team.units.Add(unit2);
 
         instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-        unit = instance.GetComponent<Unit>();
-        unit.owner = enemy_team;
-        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(6, 10));
-        enemy_team.units.Add(unit);
+        Unit unit4 = instance.GetComponent<Unit>();
+        unit4.u_name = "E2";
+        unit4.owner = enemy_team;
+        HexMap.hex_map.WarpUnitTo(unit4, HexMap.hex_map.GetHex(6, 10));
+        enemy_team.units.Add(unit4);
 
 
         // Set enemies
