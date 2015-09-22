@@ -8,11 +8,13 @@ public class PlayerBoatController : MonoBehaviour {
 	public float turnSpeed = 0.2f;
 	private int moveRate = 1;
 	public float encounterRange = 5;
+	public ResourceManager resource;
 	
 	public bool paused = false;
 	
 	// Use this for initialization
 	void Start () {
+	resource = GetComponent<ResourceManager>();
 	}
 	
 	// Update is called once per frame
@@ -22,19 +24,19 @@ public class PlayerBoatController : MonoBehaviour {
 	
 		if(moveRate == 0)
 		{
-			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*slowSpeed*transform.forward;
+			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*slowSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
 			transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
 		}
 	
 		if(moveRate == 1)
 		{
-			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*speed*transform.forward;
+			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*speed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
 			transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
 		}
 	
 		if(moveRate == 2)
 		{
-			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*fastSpeed*transform.forward;
+			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*fastSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
 			transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
 		}
 	}
@@ -47,17 +49,25 @@ public class PlayerBoatController : MonoBehaviour {
 	
 	public void MediumSpeed()
 	{
+		if(resource.stamina>0)
+		{
 		moveRate = 1;
+		}
 	}
 	
 	public void HighSpeed()
 	{
-		moveRate = 2;
+		if(resource.stamina>0)
+		{
+			moveRate = 2;
+		}
 	}
 	
 	public void Pause()
 	{
 		paused = true;
+		gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+		
 	}
 	
 	public void Unpause()

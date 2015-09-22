@@ -17,6 +17,7 @@ public TroopManager troopManager;
 
 public bool paused = false;
 public bool anchored = false;
+public bool gathering = false;
 
 //how frequently your sailors must eat
 public int framesPerConsuption = 120;
@@ -70,6 +71,7 @@ public float poseidonsFavour = 0f;
 public float zeusFavour = 0f;
 public float hadesFavour = 0f;
 public float athenasFavour = 0f;
+public float aresFavour = 0f;
 
 
 
@@ -317,6 +319,7 @@ public float athenasFavour = 0f;
 		}
 		weight = weight + food;
 		weight = weight + water;
+		weight = weight + gold;
 	}
 	
 	public void AddCargo(GameObject cargoToAdd)
@@ -351,6 +354,16 @@ public float athenasFavour = 0f;
 	public void Unpause()
 	{
 		paused = false;
+	}
+	
+	public void Gather()
+	{
+	
+	}
+	
+	public void Camp()
+	{
+	
 	}
 	
 	public void toggleAnchor()

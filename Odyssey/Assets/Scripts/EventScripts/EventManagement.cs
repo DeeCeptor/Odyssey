@@ -109,7 +109,10 @@ public class EventManagement : MonoBehaviour {
 	{
 		paused = false;
 		resourceController.Unpause();
+		if(!resourceController.anchored)
+		{
 		playerController.Unpause();
+		}
 		for(int i = 0; i < enemies.Length;i++)
 		{
 			enemies[i].GetComponent<OverworldEnemyScript>().Unpause();
