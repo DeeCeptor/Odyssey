@@ -160,12 +160,29 @@ public class BattleManager : MonoBehaviour
             if (faction.units.Count <= 0)
             {
                 Debug.Log(faction.faction_name + " has been defeated");
+                if (faction.human_controlled)
+                    Defeat();
+                else
+                    Victory();
             }
         }
     }
 
-	
-	void Update () 
+    public void Defeat()
+    {
+        Debug.Log("Player defeated");
+        PlayerInterface.player_interface.summary_screen_title.text = "Defeat";
+        PlayerInterface.player_interface.ShowSummaryScreen();
+    }
+    public void Victory()
+    {
+        Debug.Log("Player victory");
+        PlayerInterface.player_interface.summary_screen_title.text = "Victory";
+        PlayerInterface.player_interface.ShowSummaryScreen();
+    }
+
+
+    void Update () 
 	{
 	
 	}

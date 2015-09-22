@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public bool ready_to_be_controlled = false;     // True when it's the human players turn and this unit is ready to act
     bool has_moved = false; // Can only move if this is set to false
+    public bool is_moving = false;      // True when the unit is moving
     bool has_attacked = false;  // Can only attack once per round
 
 
@@ -34,7 +35,19 @@ public class Unit : MonoBehaviour
     float damage = 10;
     int normal_movement = 3;
     int movement = 3;
+
+    public bool counter_attacks = true;     // Counterattacks if the enemy is within range and in the frontal facing arc
+    public int counter_attack_radius = 60; // The difference in facing counter attacks can be done from. 60 means the front 3 hexes
+    public bool attacks_are_counterable = true;
+
+    // AI scores used to determine how this unit should move
     public float offensive_AI_score = 1;  // If this is an AI unit, this value indicates how agressively we should advance towards the enemy
+
+
+    // Which direction the unit is facing. Hexagons have 6 facings. 360/6 = 60. This value will be a multiple of 6
+    public int facing = 0;
+    [HideInInspector]
+    public bool rotating = false;
 
     public string u_name = ""; // Name at the top of the unit panel
     public string u_description = "";  // Short description of the unit
@@ -55,15 +68,22 @@ public class Unit : MonoBehaviour
 	void Update ()
     {
         // Check if we should be moving
-	    if (movement_path != null && movement_path.Count > 0)
+        if (movement_path != null && movement_path.Count > 0)
         {
             //transform.LookAt(movement_path[0].transform.position);
-            transform.position = Vector3.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
+            //transform.position = Vector3.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
+            Vector3 pos = Vector3.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
+            //pos.z = 0;
+            transform.position = pos;
+            //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
             if (transform.position == movement_path[0].transform.position)
             {
                 if (movement_path.Count == 1)
+                {
                     location = movement_path[0];
+                    is_moving = false;
+                }
 
                 movement_path.RemoveAt(0);
             }
@@ -71,10 +91,40 @@ public class Unit : MonoBehaviour
         else if (attack_target != null)
         {
             // Initiate an attack on the target once we're done moving
-            this.Attack(attack_target);
+            this.Attack(attack_target, attacks_are_counterable);
             attack_target = null;
         }
-	}
+        else if (rotating)
+        {
+            // Rotate towards mouse
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
+            Quaternion rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
+
+            // Use euler angles so we're dealing with degrees 0-360
+            Vector3 angles = rotation.eulerAngles;
+            angles.x = 0;
+            angles.y = 0;
+
+            // Snap to one of the hexagon directions
+            if (angles.z >= 0 && angles.z < 60)
+                angles.z = 30;
+            else if (angles.z >= 60 && angles.z < 120)
+                angles.z = 90;
+            else if (angles.z >= 120 && angles.z < 180)
+                angles.z = 150;
+            else if (angles.z >= 180 && angles.z < 240)
+                angles.z = 210;
+            else if (angles.z >= 240 && angles.z < 300)
+                angles.z = 270;
+            else if (angles.z >= 300 && angles.z < 360)
+                angles.z = 330;
+            this.transform.eulerAngles = angles;
+
+            // Set facing
+            this.facing = (int) angles.z;
+        }
+    }
 
 
     // Called when the current owner's turn starts
@@ -86,6 +136,29 @@ public class Unit : MonoBehaviour
 
         if (owner.human_controlled)
             ready_to_be_controlled = true;
+    }
+
+
+    // Used for setting the facing of the unit
+    public void StartRotating()
+    {
+        rotating = true;
+    }
+    public void StopRotating()
+    {
+        rotating = false;
+    }
+    // Used for deciding if this unit will counterattack the other unit
+    public bool IsFacing(Unit unit)
+    {
+        // Check if the other unit is within our frontal arc
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, unit.transform.position - this.transform.position);
+        float angle_towards_unit = rotation.eulerAngles.z;
+        float angle_diff = (angle_towards_unit - this.facing + 180) % 360 - 180;    // Do math to get the difference in this units facing and the direction towards the enemy
+
+        Debug.Log("Victim: " + facing + " towards enemy: " + angle_towards_unit + " diff: " + angle_diff);
+
+        return (Mathf.Abs(angle_diff) <= counter_attack_radius);
     }
 
 
@@ -155,6 +228,19 @@ public class Unit : MonoBehaviour
     }
 
 
+    // Returns true if the other unit is within the frontal 3 arc of this units facing
+    public bool FacingTowards(Unit unit)
+    {
+        //Vector3 direction = unit.transform.position - this.transform.position;
+        //direction.Normalize();
+
+        //float angle = Vector2.Angle(unit.transform.position, this.transform.position);
+
+        float angle = 180;
+        return (Vector3.Angle(unit.transform.forward, transform.position - this.transform.position) <= angle);
+    }
+
+
     public virtual void Die()
     {
         // Remove from the unit lists
@@ -175,7 +261,8 @@ public class Unit : MonoBehaviour
     public bool IsControllable()
     {
         return (this.active
-                && this.ready_to_be_controlled);
+                && this.ready_to_be_controlled
+                && !this.is_moving);
     }
 
 
@@ -210,7 +297,7 @@ public class Unit : MonoBehaviour
             && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this)
             && HexMap.hex_map.InRange(PlayerInterface.player_interface.selected_unit.location, this.location, attack_range))
         {
-            PlayerInterface.player_interface.selected_unit.Attack(this);
+            PlayerInterface.player_interface.selected_unit.Attack(this, attacks_are_counterable);
         }
     }
 
@@ -238,7 +325,7 @@ public class Unit : MonoBehaviour
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
             {
-                Attack(hex.occupying_unit);
+                Attack(hex.occupying_unit, attacks_are_counterable);
             }
         }
     }
@@ -257,6 +344,7 @@ public class Unit : MonoBehaviour
                 {
                     SetLocation(to);
                     has_moved = true;
+                    is_moving = true;
                     BattleManager.battle_manager.SetUnitsMovableTiles();
                 }
             }
@@ -347,7 +435,7 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void Attack(Unit victim)
+    public void Attack(Unit victim, bool attack_is_counterable)
     {
         if (victim != this 
             && !this.has_attacked 
@@ -355,19 +443,28 @@ public class Unit : MonoBehaviour
             && this.owner.IsEnemy(victim)
             && HexMap.hex_map.InRange(this.location, victim.location, attack_range))
         {
-            victim.TakeHit(this);
+            victim.TakeHit(this, attack_is_counterable);
             has_attacked = true;
             active = false;
         }
     }
-    public float TakeHit(Unit attacker)
+    public float TakeHit(Unit attacker, bool attack_is_counterable)
     {
         float modified_damage = CalculateDamage(attacker);
         health -= modified_damage;
-        Debug.Log("Took " + modified_damage + " damaged, " + health + " HP remaining");
+        Debug.Log(u_name + " took " + modified_damage + " damaged, " + health + " HP remaining from " + attacker.u_name);
+
+        PlayerInterface.player_interface.CreateFloatingText(this.transform.position, modified_damage + "", false, 3.0f);
 
         if (health <= 0)
             Die();
+
+        // Check if we can counter attack
+        if (attack_is_counterable && counter_attacks && IsFacing(attacker) && HexMap.hex_map.InRange(this.location, attacker.location, this.GetRange()))
+        {
+            Debug.Log(u_name + " counterattacking " + attacker.u_name);
+            Attack(attacker, false);
+        }
 
         PlayerInterface.player_interface.RefreshUnitStatsPanel();
 
@@ -377,8 +474,11 @@ public class Unit : MonoBehaviour
     // Returns how much damage the attacker would do to this unit
     public float CalculateDamage(Unit attacker)
     {
+        // Have the damage be the percentage of the health remaining of this unit. Weak units don't do as much damage
+        float raw_damage = attacker.GetDamage() * (attacker.GetHealth() / attacker.GetMaxHealth());
+
         // Modify the damage by the defence percentage. 10% defence means 90% of the damage is inflicted.
         // Always do a minimum of 1 damage.
-        return Mathf.Max(1, attacker.GetDamage() - (attacker.GetDamage() * this.GetDefence()));
+        return Mathf.Max(1, raw_damage - (raw_damage * this.GetDefence()));
     }
 }

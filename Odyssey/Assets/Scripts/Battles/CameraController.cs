@@ -5,11 +5,12 @@ public class CameraController : MonoBehaviour
 {
     float cur_zoom = 5;
     private float camera_z = -10;
+    Camera cur_camera;
 
 	void Start () 
 	{
-
-	}
+        cur_camera = this.GetComponent<Camera>();
+    }
 	
 	void Update () 
 	{
@@ -25,7 +26,7 @@ public class CameraController : MonoBehaviour
 				Mathf.Clamp(this.gameObject.transform.position.x + x, HexMap.hex_map.x_min_cam, HexMap.hex_map.x_max_cam),
 				Mathf.Clamp(this.gameObject.transform.position.y + y, HexMap.hex_map.y_min_cam, HexMap.hex_map.y_max_cam),
                 camera_z);  // Z of camera never changes
-            Camera.current.orthographicSize = cur_zoom;     // Set zoom level of camera
+            cur_camera.orthographicSize = cur_zoom;     // Set zoom level of camera
         }
     }
 }

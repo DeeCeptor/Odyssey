@@ -46,7 +46,7 @@ public class HexMap : MonoBehaviour
                 GameObject instance = Instantiate(Resources.Load("Battles/Hexes/Hex", typeof(GameObject))) as GameObject;
                 float x_pos = x * x_offset + y * x_offset / 2;
                 float y_pos = y * y_offset;
-                instance.transform.position = new Vector3(x_pos, y_pos, 0);
+                instance.transform.position = new Vector3(x_pos, y_pos, 1);
                 Hex hex = instance.GetComponent<Hex>();
                 hex.coordinate = new Vector2((int)x, (int)y);
                 all_hexes.Add(hex);
@@ -457,5 +457,6 @@ public class HexMap : MonoBehaviour
     {
         unit.SetLocation(destination);
         unit.transform.position = destination.transform.position;
+        unit.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y, 0);
     }
 }

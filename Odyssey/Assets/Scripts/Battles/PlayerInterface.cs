@@ -6,6 +6,10 @@ public class PlayerInterface : MonoBehaviour
 {
     public static PlayerInterface player_interface;
 
+    public GameObject pause_menu;
+    public GameObject summary_screen;
+    public Text summary_screen_title;
+
     public Text turn_text;
 
     public GameObject unit_panel;
@@ -28,6 +32,8 @@ public class PlayerInterface : MonoBehaviour
     [HideInInspector]
     public Hex highlighted_hex;
 
+    private bool can_select = true;
+    private bool is_rotating_unit = false;
 
 	void Start () 
 	{
@@ -38,8 +44,48 @@ public class PlayerInterface : MonoBehaviour
 
 	void Update () 
 	{
-	
+        // Check if we tried to start or end rotating a unit
+	    if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (!is_rotating_unit)
+            {
+                StartRotatingUnit();
+            }
+            else
+            {
+                StopRotatingUnit();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseMenu();
+        }
 	}
+
+
+    // Call to ensure we can click on things, like units to select them.
+    // Unable to click things when rotating a unit's facing or selecting an ability.
+    public bool CanSelect()
+    {
+        return can_select;
+    }
+    public void StartRotatingUnit()
+    {
+        if (SelectedUnitAvailableToControl() && !is_rotating_unit && CanSelect())
+        {
+            can_select = false;
+            is_rotating_unit = true;
+            selected_unit.StartRotating();
+        }
+    }
+    public void StopRotatingUnit()
+    {
+        if (selected_unit != null)
+            selected_unit.StopRotating();
+
+        can_select = true;
+        is_rotating_unit = false;
+    }
 
 
     // Player left clicked on the unit
@@ -156,6 +202,16 @@ public class PlayerInterface : MonoBehaviour
     }
 
 
+    public void CreateFloatingText(Vector3 position, string text, bool random_velocity, float time_to_die)
+    {
+        GameObject instance = Instantiate(Resources.Load("FloatingText", typeof(GameObject))) as GameObject;
+        position.z = -6;
+        instance.transform.position = position;
+        instance.GetComponent<TextMesh>().text = text;
+        instance.GetComponent<Rigidbody2D>().velocity = Vector2.up;
+    }
+
+
     public void TeleportUnit(Hex to)
     {
         if (selected_unit.location == null)
@@ -166,5 +222,15 @@ public class PlayerInterface : MonoBehaviour
         {
 
         }
+    }
+
+
+    public void TogglePauseMenu()
+    {
+        pause_menu.SetActive(!pause_menu.activeSelf);
+    }
+    public void ShowSummaryScreen()
+    {
+        summary_screen.SetActive(true);
     }
 }
