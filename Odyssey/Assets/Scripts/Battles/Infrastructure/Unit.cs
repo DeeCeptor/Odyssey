@@ -12,12 +12,11 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public List<Hex> tiles_I_can_move_to;   // Tiles that will be highlighted when the user clicks on the unit
 
-    bool active = false;    // Set to true when it's this unit's turn
-    [HideInInspector]
+    public bool active = false;    // Set to true when it's this unit's turn
     public bool ready_to_be_controlled = false;     // True when it's the human players turn and this unit is ready to act
-    bool has_moved = false; // Can only move if this is set to false
+    public bool has_moved = false; // Can only move if this is set to false
     public bool is_moving = false;      // True when the unit is moving
-    bool has_attacked = false;  // Can only attack once per round
+    public bool has_attacked = false;  // Can only attack once per round
 
 
     protected List<Effect> effects_on_unit = new List<Effect>();
@@ -53,6 +52,8 @@ public class Unit : MonoBehaviour
     public string u_description = "";  // Short description of the unit
     public Texture portrait;    // Unit portrait
     [HideInInspector]
+    public string prefab_name;  // Exact name needed to load the prefab
+    [HideInInspector]
     public GameObject unit_menu;
 
     // List<Ability> abilities;
@@ -62,6 +63,7 @@ public class Unit : MonoBehaviour
 	void Start ()
     {
         unit_menu = this.transform.FindChild("UnitMenu").gameObject;
+        this.SetRotation(new Vector3(0, 0, 0));
     }
 
 
@@ -72,12 +74,12 @@ public class Unit : MonoBehaviour
         {
             //transform.LookAt(movement_path[0].transform.position);
             //transform.position = Vector3.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
-            Vector3 pos = Vector3.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
+            Vector3 pos = Vector2.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
             //pos.z = 0;
             transform.position = pos;
             //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-            if (transform.position == movement_path[0].transform.position)
+            if ((Vector2) transform.position == (Vector2) movement_path[0].transform.position)
             {
                 if (movement_path.Count == 1)
                 {
@@ -99,31 +101,41 @@ public class Unit : MonoBehaviour
             // Rotate towards mouse
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
-            Quaternion rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
-
-            // Use euler angles so we're dealing with degrees 0-360
-            Vector3 angles = rotation.eulerAngles;
-            angles.x = 0;
-            angles.y = 0;
-
-            // Snap to one of the hexagon directions
-            if (angles.z >= 0 && angles.z < 60)
-                angles.z = 30;
-            else if (angles.z >= 60 && angles.z < 120)
-                angles.z = 90;
-            else if (angles.z >= 120 && angles.z < 180)
-                angles.z = 150;
-            else if (angles.z >= 180 && angles.z < 240)
-                angles.z = 210;
-            else if (angles.z >= 240 && angles.z < 300)
-                angles.z = 270;
-            else if (angles.z >= 300 && angles.z < 360)
-                angles.z = 330;
-            this.transform.eulerAngles = angles;
-
-            // Set facing
-            this.facing = (int) angles.z;
+            SetRotationTowards(this.transform.position, mousePos);
         }
+    }
+
+
+    public void SetRotationTowards(Vector3 from, Vector3 towards)
+    {
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, towards - from);
+
+        // Use euler angles so we're dealing with degrees 0-360
+        Vector3 angles = rotation.eulerAngles;
+        angles.x = 0;
+        angles.y = 0;
+
+        SetRotation(angles);
+    }
+    public void SetRotation(Vector3 angles)
+    {
+        // Snap to one of the hexagon directions
+        if (angles.z >= 0 && angles.z < 60)
+            angles.z = 30;
+        else if (angles.z >= 60 && angles.z < 120)
+            angles.z = 90;
+        else if (angles.z >= 120 && angles.z < 180)
+            angles.z = 150;
+        else if (angles.z >= 180 && angles.z < 240)
+            angles.z = 210;
+        else if (angles.z >= 240 && angles.z < 300)
+            angles.z = 270;
+        else if (angles.z >= 300 && angles.z < 360)
+            angles.z = 330;
+        this.transform.eulerAngles = angles;
+
+        // Set facing
+        this.facing = (int)angles.z;
     }
 
 
@@ -136,6 +148,12 @@ public class Unit : MonoBehaviour
 
         if (owner.human_controlled)
             ready_to_be_controlled = true;
+    }
+    public virtual void EndTurn()
+    {
+        if (owner.human_controlled)
+            active = false;
+        ready_to_be_controlled = false;
     }
 
 
@@ -152,9 +170,23 @@ public class Unit : MonoBehaviour
     public bool IsFacing(Unit unit)
     {
         // Check if the other unit is within our frontal arc
+        /*
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, unit.transform.position - this.transform.position);
         float angle_towards_unit = rotation.eulerAngles.z;
-        float angle_diff = (angle_towards_unit - this.facing + 180) % 360 - 180;    // Do math to get the difference in this units facing and the direction towards the enemy
+        int angle_diff = (int) ((angle_towards_unit - this.facing + 180) % 360 - 180);    // Do math to get the difference in this units facing and the direction towards the enemy
+
+        Debug.Log("Victim: " + facing + " towards enemy: " + angle_towards_unit + " diff: " + angle_diff);
+
+        return (Mathf.Abs(angle_diff) <= counter_attack_radius);
+        */
+        return IsFacing(unit.location);
+    }
+    // Is the unit facing this hex? (Used for counter attacking)
+    public bool IsFacing(Hex hex)
+    {
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, hex.transform.position - this.transform.position);
+        float angle_towards_unit = rotation.eulerAngles.z;
+        int angle_diff = (int)((angle_towards_unit - this.facing + 180) % 360 - 180);    // Do math to get the difference in this units facing and the direction towards the enemy
 
         Debug.Log("Victim: " + facing + " towards enemy: " + angle_towards_unit + " diff: " + angle_diff);
 
@@ -280,25 +312,31 @@ public class Unit : MonoBehaviour
     }
 
 
-    void OnMouseDown()
+    // Attack unit if we right clicked on it and we have another unit selected
+    void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))    // Left click
-        {
-            // Deselect other unit
-            PlayerInterface.player_interface.UnitDeselected();
-
-            // Select the unit
-            PlayerInterface.player_interface.UnitSelected(this);
-        }
-        // Attack if we clicked on an enemy unit
-        else if (Input.GetMouseButtonDown(1)     // Right click
+        /*if (Input.GetMouseButtonDown(1))
+            Debug.Log("OnMouseOver " + PlayerInterface.player_interface.SelectedUnitAvailableToControl()
+                + PlayerInterface.player_interface.selected_unit.has_attacked 
+                + PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this)
+                + HexMap.hex_map.InRange(PlayerInterface.player_interface.selected_unit.location, this.location, attack_range));*/
+        if (Input.GetMouseButtonDown(1)     // Right clicked on unit
             && PlayerInterface.player_interface.SelectedUnitAvailableToControl()
             && !PlayerInterface.player_interface.selected_unit.has_attacked
             && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this)
             && HexMap.hex_map.InRange(PlayerInterface.player_interface.selected_unit.location, this.location, attack_range))
         {
+            Debug.Log("OnMouseOver attack");
             PlayerInterface.player_interface.selected_unit.Attack(this, attacks_are_counterable);
         }
+    }
+    void OnMouseDown()      // Left clicked on unit
+    {
+        // Deselect other unit
+        PlayerInterface.player_interface.UnitDeselected();
+
+        // Select the unit
+        PlayerInterface.player_interface.UnitSelected(this);
     }
 
 
@@ -313,6 +351,8 @@ public class Unit : MonoBehaviour
 
     public void HexClicked(Hex hex)
     {
+        Debug.Log("HexClicked");
+
         if (this.owner == BattleManager.battle_manager.current_player 
             && BattleManager.battle_manager.current_player.human_controlled
             && this.active )
@@ -325,6 +365,7 @@ public class Unit : MonoBehaviour
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
             {
+                Debug.Log("HexClicked attack");
                 Attack(hex.occupying_unit, attacks_are_counterable);
             }
         }
@@ -448,6 +489,15 @@ public class Unit : MonoBehaviour
             active = false;
         }
     }
+    public void CounterAttack(Unit victim)
+    {
+        if (victim != this
+            && this.owner.IsEnemy(victim)
+            && HexMap.hex_map.InRange(this.location, victim.location, attack_range))
+        {
+            victim.TakeHit(this, false);
+        }
+    }
     public float TakeHit(Unit attacker, bool attack_is_counterable)
     {
         float modified_damage = CalculateDamage(attacker);
@@ -463,7 +513,7 @@ public class Unit : MonoBehaviour
         if (attack_is_counterable && counter_attacks && IsFacing(attacker) && HexMap.hex_map.InRange(this.location, attacker.location, this.GetRange()))
         {
             Debug.Log(u_name + " counterattacking " + attacker.u_name);
-            Attack(attacker, false);
+            CounterAttack(attacker);
         }
 
         PlayerInterface.player_interface.RefreshUnitStatsPanel();

@@ -13,6 +13,7 @@ public class HexMap : MonoBehaviour
     [HideInInspector]
     public List<Edge> all_edges = new List<Edge>();
 
+    public int x_size, y_size;  // How tall and wide the map is. Set this in th
     int x_max, y_max, x_min, y_min; // Min and max coordinates for the hexes
     [HideInInspector]
 	public float x_max_cam, y_max_cam, x_min_cam, y_min_cam;    // Camera boundaries
@@ -39,9 +40,9 @@ public class HexMap : MonoBehaviour
     void InitializeMap()
     {
         // Coordinates set up like http://stackoverflow.com/questions/5084801/manhattan-distance-between-tiles-in-a-hexagonal-grid/5085274#5085274
-        for (int y  = -10;  y < 11; y++)
+        for (int y  = -y_size / 2;  y <= y_size / 2; y++)
         {
-            for (int x = -10; x < 11; x++)
+            for (int x = -x_size / 2; x <= x_size / 2; x++)
             {
                 GameObject instance = Instantiate(Resources.Load("Battles/Hexes/Hex", typeof(GameObject))) as GameObject;
                 float x_pos = x * x_offset + y * x_offset / 2;

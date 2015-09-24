@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerInterface : MonoBehaviour 
 {
+    [HideInInspector]
     public static PlayerInterface player_interface;
 
     public GameObject pause_menu;
@@ -27,7 +28,6 @@ public class PlayerInterface : MonoBehaviour
     public Text terrain_description;
 
 
-    [HideInInspector]
     public Unit selected_unit;
     [HideInInspector]
     public Hex highlighted_hex;
@@ -185,6 +185,7 @@ public class PlayerInterface : MonoBehaviour
             highlighted_hex = hex;
             highlighted_hex.MouseHighlight();
         }
+        //highlighted_hex = hex;
 
         ShowTerrainStatsPanel(hex);
     }

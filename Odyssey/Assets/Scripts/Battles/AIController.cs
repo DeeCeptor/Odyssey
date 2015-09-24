@@ -37,10 +37,21 @@ public class AIController
             // Now that we know where we're ending up, evaluate the best target we can attack from there
             Unit target = null;
             float best_target_score = 0;
+            int closest_distance = 999;
+            Unit closest_enemy = null;
             foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
             {
+                // Check if this is the closest enemy, so we can face towards them
+                int distance = HexMap.hex_map.DistanceBetweenHexes(unit.location.coordinate, enemy.location.coordinate);
+                if (distance < closest_distance)
+                {
+                    // This is the closest enemy we've evaluated. 
+                    closest_enemy = enemy;
+                    closest_distance = distance;
+                }
+
                 // Check if we're in range. If we're not in range, we can't attack the unit
-                if (HexMap.hex_map.InRange(unit.location, enemy.location, unit.GetRange()))
+                if (distance <= unit.GetRange())
                 {
                     float cur_score = enemy.CalculateDamage(unit);
 
@@ -51,6 +62,11 @@ public class AIController
                         best_target_score = cur_score;
                     }
                 }
+            }
+
+            if (closest_enemy != null)
+            {
+                unit.SetRotationTowards(unit.location.coordinate, closest_enemy.location.coordinate);
             }
 
             // If there's a suitable target, have the unit attack it once it gets to the right hex
@@ -92,6 +108,12 @@ public class AIController
         foreach (Hex target_hex in potential_targets)
         {
             score = Mathf.Max(score, target_hex.occupying_unit.CalculateDamage(cur_unit));
+
+            // Increase the score of this hex if we can attack them without being counterattacked
+            if (!target_hex.occupying_unit.counter_attacks || !target_hex.occupying_unit.IsFacing(hex))
+            {
+                score *= 1.5f;
+            }
         }
 
         // If we can't attack someone from this hex, 
@@ -101,7 +123,7 @@ public class AIController
             // Find the closest enemy unit, and make this score higher the closer we are to it
             foreach (Unit enemy in cur_unit.owner.GetAllEnemyUnits())
             {
-                int dist = HexMap.hex_map.DistanceBetweenHexes(cur_unit.location.coordinate, enemy.location.coordinate);
+                int dist = HexMap.hex_map.DistanceBetweenHexes(hex.coordinate, enemy.location.coordinate);
 
                 if (dist < closest_enemy_distance)
                     closest_enemy_distance = dist;
@@ -109,8 +131,6 @@ public class AIController
 
             if (closest_enemy_distance < 1000)
                 score = (20f - closest_enemy_distance) / 20f;
-
-            Debug.Log(score);
         }
 
         return score;
