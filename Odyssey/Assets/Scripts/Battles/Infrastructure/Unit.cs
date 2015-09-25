@@ -6,6 +6,8 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public Hex location;       // Where this unit currently is
     [HideInInspector]
+    public Vector2 location_coordinates;
+    [HideInInspector]
     public List<Hex> movement_path = new List<Hex>();      // When ordered to move, this path is populated with the hexes this unit will traverse
     [HideInInspector]
     public Unit attack_target;  // Used for AI units. Who they will attack when they've reached their destination
@@ -185,7 +187,7 @@ public class Unit : MonoBehaviour
     public bool IsFacing(Hex hex)
     {
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, hex.transform.position - this.transform.position);
-        float angle_towards_unit = rotation.eulerAngles.z;
+        int angle_towards_unit = (int) rotation.eulerAngles.z;
         int angle_diff = (int)((angle_towards_unit - this.facing + 180) % 360 - 180);    // Do math to get the difference in this units facing and the direction towards the enemy
 
         Debug.Log("Victim: " + facing + " towards enemy: " + angle_towards_unit + " diff: " + angle_diff);
@@ -405,7 +407,7 @@ public class Unit : MonoBehaviour
         }
         this.location = hex;
         hex.occupying_unit = this;
-
+        this.location_coordinates = new Vector2(hex.coordinate.x, hex.coordinate.y);
        // hex.SetZoneOfControl(this);
 
         // Get the effects on this hex

@@ -35,6 +35,15 @@ public class BattleManager : MonoBehaviour
             Faction player_team = new Faction("Player", true, 1);
             factions.Add(player_team);
 
+            for (int x = -1; x <= 2; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    Debug.Log(x + " " + y);
+                    SpawnUnit(player_team, "Battles/Units/BlueHoplite", x, y);
+                }
+            }
+            /*
             // Place units and add them to the faction unit list
             GameObject instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
             Unit unit = instance.GetComponent<Unit>();
@@ -63,7 +72,7 @@ public class BattleManager : MonoBehaviour
             unit.owner = player_team;
             HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(0, 1));
             player_team.units.Add(unit);
-
+            */
             // Make the units draggable
             foreach (Faction faction in factions)
             {
@@ -82,63 +91,27 @@ public class BattleManager : MonoBehaviour
 
 
 
-
+            /*
             Faction player_team = new Faction("Player", true, 1);
             factions.Add(player_team);
-
-            // Place units and add them to the faction unit list
-            GameObject instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            Unit unit = instance.GetComponent<Unit>();
-            unit.u_name = "P1";
-            unit.owner = player_team;
-            HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(0, 0));
-            player_team.units.Add(unit);
-
-            instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            unit = instance.GetComponent<Unit>();
-            unit.u_name = "P2";
-            unit.owner = player_team;
-            HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(1, 0));
-            player_team.units.Add(unit);
-
-            instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            unit = instance.GetComponent<Unit>();
-            unit.u_name = "P3";
-            unit.owner = player_team;
-            HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(1, 1));
-            player_team.units.Add(unit);
-
-            instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            unit = instance.GetComponent<Unit>();
-            unit.u_name = "P4";
-            unit.owner = player_team;
-            HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(0, 1));
-            player_team.units.Add(unit);
-
-
-
+            */
 
             Faction enemy_team = new Faction("Enemies", false, 2);
             AI = new AIController(enemy_team);
             factions.Add(enemy_team);
 
-             instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            Unit unit2 = instance.GetComponent<Unit>();
-            unit2.owner = enemy_team;
-            unit2.u_name = "E1";
-            HexMap.hex_map.WarpUnitTo(unit2, HexMap.hex_map.GetHex(2, 2));
-            enemy_team.units.Add(unit2);
-
-            instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            Unit unit4 = instance.GetComponent<Unit>();
-            unit4.u_name = "E2";
-            unit4.owner = enemy_team;
-            HexMap.hex_map.WarpUnitTo(unit4, HexMap.hex_map.GetHex(3, 2));
-            enemy_team.units.Add(unit4);
+            for (int x = -4; x < 5; x++)
+            {
+                SpawnUnit(enemy_team, "Battles/Units/Hoplite", x, 6);
+            }
+            for (int x = -4; x < 5; x++)
+            {
+                SpawnUnit(enemy_team, "Battles/Units/Hoplite", x, -6);
+            }
 
 
             // Set enemies. Everyone is an enemy of everyone currently
-            /*
+
             foreach (Faction faction_1 in factions)
             {
                 foreach (Faction faction_2 in factions)
@@ -146,9 +119,9 @@ public class BattleManager : MonoBehaviour
                     if (faction_1 != faction_2)
                         faction_1.enemies.Add(faction_2);
                 }
-            }*/
-            player_team.enemies.Add(enemy_team);
-            enemy_team.enemies.Add(player_team);
+            }
+            //player_team.enemies.Add(enemy_team);
+            //enemy_team.enemies.Add(player_team);
             
             StartRound();
         }
@@ -240,6 +213,17 @@ public class BattleManager : MonoBehaviour
     }
 
 
+    public void SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y)
+    {
+        GameObject instance = Instantiate(Resources.Load(unit_prefab, typeof(GameObject))) as GameObject;
+        Unit unit2 = instance.GetComponent<Unit>();
+        unit2.owner = owning_faction;
+        unit2.u_name = "E1";
+        HexMap.hex_map.WarpUnitTo(unit2, HexMap.hex_map.GetHex(x, y));
+        owning_faction.units.Add(unit2);
+    }
+
+
     // If a player has no more units, the fight's over
     public void CheckVictoryAndDefeat()
     {
@@ -284,14 +268,28 @@ public class BattleManager : MonoBehaviour
             foreach(Unit unit in faction.units)
             {
                 positions.player_deployed_units.Add(unit);
+                DontDestroyOnLoad(unit.gameObject);
+                Debug.Log("Saving " + unit.u_name);
             }
         }
 
         Application.LoadLevel("TacticalBattle");
     }
+    // Takes the saved player units from the pre battle deployment screen and deploys them
     public void SpawnPlayerDeployedUnits()
     {
+        PlayerUnitPositions positions = GameObject.Find("PlayerUnitPositions").GetComponent<PlayerUnitPositions>();
 
+        foreach (Faction faction in positions.saved_factions)
+        {
+            factions.Add(faction);
+            Debug.Log("Loading faction ");
+            foreach (Unit unit in positions.player_deployed_units)
+            {
+                HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex((int)unit.location_coordinates.x, (int)unit.location_coordinates.y));
+                Debug.Log("Loading " + unit.u_name);
+            }
+        }
     }
 
 
