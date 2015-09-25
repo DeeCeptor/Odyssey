@@ -73,8 +73,18 @@ public float hadesFavour = 0f;
 public float athenasFavour = 0f;
 public float aresFavour = 0f;
 
-
-
+//gathering variables
+//how many frames before resources
+public float defaultGatheringFrames = 240;
+private float gatheringCounter = 0;
+public float waterToGain = 10f;
+public float foodToGain = 5f;
+//percent chance to get water when gathering instead of food;
+public int waterPercent = 66;
+//gameObject to spawn to indicate gain of water/food
+public GameObject waterAquiredSymbol;
+public GameObject foodAquiredSymbol;
+public GameObject islandToPlunder;
 
 	// Use this for initialization
 	void Start () {
@@ -107,6 +117,14 @@ public float aresFavour = 0f;
 			frameIterator = 0;
 			Consume(1);
 			CalcWeight();
+		}
+		if(!anchored)
+		{
+			gathering = false;
+		}
+		if(gathering)
+		{
+			Gather();
 		}
 		frameIterator = frameIterator + 1;
 		waterText.GetComponent<Text>().text = "water: " + water.ToString("F1") + "L";
@@ -221,6 +239,8 @@ public float aresFavour = 0f;
 	}
 	
 	}
+	
+	
 	
 	public void IncrementHealth()
 	{
@@ -356,9 +376,47 @@ public float aresFavour = 0f;
 		paused = false;
 	}
 	
+	public void GatherToggle(GameObject island)
+	{
+		gathering = true;
+		islandToPlunder = island;
+	}
+	
 	public void Gather()
 	{
-	
+		if(islandToPlunder.GetComponent<IslandGatherScript>().percentGathered == 100f)
+		{
+			gathering = false;
+			//create message saying island is out of resources;
+			islandToPlunder.GetComponent<IslandEventScript>().HaveEvent();
+		}
+		
+		if(gatheringCounter > defaultGatheringFrames*(0.2+(islandToPlunder.GetComponent<IslandGatherScript>().percentGathered/50f)))
+		{
+			gatheringCounter =0;
+			if(Random.Range (1,101)<waterPercent)
+			{
+				water = water + (waterToGain*(1f+(0.1f*troopManager.getScavenging())+(0.2f*islandToPlunder.GetComponent<IslandGatherScript>().amount))); 
+				if(weight > maxWeight)
+				{
+					//open some kinda cargo menu
+					water = water + (maxWeight-weight);
+				}
+			}
+			else
+			{
+				food = food + (foodToGain*(1f+(0.1f*troopManager.getScavenging())+(0.2f*islandToPlunder.GetComponent<IslandGatherScript>().amount))); 
+				if(weight > maxWeight)
+				{
+					//open some kinda cargo menu
+					food = food + (maxWeight-weight);
+				}
+			}
+			CalcWeight();
+			
+			islandToPlunder.GetComponent<IslandGatherScript>().percentGathered = islandToPlunder.GetComponent<IslandGatherScript>().percentGathered + 4;
+		}
+		gatheringCounter++;
 	}
 	
 	public void Camp()

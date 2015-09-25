@@ -20,6 +20,6 @@ public EventManagement eventHandler;
 	
 	public void HaveEvent()
 	{
-		eventHandler.HaveEvent(eventToCall);
+		eventHandler.HaveIslandEvent(eventToCall,gameObject);
 	}
 }

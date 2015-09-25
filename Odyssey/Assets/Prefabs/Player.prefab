@@ -503,6 +503,7 @@ MonoBehaviour:
   troopManager: {fileID: 0}
   paused: 0
   anchored: 0
+  gathering: 0
   framesPerConsuption: 120
   foodPerSailorPerConsumption: .00499999989
   lowRationRate: .5
@@ -542,6 +543,13 @@ MonoBehaviour:
   hadesFavour: 0
   athenasFavour: 0
   aresFavour: 0
+  defaultGatheringFrames: 240
+  waterToGain: 5
+  foodToGain: 2.5
+  waterPercent: 66
+  waterAquiredSymbol: {fileID: 0}
+  foodAquiredSymbol: {fileID: 0}
+  islandToPlunder: {fileID: 0}
 --- !u!114 &11424536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -590,20 +598,20 @@ MonoBehaviour:
   weapon: {fileID: 0}
   armour: {fileID: 0}
   accessory: {fileID: 0}
-  leadership: 0
+  leadership: 3
   engineering: 0
-  scavenging: 0
-  seamanship: 0
-  diplomacy: 0
+  scavenging: 2
+  seamanship: 2
+  diplomacy: 3
   piety: 0
-  cunning: 0
-  medicene: 0
-  strength: 0
-  haggling: 0
+  cunning: 4
+  medicene: 1
+  strength: 2
+  haggling: 2
   animalHandling: 0
   spear: 0
   sword: 0
-  bow: 0
+  bow: 4
 --- !u!114 &11452682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -638,6 +646,7 @@ MonoBehaviour:
   turnSpeed: .200000003
   encounterRange: 5
   resource: {fileID: 0}
+  islandParkedAt: {fileID: 0}
   paused: 0
 --- !u!114 &11476022
 MonoBehaviour:

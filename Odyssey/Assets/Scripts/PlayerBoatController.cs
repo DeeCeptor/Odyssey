@@ -9,6 +9,7 @@ public class PlayerBoatController : MonoBehaviour {
 	private int moveRate = 1;
 	public float encounterRange = 5;
 	public ResourceManager resource;
+	public GameObject islandParkedAt;
 	
 	public bool paused = false;
 	
@@ -91,7 +92,8 @@ public class PlayerBoatController : MonoBehaviour {
 			{
 				if (objectsNear[i].gameObject.tag.Equals("Island"))
 				{
-				objectsNear[i].GetComponent<IslandEventScript>().HaveEvent();
+				islandParkedAt = objectsNear[i].gameObject;
+				islandParkedAt.GetComponent<IslandEventScript>().HaveEvent();
 				}
 			
 			}

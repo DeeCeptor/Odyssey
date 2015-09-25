@@ -27,6 +27,8 @@ public class IslandEventFunctions : MonoBehaviour {
 	
 	public void Gather()
 	{
+	eventHandler.resourceController.GatherToggle(eventHandler.islandEventIsOn);
+	eventHandler.EndEvent();
 	}
 	
 	public void End()
