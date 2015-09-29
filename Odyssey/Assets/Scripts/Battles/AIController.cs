@@ -99,10 +99,12 @@ public class AI_Turn_Thread
                         }
                     }
                 }
+                
 
+                // ROTATION
                 if (closest_enemy != null)
                 {
-                    unit.SetDesiredRotationTowards(unit.location.coordinate, closest_enemy.location.coordinate);//?? 
+                    unit.SetDesiredRotationTowards(best_hex.coordinate, closest_enemy.location.coordinate);//?? 
                 }
 
                 // If there's a suitable target, have the unit attack it once it gets to the right hex

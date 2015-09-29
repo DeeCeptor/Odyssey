@@ -91,6 +91,8 @@ public class PlayerInterface : MonoBehaviour
     // Player left clicked on the unit
     public void UnitSelected(Unit unit)
     {
+        UnitDeselected();
+
         ShowUnitStatsPanel(unit);
 
         if (unit.owner == BattleManager.battle_manager.current_player)

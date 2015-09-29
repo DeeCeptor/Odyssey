@@ -178,6 +178,9 @@ public class BattleManager : MonoBehaviour
     {
         if (PlayerInterface.player_interface.CanSelect())
         {
+            PlayerInterface.player_interface.UnhighlightHexes();
+            PlayerInterface.player_interface.UnitDeselected();
+
             foreach (Unit unit in current_player.units)
             {
                 unit.EndTurn();
@@ -204,7 +207,7 @@ public class BattleManager : MonoBehaviour
     {
         HexMap.hex_map.ResetEdgeScores();
 
-        if (!current_player.human_controlled)
+        if (false && !current_player.human_controlled)  // not used
         {
             // AI player only needs to update their own units movable hexes
             foreach(Unit unit in current_player.units)
