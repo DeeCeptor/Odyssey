@@ -39,7 +39,6 @@ public class BattleManager : MonoBehaviour
             {
                 for (int y = -1; y <= 1; y++)
                 {
-                    Debug.Log(x + " " + y);
                     SpawnUnit(player_team, "Battles/Units/BlueHoplite", x, y);
                 }
             }
@@ -140,7 +139,6 @@ public class BattleManager : MonoBehaviour
 
         current_player = players_waiting_for_turn.Dequeue();
         round_number++;
-        SetUnitsMovableTiles();
 
         StartTurn();
     }
@@ -153,14 +151,26 @@ public class BattleManager : MonoBehaviour
             unit.StartTurn();
         }
 
+        SetUnitsMovableTiles();
         human_turn = current_player.human_controlled;
         PlayerInterface.player_interface.turn_text.text = current_player.faction_name + ", Round " + round_number;
 
         if (!current_player.human_controlled)
         {
             // AI player. Let the AI play for them
-            AI.Do_Turn();
+            StartCoroutine(Wait_For_AI_Turn_To_End());
         }
+    }
+    IEnumerator Wait_For_AI_Turn_To_End()
+    {
+        AI.Do_Turn();
+
+        // Wait for the AI turn to finish
+        while (!AI.done_AI_turn)
+            yield return new WaitForSeconds(0.3f);
+
+        // AI turn is over, end it
+        EndTurn();
     }
 
 
@@ -194,20 +204,32 @@ public class BattleManager : MonoBehaviour
     {
         HexMap.hex_map.ResetEdgeScores();
 
-        foreach (Faction faction in factions)
+        if (!current_player.human_controlled)
         {
-            foreach (Unit unit in faction.units)
+            // AI player only needs to update their own units movable hexes
+            foreach(Unit unit in current_player.units)
             {
-                unit.location.SetZoneOfControl(unit);
+                unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
             }
         }
-
-        foreach (Faction faction in factions)
+        else
         {
-            foreach (Unit unit in faction.units)
+            // This is a human player, so update every units movable hexes
+            foreach (Faction faction in factions)
             {
-                // Get all the hexes within range
-                unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
+                foreach (Unit unit in faction.units)
+                {
+                    unit.location.SetZoneOfControl(unit);
+                }
+            }
+
+            foreach (Faction faction in factions)
+            {
+                foreach (Unit unit in faction.units)
+                {
+                    // Get all the hexes within range
+                    unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
+                }
             }
         }
     }

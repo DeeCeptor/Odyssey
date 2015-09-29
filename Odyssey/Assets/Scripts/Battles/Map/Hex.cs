@@ -5,6 +5,7 @@ using System;
 public class Hex : MonoBehaviour, IComparable<Hex>
 {
     public Vector2 coordinate;      // Grid coordinate
+    public Vector3 world_coordinates;
 
     public List<Effect> effects_on_hex = new List<Effect>();
 
@@ -39,7 +40,8 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     void Start ()
     {
         //regular_material = this.GetComponent<MeshRenderer>().material;
-		//regular_color = this.GetComponent<SpriteRenderer>().color;
+        //regular_color = this.GetComponent<SpriteRenderer>().color;
+        world_coordinates = this.transform.position;
     }
 
 	
