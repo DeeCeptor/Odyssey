@@ -430,7 +430,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108032}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 1
   m_AngularDrag: 1
   m_UseGravity: 0
@@ -544,8 +544,8 @@ MonoBehaviour:
   athenasFavour: 0
   aresFavour: 0
   defaultGatheringFrames: 240
-  waterToGain: 5
-  foodToGain: 2.5
+  waterToGain: 10
+  foodToGain: 5
   waterPercent: 66
   waterAquiredSymbol: {fileID: 0}
   foodAquiredSymbol: {fileID: 0}
