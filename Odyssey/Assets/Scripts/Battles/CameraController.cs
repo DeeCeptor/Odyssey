@@ -20,13 +20,10 @@ public class CameraController : MonoBehaviour
 
         cur_zoom = Mathf.Clamp(cur_zoom - z, 3, 10);    // Limit how far and how close we can zoom
 
-        if (Camera.current != null)
-        {
-            this.gameObject.transform.position = new Vector3(
-				Mathf.Clamp(this.gameObject.transform.position.x + x, HexMap.hex_map.x_min_cam, HexMap.hex_map.x_max_cam),
-				Mathf.Clamp(this.gameObject.transform.position.y + y, HexMap.hex_map.y_min_cam, HexMap.hex_map.y_max_cam),
-                camera_z);  // Z of camera never changes
-            cur_camera.orthographicSize = cur_zoom;     // Set zoom level of camera
-        }
+        this.gameObject.transform.position = new Vector3(
+			Mathf.Clamp(this.gameObject.transform.position.x + x, HexMap.hex_map.x_min_cam, HexMap.hex_map.x_max_cam),
+			Mathf.Clamp(this.gameObject.transform.position.y + y, HexMap.hex_map.y_min_cam, HexMap.hex_map.y_max_cam),
+            camera_z);  // Z of camera never changes
+        cur_camera.orthographicSize = cur_zoom;     // Set zoom level of camera
     }
 }

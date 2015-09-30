@@ -49,6 +49,8 @@ public class Unit : MonoBehaviour
     public int facing = 0;
     [HideInInspector]
     public bool rotating = false;
+    private float tile_move_speed = 7f;
+    private bool desired_rotation_set = false;
 
     public string u_name = ""; // Name at the top of the unit panel
     public string u_description = "";  // Short description of the unit
@@ -71,12 +73,17 @@ public class Unit : MonoBehaviour
 
 	void Update ()
     {
+        if (desired_rotation_set)
+        {
+            this.transform.eulerAngles = new Vector3(0, 0, facing);
+            desired_rotation_set = false;
+        }
         // Check if we should be moving
-        if (movement_path != null && movement_path.Count > 0)
+        else if (movement_path != null && movement_path.Count > 0)
         {
             //transform.LookAt(movement_path[0].transform.position);
             //transform.position = Vector3.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
-            Vector3 pos = Vector2.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
+            Vector3 pos = Vector2.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * tile_move_speed);
             //pos.z = 0;
             transform.position = pos;
             //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -86,7 +93,9 @@ public class Unit : MonoBehaviour
                 if (movement_path.Count == 1)
                 {
                     location = movement_path[0];
-                    is_moving = false;
+
+                    if (attack_target == null)  // is_moving is a flag used to know when the AI unit is finished its turn
+                        is_moving = false;
                 }
 
                 movement_path.RemoveAt(0);
@@ -97,6 +106,8 @@ public class Unit : MonoBehaviour
             // Initiate an attack on the target once we're done moving
             this.Attack(attack_target, attacks_are_counterable);
             attack_target = null;
+
+            is_moving = false;
         }
         else if (rotating)
         {
@@ -134,10 +145,42 @@ public class Unit : MonoBehaviour
             angles.z = 270;
         else if (angles.z >= 300 && angles.z < 360)
             angles.z = 330;
+
         this.transform.eulerAngles = angles;
 
         // Set facing
         this.facing = (int)angles.z;
+    }
+    public void SetDesiredRotationTowards(Vector3 from, Vector3 towards)
+    {
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, towards - from);
+
+        // Use euler angles so we're dealing with degrees 0-360
+        Vector3 angles = rotation.eulerAngles;
+        angles.x = 0;
+        angles.y = 0;
+
+        SetDesiredRotation(angles);
+    }
+    public void SetDesiredRotation(Vector3 angles)
+    {
+        // Snap to one of the hexagon directions
+        if (angles.z >= 0 && angles.z < 60)
+            angles.z = 30;
+        else if (angles.z >= 60 && angles.z < 120)
+            angles.z = 90;
+        else if (angles.z >= 120 && angles.z < 180)
+            angles.z = 150;
+        else if (angles.z >= 180 && angles.z < 240)
+            angles.z = 210;
+        else if (angles.z >= 240 && angles.z < 300)
+            angles.z = 270;
+        else if (angles.z >= 300 && angles.z < 360)
+            angles.z = 330;
+
+        // Set facing
+        this.facing = (int)angles.z;
+        desired_rotation_set = true;
     }
 
 
@@ -186,13 +229,13 @@ public class Unit : MonoBehaviour
     // Is the unit facing this hex? (Used for counter attacking)
     public bool IsFacing(Hex hex)
     {
-        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, hex.transform.position - this.transform.position);
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, hex.world_coordinates - this.location.world_coordinates);//this.transform.position);
         int angle_towards_unit = (int) rotation.eulerAngles.z;
-        int angle_diff = (int)((angle_towards_unit - this.facing + 180) % 360 - 180);    // Do math to get the difference in this units facing and the direction towards the enemy
+        int angle_diff = (int)Mathf.Abs(((angle_towards_unit - this.facing + 180) % 360 - 180));    // Do math to get the difference in this units facing and the direction towards the enemy
 
         Debug.Log("Victim: " + facing + " towards enemy: " + angle_towards_unit + " diff: " + angle_diff);
 
-        return (Mathf.Abs(angle_diff) <= counter_attack_radius);
+        return (Mathf.Abs(angle_diff) <= counter_attack_radius + 5);
     }
 
 

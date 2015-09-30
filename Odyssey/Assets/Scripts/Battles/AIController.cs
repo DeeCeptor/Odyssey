@@ -1,87 +1,140 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Threading;
+using System.Collections;
+using System;
 
 public class AIController 
 {
     Faction faction;
+    AI_Turn_Thread AI_turn;
+    public bool done_AI_turn = false;
 
     public AIController(Faction AI_faction)
     {
         faction = AI_faction;
+        AI_turn = new AI_Turn_Thread(faction, this);
     }
 
 
     public void Do_Turn()
     {
+        // Create a thread to do the work for this turn
+        Debug.Log("Creating thread for enemy turn");
+        done_AI_turn = false;
+        Thread AI_thread = new Thread(new ThreadStart(AI_turn.Execute_AI_Turn));
+        AI_thread.Start();
+    }
+
+}
+
+public class AI_Turn_Thread
+{
+    Faction faction;
+    AIController controller;
+
+    public AI_Turn_Thread(Faction cur_faction, AIController cur_controller)
+    {
+        faction = cur_faction;
+        controller = cur_controller;
+    }
+
+    public void Execute_AI_Turn()
+    {
+        controller.done_AI_turn = false;
 
         // By this point, all units should have their movable tiles updated
         // This AI will evaluate each tile the AI can move to, and pick the best one
         foreach (Unit unit in faction.units)
         {
-            Hex best_hex = unit.location;   // Start off assuming where they are is the best location
-            best_hex.hex_score = EvaluateHexScore(unit, best_hex);
-
-            // Go through each unit, evaluate every hex it could move to
-            foreach (Hex hex in unit.tiles_I_can_move_to)
+            try
             {
-                hex.hex_score = EvaluateHexScore(unit, hex);
+                //////// MOVING //////////
+                Hex best_hex = unit.location;   // Start off assuming where they are is the best location
+                best_hex.hex_score = EvaluateHexScore(unit, best_hex);
 
-                if (hex.hex_score > best_hex.hex_score)
-                    best_hex = hex;
-            }
-
-            // We've gone through each hex. Move to that hex
-            Debug.Log("Moving unit to " + best_hex.coordinate + ", " + best_hex.hex_score);
-            unit.PathTo(best_hex);
-
-            // Now that we know where we're ending up, evaluate the best target we can attack from there
-            Unit target = null;
-            float best_target_score = 0;
-            int closest_distance = 999;
-            Unit closest_enemy = null;
-            foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
-            {
-                // Check if this is the closest enemy, so we can face towards them
-                int distance = HexMap.hex_map.DistanceBetweenHexes(unit.location.coordinate, enemy.location.coordinate);
-                if (distance < closest_distance)
+                // Go through each unit, evaluate every hex it could move to
+                foreach (Hex hex in unit.tiles_I_can_move_to)
                 {
-                    // This is the closest enemy we've evaluated. 
-                    closest_enemy = enemy;
-                    closest_distance = distance;
+                    hex.hex_score = EvaluateHexScore(unit, hex);
+
+                    if (hex.hex_score > best_hex.hex_score)
+                        best_hex = hex;
                 }
 
-                // Check if we're in range. If we're not in range, we can't attack the unit
-                if (distance <= unit.GetRange())
-                {
-                    float cur_score = enemy.CalculateDamage(unit);
+                // We've gone through each hex. Move to that hex
+                //Debug.Log("Moving unit to " + best_hex.coordinate + ", " + best_hex.hex_score);
+                unit.PathTo(best_hex);
 
-                    if (cur_score > best_target_score)
+
+
+                /////// ATTACKING ////////
+                // Now that we know where we're ending up, evaluate the best target we can attack from there
+                Unit target = null;
+                float best_target_score = 0;
+                int closest_distance = 999;
+                Unit closest_enemy = null;
+                foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
+                {
+                    // Check if this is the closest enemy, so we can face towards them
+                    int distance = HexMap.hex_map.DistanceBetweenHexes(unit.location.coordinate, enemy.location.coordinate);
+                    if (distance < closest_distance)
                     {
-                        // This is our best target to attack so far. Record it.
-                        target = enemy;
-                        best_target_score = cur_score;
+                        // This is the closest enemy we've evaluated. 
+                        closest_enemy = enemy;
+                        closest_distance = distance;
+                    }
+
+
+                    // Check if we're in range. If we're not in range, we can't attack the unit
+                    if (distance <= unit.GetRange())
+                    {
+                        float cur_score = enemy.CalculateDamage(unit);
+
+                        if (cur_score > best_target_score)
+                        {
+                            // This is our best target to attack so far. Record it.
+                            target = enemy;
+                            best_target_score = cur_score;
+                        }
                     }
                 }
-            }
+                
 
-            if (closest_enemy != null)
-            {
-                unit.SetRotationTowards(unit.location.coordinate, closest_enemy.location.coordinate);
-            }
+                // ROTATION
+                if (closest_enemy != null)
+                {
+                    unit.SetDesiredRotationTowards(best_hex.coordinate, closest_enemy.location.coordinate);//?? 
+                }
 
-            // If there's a suitable target, have the unit attack it once it gets to the right hex
-            if (best_target_score > 0)  
+                // If there's a suitable target, have the unit attack it once it gets to the right hex
+                if (best_target_score > 0)
+                {
+                    //Debug.Log(unit.u_name + " attacking " + target.u_name);
+                    unit.attack_target = target;
+                }
+            }
+            catch (Exception e)
+            { Debug.Log("Exception executing " + faction.faction_name + " " + unit.u_name + "'s turn: " + e.Message);    }
+
+            // Wait until the unit is done moving before moving onto the next unit
+            // This is done so the collection of enemy units is not modified by others attacking and killing enemies while trying to evaluate them
+            if (unit.attack_target != null)
             {
-                Debug.Log(unit.u_name + " attacking " + target.u_name);
-                unit.attack_target = target;
+                Thread.Sleep(500);  // Have a delay after attacking to give the lists a chance to update
+                while (unit.is_moving)
+                {
+                    Thread.Sleep(100);
+                }
             }
         }
 
         Debug.Log("Finished AI turn");
-        BattleManager.battle_manager.EndTurn();
+        controller.done_AI_turn = true;
+        //BattleManager.battle_manager.EndTurn(); //??
     }
 
-    
+
     // Returns the value of this hex to the AI player. High value is good.
     public float EvaluateHexScore(Unit unit, Hex hex)
     {
@@ -110,9 +163,12 @@ public class AIController
             score = Mathf.Max(score, target_hex.occupying_unit.CalculateDamage(cur_unit));
 
             // Increase the score of this hex if we can attack them without being counterattacked
-            if (!target_hex.occupying_unit.counter_attacks || !target_hex.occupying_unit.IsFacing(hex))
+            if (cur_unit.attacks_are_counterable)
             {
-                score *= 1.5f;
+                if (!target_hex.occupying_unit.counter_attacks || !target_hex.occupying_unit.IsFacing(hex))    //??
+                {
+                    score *= 1.5f;
+                }
             }
         }
 
@@ -152,4 +208,5 @@ public class AIController
 
         return score;
     }
+
 }
