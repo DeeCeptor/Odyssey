@@ -12,6 +12,7 @@ GameObject:
   - 65: {fileID: 6522392}
   - 23: {fileID: 2355574}
   - 114: {fileID: 11459532}
+  - 114: {fileID: 11420974}
   m_Layer: 0
   m_Name: PoseidonTempleIsland
   m_TagString: Island
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 268.235352, y: 2638, z: -3448.93237}
+  m_LocalPosition: {x: -18.2000008, y: -11.8000002, z: 42.0999985}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,6 +75,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11420974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7345a2ed0dd181343b0efff6db08c2ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  percentGathered: 0
+  amount: 2
 --- !u!114 &11459532
 MonoBehaviour:
   m_ObjectHideFlags: 1

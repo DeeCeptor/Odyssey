@@ -42,6 +42,7 @@ public float staminaLossFromLowRations= 0.5f;
 public float staminaGainFromLowSpeed = 0.5f;
 public float staminaGainFromHighRations= 0.5f;
 public float staminaGainFromAnchor = 1f;
+public float staminaGainFromCamping = 2f;
 
 //rates of health loss
 public float healthLossFromStarvation = 1f;
@@ -51,7 +52,8 @@ public float healthLossFromExhaustion = 0.02f; //health loss is per each percent
 public float healthGainNaturally = 0.5f;
 public float healthGainFromSlowSpeed = 0.5f;
 public float healthGainFromHighRations = 0.5f;
-public float healthGainFromAnchoring = 1;
+public float healthGainFromAnchoring = 1f;
+public float healthGainFromCamping = 1f;
 
 //amount of resources
 public float food = 100f;
