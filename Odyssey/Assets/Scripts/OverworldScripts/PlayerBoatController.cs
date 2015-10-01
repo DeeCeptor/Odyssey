@@ -16,7 +16,8 @@ public class PlayerBoatController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	resource = GetComponent<ResourceManager>();
-	}
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {

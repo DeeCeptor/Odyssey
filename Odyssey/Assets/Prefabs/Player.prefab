@@ -519,6 +519,7 @@ MonoBehaviour:
   staminaGainFromLowSpeed: 0
   staminaGainFromHighRations: .5
   staminaGainFromAnchor: 1
+  staminaGainFromCamping: 2
   healthLossFromStarvation: .5
   healthLossFromDehydration: 1.5
   healthLossFromLowRations: .5
@@ -527,6 +528,7 @@ MonoBehaviour:
   healthGainFromSlowSpeed: .25
   healthGainFromHighRations: .5
   healthGainFromAnchoring: 1
+  healthGainFromCamping: 1
   food: 100
   water: 100
   sailors: 50

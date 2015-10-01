@@ -13,6 +13,7 @@ public GameObject ui;
 
 public int maxIslands = 40;
 public float islandSpace = 50;
+public float goalSpace = 200;
 public int maxIterationFactor = 5000;
 float oceanXWidth;
 float oceanZWidth;
@@ -38,21 +39,30 @@ GameObject curIsland;
 	
 	public void GenerateWorld()
 	{
-	Instantiate(ocean);
-	PlaceIslands();
-	PlacePlayer();
-	Instantiate(eventController);
-	GameObject newUI = (GameObject)Instantiate(ui,transform.position,transform.rotation);
+	    Instantiate(ocean);
+        PlaceGoal();
+	    PlaceIslands();
+	    PlacePlayer();
+    	Instantiate(eventController);
+	    GameObject newUI = (GameObject)Instantiate(ui,transform.position,transform.rotation);
 	
 	}
 	
 	public void PlaceGoal()
 	{
-	//do when I know what goal is
-	}
-	
-	public void PlacePlayer()
+        oceanXWidth = ocean.GetComponent<Renderer>().bounds.extents.x;
+        oceanZWidth = ocean.GetComponent<Renderer>().bounds.extents.z;
+        islandXWidth = goal.GetComponent<Renderer>().bounds.extents.x;
+        islandZWidth = goal.GetComponent<Renderer>().bounds.extents.z;
+        curPosition = new Vector3(Random.Range(-oceanXWidth + islandXWidth, oceanXWidth - islandXWidth), transform.position.y, Random.Range(-oceanZWidth + islandZWidth, oceanZWidth - islandZWidth));
+        goal = (GameObject)Instantiate(goal, curPosition, transform.rotation);
+        islandCounter = islandCounter + 1;
+
+    }
+
+    public void PlacePlayer()
 	{
+        //place player far from goal
 	noGood = true;
 	while(noGood)
 		{
@@ -70,8 +80,13 @@ GameObject curIsland;
 					noGood = true;
 				}
 			}
-			
-			if(!noGood)
+
+            if((goal.transform.position - curPosition).magnitude < goalSpace)
+            {
+                noGood = true;
+            }
+
+            if (!noGood)
 			{
 				GameObject pShip = (GameObject)Instantiate(player,curPosition,transform.rotation);
 				pShip.transform.Rotate(transform.up,Random.Range(0,360),Space.Self);
@@ -85,8 +100,6 @@ GameObject curIsland;
 	
 	public void PlaceIslands()
 	{
-	oceanXWidth = ocean.GetComponent<Renderer>().bounds.extents.x;
-	oceanZWidth = ocean.GetComponent<Renderer>().bounds.extents.z;
 	
 	//just to make sure it has an endpoint if number of islands is greater than can fit
 	int i = 0;
@@ -95,7 +108,7 @@ GameObject curIsland;
 		curIsland = islands[Random.Range (0,islands.Length)];
 		islandXWidth = curIsland.GetComponent<Renderer>().bounds.extents.x;
 		islandZWidth = curIsland.GetComponent<Renderer>().bounds.extents.z;
-		curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth),transform.position.y,Random.Range(-oceanZWidth+islandZWidth,oceanZWidth-islandZWidth));
+		curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth),transform.position.y-5,Random.Range(-oceanZWidth+islandZWidth,oceanZWidth-islandZWidth));
 		
 		Collider[] objectsNear = Physics.OverlapSphere(curPosition, islandSpace);
 		for(int x = 0; x< objectsNear.Length;x++)
