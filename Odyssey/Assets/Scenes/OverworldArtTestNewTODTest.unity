@@ -679,6 +679,30 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 136608, guid: fce4fed67e7473a499ebc4aae4a6ab23, type: 2}
   m_PrefabInternal: {fileID: 870504497}
+--- !u!1 &1997884720 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 134824, guid: fce4fed67e7473a499ebc4aae4a6ab23, type: 2}
+  m_PrefabInternal: {fileID: 870504497}
+--- !u!23 &1997884722 stripped
+MeshRenderer:
+  m_PrefabParentObject: {fileID: 2368696, guid: fce4fed67e7473a499ebc4aae4a6ab23,
+    type: 2}
+  m_PrefabInternal: {fileID: 870504497}
+--- !u!114 &1997884725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1997884720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302671cb3dff1cc48a38912fcaf22dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorStart: {r: 1, g: 0, b: 0, a: 1}
+  colorEnd: {r: 0, g: 1, b: 0, a: 1}
+  duration: 1
+  rend: {fileID: 1997884722}
 --- !u!1001 &2078883436
 Prefab:
   m_ObjectHideFlags: 0
