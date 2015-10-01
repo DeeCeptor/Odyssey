@@ -8,13 +8,25 @@ public class Faction
     public List<Unit> units = new List<Unit>();
     public int faction_ID;  // Used for pathing. Each team needs its own ID
     public bool human_controlled;  // Used by the human player?
+    private AIController AI;
+    public bool use_ai = false;
+    public Color faction_color;
 
-
-    public Faction(string name, bool controlled_by_human, int ID)
+    public Faction(string name, bool controlled_by_human, int ID, Color color)
     {
         faction_ID = ID;
         human_controlled = controlled_by_human;
         faction_name = name;
+        faction_color = color;
+        AI = new AIController(this);
+    }
+    public void SetAI(AIController faction_AI)
+    {
+        AI = faction_AI;
+    }
+    public AIController GetAI()
+    {
+        return AI;
     }
 
 

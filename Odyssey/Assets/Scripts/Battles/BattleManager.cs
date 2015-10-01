@@ -15,8 +15,6 @@ public class BattleManager : MonoBehaviour
     Queue<Faction> players_waiting_for_turn = new Queue<Faction>();     // FIFO queue showing what player's are waiting to do their turn this round
     List<Faction> factions = new List<Faction>();   // The sides that are fighting in this fight
 
-    AIController AI;
-
 
     void Start()
     {
@@ -32,46 +30,18 @@ public class BattleManager : MonoBehaviour
         // Set units to inactive if this is a pre battle deployment
         if (pre_battle_deployment)
         {
-            Faction player_team = new Faction("Player", true, 1);
+            Faction player_team = new Faction("Player", true, 1, Color.green);
             factions.Add(player_team);
+            PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
 
             for (int x = -1; x <= 2; x++)
             {
                 for (int y = -1; y <= 1; y++)
                 {
-                    SpawnUnit(player_team, "Battles/Units/BlueHoplite", x, y);
+                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, y);
                 }
             }
-            /*
-            // Place units and add them to the faction unit list
-            GameObject instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            Unit unit = instance.GetComponent<Unit>();
-            unit.u_name = "P1";
-            unit.owner = player_team;
-            HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(0, 0));
-            player_team.units.Add(unit);
-
-            instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            unit = instance.GetComponent<Unit>();
-            unit.u_name = "P2";
-            unit.owner = player_team;
-            HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(1, 0));
-            player_team.units.Add(unit);
-
-            instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            unit = instance.GetComponent<Unit>();
-            unit.u_name = "P3";
-            unit.owner = player_team;
-            HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(1, 1));
-            player_team.units.Add(unit);
-
-            instance = Instantiate(Resources.Load("Battles/Units/Hoplite", typeof(GameObject))) as GameObject;
-            unit = instance.GetComponent<Unit>();
-            unit.u_name = "P4";
-            unit.owner = player_team;
-            HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.GetHex(0, 1));
-            player_team.units.Add(unit);
-            */
+            
             // Make the units draggable
             foreach (Faction faction in factions)
             {
@@ -85,43 +55,67 @@ public class BattleManager : MonoBehaviour
         // Regular battle
         else
         {
-            
-            SpawnPlayerDeployedUnits(); // Also gets the faction
-
-
-
-            /*
-            Faction player_team = new Faction("Player", true, 1);
-            factions.Add(player_team);
-            */
-
-            Faction enemy_team = new Faction("Enemies", false, 2);
-            AI = new AIController(enemy_team);
-            factions.Add(enemy_team);
-
-            for (int x = -4; x < 5; x++)
+            if (GameObject.Find("PlayerUnitPositions") != null)
             {
-                SpawnUnit(enemy_team, "Battles/Units/Hoplite", x, 6);
-            }
-            for (int x = -4; x < 5; x++)
-            {
-                SpawnUnit(enemy_team, "Battles/Units/Hoplite", x, -6);
-            }
+                SpawnPlayerDeployedUnits(); // Also gets the faction
 
 
-            // Set enemies. Everyone is an enemy of everyone currently
+                Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
+                factions.Add(enemy_team);
 
-            foreach (Faction faction_1 in factions)
-            {
-                foreach (Faction faction_2 in factions)
+                for (int x = -4; x < 5; x++)
                 {
-                    if (faction_1 != faction_2)
-                        faction_1.enemies.Add(faction_2);
+                    SpawnUnit(enemy_team, "Battles/Units/Hoplite", x, 6);
+                }
+                for (int x = -4; x < 5; x++)
+                {
+                    SpawnUnit(enemy_team, "Battles/Units/Hoplite", x, -6);
+                }
+
+
+                // Set enemies. Everyone is an enemy of everyone currently
+                foreach (Faction faction_1 in factions)
+                {
+                    foreach (Faction faction_2 in factions)
+                    {
+                        if (faction_1 != faction_2)
+                            faction_1.enemies.Add(faction_2);
+                    }
                 }
             }
-            //player_team.enemies.Add(enemy_team);
-            //enemy_team.enemies.Add(player_team);
-            
+            else
+            {
+                Debug.Log("No player deployed units. Starting debug mode.");
+
+                Faction player_team = new Faction("Player", true, 1, Color.green);
+                factions.Add(player_team);
+                for (int x = -2; x < 2; x++)
+                {
+                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, 0);
+                }
+                for (int x = -2; x < 2; x++)
+                {
+                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, -1);
+                }
+
+
+                Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
+                factions.Add(enemy_team);
+                for (int x = -4; x < 5; x++)
+                {
+                    SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, 6);
+                }
+                for (int x = -4; x < 5; x++)
+                {
+                    SpawnUnit(enemy_team, "Battles/Units/Archer", x, -6);
+                }
+
+
+                // Set enemies
+                player_team.enemies.Add(enemy_team);
+                enemy_team.enemies.Add(player_team);
+            }
+
             StartRound();
         }
 
@@ -152,25 +146,38 @@ public class BattleManager : MonoBehaviour
         }
 
         SetUnitsMovableTiles();
-        human_turn = current_player.human_controlled;
+        human_turn = (current_player.human_controlled && !current_player.use_ai);
         PlayerInterface.player_interface.turn_text.text = current_player.faction_name + ", Round " + round_number;
 
-        if (!current_player.human_controlled)
+        if (!current_player.human_controlled || current_player.use_ai)
         {
             // AI player. Let the AI play for them
+            PlayerInterface.player_interface.end_turn_button.interactable = false;
+            PlayerInterface.player_interface.AI_turn_button.interactable = false;
             StartCoroutine(Wait_For_AI_Turn_To_End());
+        }
+        else
+        {
+            PlayerInterface.player_interface.end_turn_button.interactable = true;
+            PlayerInterface.player_interface.AI_turn_button.interactable = true;
         }
     }
     IEnumerator Wait_For_AI_Turn_To_End()
     {
-        AI.Do_Turn();
+        Debug.ClearDeveloperConsole();
+        current_player.GetAI().Do_Turn();
 
         // Wait for the AI turn to finish
-        while (!AI.done_AI_turn)
+        while (!current_player.GetAI().done_AI_turn)
             yield return new WaitForSeconds(0.3f);
 
         // AI turn is over, end it
         EndTurn();
+    }
+    public void Do_Player_AI_Turn()
+    {
+        current_player.use_ai = true;
+        StartTurn();
     }
 
 
@@ -178,6 +185,10 @@ public class BattleManager : MonoBehaviour
     {
         if (PlayerInterface.player_interface.CanSelect())
         {
+            // Only let the player use the AI one turn at a time
+            if (current_player.human_controlled && current_player.use_ai)
+                current_player.use_ai = false;
+
             PlayerInterface.player_interface.UnhighlightHexes();
             PlayerInterface.player_interface.UnitDeselected();
 
@@ -238,6 +249,10 @@ public class BattleManager : MonoBehaviour
     }
 
 
+    public void SpawnUnit(Faction owning_faction, string unit_prefab, Hex hex)
+    {
+        SpawnUnit(owning_faction, unit_prefab, (int)hex.coordinate.x, (int)hex.coordinate.y);
+    }
     public void SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y)
     {
         GameObject instance = Instantiate(Resources.Load(unit_prefab, typeof(GameObject))) as GameObject;
