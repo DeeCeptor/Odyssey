@@ -14,38 +14,56 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public List<Hex> tiles_I_can_move_to;   // Tiles that will be highlighted when the user clicks on the unit
 
+    // UNIT ACTIVATION
+    [HideInInspector]
     public bool active = false;    // Set to true when it's this unit's turn
+    [HideInInspector]
     public bool ready_to_be_controlled = false;     // True when it's the human players turn and this unit is ready to act
+    [HideInInspector]
     public bool has_moved = false; // Can only move if this is set to false
+    [HideInInspector]
     public bool is_moving = false;      // True when the unit is moving
+    [HideInInspector]
     public bool has_attacked = false;  // Can only attack once per round
+    [HideInInspector]
+    public bool dead = false;
 
 
     protected List<Effect> effects_on_unit = new List<Effect>();
     protected List<Effect> remove_effects = new List<Effect>();     // Effects to be removed shortly
 
-    float maximum_health = 20;
+
+    // UNIT STATS
+    // Normal stats are the base stats of the unit.
+    // The non-normal stats are the current stats of the unit
+    public float maximum_health = 20;
     float health = 20;
-    float normal_defence = 0.3f;
+    public float normal_defence = 0.3f;     // Defense is a percentage, from 0 to 1 of how much damage is blocked
     float defence = 0.3f;
-    float normal_ranged_defence = 0.3f;
+    public float normal_ranged_defence = 0.3f;      // Specific 0 to 1 % blocked from ranged attacks
     float ranged_defence = 0.3f;
-    int normal_attack_range = 1;
+    public int normal_attack_range = 1;     // 1 is adjacent. 0 would mean unable to attack
     int attack_range = 1;
-    float normal_damage = 10;
-    float damage = 10;
-    int normal_movement = 3;
+    public float normal_damage = 8;     // Damage is blocked by defence
+    float damage = 8;
+    public float normal_piercing_damage = 2;    // Piercing damage ignores defence, making this stat extremely valuable
+    float piercing_damage;
+    public int normal_movement = 3;     // How far this unit can move in a turn.
     int movement = 3;
 
     public bool counter_attacks = true;     // Counterattacks if the enemy is within range and in the frontal facing arc
     public int counter_attack_radius = 60; // The difference in facing counter attacks can be done from. 60 means the front 3 hexes
     public bool attacks_are_counterable = true;
 
+
     // AI scores used to determine how this unit should move
     public float offensive_AI_score = 1;  // If this is an AI unit, this value indicates how agressively we should advance towards the enemy
+    public float flanking_factor = 1.5f;    // Damage multiplied by this factor when flanking, to show that we're not taking damage
+    public float ally_grouping_score = 0.1f;
 
 
     // Which direction the unit is facing. Hexagons have 6 facings. 360/6 = 60. This value will be a multiple of 6
+    [HideInInspector]
     public int facing = 0;
     [HideInInspector]
     public bool rotating = false;
@@ -68,6 +86,12 @@ public class Unit : MonoBehaviour
     {
         unit_menu = this.transform.FindChild("UnitMenu").gameObject;
         this.SetRotation(new Vector3(0, 0, 0));
+        health = maximum_health;
+
+        // Set aura so we can tell which faction this player belongs to
+        this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
+
+        ResetStats();
     }
 
 
@@ -233,8 +257,6 @@ public class Unit : MonoBehaviour
         int angle_towards_unit = (int) rotation.eulerAngles.z;
         int angle_diff = (int)Mathf.Abs(((angle_towards_unit - this.facing + 180) % 360 - 180));    // Do math to get the difference in this units facing and the direction towards the enemy
 
-        Debug.Log("Victim: " + facing + " towards enemy: " + angle_towards_unit + " diff: " + angle_diff);
-
         return (Mathf.Abs(angle_diff) <= counter_attack_radius + 5);
     }
 
@@ -260,6 +282,19 @@ public class Unit : MonoBehaviour
     {
         damage += constant_amount;
         damage += normal_damage * percent;
+    }
+
+    // Returns the piercing damage of the unit. Piercing damage ignores the defense of the unit
+    public virtual float GetPiercingDamage()
+    {
+        return piercing_damage;
+    }
+    // Adds to the units piercing damage.
+    // Percent is 0-1. 0.10 means add 10% of its normal damage
+    public virtual void AdjustPiercingDamage(float constant_amount, float percent)
+    {
+        piercing_damage += constant_amount;
+        piercing_damage += piercing_damage * percent;
     }
 
     public virtual int GetRange()
@@ -322,6 +357,7 @@ public class Unit : MonoBehaviour
     {
         // Remove from the unit lists
         this.owner.units.Remove(this);
+        dead = true;
 
         // Check victory/defeat conditions
         BattleManager.battle_manager.CheckVictoryAndDefeat();
@@ -471,6 +507,7 @@ public class Unit : MonoBehaviour
         defence = normal_defence;
         ranged_defence = normal_ranged_defence;
         damage = normal_damage;
+        piercing_damage = normal_piercing_damage;
         attack_range = normal_attack_range;
     }
     public void EvaluateEffects()
@@ -546,7 +583,7 @@ public class Unit : MonoBehaviour
     public float TakeHit(Unit attacker, bool attack_is_counterable)
     {
         float modified_damage = CalculateDamage(attacker);
-        health -= modified_damage;
+        health -= (int) modified_damage;
         Debug.Log(u_name + " took " + modified_damage + " damaged, " + health + " HP remaining from " + attacker.u_name);
 
         PlayerInterface.player_interface.CreateFloatingText(this.transform.position, modified_damage + "", false, 3.0f);
@@ -570,10 +607,15 @@ public class Unit : MonoBehaviour
     public float CalculateDamage(Unit attacker)
     {
         // Have the damage be the percentage of the health remaining of this unit. Weak units don't do as much damage
-        float raw_damage = attacker.GetDamage() * (attacker.GetHealth() / attacker.GetMaxHealth());
-
+        float raw_normal_damage = attacker.GetDamage() * (attacker.GetHealth() / attacker.GetMaxHealth());
+        float raw_piercing_damage = attacker.GetPiercingDamage() * (attacker.GetHealth() / attacker.GetMaxHealth());
+        
         // Modify the damage by the defence percentage. 10% defence means 90% of the damage is inflicted.
-        // Always do a minimum of 1 damage.
-        return Mathf.Max(1, raw_damage - (raw_damage * this.GetDefence()));
+        float modified_normal_damage = raw_normal_damage - (raw_normal_damage * this.GetDefence());
+
+        // Piercing damage is not affected by the enemy's defense.
+        // Every attack does a minimum of 1 damage.
+        float final_damage = Mathf.Max(1, modified_normal_damage + raw_piercing_damage);
+        return final_damage;
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 437488}
   - 212: {fileID: 21203156}
   - 114: {fileID: 11457070}
-  - 65: {fileID: 6572376}
+  - 58: {fileID: 5882118}
   m_Layer: 0
   m_Name: Hoplite
   m_TagString: Untagged
@@ -65,6 +65,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &148100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 470716}
+  - 212: {fileID: 21233656}
+  m_Layer: 0
+  m_Name: PlayerAura
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &160802
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +113,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &189502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 476118}
+  - 212: {fileID: 21254116}
+  m_Layer: 0
+  m_Name: FacingArrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &428186
 Transform:
   m_ObjectHideFlags: 1
@@ -108,7 +140,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 437488}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &437488
 Transform:
   m_ObjectHideFlags: 1
@@ -120,7 +152,9 @@ Transform:
   m_LocalScale: {x: .600000024, y: .600000024, z: 1}
   m_Children:
   - {fileID: 466020}
+  - {fileID: 476118}
   - {fileID: 428186}
+  - {fileID: 470716}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &449812
@@ -162,6 +196,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 466020}
   m_RootOrder: 1
+--- !u!4 &470716
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148100}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: .5}
+  m_LocalScale: {x: 1.70000005, y: 1.70000005, z: 2}
+  m_Children: []
+  m_Father: {fileID: 437488}
+  m_RootOrder: 3
+--- !u!4 &476118
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.37, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_Children: []
+  m_Father: {fileID: 437488}
+  m_RootOrder: 1
 --- !u!4 &496126
 Transform:
   m_ObjectHideFlags: 1
@@ -174,18 +232,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 466020}
   m_RootOrder: 0
---- !u!65 &6572376
-BoxCollider:
+--- !u!58 &5882118
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126922}
+  m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1.89999998, y: 2.20000005, z: .200000003}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1.10000002
 --- !u!114 &11457070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,16 +257,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   location: {fileID: 0}
+  location_coordinates: {x: 0, y: 0}
   movement_path: []
   attack_target: {fileID: 0}
   tiles_I_can_move_to: []
+  active: 0
   ready_to_be_controlled: 0
+  has_moved: 0
+  is_moving: 0
+  has_attacked: 0
+  maximum_health: 200
+  normal_defence: .300000012
+  normal_ranged_defence: .300000012
+  normal_attack_range: 1
+  normal_damage: 80
+  normal_piercing_damage: 20
+  normal_movement: 3
+  counter_attacks: 1
+  counter_attack_radius: 60
+  attacks_are_counterable: 1
   offensive_AI_score: 1
   facing: 0
+  rotating: 0
   u_name: Hoplite
   u_description: Armed with spear and shield, these warriors are trained to fight
     in a shield wall.
   portrait: {fileID: 0}
+  prefab_name: 
   unit_menu: {fileID: 0}
 --- !u!212 &21203156
 SpriteRenderer:
@@ -287,6 +363,32 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!212 &21233656
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148100}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 0
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 2b96439affe9aa644966ad214994f3f4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: .527999997}
 --- !u!212 &21251280
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -312,6 +414,32 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!212 &21254116
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189502}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 0
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21290822
 SpriteRenderer:

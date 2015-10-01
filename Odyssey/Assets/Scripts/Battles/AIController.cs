@@ -45,15 +45,19 @@ public class AI_Turn_Thread
 
         // By this point, all units should have their movable tiles updated
         // This AI will evaluate each tile the AI can move to, and pick the best one
-        foreach (Unit unit in faction.units)
+        List<Unit> units_needing_turns = new List<Unit>();
+        units_needing_turns.AddRange(faction.units);
+        foreach (Unit unit in units_needing_turns)
         {
             try
             {
+                unit.attack_target = null;
+
                 //////// MOVING //////////
                 Hex best_hex = unit.location;   // Start off assuming where they are is the best location
                 best_hex.hex_score = EvaluateHexScore(unit, best_hex);
 
-                // Go through each unit, evaluate every hex it could move to
+                // Evaluate every hex this unit can move to
                 foreach (Hex hex in unit.tiles_I_can_move_to)
                 {
                     hex.hex_score = EvaluateHexScore(unit, hex);
@@ -76,6 +80,7 @@ public class AI_Turn_Thread
                 Unit closest_enemy = null;
                 foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
                 {
+                    //////// FACING ////////////
                     // Check if this is the closest enemy, so we can face towards them
                     int distance = HexMap.hex_map.DistanceBetweenHexes(unit.location.coordinate, enemy.location.coordinate);
                     if (distance < closest_distance)
@@ -167,15 +172,15 @@ public class AI_Turn_Thread
             {
                 if (!target_hex.occupying_unit.counter_attacks || !target_hex.occupying_unit.IsFacing(hex))    //??
                 {
-                    score *= 1.5f;
+                    score *= cur_unit.flanking_factor;
                 }
             }
         }
 
         // If we can't attack someone from this hex, 
-        if (score == 0 && cur_unit.offensive_AI_score > 0)
+        if ((score == 0 && cur_unit.offensive_AI_score > 0) || cur_unit.GetRange() > 1)
         {
-            float closest_enemy_distance = 1000;
+            float closest_enemy_distance = 100000;
             // Find the closest enemy unit, and make this score higher the closer we are to it
             foreach (Unit enemy in cur_unit.owner.GetAllEnemyUnits())
             {
@@ -185,8 +190,21 @@ public class AI_Turn_Thread
                     closest_enemy_distance = dist;
             }
 
-            if (closest_enemy_distance < 1000)
+            // Move towards enemies if we have no target
+            if (score == 0 && closest_enemy_distance < 100000)
                 score = (20f - closest_enemy_distance) / 20f;
+
+
+            // This section is for ranged units. They should move to their max range to stay away from enemy melee
+            // If the value is positive, that means that this unit is closer than this unit's range. We don't like that, so try to move to max range to stay alive
+            if (cur_unit.GetRange() > 1)
+            {
+                float distance_versus_range = closest_enemy_distance - cur_unit.GetRange();
+                if (distance_versus_range < 0)
+                {
+                    score += distance_versus_range;
+                }
+            }
         }
 
         return score;
@@ -198,12 +216,15 @@ public class AI_Turn_Thread
     {
         float score = 0;
 
-        // Find all hexes with allies on them
-        List<Hex> potential_targets = HexMap.hex_map.HexesWithinRangeContainingAllies(hex, cur_unit.GetRange(), cur_unit.owner);
-        foreach (Hex target_hex in potential_targets)
+        if (cur_unit.ally_grouping_score > 0)
         {
-            if (target_hex.occupying_unit != cur_unit)
-                score += 0.1f;
+            // Find all hexes with allies on them
+            List<Hex> potential_targets = HexMap.hex_map.HexesWithinRangeContainingAllies(hex, cur_unit.GetRange(), cur_unit.owner);
+            foreach (Hex target_hex in potential_targets)
+            {
+                if (target_hex.occupying_unit != cur_unit)
+                    score += cur_unit.ally_grouping_score;
+            }
         }
 
         return score;

@@ -12,7 +12,7 @@ GameObject:
   - 124: {fileID: 12459200}
   - 92: {fileID: 9276984}
   - 81: {fileID: 8192674}
-  - 114: {fileID: 11474816}
+  - 114: {fileID: 11468642}
   m_Layer: 0
   m_Name: BattleCamera
   m_TagString: MainCamera
@@ -80,7 +80,7 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 125548}
   m_Enabled: 1
---- !u!114 &11474816
+--- !u!114 &11468642
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 125548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e404f5fefb26645ab79f6cce9eadb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 304988cdffa998642b081511fdcf3a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!124 &12459200

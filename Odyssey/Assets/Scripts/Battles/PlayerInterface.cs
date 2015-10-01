@@ -6,7 +6,8 @@ public class PlayerInterface : MonoBehaviour
 {
     [HideInInspector]
     public static PlayerInterface player_interface;
-
+    public Button end_turn_button;
+    public Button AI_turn_button;
     public GameObject pause_menu;
     public GameObject summary_screen;
     public Text summary_screen_title;
@@ -91,7 +92,7 @@ public class PlayerInterface : MonoBehaviour
     // Player left clicked on the unit
     public void UnitSelected(Unit unit)
     {
-        UnitDeselected();
+        //UnitDeselected();
 
         ShowUnitStatsPanel(unit);
 
@@ -180,7 +181,7 @@ public class PlayerInterface : MonoBehaviour
 
     public void MousedOverHex(Hex hex)
     {
-        if (highlighted_hex != hex && !hex.IsHighlighted())
+        if (highlighted_hex != hex)// && !hex.IsHighlighted())
         {
             if (highlighted_hex != null)
                 highlighted_hex.UnMouseHighlight();
