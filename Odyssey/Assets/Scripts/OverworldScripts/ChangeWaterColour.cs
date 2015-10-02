@@ -11,10 +11,22 @@ public class ChangeWaterColour : MonoBehaviour
     void Start()
     {
         rend = GetComponent<Renderer>();
+
+        /*
+        Material mat = rend.material;
+        mat.
+        Debug.Log("A");
+        foreach (string str in rend.material.shaderKeywords)
+        {
+            Debug.Log(str);
+        }*/
     }
+
     void Update()
     {
-        float lerp = Mathf.PingPong(Time.time, duration) / duration;
-        rend.material.color = Color.Lerp(colorStart, colorEnd, lerp);
+        //float lerp = Mathf.PingPong(Time.time, duration) / duration;
+        //rend.material.color = Color.Lerp(colorStart, colorEnd, lerp);
+
+
     }
 }

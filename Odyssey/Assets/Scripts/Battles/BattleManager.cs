@@ -33,14 +33,14 @@ public class BattleManager : MonoBehaviour
             Faction player_team = new Faction("Player", true, 1, Color.green);
             factions.Add(player_team);
             PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
-
+            /*
             for (int x = -1; x <= 2; x++)
             {
                 for (int y = -1; y <= 1; y++)
                 {
-                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, y);
+                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, y, true);
                 }
-            }
+            }*/
             
             // Make the units draggable
             foreach (Faction faction in factions)
@@ -58,31 +58,8 @@ public class BattleManager : MonoBehaviour
             if (GameObject.Find("PlayerUnitPositions") != null)
             {
                 SpawnPlayerDeployedUnits(); // Also gets the faction
-
-
-                Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
-                factions.Add(enemy_team);
-
-                for (int x = -4; x < 5; x++)
-                {
-                    SpawnUnit(enemy_team, "Battles/Units/Hoplite", x, 6);
-                }
-                for (int x = -4; x < 5; x++)
-                {
-                    SpawnUnit(enemy_team, "Battles/Units/Hoplite", x, -6);
-                }
-
-
-                // Set enemies. Everyone is an enemy of everyone currently
-                foreach (Faction faction_1 in factions)
-                {
-                    foreach (Faction faction_2 in factions)
-                    {
-                        if (faction_1 != faction_2)
-                            faction_1.enemies.Add(faction_2);
-                    }
-                }
             }
+            // DEBUG SPAWN UNITS
             else
             {
                 Debug.Log("No player deployed units. Starting debug mode.");
@@ -91,29 +68,57 @@ public class BattleManager : MonoBehaviour
                 factions.Add(player_team);
                 for (int x = -2; x < 2; x++)
                 {
-                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, 0);
+                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, 0, false);
                 }
                 for (int x = -2; x < 2; x++)
                 {
-                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, -1);
+                    SpawnUnit(player_team, "Battles/Units/Archer", x, -1, false);
+                }
+                for (int x = -2; x < 2; x++)
+                {
+                    SpawnUnit(player_team, "Battles/Units/Cavalry", x, 1, false);
                 }
 
-
+                /*
                 Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
                 factions.Add(enemy_team);
                 for (int x = -4; x < 5; x++)
                 {
-                    SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, 6);
+                    SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, 6, false);
                 }
                 for (int x = -4; x < 5; x++)
                 {
-                    SpawnUnit(enemy_team, "Battles/Units/Archer", x, -6);
+                    SpawnUnit(enemy_team, "Battles/Units/Archer", x, -6, false);
                 }
 
 
                 // Set enemies
                 player_team.enemies.Add(enemy_team);
-                enemy_team.enemies.Add(player_team);
+                enemy_team.enemies.Add(player_team);*/
+            }
+
+            // Set enemies regardless of how the player got units (deployed or debug)
+            Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
+            factions.Add(enemy_team);
+
+            for (int x = -4; x < 5; x++)
+            {
+                SpawnUnit(enemy_team, "Battles/Units/Archer", x, 6, false);
+            }
+            for (int x = -4; x < 5; x++)
+            {
+                SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, -6, false);
+            }
+
+
+            // Set enemies. Everyone is an enemy of everyone currently
+            foreach (Faction faction_1 in factions)
+            {
+                foreach (Faction faction_2 in factions)
+                {
+                    if (faction_1 != faction_2)
+                        faction_1.enemies.Add(faction_2);
+                }
             }
 
             StartRound();
@@ -249,33 +254,39 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    public void SpawnUnit(Faction owning_faction, string unit_prefab, Hex hex)
+    // Drag and drop is for the player deployment so they can drag and drop units around the map
+    public void SpawnUnit(Faction owning_faction, string unit_prefab, Hex hex, bool add_drag_drop)
     {
-        SpawnUnit(owning_faction, unit_prefab, (int)hex.coordinate.x, (int)hex.coordinate.y);
+        SpawnUnit(owning_faction, unit_prefab, (int)hex.coordinate.x, (int)hex.coordinate.y, add_drag_drop);
     }
-    public void SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y)
+    public void SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y, bool add_drag_drop)
     {
         GameObject instance = Instantiate(Resources.Load(unit_prefab, typeof(GameObject))) as GameObject;
         Unit unit2 = instance.GetComponent<Unit>();
         unit2.owner = owning_faction;
-        unit2.u_name = "E1";
         HexMap.hex_map.WarpUnitTo(unit2, HexMap.hex_map.GetHex(x, y));
         owning_faction.units.Add(unit2);
+
+        if (add_drag_drop)
+            instance.AddComponent<UnitDragDrop>();
     }
 
 
     // If a player has no more units, the fight's over
     public void CheckVictoryAndDefeat()
     {
-        foreach (Faction faction in factions)
+        if (!pre_battle_deployment)
         {
-            if (faction.units.Count <= 0)
+            foreach (Faction faction in factions)
             {
-                Debug.Log(faction.faction_name + " has been defeated");
-                if (faction.human_controlled)
-                    Defeat();
-                else
-                    Victory();
+                if (faction.units.Count <= 0)
+                {
+                    Debug.Log(faction.faction_name + " has been defeated");
+                    if (faction.human_controlled)
+                        Defeat();
+                    else
+                        Victory();
+                }
             }
         }
     }
@@ -307,6 +318,7 @@ public class BattleManager : MonoBehaviour
 
             foreach(Unit unit in faction.units)
             {
+                Destroy(unit.GetComponent<UnitDragDrop>());
                 positions.player_deployed_units.Add(unit);
                 DontDestroyOnLoad(unit.gameObject);
                 Debug.Log("Saving " + unit.u_name);

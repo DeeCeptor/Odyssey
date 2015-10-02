@@ -396,16 +396,10 @@ public class Unit : MonoBehaviour
     // Attack unit if we right clicked on it and we have another unit selected
     void OnMouseOver()
     {
-        /*if (Input.GetMouseButtonDown(1))
-            Debug.Log("OnMouseOver " + PlayerInterface.player_interface.SelectedUnitAvailableToControl()
-                + PlayerInterface.player_interface.selected_unit.has_attacked 
-                + PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this)
-                + HexMap.hex_map.InRange(PlayerInterface.player_interface.selected_unit.location, this.location, attack_range));*/
         if (Input.GetMouseButtonDown(1)     // Right clicked on unit
             && PlayerInterface.player_interface.SelectedUnitAvailableToControl()
             && !PlayerInterface.player_interface.selected_unit.has_attacked
-            && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this)
-            && HexMap.hex_map.InRange(PlayerInterface.player_interface.selected_unit.location, this.location, attack_range))
+            && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this))
         {
             Debug.Log("OnMouseOver attack");
             PlayerInterface.player_interface.selected_unit.Attack(this, attacks_are_counterable);

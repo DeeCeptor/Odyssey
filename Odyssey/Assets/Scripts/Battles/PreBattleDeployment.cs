@@ -14,9 +14,11 @@ public class PreBattleDeployment : MonoBehaviour
 
     // String that contains the location of the prefab to spawn
     public string unit_to_spawn;
+    public string unit_to_spawn_name;
     public GameObject deployable_sprite;    // Sprite that follows the mouse to show the unit we're going to spawn
     public GameObject deploy_unit_button;   // Button to populate our deploy units list
-    public Transform deployable_panel; 
+    public Transform deployable_panel;      // Panel that gets populated with buttons to deploy units
+    public Text units_remaining_text;
     [HideInInspector]
     public Faction player_faction;
 
@@ -33,6 +35,7 @@ public class PreBattleDeployment : MonoBehaviour
         foreach (KeyValuePair<string, int> pair in deployable_units)
         {
             GameObject newButton = Instantiate(deploy_unit_button) as GameObject;
+            newButton.name = pair.Key;
             Button button = newButton.GetComponent<Button>();
             Debug.Log(pair.Key + " x " + pair.Value);
             string unit_name = pair.Key;
@@ -40,7 +43,10 @@ public class PreBattleDeployment : MonoBehaviour
             Text text = newButton.GetComponentInChildren<Text>();
             text.text = pair.Key + " x " + pair.Value;
             newButton.transform.SetParent(deployable_panel);
+            newButton.transform.localScale = new Vector3(1, 1, 1);
         }
+
+        SetUnitsRemainingText();
     }
 
 
@@ -57,9 +63,7 @@ public class PreBattleDeployment : MonoBehaviour
                 && PlayerInterface.player_interface.highlighted_hex.occupying_unit == null
                 && cur_deployed_units < maximum_deployable_units)
             {
-                Debug.Log("Spawning unit");
-                cur_deployed_units++;
-                BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex);
+                DeployUnit();
             }
         }
 
@@ -68,9 +72,60 @@ public class PreBattleDeployment : MonoBehaviour
             && PlayerInterface.player_interface.highlighted_hex != null
             && PlayerInterface.player_interface.highlighted_hex.occupying_unit != null)
         {
-            cur_deployed_units--;
-            PlayerInterface.player_interface.highlighted_hex.occupying_unit.Die();
+            UndeployUnit();
         }
+    }
+    public void DeployUnit()
+    {
+        Debug.Log("Spawning unit " + unit_to_spawn_name);
+        int remaining_units = deployable_units[unit_to_spawn_name];
+        if (remaining_units > 0)    // Spawn the unit if we have units available to spawn
+        {
+            deployable_units[unit_to_spawn_name] = deployable_units[unit_to_spawn_name] - 1;
+            cur_deployed_units++;
+            SetUnitsRemainingText();
+            SetDeployButtonText(unit_to_spawn_name, deployable_units[unit_to_spawn_name]);
+            BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex, true);
+
+            // Disable the deployment of that unit if we're out of those units to deploy
+            if (deployable_units[unit_to_spawn_name] <= 0)
+            {
+                deployable_panel.FindChild(unit_to_spawn_name).gameObject.GetComponent<Button>().interactable = false;
+                unit_to_spawn = "";
+                unit_to_spawn_name = "";
+            }
+        }
+    }
+    public void UndeployUnit()
+    {
+        cur_deployed_units--;
+        SetUnitsRemainingText();
+        string name = PlayerInterface.player_interface.highlighted_hex.occupying_unit.u_name;
+        Debug.Log("Undeploying " + name);
+
+        deployable_units[name] = deployable_units[name] + 1;
+        SetDeployButtonText(name, deployable_units[name]);
+
+        // Re enable deployment button of this unit we just deleted
+        if (deployable_units[name] == 1)
+        {
+            deployable_panel.FindChild(name).gameObject.GetComponent<Button>().interactable = true;
+        }
+
+        PlayerInterface.player_interface.highlighted_hex.occupying_unit.Die();
+    }
+
+
+    public void SetDeployButtonText(string unit_name, int number_available)
+    {
+        Debug.Log(unit_name + " " + number_available);
+        deployable_panel.FindChild(unit_name).GetComponentInChildren<Text>().text = unit_name + " x " + number_available;
+    }
+
+
+    public void SetUnitsRemainingText()
+    {
+        units_remaining_text.text = (maximum_deployable_units - cur_deployed_units) + " deployments remaining";
     }
 
 
@@ -78,6 +133,7 @@ public class PreBattleDeployment : MonoBehaviour
     {
         Debug.Log("Selected " + unit_name + " to deploy");
         unit_to_spawn = "Battles/Units/" + unit_name;
+        unit_to_spawn_name = unit_name;
 
         // Activate and set deployable sprite
         deployable_sprite.SetActive(true);
