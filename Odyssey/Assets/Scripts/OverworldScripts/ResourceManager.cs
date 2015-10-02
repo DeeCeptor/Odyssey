@@ -87,6 +87,8 @@ public int waterPercent = 66;
 public GameObject waterAquiredSymbol;
 public GameObject foodAquiredSymbol;
 public GameObject islandToPlunder;
+public Collider[] currentWeather;
+public WeatherScript weatherAtIndex;
 
 	// Use this for initialization
 	void Start () {
@@ -119,6 +121,7 @@ public GameObject islandToPlunder;
 			frameIterator = 0;
 			Consume(1);
 			CalcWeight();
+            Weather();
 		}
 		if(!anchored)
 		{
@@ -139,10 +142,27 @@ public GameObject islandToPlunder;
 		goldText.GetComponent<Text>().text = "gold: " + gold.ToString();
 	}
 	}
+
+    public void Weather()
+    {
+        LayerMask mask = 1 << 10;
+        currentWeather = Physics.OverlapSphere(transform.position, 0.1f);
+        for (int i = 0; i < currentWeather.Length;i++)
+        {
+            weatherAtIndex = currentWeather[i].gameObject.GetComponent<WeatherScript>();
+            if (!anchored)
+            {
+                shipHealth = shipHealth - weatherAtIndex.weatherDamage;
+                morale = morale - weatherAtIndex.weatherMoraleDrain;
+                stamina = stamina - weatherAtIndex.weatherStaminaDrain;
+            }
+        }
+
+    }
 	
 	public void LowRations()
 	{
-	rationRate = 0;
+	    rationRate = 0;
 	}
 	
 	public void NormalRations()

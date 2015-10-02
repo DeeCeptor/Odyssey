@@ -10,6 +10,7 @@ public class PlayerBoatController : MonoBehaviour {
 	public float encounterRange = 5;
 	public ResourceManager resource;
 	public GameObject islandParkedAt;
+
 	
 	public bool paused = false;
 	
@@ -21,26 +22,35 @@ public class PlayerBoatController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-	if(!paused)
-	{
+	    if(!paused)
+	    {
 	
-		if(moveRate == 0)
-		{
-			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*slowSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-			transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
-		}
+	    	if(moveRate == 0)
+	    	{
+	    		gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*slowSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
+	    		transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
+	    	}
 	
-		if(moveRate == 1)
-		{
-			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*speed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-			transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
-		}
+	    	if(moveRate == 1)
+	    	{
+	    		gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*speed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
+	    		transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
+	    	}
 	
-		if(moveRate == 2)
-		{
-			gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*fastSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-			transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
-		}
+	    	if(moveRate == 2)
+	    	{
+		    	gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*fastSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
+		    	transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
+		    }
+
+          if(resource.currentWeather.Length > 0)
+          {
+                 for (int i = 0; i< resource.currentWeather.Length; i++)
+                 {
+                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity * resource.currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherSpeedDown;
+                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity + resource.currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherDirection;
+                }
+         }
 	}
 	}
 	
