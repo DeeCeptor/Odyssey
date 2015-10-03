@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2346630}
   - 114: {fileID: 11408706}
   - 114: {fileID: 11466548}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Goal
   m_TagString: Island
   m_Icon: {fileID: 0}
@@ -113,6 +113,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: amount
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

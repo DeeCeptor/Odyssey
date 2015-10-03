@@ -43,14 +43,15 @@ public class PlayerBoatController : MonoBehaviour {
 		    	transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
 		    }
 
-          if(resource.currentWeather.Length > 0)
-          {
-                 for (int i = 0; i< resource.currentWeather.Length; i++)
+            LayerMask mask = 1 << 10;
+            Collider[] currentWeather = Physics.OverlapSphere(transform.position, 0.1f, mask);
+
+            for (int i = 0; i< currentWeather.Length; i++)
                  {
-                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity * resource.currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherSpeedDown;
-                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity + resource.currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherDirection;
+                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity * currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherSpeedDown;
+                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity + currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherDirection;
                 }
-         }
+         
 	}
 	}
 	

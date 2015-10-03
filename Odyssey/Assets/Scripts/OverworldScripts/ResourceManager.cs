@@ -146,7 +146,7 @@ public WeatherScript weatherAtIndex;
     public void Weather()
     {
         LayerMask mask = 1 << 10;
-        currentWeather = Physics.OverlapSphere(transform.position, 0.1f);
+        currentWeather = Physics.OverlapSphere(transform.position, 0.1f,mask);
         for (int i = 0; i < currentWeather.Length;i++)
         {
             weatherAtIndex = currentWeather[i].gameObject.GetComponent<WeatherScript>();

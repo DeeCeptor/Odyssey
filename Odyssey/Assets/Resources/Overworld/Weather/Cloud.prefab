@@ -1,47 +1,47 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &103618
+--- !u!1 &160574
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 454082}
-  - 33: {fileID: 3330204}
-  - 64: {fileID: 6413576}
-  - 23: {fileID: 2305716}
-  - 114: {fileID: 11482664}
-  m_Layer: 0
-  m_Name: Ocean
-  m_TagString: Ocean
+  - 4: {fileID: 408970}
+  - 33: {fileID: 3343698}
+  - 23: {fileID: 2316602}
+  - 114: {fileID: 11436370}
+  - 65: {fileID: 6548384}
+  m_Layer: 10
+  m_Name: Cloud
+  m_TagString: Weather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &454082
+--- !u!4 &408970
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103618}
+  m_GameObject: {fileID: 160574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.25, y: -.25999999, z: .680000007}
-  m_LocalScale: {x: 500, y: 1, z: 500}
+  m_LocalPosition: {x: 17.2240219, y: 39, z: 32.0999985}
+  m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2305716
+--- !u!23 &2316602
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103618}
+  m_GameObject: {fileID: 160574}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: b164241fc8c8f064ba37e12f285ea8d8, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -55,46 +55,46 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3330204
+--- !u!33 &3343698
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103618}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &6413576
-MeshCollider:
+  m_GameObject: {fileID: 160574}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &6548384
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103618}
+  m_GameObject: {fileID: 160574}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11482664
+  m_Size: {x: 1, y: 52.9399986, z: 1}
+  m_Center: {x: 0, y: -24.6000004, z: 0}
+--- !u!114 &11436370
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103618}
+  m_GameObject: {fileID: 160574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3d3ef1a5bbfb4e0a910fbbe5830b1f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7146802cb9daa104097d612abc04fd52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterMode: 2
-  disablePixelLights: 1
-  textureSize: 256
-  clipPlaneOffset: .0700000003
-  reflectLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  refractLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  weatherType: Cloud
+  weatherDamage: 0
+  LifeSpan: 240
+  ReplaceWith: {fileID: 152534, guid: de0f3e56025fc63439fb8be5d0206951, type: 2}
+  paused: 0
+  weatherSpeedDown: 1
+  weatherStaminaDrain: 0
+  weatherDirection: {x: 0, y: 0, z: 0}
+  weatherMoraleDrain: 0
+  weatherHeight: 40
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -103,34 +103,30 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
-      propertyPath: m_LocalScale.x
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalScale.z
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Texture
+      propertyPath: ReplaceWith
       value: 
-      objectReference: {fileID: 2800000, guid: fa2667b377594463fbb6e02f9bb0b844, type: 3}
+      objectReference: {fileID: 152534, guid: de0f3e56025fc63439fb8be5d0206951, type: 2}
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: Ocean
+      value: Weather
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: waterMode
-      value: 2
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: disablePixelLights
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+      propertyPath: weatherSpeedDown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weatherHeight
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 103618}
+  m_RootGameObject: {fileID: 160574}
   m_IsPrefabParent: 1

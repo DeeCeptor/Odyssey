@@ -5,6 +5,7 @@ public class EventManagement : MonoBehaviour {
 	
 	public GameObject player;
 	public GameObject[] enemies;
+    public GameObject[] weather;
 	public ResourceManager resourceController;
 	public PlayerBoatController playerController;
 	public GameObject currentEvent;
@@ -50,7 +51,7 @@ public class EventManagement : MonoBehaviour {
 	
 	public void HaveEvent(GameObject eventToHave)
 	{
-		enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
+        
 		currentEvent = Instantiate(eventToHave);
 		Pause();
 	}
@@ -89,34 +90,47 @@ public class EventManagement : MonoBehaviour {
 	
 	public void EndEvent()
 	{
-	enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
 	Unpause();
 	Destroy(currentEvent);
 	}
 
 	public void Pause()
 	{
-		paused = true;
+        weather = GameObject.FindGameObjectsWithTag("Weather");
+        enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
+        paused = true;
 		resourceController.Pause();
 		playerController.Pause();
 		for(int i = 0; i < enemies.Length;i++)
 		{
 		enemies[i].GetComponent<OverworldEnemyScript>().Pause();
 		}
-	}
+        for (int i = 0; i < weather.Length; i++)
+        {
+            weather[i].GetComponent<WeatherScript>().Pause();
+        }
+        GetComponent<WeatherAndEnemySpawnScript>().Pause();
+    }
 	
 	public void Unpause()
 	{
-		paused = false;
+        weather = GameObject.FindGameObjectsWithTag("Weather");
+        enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
+        paused = false;
 		resourceController.Unpause();
 		if(!resourceController.anchored)
 		{
 		playerController.Unpause();
 		}
-		for(int i = 0; i < enemies.Length;i++)
+		for(int i = 0; i < weather.Length;i++)
 		{
-			enemies[i].GetComponent<OverworldEnemyScript>().Unpause();
-		}
-	}
+            weather[i].GetComponent<WeatherScript>().Unpause();
+        }
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<OverworldEnemyScript>().Unpause();
+        }
+        GetComponent<WeatherAndEnemySpawnScript>().Unpause();
+    }
 	
 }
