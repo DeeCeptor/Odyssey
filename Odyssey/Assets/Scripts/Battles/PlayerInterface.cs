@@ -19,10 +19,16 @@ public class PlayerInterface : MonoBehaviour
     public Text unit_description;
     public Text health_text;
     public Slider health_bar;
+    public Text damage_text;
+    public Slider damage_bar;
+    public Text piercing_damage_text;
+    public Slider piercing_damage_bar;
     public Text defence_text;
     public Slider defence_bar;
     public Text ranged_defence_text;
     public Slider ranged_defence_bar;
+    public Text movement_text;
+    public Slider movement_bar;
 
     public GameObject terrain_panel;
     public Text terrain_name;
@@ -131,6 +137,9 @@ public class PlayerInterface : MonoBehaviour
         SetHealthText(unit);
         SetDefenceText(unit);
         SetRangedDefenceText(unit);
+        SetDamageText(unit);
+        SetPiercingDamageText(unit);
+        SetMovementText(unit);
     }
     public void HideUnitStatsPanel()
     {
@@ -154,13 +163,28 @@ public class PlayerInterface : MonoBehaviour
     }
     public void SetDefenceText(Unit unit)
     {
-        defence_text.text = "Defence: " + unit.GetDefence();
+        defence_text.text = "Defence: " + (int)(unit.GetDefence() * 100) + "%";
         defence_bar.value = unit.GetDefence();
     }
     public void SetRangedDefenceText(Unit unit)
     {
-        ranged_defence_text.text = "Ranged Defence: " + unit.GetDefence();
-        ranged_defence_bar.value = unit.GetDefence();
+        ranged_defence_text.text = "Ranged Defence: " + (int)(unit.GetRangedDefence() * 100) + "%";
+        ranged_defence_bar.value = unit.GetRangedDefence();
+    }
+    public void SetDamageText(Unit unit)
+    {
+        damage_text.text = "Damage: " + unit.GetDamage();
+        damage_bar.value = unit.GetDamage() / 200.0f;
+    }
+    public void SetPiercingDamageText(Unit unit)
+    {
+        piercing_damage_text.text = "Piercing Damage: " + unit.GetPiercingDamage();
+        piercing_damage_bar.value = unit.GetPiercingDamage() / 200.0f;
+    }
+    public void SetMovementText(Unit unit)
+    {
+        movement_text.text = "Movement Speed: " + unit.GetMovement();
+        movement_bar.value = (float) unit.GetMovement() / 10.0f;
     }
 
     public bool SelectedUnitAvailableToControl()

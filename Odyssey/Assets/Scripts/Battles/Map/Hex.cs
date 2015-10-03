@@ -30,6 +30,8 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 
     public string h_name;
     public string h_description;
+    public int cost_to_enter_hex = 1;
+    public bool impassable = false;     // If set to true, no unit can ever traverse this hex
     //List<Effects> effects_on_hex;
 
     // Used for AI
@@ -178,10 +180,15 @@ public class Hex : MonoBehaviour, IComparable<Hex>
         if (collision.gameObject.tag == "Hex")// && !neighbours.Contains(collision.gameObject.GetComponent<Hex>()))
         {
             GameObject neighbour = collision.gameObject;
-            Edge edge = new Edge(neighbour.GetComponent<Hex>(), this, 1);
-            neighbours.Add(edge);
-            HexMap.hex_map.all_edges.Add(edge);
-            Debug.DrawLine(this.transform.position, neighbour.transform.position, Color.red, 500);
+
+            // Only create an edge between these 2 hexes if they're both passable
+            if (!impassable && !neighbour.GetComponent<Hex>().impassable)
+            {
+                Edge edge = new Edge(neighbour.GetComponent<Hex>(), this, neighbour.GetComponent<Hex>().cost_to_enter_hex);
+                neighbours.Add(edge);
+                HexMap.hex_map.all_edges.Add(edge);
+                Debug.DrawLine(this.transform.position, neighbour.transform.position, Color.red, 500);
+            }
         }
     }
 

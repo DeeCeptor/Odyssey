@@ -33,14 +33,6 @@ public class BattleManager : MonoBehaviour
             Faction player_team = new Faction("Player", true, 1, Color.green);
             factions.Add(player_team);
             PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
-            /*
-            for (int x = -1; x <= 2; x++)
-            {
-                for (int y = -1; y <= 1; y++)
-                {
-                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, y, true);
-                }
-            }*/
             
             // Make the units draggable
             foreach (Faction faction in factions)
@@ -78,23 +70,6 @@ public class BattleManager : MonoBehaviour
                 {
                     SpawnUnit(player_team, "Battles/Units/Cavalry", x, 1, false);
                 }
-
-                /*
-                Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
-                factions.Add(enemy_team);
-                for (int x = -4; x < 5; x++)
-                {
-                    SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, 6, false);
-                }
-                for (int x = -4; x < 5; x++)
-                {
-                    SpawnUnit(enemy_team, "Battles/Units/Archer", x, -6, false);
-                }
-
-
-                // Set enemies
-                player_team.enemies.Add(enemy_team);
-                enemy_team.enemies.Add(player_team);*/
             }
 
             // Set enemies regardless of how the player got units (deployed or debug)
@@ -262,10 +237,12 @@ public class BattleManager : MonoBehaviour
     public void SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y, bool add_drag_drop)
     {
         GameObject instance = Instantiate(Resources.Load(unit_prefab, typeof(GameObject))) as GameObject;
-        Unit unit2 = instance.GetComponent<Unit>();
-        unit2.owner = owning_faction;
-        HexMap.hex_map.WarpUnitTo(unit2, HexMap.hex_map.GetHex(x, y));
-        owning_faction.units.Add(unit2);
+        Unit unit = instance.GetComponent<Unit>();
+        unit.owner = owning_faction;
+        owning_faction.units.Add(unit);
+
+        // Spawn the unit in a non impassasble and non occupied space
+        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.Nearest_Unoccupied_Passable_Hex(HexMap.hex_map.GetHex(x, y)));
 
         if (add_drag_drop)
             instance.AddComponent<UnitDragDrop>();

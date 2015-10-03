@@ -16,8 +16,8 @@ public class Ruins : Effect
         base.ApplyEffect();
 
         // Gives substantial defense to the unit
-        receiver.AdjustDefence(30);
-        receiver.AdjustRangedDefence(30);
+        receiver.AdjustDefence(0.30f);
+        receiver.AdjustRangedDefence(0.30f);
     }
 
 

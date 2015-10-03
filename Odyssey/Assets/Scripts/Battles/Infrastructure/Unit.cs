@@ -51,6 +51,7 @@ public class Unit : MonoBehaviour
     public int normal_movement = 3;     // How far this unit can move in a turn.
     int movement = 3;
 
+    public bool is_ranged_unit = false;
     public bool counter_attacks = true;     // Counterattacks if the enemy is within range and in the frontal facing arc
     public int counter_attack_radius = 60; // The difference in facing counter attacks can be done from. 60 means the front 3 hexes
     public bool attacks_are_counterable = true;

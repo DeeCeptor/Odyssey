@@ -35,7 +35,16 @@ public class HexMap : MonoBehaviour
         hex_map = this;
         InitializeMap();
     }
-	
+
+
+    System.Random rand = new System.Random();
+    string[] hex_types = new string[] { "Battles/Hexes/Hex", "Battles/Hexes/ForestHex"
+        , "Battles/Hexes/HillHex", "Battles/Hexes/WaterHex"
+        , "Battles/Hexes/RuinsHex", "Battles/Hexes/SwampHex" };
+    string GetRandomHexPrefab()
+    {
+        return hex_types[rand.Next(0, hex_types.Length)];
+    }
 
     void InitializeMap()
     {
@@ -44,7 +53,7 @@ public class HexMap : MonoBehaviour
         {
             for (int x = -x_size / 2; x <= x_size / 2; x++)
             {
-                GameObject instance = Instantiate(Resources.Load("Battles/Hexes/Hex", typeof(GameObject))) as GameObject;
+                GameObject instance = Instantiate(Resources.Load(GetRandomHexPrefab(), typeof(GameObject))) as GameObject;
                 float x_pos = x * x_offset + y * x_offset / 2;
                 float y_pos = y * y_offset;
                 instance.transform.position = new Vector3(x_pos, y_pos, 1);
@@ -52,6 +61,15 @@ public class HexMap : MonoBehaviour
                 hex.coordinate = new Vector2((int)x, (int)y);
                 all_hexes.Add(hex);
                 hex_dictionary.Add((int)x + "," + (int)y, hex);
+
+                // Give hex its terrain abilities
+                switch (hex.h_name)
+                {
+                    case "Ruins":
+                        hex.effects_on_hex.Add(new Ruins(null));
+                        break;
+                }
+
 
                 // Set boundaries and camera boundaries
                 if (x_pos > x_max)
@@ -459,5 +477,25 @@ public class HexMap : MonoBehaviour
         unit.SetLocation(destination);
         unit.transform.position = destination.transform.position;
         unit.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y, 0);
+    }
+
+
+    // Returns the nearest unoccupied passable hex to the destination
+    public Hex Nearest_Unoccupied_Passable_Hex(Hex destination)
+    {
+        if (!destination.impassable && destination.occupying_unit == null)
+            return destination;
+
+        for (int radius = 1; radius < 10; radius++)
+        {
+            foreach (Hex hex in HexesWithinRange(destination, radius))
+            {
+                if (!hex.impassable && hex.occupying_unit == null)
+                    return hex;
+            }
+        }
+
+        Debug.Log("Nearest_Unoccupied_Passable_Hex couldn't find free hex around " + destination.coordinate);
+        return destination;
     }
 }
