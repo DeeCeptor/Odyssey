@@ -68,6 +68,12 @@ public class HexMap : MonoBehaviour
                     case "Ruins":
                         hex.effects_on_hex.Add(new Ruins(null));
                         break;
+                    case "Forest":
+                        hex.effects_on_hex.Add(new Forest(null));
+                        break;
+                    case "Hill":
+                        hex.effects_on_hex.Add(new Hill(null));
+                        break;
                 }
 
 
@@ -358,7 +364,7 @@ public class HexMap : MonoBehaviour
             {
                 Hex cur_hex;
                 hex_dictionary.TryGetValue(cur_x + "," + cur_y, out cur_hex);
-                if (cur_hex.occupying_unit == null && !hexes_in_range.Contains(cur_hex))
+                if (cur_hex.occupying_unit == null && !cur_hex.impassable && !hexes_in_range.Contains(cur_hex))
                     AStarPathableToRecordHexes(location, cur_hex, range, unit.owner);
             }
         }

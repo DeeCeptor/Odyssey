@@ -304,7 +304,7 @@ public class Unit : MonoBehaviour
     }
     public virtual void AdjustRange(int amount)
     {
-        attack_range = Mathf.Min(1, attack_range + amount);
+        attack_range = Mathf.Max(1, attack_range + amount);
     }
 
     // Returns the defence of the unit
@@ -456,24 +456,37 @@ public class Unit : MonoBehaviour
             // Pathfind to the correct spot
             if (this.movement_path.Count == 0)
             {
+                Debug.Log("FF");
                 this.movement_path = HexMap.hex_map.AStarFindPath(this.location, to, movement, this.owner);
+                Debug.Log("path length " + movement_path.Count);
                 if (movement_path.Count > 0)
                 {
+                    Debug.Log("before SetLocation");
                     SetLocation(to);
                     has_moved = true;
                     is_moving = true;
+                    Debug.Log("before SetUnitsMovableTiles");
+
                     BattleManager.battle_manager.SetUnitsMovableTiles();
+                    Debug.Log("after SetUnitsMovableTiles");
                 }
+                else
+                    Debug.Log("CC");
             }
+            else
+                Debug.Log("BB");
         }
+        else
+            Debug.Log("AA");
     } 
 
 
     public void SetLocation(Hex hex)
     {
+        Debug.Log("before UnitMovedChangeEffects");
         // Remove the effects from this 
         UnitMovedChangeEffects();
-
+        Debug.Log("after UnitMovedChangeEffects");
         if (this.location != null)
         {
            // hex.ResetZoneOfControl();
@@ -482,10 +495,12 @@ public class Unit : MonoBehaviour
         this.location = hex;
         hex.occupying_unit = this;
         this.location_coordinates = new Vector2(hex.coordinate.x, hex.coordinate.y);
-       // hex.SetZoneOfControl(this);
+        // hex.SetZoneOfControl(this);
 
+        Debug.Log("before GetHexEffects");
         // Get the effects on this hex
         GetHexEffects(hex);
+        Debug.Log("after GetHexEffects");
     }
     // Add the bonuses conferred by the hex to this unit
     public void GetHexEffects(Hex hex)
@@ -519,6 +534,16 @@ public class Unit : MonoBehaviour
     // Called when the unit has moved to remove the old hex's effect
     public void UnitMovedChangeEffects()
     {
+        // Iterate through list backwards, so elements we remove don't change our ordering
+        for (int i = effects_on_unit.Count - 1; i >= 0; i--)
+        {
+            if (effects_on_unit[i].UnitMoved())
+            {
+                effects_on_unit[i].RemoveThisEffect();
+                effects_on_unit.RemoveAt(i);
+            }
+        }
+        /*
         foreach (Effect effect in effects_on_unit)
         {
             if (effect.UnitMoved())
@@ -526,11 +551,21 @@ public class Unit : MonoBehaviour
                 remove_effects.Add(effect);
             }
         }
-        RemoveEffects();
+        RemoveEffects();*/
     }
     // Called at the start of the turn to remove time sensitive effects
     public void TurnStartEffects()
     {
+        // Iterate through list backwards, so elements we remove don't change our ordering
+        for (int i = effects_on_unit.Count - 1; i >= 0; i--)
+        {
+            if (effects_on_unit[i].TurnStart())
+            {
+                effects_on_unit[i].RemoveThisEffect();
+                effects_on_unit.RemoveAt(i);
+            }
+        }
+        /*
         foreach (Effect effect in effects_on_unit)
         {
             if (effect.TurnStart())
@@ -538,7 +573,7 @@ public class Unit : MonoBehaviour
                 remove_effects.Add(effect);
             }
         }
-        RemoveEffects();
+        RemoveEffects();*/
     }
     // Removes effects in the remove_effects list
     public void RemoveEffects()
@@ -577,7 +612,7 @@ public class Unit : MonoBehaviour
     }
     public float TakeHit(Unit attacker, bool attack_is_counterable)
     {
-        float modified_damage = CalculateDamage(attacker);
+        int modified_damage = (int) CalculateDamage(attacker);
         health -= (int) modified_damage;
         Debug.Log(u_name + " took " + modified_damage + " damaged, " + health + " HP remaining from " + attacker.u_name);
 
