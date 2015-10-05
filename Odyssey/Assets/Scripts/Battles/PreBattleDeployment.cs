@@ -61,7 +61,8 @@ public class PreBattleDeployment : MonoBehaviour
             if (Input.GetMouseButtonDown(0) 
                 && PlayerInterface.player_interface.highlighted_hex != null 
                 && PlayerInterface.player_interface.highlighted_hex.occupying_unit == null
-                && cur_deployed_units < maximum_deployable_units)
+                && cur_deployed_units < maximum_deployable_units
+                && !PlayerInterface.player_interface.highlighted_hex.impassable)
             {
                 DeployUnit();
             }
@@ -70,8 +71,7 @@ public class PreBattleDeployment : MonoBehaviour
         // Right clicking on a deployed unit un deploys it
         if (Input.GetMouseButtonDown(1)
             && PlayerInterface.player_interface.highlighted_hex != null
-            && PlayerInterface.player_interface.highlighted_hex.occupying_unit != null
-            && !PlayerInterface.player_interface.highlighted_hex.impassable)
+            && PlayerInterface.player_interface.highlighted_hex.occupying_unit != null)
         {
             UndeployUnit();
         }

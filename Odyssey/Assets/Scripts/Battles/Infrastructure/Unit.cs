@@ -220,6 +220,8 @@ public class Unit : MonoBehaviour
 
         if (owner.human_controlled)
             ready_to_be_controlled = true;
+
+        TurnStartEffects();
     }
     public virtual void EndTurn()
     {
@@ -458,37 +460,24 @@ public class Unit : MonoBehaviour
             // Pathfind to the correct spot
             if (this.movement_path.Count == 0)
             {
-                Debug.Log("FF");
                 this.movement_path = HexMap.hex_map.AStarFindPath(this.location, to, movement, this.owner);
-                Debug.Log("path length " + movement_path.Count);
                 if (movement_path.Count > 0)
                 {
-                    Debug.Log("before SetLocation");
                     SetLocation(to);
                     has_moved = true;
                     is_moving = true;
-                    Debug.Log("before SetUnitsMovableTiles");
 
                     BattleManager.battle_manager.SetUnitsMovableTiles();
-                    Debug.Log("after SetUnitsMovableTiles");
                 }
-                else
-                    Debug.Log("CC");
             }
-            else
-                Debug.Log("BB");
         }
-        else
-            Debug.Log("AA");
     } 
 
 
     public void SetLocation(Hex hex)
     {
-        Debug.Log("before UnitMovedChangeEffects");
         // Remove the effects from this 
         UnitMovedChangeEffects();
-        Debug.Log("after UnitMovedChangeEffects");
         if (this.location != null)
         {
            // hex.ResetZoneOfControl();
@@ -499,10 +488,8 @@ public class Unit : MonoBehaviour
         this.location_coordinates = new Vector2(hex.coordinate.x, hex.coordinate.y);
         // hex.SetZoneOfControl(this);
 
-        Debug.Log("before GetHexEffects");
         // Get the effects on this hex
         GetHexEffects(hex);
-        Debug.Log("after GetHexEffects");
     }
     // Add the bonuses conferred by the hex to this unit
     public void GetHexEffects(Hex hex)
@@ -545,15 +532,6 @@ public class Unit : MonoBehaviour
                 effects_on_unit.RemoveAt(i);
             }
         }
-        /*
-        foreach (Effect effect in effects_on_unit)
-        {
-            if (effect.UnitMoved())
-            {
-                remove_effects.Add(effect);
-            }
-        }
-        RemoveEffects();*/
     }
     // Called at the start of the turn to remove time sensitive effects
     public void TurnStartEffects()
@@ -567,26 +545,6 @@ public class Unit : MonoBehaviour
                 effects_on_unit.RemoveAt(i);
             }
         }
-        /*
-        foreach (Effect effect in effects_on_unit)
-        {
-            if (effect.TurnStart())
-            {
-                remove_effects.Add(effect);
-            }
-        }
-        RemoveEffects();*/
-    }
-    // Removes effects in the remove_effects list
-    public void RemoveEffects()
-    {
-        while (remove_effects.Count > 0)
-        {
-            Effect effect = remove_effects[0];
-            effects_on_unit.Remove(effect);
-        }
-
-        remove_effects.Clear();
     }
 
 

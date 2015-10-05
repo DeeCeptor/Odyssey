@@ -51,7 +51,6 @@ public class AI_Turn_Thread
         {
             try
             {
-                Debug.Log(unit.u_name + " " + unit.location.coordinate);
                 unit.attack_target = null;
 
                 //////// MOVING //////////
@@ -68,10 +67,8 @@ public class AI_Turn_Thread
                 }
 
                 // We've gone through each hex. Move to that hex
-                Debug.Log("Moving unit to " + best_hex.coordinate + ", " + best_hex.hex_score);
                 unit.PathTo(best_hex);
 
-                Debug.Log("finished pathing " + best_hex.coordinate);
 
                 /////// ATTACKING ////////
                 // Now that we know where we're ending up, evaluate the best target we can attack from there
@@ -119,8 +116,6 @@ public class AI_Turn_Thread
                     //Debug.Log(unit.u_name + " attacking " + target.u_name);
                     unit.attack_target = target;
                 }
-
-                Debug.Log("got to end");
             }
             catch (Exception e)
             { Debug.Log("Exception executing " + faction.faction_name + " " + unit.u_name + "'s turn: " + e.Message);    }
