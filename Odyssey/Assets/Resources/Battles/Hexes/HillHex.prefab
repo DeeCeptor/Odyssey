@@ -80,8 +80,11 @@ MonoBehaviour:
   h_name: Hill
   h_description: Provides elevation that increases the range and power of ranged units.
   cost_to_enter_hex: 1
+  impassable: 0
   hex_score: 0
-  defense_score: 0
+  ranged_score: 1.5
+  melee_score: 0
+  cavalry_score: 0
 --- !u!212 &21287270
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -122,6 +125,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: h_description
       value: Provides elevation that increases the range and power of ranged units.
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ranged_score
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

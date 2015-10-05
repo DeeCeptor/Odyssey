@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+public enum Unit_Types { Melee, Cavalry, Ranged };
+
 public class Unit : MonoBehaviour
 {
     [HideInInspector]
@@ -51,6 +53,7 @@ public class Unit : MonoBehaviour
     public int normal_movement = 3;     // How far this unit can move in a turn.
     int movement = 3;
 
+    public Unit_Types unit_type;
     public bool is_ranged_unit = false;
     public bool counter_attacks = true;     // Counterattacks if the enemy is within range and in the frontal facing arc
     public int counter_attack_radius = 60; // The difference in facing counter attacks can be done from. 60 means the front 3 hexes
@@ -61,7 +64,6 @@ public class Unit : MonoBehaviour
     public float offensive_AI_score = 1;  // If this is an AI unit, this value indicates how agressively we should advance towards the enemy
     public float flanking_factor = 1.5f;    // Damage multiplied by this factor when flanking, to show that we're not taking damage
     public float ally_grouping_score = 0.1f;
-
 
     // Which direction the unit is facing. Hexagons have 6 facings. 360/6 = 60. This value will be a multiple of 6
     [HideInInspector]

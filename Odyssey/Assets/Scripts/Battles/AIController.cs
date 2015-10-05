@@ -147,7 +147,7 @@ public class AI_Turn_Thread
     public float EvaluateHexScore(Unit unit, Hex hex)
     {
         // Add the bonuses this hex gives
-        float hex_score = hex.defense_score;
+        float hex_score = hex.HexTerrainScoreForUnit(unit);
 
         // Add score based on the damage we can do to enemies from this hex
         hex_score += EnemyScoreOnHex(unit, hex);

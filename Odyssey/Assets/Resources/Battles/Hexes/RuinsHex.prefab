@@ -81,8 +81,11 @@ MonoBehaviour:
   h_description: Ancient ruins provide valuable cover from ranged fire, and chokepoints
     to fight off agressors.
   cost_to_enter_hex: 1
+  impassable: 0
   hex_score: 0
-  defense_score: 0
+  ranged_score: .75
+  melee_score: 1
+  cavalry_score: 1
 --- !u!212 &21288346
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -124,6 +127,18 @@ Prefab:
       propertyPath: h_description
       value: Ancient ruins provide valuable cover from ranged fire, and chokepoints
         to fight off agressors.
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: melee_score
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cavalry_score
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ranged_score
+      value: .75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

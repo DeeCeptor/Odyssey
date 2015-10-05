@@ -36,7 +36,12 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 
     // Used for AI
     public float hex_score;         // How 'favourable' this hex is for the AI. Based on nearby allies, and hurt enemies
-    public float defense_score;     // What bonuses this hex gives
+
+
+    // AI terrain score. How highly does each genre of unit value this hex?
+    public float ranged_score = 0;
+    public float melee_score = 0;
+    public float cavalry_score = 0;
 
 
     void Start ()
@@ -128,6 +133,21 @@ public class Hex : MonoBehaviour, IComparable<Hex>
         //return this.GetComponent<MeshRenderer>().material == highlighted_material;
 		return this.GetComponent<SpriteRenderer>().color == Color.blue;
 
+    }
+
+
+    public float HexTerrainScoreForUnit(Unit unit)
+    {
+        switch (unit.unit_type)
+        {
+            case Unit_Types.Melee:
+                return this.melee_score;
+            case Unit_Types.Ranged:
+                return this.ranged_score;
+            case Unit_Types.Cavalry:
+                return this.cavalry_score;
+        }
+        return 0;
     }
 
 

@@ -81,8 +81,11 @@ MonoBehaviour:
   h_description: A thick grove of trees that provides excellent cover against ranged
     attacks.
   cost_to_enter_hex: 1
+  impassable: 0
   hex_score: 0
-  defense_score: 0
+  ranged_score: 0
+  melee_score: .699999988
+  cavalry_score: .400000006
 --- !u!212 &21224144
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -123,6 +126,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: h_description
       value: A thick grove of trees that provides excellent cover against ranged attacks.
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: melee_score
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cavalry_score
+      value: .400000006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
