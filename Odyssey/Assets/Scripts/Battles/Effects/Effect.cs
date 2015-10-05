@@ -42,7 +42,6 @@ public class Effect
             }
         }
 
-        ApplyEffect();
         return false;
     }
 

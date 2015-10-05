@@ -94,7 +94,7 @@ public class Unit : MonoBehaviour
         // Set aura so we can tell which faction this player belongs to
         this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
 
-        ResetStats();
+        //ResetStats();
     }
 
 
@@ -480,13 +480,11 @@ public class Unit : MonoBehaviour
         UnitMovedChangeEffects();
         if (this.location != null)
         {
-           // hex.ResetZoneOfControl();
             this.location.occupying_unit = null;
         }
         this.location = hex;
         hex.occupying_unit = this;
         this.location_coordinates = new Vector2(hex.coordinate.x, hex.coordinate.y);
-        // hex.SetZoneOfControl(this);
 
         // Get the effects on this hex
         GetHexEffects(hex);
@@ -545,6 +543,8 @@ public class Unit : MonoBehaviour
                 effects_on_unit.RemoveAt(i);
             }
         }
+
+        EvaluateEffects();
     }
 
 

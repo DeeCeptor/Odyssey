@@ -6,6 +6,7 @@ using System;
 public class HexMap : MonoBehaviour
 {
     public static HexMap hex_map;
+    public LevelFileParser parser = new LevelFileParser();
 
     [HideInInspector]
     public List<Hex> all_hexes = new List<Hex>();
@@ -45,22 +46,114 @@ public class HexMap : MonoBehaviour
     {
         return hex_types[rand.Next(0, hex_types.Length)];
     }
+    string GetHexPrefabFromName(string name)
+    {
+        return "Battles/Hexes/" + name;
+    }
 
     void InitializeMap()
     {
+        parser.ReadInLevel(Application.dataPath + "/Resources/Battles/LevelFiles/Level1.txt");
+
+        y_size = parser.y_dimension;
+        x_size = parser.x_dimension;
+        int cur_hex = 0;
+
+        // Coordinates set up like http://stackoverflow.com/questions/5084801/manhattan-distance-between-tiles-in-a-hexagonal-grid/5085274#5085274
+        // Reads hexes from top to bottom, left to right
+        for (int y = y_size / 2; y >= -y_size / 2; y--)
+        {
+            for (int x = -x_size / 2; x <= x_size / 2; x++)
+            {
+                int x_coord = x;
+
+                // Correct the  coordinates so we can continue to use our tilted axis, but the map looks evenly layed out
+                Vector2 coords = GetCorrectedCoordinates(x, y);
+                x_coord = (int) coords.x;
+
+                // Spawn the right hex prefab by looking at the file we loaded
+                GameObject instance = Instantiate(Resources.Load(
+                    GetHexPrefabFromName(parser.hex_types[cur_hex])
+                    , typeof(GameObject))) as GameObject;
+
+                float x_pos = x_coord * x_offset + y * x_offset / 2;
+                float y_pos = y * y_offset;
+                instance.transform.position = new Vector3(x_pos, y_pos, 1);
+                Hex hex = instance.GetComponent<Hex>();
+                hex.coordinate = new Vector2((int)x_coord, (int)y);
+                all_hexes.Add(hex);
+                hex_dictionary.Add((int)x_coord + "," + (int)y, hex);
+
+                cur_hex++;
+
+                // Give hex its terrain abilities
+                switch (hex.h_name)
+                {
+                    case "Ruins":
+                        hex.effects_on_hex.Add(new Ruins(null));
+                        break;
+                    case "Forest":
+                        hex.effects_on_hex.Add(new Forest(null));
+                        break;
+                    case "Hill":
+                        hex.effects_on_hex.Add(new Hill(null));
+                        break;
+                }
+
+
+                // Set boundaries and camera boundaries
+                if (x_pos > x_max_cam)
+                {
+                    x_max = (int)x;
+                    x_max_cam = x_pos;
+                }
+                if (y_pos > y_max_cam)
+                {
+                    y_max = (int)y;
+                    y_max_cam = y_pos;
+                }
+
+                if (x_pos < x_min_cam)
+                {
+                    x_min = x;
+                    x_min_cam = x_pos;
+                }
+                if (y_pos < y_min_cam)
+                {
+                    y_min = y;
+                    y_min_cam = y_pos;
+                }
+            }
+        }
+
+        /*
         // Coordinates set up like http://stackoverflow.com/questions/5084801/manhattan-distance-between-tiles-in-a-hexagonal-grid/5085274#5085274
         for (int y  = -y_size / 2;  y <= y_size / 2; y++)
         {
             for (int x = -x_size / 2; x <= x_size / 2; x++)
             {
-                GameObject instance = Instantiate(Resources.Load(GetRandomHexPrefab(), typeof(GameObject))) as GameObject;
-                float x_pos = x * x_offset + y * x_offset / 2;
+                int x_coord = x;
+                
+                // Correct the  coordinates so we can continue to use our tilted axis, but the map looks evenly layed out
+                if (y > 0)
+                    x_coord = x - (y / 2);
+                else if (y < 0)
+                    x_coord = x + (Mathf.Abs(y - 1) / 2);
+                 
+                // Spawn the right hex prefab by looking at the file we loaded
+                GameObject instance = Instantiate(Resources.Load(
+                    GetHexPrefabFromName(parser.hex_types[cur_hex])
+                    , typeof(GameObject))) as GameObject;
+
+                float x_pos = x_coord * x_offset + y * x_offset / 2;
                 float y_pos = y * y_offset;
                 instance.transform.position = new Vector3(x_pos, y_pos, 1);
                 Hex hex = instance.GetComponent<Hex>();
-                hex.coordinate = new Vector2((int)x, (int)y);
+                hex.coordinate = new Vector2((int)x_coord, (int)y);
                 all_hexes.Add(hex);
-                hex_dictionary.Add((int)x + "," + (int)y, hex);
+                hex_dictionary.Add((int)x_coord + "," + (int)y, hex);
+
+                cur_hex--;
 
                 // Give hex its terrain abilities
                 switch (hex.h_name)
@@ -101,40 +194,32 @@ public class HexMap : MonoBehaviour
                 }
             }
         }
-        /*
-        float x = 0;
-        for (int y = 0; y < 20; y++)
-        {
-            // Get hex offset of rows
-            if (y % 2 == 0)
-                x = 0.5f;
-            else
-                x = 0;
+        */
+    }
 
-            while (x < 10.6)
-            {
-                GameObject instance = Instantiate(Resources.Load("Battles/Hexes/Hex", typeof(GameObject))) as GameObject;
-				//float width = instance.GetComponent<Sprite>().texture.width;
-				float x_pos = x * x_offset;
-				float y_pos = y * y_offset;
-                instance.transform.position = new Vector3(x_pos, y_pos, 0);
-                Hex hex = instance.GetComponent<Hex>();
-                hex.coordinate = new Vector2((int) x, (int) y);
-                all_hexes.Add(hex);
-                hex_dictionary.Add((int) x + "," + (int) y, hex);
-                if (x_pos > x_max)
-				{
-					x_max = (int) x;
-                    x_cam = x_pos;
-				}
-                if (y_pos > y_max)
-				{
-					y_max = (int) y;
-                    y_cam = y_pos;
-				}
-                x++;
-            }
-        }*/
+
+    // Changes coordinates so the board lines up instead of being diagonal
+    public Vector2 GetCorrectedCoordinates(int x, int y)
+    {
+        int x_coord = x;
+
+        if (y > 0)
+            x_coord = x - (y / 2);
+        else if (y < 0)
+            x_coord = x + (Mathf.Abs(y - 1) / 2);
+
+        return new Vector2(x_coord, y);
+    }
+    public Vector2 GetUncorrectedCoordinates(int x, int y)
+    {
+        int x_coord = x;
+
+        if (y > 0)
+            x_coord = x + (y / 2);
+        else if (y < 0)
+            x_coord = x - (Mathf.Abs(y - 1) / 2);
+
+        return new Vector2(x_coord, y);
     }
 
 
@@ -364,7 +449,8 @@ public class HexMap : MonoBehaviour
             {
                 Hex cur_hex;
                 hex_dictionary.TryGetValue(cur_x + "," + cur_y, out cur_hex);
-                if (cur_hex.occupying_unit == null && !cur_hex.impassable && !hexes_in_range.Contains(cur_hex))
+                // Boundary calculations aren't correct with tilted axis
+                if (cur_hex != null && cur_hex.occupying_unit == null && !cur_hex.impassable && !hexes_in_range.Contains(cur_hex))
                     AStarPathableToRecordHexes(location, cur_hex, range, unit.owner);
             }
         }

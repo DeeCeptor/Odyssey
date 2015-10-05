@@ -71,19 +71,22 @@ public class BattleManager : MonoBehaviour
                     SpawnUnit(player_team, "Battles/Units/Cavalry", x, 1, false);
                 }
             }
-
+            
             // Set enemies regardless of how the player got units (deployed or debug)
             Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
             factions.Add(enemy_team);
-
-            for (int x = -4; x < 5; x++)
+            /*
+            for (int x = -2; x < 1; x++)
             {
                 SpawnUnit(enemy_team, "Battles/Units/Archer", x, 6, false);
             }
-            for (int x = -4; x < 5; x++)
+            for (int x = -2; x < 1; x++)
             {
                 SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, -6, false);
-            }
+            }*/
+
+            // Spawn units specified in the text file
+            SpawnUnitsPlacedOnMap();
 
 
             // Set enemies. Everyone is an enemy of everyone currently
@@ -100,6 +103,17 @@ public class BattleManager : MonoBehaviour
         }
 
         yield return null;
+    }
+
+
+    // Place all the units specified in the battle text file onto the map
+    public void SpawnUnitsPlacedOnMap()
+    {
+        foreach(PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
+        {
+            Vector2 pos = HexMap.hex_map.GetUncorrectedCoordinates((int)unit.position.x, (int)unit.position.y);
+            SpawnUnit(GetFaction(unit.faction_name), "Battles/Units/" + unit.unit_name, (int)pos.x, (int)pos.y, false);
+        }
     }
 
 
@@ -246,6 +260,19 @@ public class BattleManager : MonoBehaviour
 
         if (add_drag_drop)
             instance.AddComponent<UnitDragDrop>();
+    }
+
+
+    public Faction GetFaction(string name)
+    {
+        foreach(Faction faction in factions)
+        {
+            if (faction.faction_name == name)
+                return faction;
+        }
+
+        Debug.Log("Couldn't find faction " + name + ", returning first faction " + factions[0].faction_name);
+        return factions[0];
     }
 
 
