@@ -71,15 +71,18 @@ public class HexMap : MonoBehaviour
                 Vector2 coords = GetCorrectedCoordinates(x, y);
                 x_coord = (int) coords.x;
 
+                PotentialHex p_hex = parser.hex_types[cur_hex];
                 // Spawn the right hex prefab by looking at the file we loaded
                 GameObject instance = Instantiate(Resources.Load(
-                    GetHexPrefabFromName(parser.hex_types[cur_hex])
+                    GetHexPrefabFromName(p_hex.hex_type)
                     , typeof(GameObject))) as GameObject;
 
                 float x_pos = x_coord * x_offset + y * x_offset / 2;
                 float y_pos = y * y_offset;
                 instance.transform.position = new Vector3(x_pos, y_pos, 1);
                 Hex hex = instance.GetComponent<Hex>();
+                hex.deployment_zone = p_hex.deployment_zone;
+                hex.retreat_zone = p_hex.retreat_zone;
                 hex.coordinate = new Vector2((int)x_coord, (int)y);
                 all_hexes.Add(hex);
                 hex_dictionary.Add((int)x_coord + "," + (int)y, hex);

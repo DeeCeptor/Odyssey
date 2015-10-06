@@ -4,17 +4,28 @@ using System.IO;
 using System;
 using UnityEngine;
 
+// Potential units that are specified in the level text file.
+// These are used in battle manager to spawn the right units, at the right place, for the right person.
 public class PotentialUnit
 {
     public Vector2 position;
     public string unit_name;
     public string faction_name;
 }
+// Hexes that will be read in by HexMap.
+public class PotentialHex
+{
+    public string hex_type; // Forest, Ruins, Hill, Swamp, Water, etc
+    public Vector2 original_position;   // integer x,y positions. Recorded
+    public bool deployment_zone;    // Player can deploy units here in the player unit deployment screen
+    public bool retreat_zone;       // Player can move unitws here to retreat the units to safety.
+}
+
 
 public class LevelFileParser
 {
     public int x_dimension, y_dimension;
-    public List<string> hex_types;
+    public List<PotentialHex> hex_types;
     public List<PotentialUnit> units_to_be_spawned;
 
 
@@ -26,7 +37,7 @@ public class LevelFileParser
 
     public void ReadInLevel(string path_to_file)
     {
-        hex_types = new List<string>();
+        hex_types = new List<PotentialHex>();
         units_to_be_spawned = new List<PotentialUnit>();
 
         try
@@ -52,11 +63,25 @@ public class LevelFileParser
                         break;
 
                     // Process the line, which is delineated by tabs
-                    string[] delineated_words = line.Split(new char[] { '\t' } , StringSplitOptions.RemoveEmptyEntries);
+                    string[] delineated_words = line.Split(new char[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (String s in delineated_words)
                     {
-                        hex_types.Add(GetHexType(s));
+                        PotentialHex hex = new PotentialHex();
+
+                        string[] hex_properties = s.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (hex_properties.Length == 1)  // Hex with no special properties
+                        {
+                            hex.hex_type = GetHexType(s);
+                        }
+                        // Hex might be a deployment or a retreat zone
+                        else
+                        {
+                            hex.hex_type = GetHexType(hex_properties[0]);
+                            AssignHexProperties(hex, hex_properties);
+                        }
+                        
+                        hex_types.Add(hex);
                     }
                 }
 
@@ -115,5 +140,24 @@ public class LevelFileParser
 
         Debug.Log("No hex type found. Returning Hex");
         return "Hex";
+    }
+
+
+    // Assigns hex properties, such as deployment and retreat zones
+    public void AssignHexProperties(PotentialHex hex, string[] properties)
+    {
+        foreach(String s in properties)
+        {
+            switch (s)
+            {
+                case ("d"):
+                    hex.deployment_zone = true;
+                    return;
+                case ("r"):
+                    hex.retreat_zone = true;
+                    return;
+            }
+        }
+        return;
     }
 }

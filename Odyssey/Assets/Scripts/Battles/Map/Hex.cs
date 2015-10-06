@@ -4,8 +4,9 @@ using System;
 
 public class Hex : MonoBehaviour, IComparable<Hex>
 {
-    public Vector2 coordinate;      // Grid coordinate
-    public Vector3 world_coordinates;
+    public Vector2 coordinate;      // x,y Grid coordinate
+    public Vector3 world_coordinates;   // Coordinate in real world space (unity game space)
+    public Vector2 top_down_left_right_coordiante;  // Grid as if going from the normal reading angle
 
     public List<Effect> effects_on_hex = new List<Effect>();
 
@@ -28,11 +29,13 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     [HideInInspector]
     public Hex came_from;
 
+    // Properties
     public string h_name;
     public string h_description;
     public int cost_to_enter_hex = 1;
     public bool impassable = false;     // If set to true, no unit can ever traverse this hex
-    //List<Effects> effects_on_hex;
+    public bool deployment_zone = false;     // Player can deploy units on this hex in the player unit deployment screen
+    public bool retreat_zone = false;    // Player can safely retreat units from this hex
 
     // Used for AI
     public float hex_score;         // How 'favourable' this hex is for the AI. Based on nearby allies, and hurt enemies

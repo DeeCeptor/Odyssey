@@ -212,32 +212,21 @@ public class BattleManager : MonoBehaviour
     {
         HexMap.hex_map.ResetEdgeScores();
 
-        if (false && !current_player.human_controlled)  // not used
+        // Update every units movable hexes
+        foreach (Faction faction in factions)
         {
-            // AI player only needs to update their own units movable hexes
-            foreach(Unit unit in current_player.units)
+            foreach (Unit unit in faction.units)
             {
-                unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
+                unit.location.SetZoneOfControl(unit);
             }
         }
-        else
-        {
-            // This is a human player, so update every units movable hexes
-            foreach (Faction faction in factions)
-            {
-                foreach (Unit unit in faction.units)
-                {
-                    unit.location.SetZoneOfControl(unit);
-                }
-            }
 
-            foreach (Faction faction in factions)
+        foreach (Faction faction in factions)
+        {
+            foreach (Unit unit in faction.units)
             {
-                foreach (Unit unit in faction.units)
-                {
-                    // Get all the hexes within range
-                    unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
-                }
+                // Get all the hexes within range
+                unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
             }
         }
     }
