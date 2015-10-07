@@ -6,6 +6,10 @@ public class PlayerInterface : MonoBehaviour
 {
     [HideInInspector]
     public static PlayerInterface player_interface;
+
+    public GameObject deployment_canvas;
+
+    public GameObject battle_specific_objects;  // Objects that don't appear when in deployment stage
     public Button end_turn_button;
     public Button AI_turn_button;
     public GameObject pause_menu;

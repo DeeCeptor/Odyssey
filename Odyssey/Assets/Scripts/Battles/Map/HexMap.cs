@@ -593,4 +593,23 @@ public class HexMap : MonoBehaviour
         Debug.Log("Nearest_Unoccupied_Passable_Hex couldn't find free hex around " + destination.coordinate);
         return destination;
     }
+
+
+    // Destroys all game objects associated with the hex map
+    public void UnloadHexMap()
+    {
+
+    }
+
+
+    public void UndarkenDeploymentHexes()
+    {
+        all_hexes.ForEach(c => { if (c.deployment_zone) c.gameObject.transform.FindChild("UndeployableHex").gameObject.SetActive(false); });
+    }
+
+
+    public void UndarkenAllHexes()
+    {
+        all_hexes.ForEach(c => { c.gameObject.transform.FindChild("UndeployableHex").gameObject.SetActive(false); });
+    }
 }

@@ -37,6 +37,8 @@ public class LevelFileParser
 
     public void ReadInLevel(string path_to_file)
     {
+        Debug.Log("Reading in map " + path_to_file);
+
         hex_types = new List<PotentialHex>();
         units_to_be_spawned = new List<PotentialUnit>();
 

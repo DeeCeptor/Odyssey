@@ -19,8 +19,69 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         battle_manager = this;
-        StartCoroutine(Initialize());
+        StartCoroutine(InitializePreBattleDeployment());
     }
+
+
+    // Called when the player needs to deploy units
+    IEnumerator InitializePreBattleDeployment()
+    {
+        Debug.Log("Initializing prebattle unit deployment");
+
+        yield return new WaitForSeconds(0.2f);
+        pre_battle_deployment = true;
+
+        // Set deployment interfaces
+        PlayerInterface.player_interface.deployment_canvas.SetActive(true);
+        PlayerInterface.player_interface.battle_specific_objects.SetActive(false);
+
+        // Undarken hexes we can deploy on
+        HexMap.hex_map.UndarkenDeploymentHexes();
+
+        Faction player_team = new Faction("Player", true, 1, Color.green);
+        factions.Add(player_team);
+        PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
+    }
+
+    IEnumerator InitializeBattle()
+    {
+        Debug.Log("Initializing battle");
+
+        // Hide the deployment canvas
+        yield return new WaitForSeconds(0.01f);
+        pre_battle_deployment = false;
+
+        // Change interfaces
+        PlayerInterface.player_interface.deployment_canvas.SetActive(false);
+        PlayerInterface.player_interface.battle_specific_objects.SetActive(true);
+
+        // Destroy the pre battle deployment objects
+        Destroy(PreBattleDeployment.pre_battle_deployment.gameObject);
+
+        // Undarken all hexes
+        HexMap.hex_map.UndarkenAllHexes();
+
+        // Set up the enemy AI faction
+        Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
+        factions.Add(enemy_team);
+
+        // Spawn enemies placed on the map designated in the text file
+        SpawnUnitsPlacedOnMap();
+
+        // Set enemies. Everyone is an enemy of everyone currently
+        foreach (Faction faction_1 in factions)
+        {
+            foreach (Faction faction_2 in factions)
+            {
+                if (faction_1 != faction_2)
+                    faction_1.enemies.Add(faction_2);
+            }
+        }
+
+        // Start the game
+        StartRound();
+    }
+
 
     IEnumerator Initialize()
     {
@@ -300,6 +361,9 @@ public class BattleManager : MonoBehaviour
 
     public void EndPreBattleDeployment()
     {
+        StartCoroutine(InitializeBattle());
+
+        /*
         // Record the players unit positions and facings
         PlayerUnitPositions positions = GameObject.Find("PlayerUnitPositions").GetComponent<PlayerUnitPositions>();
         positions.player_deployed_units.Clear();
@@ -318,7 +382,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        Application.LoadLevel("TacticalBattle");
+        Application.LoadLevel("TacticalBattle");*/
     }
     // Takes the saved player units from the pre battle deployment screen and deploys them
     public void SpawnPlayerDeployedUnits()

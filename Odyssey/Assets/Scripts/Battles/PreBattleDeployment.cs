@@ -61,6 +61,7 @@ public class PreBattleDeployment : MonoBehaviour
             if (Input.GetMouseButtonDown(0) 
                 && PlayerInterface.player_interface.highlighted_hex != null 
                 && PlayerInterface.player_interface.highlighted_hex.occupying_unit == null
+                && PlayerInterface.player_interface.highlighted_hex.deployment_zone
                 && cur_deployed_units < maximum_deployable_units
                 && !PlayerInterface.player_interface.highlighted_hex.impassable)
             {
