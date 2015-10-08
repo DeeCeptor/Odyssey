@@ -26,7 +26,7 @@ public class BattleManager : MonoBehaviour
     // Called when the player needs to deploy units
     IEnumerator InitializePreBattleDeployment()
     {
-        Debug.Log("Initializing prebattle unit deployment");
+        Debug.Log("Initializing prebattle deployment");
 
         yield return new WaitForSeconds(0.2f);
         pre_battle_deployment = true;
@@ -172,8 +172,10 @@ public class BattleManager : MonoBehaviour
     {
         foreach(PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
         {
-            Vector2 pos = HexMap.hex_map.GetUncorrectedCoordinates((int)unit.position.x, (int)unit.position.y);
-            SpawnUnit(GetFaction(unit.faction_name), "Battles/Units/" + unit.unit_name, (int)pos.x, (int)pos.y, false);
+            Debug.Log("Spawning unit at " + unit.position);
+            Hex pos = HexMap.hex_map.GetHexFromTopDownCoordinates(new Vector2(unit.position.x, (int)unit.position.y));
+            GameObject new_unit = SpawnUnit(GetFaction(unit.faction_name), "Battles/Units/" + unit.unit_name, (int)pos.coordinate.x, (int)pos.coordinate.y, false);
+            new_unit.GetComponent<Unit>().SetRotation(new Vector3(0, 0, 90));
         }
     }
 
@@ -278,6 +280,9 @@ public class BattleManager : MonoBehaviour
         {
             foreach (Unit unit in faction.units)
             {
+                // Reset the effects of everything
+                unit.EvaluateEffects();
+
                 unit.location.SetZoneOfControl(unit);
             }
         }
@@ -294,11 +299,11 @@ public class BattleManager : MonoBehaviour
 
 
     // Drag and drop is for the player deployment so they can drag and drop units around the map
-    public void SpawnUnit(Faction owning_faction, string unit_prefab, Hex hex, bool add_drag_drop)
+    public GameObject SpawnUnit(Faction owning_faction, string unit_prefab, Hex hex, bool add_drag_drop)
     {
-        SpawnUnit(owning_faction, unit_prefab, (int)hex.coordinate.x, (int)hex.coordinate.y, add_drag_drop);
+        return SpawnUnit(owning_faction, unit_prefab, (int)hex.coordinate.x, (int)hex.coordinate.y, add_drag_drop);
     }
-    public void SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y, bool add_drag_drop)
+    public GameObject SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y, bool add_drag_drop)
     {
         GameObject instance = Instantiate(Resources.Load(unit_prefab, typeof(GameObject))) as GameObject;
         Unit unit = instance.GetComponent<Unit>();
@@ -310,6 +315,8 @@ public class BattleManager : MonoBehaviour
 
         if (add_drag_drop)
             instance.AddComponent<UnitDragDrop>();
+
+        return instance;
     }
 
 

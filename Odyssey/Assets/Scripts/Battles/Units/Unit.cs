@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public enum Unit_Types { Melee, Cavalry, Ranged };
 
@@ -30,9 +31,8 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public bool dead = false;
 
-
-    protected List<Effect> effects_on_unit = new List<Effect>();
-    protected List<Effect> remove_effects = new List<Effect>();     // Effects to be removed shortly
+    // Effects alter the stats of a unit, and can persist for a while. Either number of turns, permanent or from terrain
+    public List<Effect> effects_on_unit = new List<Effect>();
 
 
     // UNIT STATS
@@ -66,7 +66,7 @@ public class Unit : MonoBehaviour
     public float ally_grouping_score = 0.1f;
 
     // Which direction the unit is facing. Hexagons have 6 facings. 360/6 = 60. This value will be a multiple of 6
-    [HideInInspector]
+    //[HideInInspector]
     public int facing = 0;
     [HideInInspector]
     public bool rotating = false;
@@ -88,13 +88,21 @@ public class Unit : MonoBehaviour
 	void Start ()
     {
         unit_menu = this.transform.FindChild("UnitMenu").gameObject;
-        this.SetRotation(new Vector3(0, 0, 0));
+        //this.SetRotation(new Vector3(0, 0, 0));
         health = maximum_health;
 
         // Set aura so we can tell which faction this player belongs to
         this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
 
         //ResetStats();
+        AssignAbilities();
+    }
+
+
+    // Override this in the super class
+    public virtual void AssignAbilities()
+    {
+
     }
 
 
@@ -161,17 +169,17 @@ public class Unit : MonoBehaviour
     {
         // Snap to one of the hexagon directions
         if (angles.z >= 0 && angles.z < 60)
-            angles.z = 30;
+            angles.z = 30;  // top left
         else if (angles.z >= 60 && angles.z < 120)
-            angles.z = 90;
+            angles.z = 90;  // left
         else if (angles.z >= 120 && angles.z < 180)
-            angles.z = 150;
+            angles.z = 150; // bottom left
         else if (angles.z >= 180 && angles.z < 240)
-            angles.z = 210;
+            angles.z = 210; // bottom right
         else if (angles.z >= 240 && angles.z < 300)
-            angles.z = 270;
+            angles.z = 270; // right
         else if (angles.z >= 300 && angles.z < 360)
-            angles.z = 330;
+            angles.z = 330; // top right
 
         this.transform.eulerAngles = angles;
 
@@ -360,12 +368,16 @@ public class Unit : MonoBehaviour
 
     public virtual void Die()
     {
-        // Remove from the unit lists
-        this.owner.units.Remove(this);
+        RemoveUnit();
         dead = true;
 
         // Check victory/defeat conditions
         BattleManager.battle_manager.CheckVictoryAndDefeat();
+    }
+    public virtual void RemoveUnit()
+    {
+        // Remove from the unit lists
+        this.owner.units.Remove(this);
 
         this.location.occupying_unit = null;
 
@@ -402,6 +414,7 @@ public class Unit : MonoBehaviour
     void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(1)     // Right clicked on unit
+            && !EventSystem.current.IsPointerOverGameObject()   // Make sure mouse is not over UI
             && PlayerInterface.player_interface.SelectedUnitAvailableToControl()
             && !PlayerInterface.player_interface.selected_unit.has_attacked
             && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this))
@@ -544,6 +557,10 @@ public class Unit : MonoBehaviour
             }
         }
 
+        EvaluateEffects();
+    }
+    public void ResetAndApplyEffects()
+    {
         EvaluateEffects();
     }
 

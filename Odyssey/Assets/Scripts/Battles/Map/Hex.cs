@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.EventSystems;
 
 public class Hex : MonoBehaviour, IComparable<Hex>
 {
     public Vector2 coordinate;      // x,y Grid coordinate
     public Vector3 world_coordinates;   // Coordinate in real world space (unity game space)
-    public Vector2 top_down_left_right_coordiante;  // Grid as if going from the normal reading angle
+    public Vector2 top_down_left_right_coordinate;  // Grid as if going from the normal reading angle
 
     public List<Effect> effects_on_hex = new List<Effect>();
 
@@ -174,7 +175,10 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     {
         PlayerInterface.player_interface.MousedOverHex(this);
 
-        if (Input.GetMouseButtonDown(0))    // left click
+        // left click
+        if (Input.GetMouseButtonDown(0)
+            && !EventSystem.current.IsPointerOverGameObject()   // Make sure mouse is not over UI
+            )    
         {
             if (this.occupying_unit != null)    // Select the unit on this hex
                 PlayerInterface.player_interface.UnitSelected(this.occupying_unit);
@@ -185,12 +189,16 @@ public class Hex : MonoBehaviour, IComparable<Hex>
             //if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
             //    PlayerInterface.player_interface.selected_unit.HexClicked(this);
         }
-        if (Input.GetMouseButtonDown(1))    // right click
+        // right click
+        if (Input.GetMouseButtonDown(1)
+            && !EventSystem.current.IsPointerOverGameObject())
         {
             if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
                 PlayerInterface.player_interface.selected_unit.HexClicked(this);
         }
-        if (Input.GetMouseButtonDown(2))    // middle click
+        // middle click
+        if (Input.GetMouseButtonDown(2)
+            && !EventSystem.current.IsPointerOverGameObject())
         {
             if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
                 PlayerInterface.player_interface.selected_unit.HexClicked(this);

@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class PreBattleDeployment : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class PreBattleDeployment : MonoBehaviour
     void Start ()
     {
         pre_battle_deployment = this;
+
+        // Look at the persistent battle settings for how many units we can deploy
+        if (PersistentBattleSettings.battle_settings != null)
+            maximum_deployable_units = PersistentBattleSettings.battle_settings.number_of_deployable_units;
 
         // Add units we can deploy to the deployment panel
         deployable_units.Add("Hoplite", 6);
@@ -58,7 +63,8 @@ public class PreBattleDeployment : MonoBehaviour
             deployable_sprite.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             // Left click to deploy the unit
-            if (Input.GetMouseButtonDown(0) 
+            if (Input.GetMouseButtonDown(0)
+                && !EventSystem.current.IsPointerOverGameObject()
                 && PlayerInterface.player_interface.highlighted_hex != null 
                 && PlayerInterface.player_interface.highlighted_hex.occupying_unit == null
                 && PlayerInterface.player_interface.highlighted_hex.deployment_zone
@@ -71,6 +77,7 @@ public class PreBattleDeployment : MonoBehaviour
 
         // Right clicking on a deployed unit un deploys it
         if (Input.GetMouseButtonDown(1)
+            && !EventSystem.current.IsPointerOverGameObject()
             && PlayerInterface.player_interface.highlighted_hex != null
             && PlayerInterface.player_interface.highlighted_hex.occupying_unit != null)
         {
@@ -79,15 +86,16 @@ public class PreBattleDeployment : MonoBehaviour
     }
     public void DeployUnit()
     {
-        Debug.Log("Spawning unit " + unit_to_spawn_name);
         int remaining_units = deployable_units[unit_to_spawn_name];
         if (remaining_units > 0)    // Spawn the unit if we have units available to spawn
         {
+            Debug.Log("Spawning unit " + unit_to_spawn_name);
             deployable_units[unit_to_spawn_name] = deployable_units[unit_to_spawn_name] - 1;
             cur_deployed_units++;
             SetUnitsRemainingText();
             SetDeployButtonText(unit_to_spawn_name, deployable_units[unit_to_spawn_name]);
-            BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex, true);
+            GameObject unit = BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex, true);
+            unit.GetComponent<Unit>().SetRotation(new Vector3(0, 0, 270));
 
             // Disable the deployment of that unit if we're out of those units to deploy
             if (deployable_units[unit_to_spawn_name] <= 0)
@@ -114,7 +122,7 @@ public class PreBattleDeployment : MonoBehaviour
             deployable_panel.FindChild(name).gameObject.GetComponent<Button>().interactable = true;
         }
 
-        PlayerInterface.player_interface.highlighted_hex.occupying_unit.Die();
+        PlayerInterface.player_interface.highlighted_hex.occupying_unit.RemoveUnit();
     }
 
 

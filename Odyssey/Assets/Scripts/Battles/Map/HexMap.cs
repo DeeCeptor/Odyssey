@@ -31,9 +31,12 @@ public class HexMap : MonoBehaviour
     }
 
 
-	void Start ()
+    void Awake ()
     {
         hex_map = this;
+    }
+	void Start ()
+    {
         InitializeMap();
     }
 
@@ -53,18 +56,30 @@ public class HexMap : MonoBehaviour
 
     void InitializeMap()
     {
-        parser.ReadInLevel(Application.dataPath + "/Resources/Battles/LevelFiles/Level1.txt");
+        // Read in the file stored in persistent battle settings
+        if (PersistentBattleSettings.battle_settings != null)
+            parser.ReadInLevel(Application.dataPath + PersistentBattleSettings.battle_settings.path_to_battle_file);
+        // No file to read in set. Must be debug mode. Just use my test file
+        else
+        {
+            Debug.Log("No path in PersistentBattleSettings set. Using test file");
+            parser.ReadInLevel(Application.dataPath + "/Resources/Battles/LevelFiles/Level1.txt");
+        }
 
         y_size = parser.y_dimension;
         x_size = parser.x_dimension;
+        int actual_x = -1;
+        int actual_y = -1;
         int cur_hex = 0;
 
         // Coordinates set up like http://stackoverflow.com/questions/5084801/manhattan-distance-between-tiles-in-a-hexagonal-grid/5085274#5085274
         // Reads hexes from top to bottom, left to right
         for (int y = y_size / 2; y >= -y_size / 2; y--)
         {
+            actual_y++;
             for (int x = -x_size / 2; x <= x_size / 2; x++)
             {
+                actual_x++;
                 int x_coord = x;
 
                 // Correct the  coordinates so we can continue to use our tilted axis, but the map looks evenly layed out
@@ -84,6 +99,7 @@ public class HexMap : MonoBehaviour
                 hex.deployment_zone = p_hex.deployment_zone;
                 hex.retreat_zone = p_hex.retreat_zone;
                 hex.coordinate = new Vector2((int)x_coord, (int)y);
+                hex.top_down_left_right_coordinate = new Vector2(actual_x, actual_y);
                 all_hexes.Add(hex);
                 hex_dictionary.Add((int)x_coord + "," + (int)y, hex);
 
@@ -127,7 +143,12 @@ public class HexMap : MonoBehaviour
                     y_min_cam = y_pos;
                 }
             }
+            actual_x = -1;
         }
+
+        // Set the actual number of hexes in each row and column
+        x_size = actual_x + 1;
+        y_size = actual_y + 1;
 
         /*
         // Coordinates set up like http://stackoverflow.com/questions/5084801/manhattan-distance-between-tiles-in-a-hexagonal-grid/5085274#5085274
@@ -223,6 +244,16 @@ public class HexMap : MonoBehaviour
             x_coord = x - (Mathf.Abs(y - 1) / 2);
 
         return new Vector2(x_coord, y);
+    }
+    public Hex GetHexFromTopDownCoordinates(Vector2 coordinate)
+    {
+        foreach (Hex hex in all_hexes)
+        {
+            if (hex.top_down_left_right_coordinate == coordinate)
+                return hex;
+        }
+        Debug.Log("GetHexFromTopDownCoordinates no hex from with coordinates " + coordinate);
+        return all_hexes[0];
     }
 
 

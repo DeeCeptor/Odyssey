@@ -8,6 +8,7 @@ public class PlayerInterface : MonoBehaviour
     public static PlayerInterface player_interface;
 
     public GameObject deployment_canvas;
+    public GameObject unit_menu_canvas;
 
     public GameObject battle_specific_objects;  // Objects that don't appear when in deployment stage
     public Button end_turn_button;
@@ -17,6 +18,7 @@ public class PlayerInterface : MonoBehaviour
     public Text summary_screen_title;
 
     public Text turn_text;
+    public Text favour_remaining_text;
 
     public GameObject unit_panel;
     public Text unit_name;
@@ -46,11 +48,15 @@ public class PlayerInterface : MonoBehaviour
     private bool can_select = true;
     private bool is_rotating_unit = false;
 
-	void Start () 
+	void Awake () 
 	{
         player_interface = this;
-
 	}
+    void Start()
+    {
+        unit_panel.SetActive(false);
+        terrain_panel.SetActive(false);
+    }
 	
 
 	void Update () 
@@ -110,7 +116,11 @@ public class PlayerInterface : MonoBehaviour
         {
             selected_unit = unit;
 
-            unit.unit_menu.SetActive(true);
+            //unit.unit_menu.SetActive(true);
+
+            this.unit_menu_canvas.transform.position = unit.transform.position;
+            this.unit_menu_canvas.transform.parent = unit.transform;
+            this.unit_menu_canvas.SetActive(true);
         }
 
         UnhighlightHexes();
@@ -122,6 +132,8 @@ public class PlayerInterface : MonoBehaviour
     // Dehighlights any hexes that may have been highlighted
     public void UnitDeselected()
     {
+        this.unit_menu_canvas.SetActive(false);
+
         HideUnitStatsPanel();
         UnhighlightHexes();
 
