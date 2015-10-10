@@ -296,6 +296,10 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+    public void SetMovableTilesOfUnit(Unit unit)
+    {
+        unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
+    }
 
 
     // Drag and drop is for the player deployment so they can drag and drop units around the map

@@ -34,6 +34,9 @@ public class Unit : MonoBehaviour
     // Effects alter the stats of a unit, and can persist for a while. Either number of turns, permanent or from terrain
     public List<Effect> effects_on_unit = new List<Effect>();
 
+    // Abilities appear in the units menu when you click on them and it's your turn.
+    // Abilities must be ACTIVATED by the user to be used. They are never passive. Passives are effects.
+    public List<Ability> abilities = new List<Ability>();
 
     // UNIT STATS
     // Normal stats are the base stats of the unit.
@@ -81,7 +84,6 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public GameObject unit_menu;
 
-    // List<Ability> abilities;
     public Faction owner;
 
 
@@ -444,8 +446,6 @@ public class Unit : MonoBehaviour
 
     public void HexClicked(Hex hex)
     {
-        Debug.Log("HexClicked");
-
         if (this.owner == BattleManager.battle_manager.current_player 
             && BattleManager.battle_manager.current_player.human_controlled
             && this.active )
@@ -506,6 +506,13 @@ public class Unit : MonoBehaviour
     public void GetHexEffects(Hex hex)
     {
         effects_on_unit.AddRange(hex.GetEffectsOnHex(this));
+        EvaluateEffects();
+    }
+
+
+    public void AddEffectToUnit(Effect effect)
+    {
+        effects_on_unit.Add(effect);
         EvaluateEffects();
     }
 

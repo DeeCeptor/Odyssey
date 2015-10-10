@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// An affect that 
+// An affect that belongs to a unit. These change the stats of a unit.
 public class Effect
 {
     public string readable_name;    // Name displayed on the unit when this effect is active

@@ -9,6 +9,7 @@ public class PlayerInterface : MonoBehaviour
 
     public GameObject deployment_canvas;
     public GameObject unit_menu_canvas;
+    public GameObject ability_panel;
 
     public GameObject battle_specific_objects;  // Objects that don't appear when in deployment stage
     public Button end_turn_button;
@@ -118,6 +119,31 @@ public class PlayerInterface : MonoBehaviour
 
             //unit.unit_menu.SetActive(true);
 
+            // Destroy all previous ability buttons
+            int childs = ability_panel.transform.childCount;
+            for (int i = childs - 1; i > 0; i--)
+            {
+                GameObject.Destroy(ability_panel.transform.GetChild(i).gameObject);
+            }
+
+            // Populate the unit menu panel with the abilities of this unit
+            for (int x = 0; x < unit.abilities.Count; x++)
+            {
+                Ability ability = unit.abilities[x];
+                // Create a button for the ability
+                GameObject newButton = Instantiate(Resources.Load("Battles/AbilityButton", typeof(GameObject))) as GameObject;
+                newButton.name = ability.ability_name + "Button";
+                Button button = newButton.GetComponent<Button>();
+                button.onClick.AddListener(() => ability.TryToCastAbility());
+                Text text = newButton.GetComponentInChildren<Text>();
+                text.text = ability.ability_name;
+                newButton.transform.SetParent(ability_panel.transform);
+                newButton.transform.localScale = new Vector3(1, 1, 1);
+
+                if (!ability.can_cast)
+                    button.interactable = false;
+            }
+
             this.unit_menu_canvas.transform.position = unit.transform.position;
             this.unit_menu_canvas.transform.parent = unit.transform;
             this.unit_menu_canvas.SetActive(true);
@@ -140,6 +166,16 @@ public class PlayerInterface : MonoBehaviour
         if (selected_unit != null)
             selected_unit.unit_menu.SetActive(false);
         selected_unit = null;
+    }
+
+
+    // Refreshes the units stats panel if that unit is selected.
+    public void RefreshStatsPanel(Unit unit)
+    {
+        if (selected_unit == unit)
+        {
+            ShowUnitStatsPanel(selected_unit);
+        }
     }
 
 

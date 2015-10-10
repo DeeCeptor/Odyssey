@@ -128,7 +128,6 @@ public class PreBattleDeployment : MonoBehaviour
 
     public void SetDeployButtonText(string unit_name, int number_available)
     {
-        Debug.Log(unit_name + " " + number_available);
         deployable_panel.FindChild(unit_name).GetComponentInChildren<Text>().text = unit_name + " x " + number_available;
     }
 
