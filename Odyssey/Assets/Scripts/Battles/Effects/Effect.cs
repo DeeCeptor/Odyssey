@@ -60,7 +60,7 @@ public class Effect
     }
 
 
-    public void RemoveThisEffect()
+    public virtual void RemoveThisEffect()
     {
 
     }

@@ -8,6 +8,9 @@ public class Ability
     public bool can_cast = true;
     public bool cast_once = true;   // If true, can_cast is set to false after this ability has been cast
     public bool takes_entire_turn = false;  // If true, sets the unit to inactive after casting.
+    public bool takes_attack_action = false;    // If true, this ability sets the unit's has_attacked to true
+    public bool cast_before_move = false;   // Cannot cast if unit has moved
+    public bool cast_before_attack = false; // Cannot cast if unit has attacked
     public int cost;    // How much god favour it costs to use this ability
     public Unit caster; // Unit whose ability menu we're using to cast this ability
     public string ability_name; // Human readable name that shows when the user mouses over
@@ -33,6 +36,10 @@ public class Ability
         return (can_cast
             && caster.active
             && (GodsManager.gods_manager.favour_remaining >= cost)
+            && (!takes_entire_turn || (!caster.has_moved && !caster.has_attacked))  // Unit can't do anythign but cast this 
+            && (!takes_attack_action || (!caster.has_attacked))
+            && (!cast_before_move || (!caster.has_moved))
+            && (!cast_before_attack || (!caster.has_attacked))
             );
     }
     public void TryToCastAbility()
@@ -45,8 +52,16 @@ public class Ability
             if (cast_once)
                 can_cast = false;
 
+            if (takes_entire_turn)  // If this takes the entire turn, the unit is done
+                caster.active = false;
+
+            if (takes_attack_action)
+                caster.has_attacked = true;
+
             // Adjust cost
             GodsManager.gods_manager.ModifyFavour(-cost);
+
+            PlayerInterface.player_interface.ReevaluateCastableAbilities(caster);
 
             CastAbility();
         }

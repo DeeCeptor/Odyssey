@@ -378,6 +378,12 @@ public class Unit : MonoBehaviour
     }
     public virtual void RemoveUnit()
     {
+        if (PlayerInterface.player_interface.selected_unit == this)
+        {
+            PlayerInterface.player_interface.unit_menu_canvas.transform.parent = null;  // Remove parent, so we don't destroy this game object
+            PlayerInterface.player_interface.UnitDeselected();
+        }
+
         // Remove from the unit lists
         this.owner.units.Remove(this);
 
@@ -387,6 +393,17 @@ public class Unit : MonoBehaviour
 
         // Remove game object
         Destroy(this.gameObject);
+    }
+    public void RetreatUnit()
+    {
+        Debug.Log("Retreating unit " + u_name);
+
+        // Change status to having retreated
+
+        // Remove from play
+        RemoveUnit();
+
+        BattleManager.battle_manager.CheckVictoryAndDefeat();
     }
 
 
@@ -422,7 +439,7 @@ public class Unit : MonoBehaviour
             && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this))
         {
             Debug.Log("OnMouseOver attack");
-            PlayerInterface.player_interface.selected_unit.Attack(this, attacks_are_counterable);
+            PlayerInterface.player_interface.selected_unit.HumanAttacked(this, attacks_are_counterable);
         }
     }
     void OnMouseDown()      // Left clicked on unit
@@ -454,17 +471,21 @@ public class Unit : MonoBehaviour
             if (hex.occupying_unit == null && hex != location && !this.has_moved)
             {
                 PlayerInterface.player_interface.UnhighlightHexes();
-                PathTo(hex);
+                HumanMovedTo(hex);
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
             {
                 Debug.Log("HexClicked attack");
-                Attack(hex.occupying_unit, attacks_are_counterable);
+                HumanAttacked(hex.occupying_unit, attacks_are_counterable);
             }
         }
     }
 
-
+    public void HumanMovedTo(Hex to)
+    {
+        PathTo(to);
+        PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
+    }
     public void PathTo(Hex to)
     {
         // Check if that's a valid spot. Can't have more than one unit sit on the same spot, can't move to the spot we're already on
@@ -572,6 +593,11 @@ public class Unit : MonoBehaviour
     }
 
 
+    public void HumanAttacked(Unit victim, bool attacks_are_counterable)
+    {
+        Attack(victim, attacks_are_counterable);
+        PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
+    }
     public void Attack(Unit victim, bool attack_is_counterable)
     {
         if (victim != this 

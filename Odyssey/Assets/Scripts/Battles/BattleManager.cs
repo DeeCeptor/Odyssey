@@ -372,28 +372,16 @@ public class BattleManager : MonoBehaviour
 
     public void EndPreBattleDeployment()
     {
-        StartCoroutine(InitializeBattle());
-
-        /*
-        // Record the players unit positions and facings
-        PlayerUnitPositions positions = GameObject.Find("PlayerUnitPositions").GetComponent<PlayerUnitPositions>();
-        positions.player_deployed_units.Clear();
-        positions.saved_factions.Clear();
-
-        foreach(Faction faction in factions)
+        // Remove drag and drop script from all units
+        foreach (Faction faction in factions)
         {
-            positions.saved_factions.Add(faction);
-
-            foreach(Unit unit in faction.units)
+            foreach (Unit unit in faction.units)
             {
                 Destroy(unit.GetComponent<UnitDragDrop>());
-                positions.player_deployed_units.Add(unit);
-                DontDestroyOnLoad(unit.gameObject);
-                Debug.Log("Saving " + unit.u_name);
             }
         }
 
-        Application.LoadLevel("TacticalBattle");*/
+        StartCoroutine(InitializeBattle());
     }
     // Takes the saved player units from the pre battle deployment screen and deploys them
     public void SpawnPlayerDeployedUnits()

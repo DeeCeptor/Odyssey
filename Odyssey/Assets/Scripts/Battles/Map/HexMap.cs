@@ -119,6 +119,9 @@ public class HexMap : MonoBehaviour
                         break;
                 }
 
+                if (hex.retreat_zone)
+                    hex.effects_on_hex.Add(new RetreatHex(null));
+
 
                 // Set boundaries and camera boundaries
                 if (x_pos > x_max_cam)

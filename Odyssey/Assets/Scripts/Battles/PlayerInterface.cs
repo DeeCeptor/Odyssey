@@ -119,34 +119,7 @@ public class PlayerInterface : MonoBehaviour
 
             //unit.unit_menu.SetActive(true);
 
-            // Destroy all previous ability buttons
-            int childs = ability_panel.transform.childCount;
-            for (int i = childs - 1; i > 0; i--)
-            {
-                GameObject.Destroy(ability_panel.transform.GetChild(i).gameObject);
-            }
-
-            // Populate the unit menu panel with the abilities of this unit
-            for (int x = 0; x < unit.abilities.Count; x++)
-            {
-                Ability ability = unit.abilities[x];
-                // Create a button for the ability
-                GameObject newButton = Instantiate(Resources.Load("Battles/AbilityButton", typeof(GameObject))) as GameObject;
-                newButton.name = ability.ability_name + "Button";
-                Button button = newButton.GetComponent<Button>();
-                button.onClick.AddListener(() => ability.TryToCastAbility());
-                Text text = newButton.GetComponentInChildren<Text>();
-                text.text = ability.ability_name;
-                newButton.transform.SetParent(ability_panel.transform);
-                newButton.transform.localScale = new Vector3(1, 1, 1);
-
-                if (!ability.can_cast)
-                    button.interactable = false;
-            }
-
-            this.unit_menu_canvas.transform.position = unit.transform.position;
-            this.unit_menu_canvas.transform.parent = unit.transform;
-            this.unit_menu_canvas.SetActive(true);
+            PopulateAbilitiesMenu(unit);
         }
 
         UnhighlightHexes();
@@ -168,6 +141,45 @@ public class PlayerInterface : MonoBehaviour
         selected_unit = null;
     }
 
+
+    public void PopulateAbilitiesMenu(Unit unit)
+    {
+        // Destroy all previous ability buttons
+        int childs = ability_panel.transform.childCount;
+        for (int i = childs - 1; i > 0; i--)
+        {
+            GameObject.Destroy(ability_panel.transform.GetChild(i).gameObject);
+        }
+
+        // Populate the unit menu panel with the abilities of this unit
+        for (int x = 0; x < unit.abilities.Count; x++)
+        {
+            Ability ability = unit.abilities[x];
+            // Create a button for the ability
+            GameObject newButton = Instantiate(Resources.Load("Battles/AbilityButton", typeof(GameObject))) as GameObject;
+            newButton.name = ability.ability_name + "Button";
+            Button button = newButton.GetComponent<Button>();
+            button.onClick.AddListener(() => ability.TryToCastAbility());
+            Text text = newButton.GetComponentInChildren<Text>();
+            text.text = ability.ability_name;
+            newButton.transform.SetParent(ability_panel.transform);
+            newButton.transform.localScale = new Vector3(1, 1, 1);
+
+            if (!ability.CanCastAbility())
+                button.interactable = false;
+        }
+
+        this.unit_menu_canvas.transform.position = unit.transform.position;
+        this.unit_menu_canvas.transform.parent = unit.transform;
+        this.unit_menu_canvas.SetActive(true);
+    }
+    public void ReevaluateCastableAbilities(Unit unit)
+    {
+        if (selected_unit == unit && unit_menu_canvas.active)
+        {
+            PopulateAbilitiesMenu(unit);
+        }
+    }
 
     // Refreshes the units stats panel if that unit is selected.
     public void RefreshStatsPanel(Unit unit)

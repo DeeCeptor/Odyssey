@@ -10,7 +10,6 @@ public class Phalanx : Ability
     {
         effect_of_ability = new ChangeMovement(owner, 3, 1);
         effects_self = false;
-        takes_entire_turn = true;
     }
 
 
