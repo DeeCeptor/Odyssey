@@ -2,9 +2,16 @@ using UnityEngine;
 using System.Collections;
 
 public class TroopManager : MonoBehaviour {
-public int totalTroops = 100;
-public GameObject[] units;
-public GameObject[] heroes;
+    public int totalTroops = 100;
+    public int healthyHoplites = 20;
+    public int woundedHoplites = 0;
+    public int healthySwordsmen = 20;
+    public int woundedSwordsmen = 0;
+    public int healthyArchers = 10;
+    public int woundedArchers = 0;
+    public int healthyCavalry = 10;
+    public int woundedCavalry = 0;
+    public GameObject[] heroes;
 	// Use this for initialization
 	void Start () {
 	}
@@ -12,12 +19,6 @@ public GameObject[] heroes;
 	// Update is called once per frame
 	void Update () {
 	
-	}
-	
-	public void AddTroop(GameObject unit)
-	{
-		unit.transform.SetParent(transform);
-		units[units.Length] = unit;
 	}
 	
 	public void AddHero(GameObject hero)
@@ -30,13 +31,6 @@ public GameObject[] heroes;
 	{
 		float consumption = 0f;
 		TroopStats curTroop;
-	
-		for(int i = 0; i<units.Length; i++)
-		{
-			curTroop = units[i].GetComponent<TroopStats>();
-			consumption = consumption + (curTroop.foodConsumptionPerSoldier*curTroop.totalLiving);
-		}
-	
 	
 		HeroStats curHero;
 		
@@ -52,13 +46,6 @@ public GameObject[] heroes;
 	{
 		float consumption = 0f;
 		TroopStats curTroop;
-		
-		for(int i = 0; i<units.Length; i++)
-		{
-			curTroop = units[i].GetComponent<TroopStats>();
-			consumption = consumption + (curTroop.waterConsumptionPerSoldier*curTroop.totalLiving);
-		}
-		
 		
 		HeroStats curHero;
 		
@@ -280,6 +267,11 @@ public GameObject[] heroes;
 		}
 		return max;
 	}
+
+    public void InjureRandom()
+    {
+
+    }
 	
 	
 	

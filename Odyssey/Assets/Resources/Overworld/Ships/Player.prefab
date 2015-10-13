@@ -35,22 +35,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &110264
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 473146}
-  - 114: {fileID: 11404472}
-  m_Layer: 9
-  m_Name: Hoplites
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &118922
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,22 +61,6 @@ GameObject:
   - 114: {fileID: 11431212}
   m_Layer: 9
   m_Name: Wood
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &134528
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 458390}
-  - 114: {fileID: 11452682}
-  m_Layer: 9
-  m_Name: Hoplites
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,7 +192,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 458084}
-  m_RootOrder: 2
+  m_RootOrder: 0
 --- !u!4 &426528
 Transform:
   m_ObjectHideFlags: 1
@@ -291,23 +259,9 @@ Transform:
   m_LocalPosition: {x: 45.0260201, y: -87.5923767, z: 160.350845}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 473146}
-  - {fileID: 458390}
   - {fileID: 411342}
   m_Father: {fileID: 426528}
   m_RootOrder: 6
---- !u!4 &458390
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134528}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 458084}
-  m_RootOrder: 1
 --- !u!4 &463704
 Transform:
   m_ObjectHideFlags: 1
@@ -319,18 +273,6 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 8}
   m_Children: []
   m_Father: {fileID: 426528}
-  m_RootOrder: 0
---- !u!4 &473146
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110264}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 458084}
   m_RootOrder: 0
 --- !u!4 &485238
 Transform:
@@ -494,23 +436,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181168}
   m_Enabled: 1
---- !u!114 &11404472
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d1eef714ae82924cb966094680b6f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  display: {fileID: 0}
-  healthyTroops: 10
-  woundedTroops: 0
-  totalLiving: 10
-  foodConsumptionPerSoldier: .00499999989
-  waterConsumptionPerSoldier: .00999999978
 --- !u!114 &11406076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -596,9 +521,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTroops: 100
-  units:
-  - {fileID: 110264}
-  - {fileID: 134528}
+  healthyHoplites: 20
+  woundedHoplites: 0
+  healthySwordsmen: 20
+  woundedSwordsmen: 0
+  healthyArchers: 10
+  woundedArchers: 0
+  healthyCavalry: 10
+  woundedCavalry: 0
   heroes:
   - {fileID: 145506}
 --- !u!114 &11431212
@@ -646,23 +576,6 @@ MonoBehaviour:
   spear: 0
   sword: 0
   bow: 4
---- !u!114 &11452682
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 134528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d1eef714ae82924cb966094680b6f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  display: {fileID: 0}
-  healthyTroops: 10
-  woundedTroops: 0
-  totalLiving: 10
-  foodConsumptionPerSoldier: .00499999989
-  waterConsumptionPerSoldier: .00999999978
 --- !u!114 &11453440
 MonoBehaviour:
   m_ObjectHideFlags: 1
