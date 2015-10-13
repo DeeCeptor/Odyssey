@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// This unit gains defence for every hoplite around it
 public class ShieldWall : Effect 
 {
 	public ShieldWall(Unit receiver)
@@ -14,7 +15,15 @@ public class ShieldWall : Effect
     {
         base.ApplyEffect();
 
-
+        foreach (Edge edge in receiver.location.neighbours)
+        {
+            if (edge.destination.occupying_unit != null 
+                && edge.destination.occupying_unit.u_name == "Hoplite")
+            {
+                receiver.AdjustDefence(0.05f);
+                receiver.AdjustRangedDefence(0.05f);
+            }
+        }
     }
 
 

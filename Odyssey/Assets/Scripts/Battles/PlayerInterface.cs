@@ -6,6 +6,12 @@ public class PlayerInterface : MonoBehaviour
 {
     [HideInInspector]
     public static PlayerInterface player_interface;
+
+    public GameObject deployment_canvas;
+    public GameObject unit_menu_canvas;
+    public GameObject ability_panel;
+
+    public GameObject battle_specific_objects;  // Objects that don't appear when in deployment stage
     public Button end_turn_button;
     public Button AI_turn_button;
     public GameObject pause_menu;
@@ -13,16 +19,23 @@ public class PlayerInterface : MonoBehaviour
     public Text summary_screen_title;
 
     public Text turn_text;
+    public Text favour_remaining_text;
 
     public GameObject unit_panel;
     public Text unit_name;
     public Text unit_description;
     public Text health_text;
     public Slider health_bar;
+    public Text damage_text;
+    public Slider damage_bar;
+    public Text piercing_damage_text;
+    public Slider piercing_damage_bar;
     public Text defence_text;
     public Slider defence_bar;
     public Text ranged_defence_text;
     public Slider ranged_defence_bar;
+    public Text movement_text;
+    public Slider movement_bar;
 
     public GameObject terrain_panel;
     public Text terrain_name;
@@ -36,11 +49,15 @@ public class PlayerInterface : MonoBehaviour
     private bool can_select = true;
     private bool is_rotating_unit = false;
 
-	void Start () 
+	void Awake () 
 	{
         player_interface = this;
-
 	}
+    void Start()
+    {
+        unit_panel.SetActive(false);
+        terrain_panel.SetActive(false);
+    }
 	
 
 	void Update () 
@@ -100,7 +117,9 @@ public class PlayerInterface : MonoBehaviour
         {
             selected_unit = unit;
 
-            unit.unit_menu.SetActive(true);
+            //unit.unit_menu.SetActive(true);
+
+            PopulateAbilitiesMenu(unit);
         }
 
         UnhighlightHexes();
@@ -112,12 +131,63 @@ public class PlayerInterface : MonoBehaviour
     // Dehighlights any hexes that may have been highlighted
     public void UnitDeselected()
     {
+        this.unit_menu_canvas.SetActive(false);
+
         HideUnitStatsPanel();
         UnhighlightHexes();
 
         if (selected_unit != null)
             selected_unit.unit_menu.SetActive(false);
         selected_unit = null;
+    }
+
+
+    public void PopulateAbilitiesMenu(Unit unit)
+    {
+        // Destroy all previous ability buttons
+        int childs = ability_panel.transform.childCount;
+        for (int i = childs - 1; i > 0; i--)
+        {
+            GameObject.Destroy(ability_panel.transform.GetChild(i).gameObject);
+        }
+
+        // Populate the unit menu panel with the abilities of this unit
+        for (int x = 0; x < unit.abilities.Count; x++)
+        {
+            Ability ability = unit.abilities[x];
+            // Create a button for the ability
+            GameObject newButton = Instantiate(Resources.Load("Battles/AbilityButton", typeof(GameObject))) as GameObject;
+            newButton.name = ability.ability_name + "Button";
+            Button button = newButton.GetComponent<Button>();
+            button.onClick.AddListener(() => ability.TryToCastAbility());
+            Text text = newButton.GetComponentInChildren<Text>();
+            text.text = ability.ability_name;
+            newButton.transform.SetParent(ability_panel.transform);
+            newButton.transform.localScale = new Vector3(1, 1, 1);
+
+            if (!ability.CanCastAbility())
+                button.interactable = false;
+        }
+
+        this.unit_menu_canvas.transform.position = unit.transform.position;
+        this.unit_menu_canvas.transform.parent = unit.transform;
+        this.unit_menu_canvas.SetActive(true);
+    }
+    public void ReevaluateCastableAbilities(Unit unit)
+    {
+        if (selected_unit == unit && unit_menu_canvas.active)
+        {
+            PopulateAbilitiesMenu(unit);
+        }
+    }
+
+    // Refreshes the units stats panel if that unit is selected.
+    public void RefreshStatsPanel(Unit unit)
+    {
+        if (selected_unit == unit)
+        {
+            ShowUnitStatsPanel(selected_unit);
+        }
     }
 
 
@@ -131,6 +201,9 @@ public class PlayerInterface : MonoBehaviour
         SetHealthText(unit);
         SetDefenceText(unit);
         SetRangedDefenceText(unit);
+        SetDamageText(unit);
+        SetPiercingDamageText(unit);
+        SetMovementText(unit);
     }
     public void HideUnitStatsPanel()
     {
@@ -154,13 +227,28 @@ public class PlayerInterface : MonoBehaviour
     }
     public void SetDefenceText(Unit unit)
     {
-        defence_text.text = "Defence: " + unit.GetDefence();
+        defence_text.text = "Defence: " + (int)(unit.GetDefence() * 100) + "%";
         defence_bar.value = unit.GetDefence();
     }
     public void SetRangedDefenceText(Unit unit)
     {
-        ranged_defence_text.text = "Ranged Defence: " + unit.GetDefence();
-        ranged_defence_bar.value = unit.GetDefence();
+        ranged_defence_text.text = "Ranged Defence: " + (int)(unit.GetRangedDefence() * 100) + "%";
+        ranged_defence_bar.value = unit.GetRangedDefence();
+    }
+    public void SetDamageText(Unit unit)
+    {
+        damage_text.text = "Damage: " + unit.GetDamage();
+        damage_bar.value = unit.GetDamage() / 200.0f;
+    }
+    public void SetPiercingDamageText(Unit unit)
+    {
+        piercing_damage_text.text = "Piercing Damage: " + unit.GetPiercingDamage();
+        piercing_damage_bar.value = unit.GetPiercingDamage() / 200.0f;
+    }
+    public void SetMovementText(Unit unit)
+    {
+        movement_text.text = "Movement Speed: " + unit.GetMovement();
+        movement_bar.value = (float) unit.GetMovement() / 10.0f;
     }
 
     public bool SelectedUnitAvailableToControl()

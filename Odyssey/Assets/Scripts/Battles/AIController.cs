@@ -67,9 +67,7 @@ public class AI_Turn_Thread
                 }
 
                 // We've gone through each hex. Move to that hex
-                //Debug.Log("Moving unit to " + best_hex.coordinate + ", " + best_hex.hex_score);
                 unit.PathTo(best_hex);
-
 
 
                 /////// ATTACKING ////////
@@ -144,7 +142,7 @@ public class AI_Turn_Thread
     public float EvaluateHexScore(Unit unit, Hex hex)
     {
         // Add the bonuses this hex gives
-        float hex_score = hex.defense_score;
+        float hex_score = hex.HexTerrainScoreForUnit(unit);
 
         // Add score based on the damage we can do to enemies from this hex
         hex_score += EnemyScoreOnHex(unit, hex);

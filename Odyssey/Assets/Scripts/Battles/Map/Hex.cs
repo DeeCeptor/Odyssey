@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEngine.EventSystems;
 
 public class Hex : MonoBehaviour, IComparable<Hex>
 {
-    public Vector2 coordinate;      // Grid coordinate
-    public Vector3 world_coordinates;
+    public Vector2 coordinate;      // x,y Grid coordinate
+    public Vector3 world_coordinates;   // Coordinate in real world space (unity game space)
+    public Vector2 top_down_left_right_coordinate;  // Grid as if going from the normal reading angle
 
     public List<Effect> effects_on_hex = new List<Effect>();
 
@@ -28,13 +30,22 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     [HideInInspector]
     public Hex came_from;
 
+    // Properties
     public string h_name;
     public string h_description;
-    //List<Effects> effects_on_hex;
+    public int cost_to_enter_hex = 1;
+    public bool impassable = false;     // If set to true, no unit can ever traverse this hex
+    public bool deployment_zone = false;     // Player can deploy units on this hex in the player unit deployment screen
+    public bool retreat_zone = false;    // Player can safely retreat units from this hex
 
     // Used for AI
     public float hex_score;         // How 'favourable' this hex is for the AI. Based on nearby allies, and hurt enemies
-    public float defense_score;     // What bonuses this hex gives
+
+
+    // AI terrain score. How highly does each genre of unit value this hex?
+    public float ranged_score = 0;
+    public float melee_score = 0;
+    public float cavalry_score = 0;
 
 
     void Start ()
@@ -129,6 +140,21 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     }
 
 
+    public float HexTerrainScoreForUnit(Unit unit)
+    {
+        switch (unit.unit_type)
+        {
+            case Unit_Types.Melee:
+                return this.melee_score;
+            case Unit_Types.Ranged:
+                return this.ranged_score;
+            case Unit_Types.Cavalry:
+                return this.cavalry_score;
+        }
+        return 0;
+    }
+
+
     void OnMouseDown()
     {
         
@@ -149,7 +175,10 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     {
         PlayerInterface.player_interface.MousedOverHex(this);
 
-        if (Input.GetMouseButtonDown(0))    // left click
+        // left click
+        if (Input.GetMouseButtonDown(0)
+            && !EventSystem.current.IsPointerOverGameObject()   // Make sure mouse is not over UI
+            )    
         {
             if (this.occupying_unit != null)    // Select the unit on this hex
                 PlayerInterface.player_interface.UnitSelected(this.occupying_unit);
@@ -160,12 +189,16 @@ public class Hex : MonoBehaviour, IComparable<Hex>
             //if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
             //    PlayerInterface.player_interface.selected_unit.HexClicked(this);
         }
-        if (Input.GetMouseButtonDown(1))    // right click
+        // right click
+        if (Input.GetMouseButtonDown(1)
+            && !EventSystem.current.IsPointerOverGameObject())
         {
             if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
                 PlayerInterface.player_interface.selected_unit.HexClicked(this);
         }
-        if (Input.GetMouseButtonDown(2))    // middle click
+        // middle click
+        if (Input.GetMouseButtonDown(2)
+            && !EventSystem.current.IsPointerOverGameObject())
         {
             if (PlayerInterface.player_interface.SelectedUnitAvailableToControl())
                 PlayerInterface.player_interface.selected_unit.HexClicked(this);
@@ -178,10 +211,15 @@ public class Hex : MonoBehaviour, IComparable<Hex>
         if (collision.gameObject.tag == "Hex")// && !neighbours.Contains(collision.gameObject.GetComponent<Hex>()))
         {
             GameObject neighbour = collision.gameObject;
-            Edge edge = new Edge(neighbour.GetComponent<Hex>(), this, 1);
-            neighbours.Add(edge);
-            HexMap.hex_map.all_edges.Add(edge);
-            Debug.DrawLine(this.transform.position, neighbour.transform.position, Color.red, 500);
+
+            // Only create an edge between these 2 hexes if they're both passable
+            if (!impassable && !neighbour.GetComponent<Hex>().impassable)
+            {
+                Edge edge = new Edge(neighbour.GetComponent<Hex>(), this, neighbour.GetComponent<Hex>().cost_to_enter_hex);
+                neighbours.Add(edge);
+                HexMap.hex_map.all_edges.Add(edge);
+                Debug.DrawLine(this.transform.position, neighbour.transform.position, Color.red, 500);
+            }
         }
     }
 

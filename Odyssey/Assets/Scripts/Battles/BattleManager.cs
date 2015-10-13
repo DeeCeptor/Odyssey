@@ -19,8 +19,69 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         battle_manager = this;
-        StartCoroutine(Initialize());
+        StartCoroutine(InitializePreBattleDeployment());
     }
+
+
+    // Called when the player needs to deploy units
+    IEnumerator InitializePreBattleDeployment()
+    {
+        Debug.Log("Initializing prebattle deployment");
+
+        yield return new WaitForSeconds(0.2f);
+        pre_battle_deployment = true;
+
+        // Set deployment interfaces
+        PlayerInterface.player_interface.deployment_canvas.SetActive(true);
+        PlayerInterface.player_interface.battle_specific_objects.SetActive(false);
+
+        // Undarken hexes we can deploy on
+        HexMap.hex_map.UndarkenDeploymentHexes();
+
+        Faction player_team = new Faction("Player", true, 1, Color.green);
+        factions.Add(player_team);
+        PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
+    }
+
+    IEnumerator InitializeBattle()
+    {
+        Debug.Log("Initializing battle");
+
+        // Hide the deployment canvas
+        yield return new WaitForSeconds(0.01f);
+        pre_battle_deployment = false;
+
+        // Change interfaces
+        PlayerInterface.player_interface.deployment_canvas.SetActive(false);
+        PlayerInterface.player_interface.battle_specific_objects.SetActive(true);
+
+        // Destroy the pre battle deployment objects
+        Destroy(PreBattleDeployment.pre_battle_deployment.gameObject);
+
+        // Undarken all hexes
+        HexMap.hex_map.UndarkenAllHexes();
+
+        // Set up the enemy AI faction
+        Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
+        factions.Add(enemy_team);
+
+        // Spawn enemies placed on the map designated in the text file
+        SpawnUnitsPlacedOnMap();
+
+        // Set enemies. Everyone is an enemy of everyone currently
+        foreach (Faction faction_1 in factions)
+        {
+            foreach (Faction faction_2 in factions)
+            {
+                if (faction_1 != faction_2)
+                    faction_1.enemies.Add(faction_2);
+            }
+        }
+
+        // Start the game
+        StartRound();
+    }
+
 
     IEnumerator Initialize()
     {
@@ -33,14 +94,6 @@ public class BattleManager : MonoBehaviour
             Faction player_team = new Faction("Player", true, 1, Color.green);
             factions.Add(player_team);
             PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
-            /*
-            for (int x = -1; x <= 2; x++)
-            {
-                for (int y = -1; y <= 1; y++)
-                {
-                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, y, true);
-                }
-            }*/
             
             // Make the units draggable
             foreach (Faction faction in factions)
@@ -78,37 +131,23 @@ public class BattleManager : MonoBehaviour
                 {
                     SpawnUnit(player_team, "Battles/Units/Cavalry", x, 1, false);
                 }
-
-                /*
-                Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
-                factions.Add(enemy_team);
-                for (int x = -4; x < 5; x++)
-                {
-                    SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, 6, false);
-                }
-                for (int x = -4; x < 5; x++)
-                {
-                    SpawnUnit(enemy_team, "Battles/Units/Archer", x, -6, false);
-                }
-
-
-                // Set enemies
-                player_team.enemies.Add(enemy_team);
-                enemy_team.enemies.Add(player_team);*/
             }
-
+            
             // Set enemies regardless of how the player got units (deployed or debug)
             Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
             factions.Add(enemy_team);
-
-            for (int x = -4; x < 5; x++)
+            /*
+            for (int x = -2; x < 1; x++)
             {
                 SpawnUnit(enemy_team, "Battles/Units/Archer", x, 6, false);
             }
-            for (int x = -4; x < 5; x++)
+            for (int x = -2; x < 1; x++)
             {
                 SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, -6, false);
-            }
+            }*/
+
+            // Spawn units specified in the text file
+            SpawnUnitsPlacedOnMap();
 
 
             // Set enemies. Everyone is an enemy of everyone currently
@@ -125,6 +164,19 @@ public class BattleManager : MonoBehaviour
         }
 
         yield return null;
+    }
+
+
+    // Place all the units specified in the battle text file onto the map
+    public void SpawnUnitsPlacedOnMap()
+    {
+        foreach(PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
+        {
+            Debug.Log("Spawning unit at " + unit.position);
+            Hex pos = HexMap.hex_map.GetHexFromTopDownCoordinates(new Vector2(unit.position.x, (int)unit.position.y));
+            GameObject new_unit = SpawnUnit(GetFaction(unit.faction_name), "Battles/Units/" + unit.unit_name, (int)pos.coordinate.x, (int)pos.coordinate.y, false);
+            new_unit.GetComponent<Unit>().SetRotation(new Vector3(0, 0, 90));
+        }
     }
 
 
@@ -223,52 +275,65 @@ public class BattleManager : MonoBehaviour
     {
         HexMap.hex_map.ResetEdgeScores();
 
-        if (false && !current_player.human_controlled)  // not used
+        // Update every units movable hexes
+        foreach (Faction faction in factions)
         {
-            // AI player only needs to update their own units movable hexes
-            foreach(Unit unit in current_player.units)
+            foreach (Unit unit in faction.units)
             {
+                // Reset the effects of everything
+                unit.EvaluateEffects();
+
+                unit.location.SetZoneOfControl(unit);
+            }
+        }
+
+        foreach (Faction faction in factions)
+        {
+            foreach (Unit unit in faction.units)
+            {
+                // Get all the hexes within range
                 unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
             }
         }
-        else
-        {
-            // This is a human player, so update every units movable hexes
-            foreach (Faction faction in factions)
-            {
-                foreach (Unit unit in faction.units)
-                {
-                    unit.location.SetZoneOfControl(unit);
-                }
-            }
-
-            foreach (Faction faction in factions)
-            {
-                foreach (Unit unit in faction.units)
-                {
-                    // Get all the hexes within range
-                    unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
-                }
-            }
-        }
+    }
+    public void SetMovableTilesOfUnit(Unit unit)
+    {
+        unit.tiles_I_can_move_to = HexMap.hex_map.GetMovableHexesWithinRange(unit.location, unit.GetMovement(), unit);
     }
 
 
     // Drag and drop is for the player deployment so they can drag and drop units around the map
-    public void SpawnUnit(Faction owning_faction, string unit_prefab, Hex hex, bool add_drag_drop)
+    public GameObject SpawnUnit(Faction owning_faction, string unit_prefab, Hex hex, bool add_drag_drop)
     {
-        SpawnUnit(owning_faction, unit_prefab, (int)hex.coordinate.x, (int)hex.coordinate.y, add_drag_drop);
+        return SpawnUnit(owning_faction, unit_prefab, (int)hex.coordinate.x, (int)hex.coordinate.y, add_drag_drop);
     }
-    public void SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y, bool add_drag_drop)
+    public GameObject SpawnUnit(Faction owning_faction, string unit_prefab, int x, int y, bool add_drag_drop)
     {
         GameObject instance = Instantiate(Resources.Load(unit_prefab, typeof(GameObject))) as GameObject;
-        Unit unit2 = instance.GetComponent<Unit>();
-        unit2.owner = owning_faction;
-        HexMap.hex_map.WarpUnitTo(unit2, HexMap.hex_map.GetHex(x, y));
-        owning_faction.units.Add(unit2);
+        Unit unit = instance.GetComponent<Unit>();
+        unit.owner = owning_faction;
+        owning_faction.units.Add(unit);
+
+        // Spawn the unit in a non impassasble and non occupied space
+        HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.Nearest_Unoccupied_Passable_Hex(HexMap.hex_map.GetHex(x, y)));
 
         if (add_drag_drop)
             instance.AddComponent<UnitDragDrop>();
+
+        return instance;
+    }
+
+
+    public Faction GetFaction(string name)
+    {
+        foreach(Faction faction in factions)
+        {
+            if (faction.faction_name == name)
+                return faction;
+        }
+
+        Debug.Log("Couldn't find faction " + name + ", returning first faction " + factions[0].faction_name);
+        return factions[0];
     }
 
 
@@ -307,25 +372,16 @@ public class BattleManager : MonoBehaviour
 
     public void EndPreBattleDeployment()
     {
-        // Record the players unit positions and facings
-        PlayerUnitPositions positions = GameObject.Find("PlayerUnitPositions").GetComponent<PlayerUnitPositions>();
-        positions.player_deployed_units.Clear();
-        positions.saved_factions.Clear();
-
-        foreach(Faction faction in factions)
+        // Remove drag and drop script from all units
+        foreach (Faction faction in factions)
         {
-            positions.saved_factions.Add(faction);
-
-            foreach(Unit unit in faction.units)
+            foreach (Unit unit in faction.units)
             {
                 Destroy(unit.GetComponent<UnitDragDrop>());
-                positions.player_deployed_units.Add(unit);
-                DontDestroyOnLoad(unit.gameObject);
-                Debug.Log("Saving " + unit.u_name);
             }
         }
 
-        Application.LoadLevel("TacticalBattle");
+        StartCoroutine(InitializeBattle());
     }
     // Takes the saved player units from the pre battle deployment screen and deploys them
     public void SpawnPlayerDeployedUnits()

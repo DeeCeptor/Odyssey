@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+
+public enum Unit_Types { Melee, Cavalry, Ranged };
 
 public class Unit : MonoBehaviour
 {
@@ -28,10 +31,12 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public bool dead = false;
 
+    // Effects alter the stats of a unit, and can persist for a while. Either number of turns, permanent or from terrain
+    public List<Effect> effects_on_unit = new List<Effect>();
 
-    protected List<Effect> effects_on_unit = new List<Effect>();
-    protected List<Effect> remove_effects = new List<Effect>();     // Effects to be removed shortly
-
+    // Abilities appear in the units menu when you click on them and it's your turn.
+    // Abilities must be ACTIVATED by the user to be used. They are never passive. Passives are effects.
+    public List<Ability> abilities = new List<Ability>();
 
     // UNIT STATS
     // Normal stats are the base stats of the unit.
@@ -51,6 +56,8 @@ public class Unit : MonoBehaviour
     public int normal_movement = 3;     // How far this unit can move in a turn.
     int movement = 3;
 
+    public Unit_Types unit_type;
+    public bool is_ranged_unit = false;
     public bool counter_attacks = true;     // Counterattacks if the enemy is within range and in the frontal facing arc
     public int counter_attack_radius = 60; // The difference in facing counter attacks can be done from. 60 means the front 3 hexes
     public bool attacks_are_counterable = true;
@@ -61,9 +68,8 @@ public class Unit : MonoBehaviour
     public float flanking_factor = 1.5f;    // Damage multiplied by this factor when flanking, to show that we're not taking damage
     public float ally_grouping_score = 0.1f;
 
-
     // Which direction the unit is facing. Hexagons have 6 facings. 360/6 = 60. This value will be a multiple of 6
-    [HideInInspector]
+    //[HideInInspector]
     public int facing = 0;
     [HideInInspector]
     public bool rotating = false;
@@ -78,20 +84,27 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public GameObject unit_menu;
 
-    // List<Ability> abilities;
     public Faction owner;
 
 
 	void Start ()
     {
         unit_menu = this.transform.FindChild("UnitMenu").gameObject;
-        this.SetRotation(new Vector3(0, 0, 0));
+        //this.SetRotation(new Vector3(0, 0, 0));
         health = maximum_health;
 
         // Set aura so we can tell which faction this player belongs to
         this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
 
-        ResetStats();
+        //ResetStats();
+        AssignAbilities();
+    }
+
+
+    // Override this in the super class
+    public virtual void AssignAbilities()
+    {
+
     }
 
 
@@ -158,17 +171,17 @@ public class Unit : MonoBehaviour
     {
         // Snap to one of the hexagon directions
         if (angles.z >= 0 && angles.z < 60)
-            angles.z = 30;
+            angles.z = 30;  // top left
         else if (angles.z >= 60 && angles.z < 120)
-            angles.z = 90;
+            angles.z = 90;  // left
         else if (angles.z >= 120 && angles.z < 180)
-            angles.z = 150;
+            angles.z = 150; // bottom left
         else if (angles.z >= 180 && angles.z < 240)
-            angles.z = 210;
+            angles.z = 210; // bottom right
         else if (angles.z >= 240 && angles.z < 300)
-            angles.z = 270;
+            angles.z = 270; // right
         else if (angles.z >= 300 && angles.z < 360)
-            angles.z = 330;
+            angles.z = 330; // top right
 
         this.transform.eulerAngles = angles;
 
@@ -217,6 +230,8 @@ public class Unit : MonoBehaviour
 
         if (owner.human_controlled)
             ready_to_be_controlled = true;
+
+        TurnStartEffects();
     }
     public virtual void EndTurn()
     {
@@ -303,7 +318,7 @@ public class Unit : MonoBehaviour
     }
     public virtual void AdjustRange(int amount)
     {
-        attack_range = Mathf.Min(1, attack_range + amount);
+        attack_range = Mathf.Max(1, attack_range + amount);
     }
 
     // Returns the defence of the unit
@@ -355,12 +370,22 @@ public class Unit : MonoBehaviour
 
     public virtual void Die()
     {
-        // Remove from the unit lists
-        this.owner.units.Remove(this);
+        RemoveUnit();
         dead = true;
 
         // Check victory/defeat conditions
         BattleManager.battle_manager.CheckVictoryAndDefeat();
+    }
+    public virtual void RemoveUnit()
+    {
+        if (PlayerInterface.player_interface.selected_unit == this)
+        {
+            PlayerInterface.player_interface.unit_menu_canvas.transform.parent = null;  // Remove parent, so we don't destroy this game object
+            PlayerInterface.player_interface.UnitDeselected();
+        }
+
+        // Remove from the unit lists
+        this.owner.units.Remove(this);
 
         this.location.occupying_unit = null;
 
@@ -368,6 +393,17 @@ public class Unit : MonoBehaviour
 
         // Remove game object
         Destroy(this.gameObject);
+    }
+    public void RetreatUnit()
+    {
+        Debug.Log("Retreating unit " + u_name);
+
+        // Change status to having retreated
+
+        // Remove from play
+        RemoveUnit();
+
+        BattleManager.battle_manager.CheckVictoryAndDefeat();
     }
 
 
@@ -397,12 +433,13 @@ public class Unit : MonoBehaviour
     void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(1)     // Right clicked on unit
+            && !EventSystem.current.IsPointerOverGameObject()   // Make sure mouse is not over UI
             && PlayerInterface.player_interface.SelectedUnitAvailableToControl()
             && !PlayerInterface.player_interface.selected_unit.has_attacked
             && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this))
         {
             Debug.Log("OnMouseOver attack");
-            PlayerInterface.player_interface.selected_unit.Attack(this, attacks_are_counterable);
+            PlayerInterface.player_interface.selected_unit.HumanAttacked(this, attacks_are_counterable);
         }
     }
     void OnMouseDown()      // Left clicked on unit
@@ -426,8 +463,6 @@ public class Unit : MonoBehaviour
 
     public void HexClicked(Hex hex)
     {
-        Debug.Log("HexClicked");
-
         if (this.owner == BattleManager.battle_manager.current_player 
             && BattleManager.battle_manager.current_player.human_controlled
             && this.active )
@@ -436,17 +471,21 @@ public class Unit : MonoBehaviour
             if (hex.occupying_unit == null && hex != location && !this.has_moved)
             {
                 PlayerInterface.player_interface.UnhighlightHexes();
-                PathTo(hex);
+                HumanMovedTo(hex);
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
             {
                 Debug.Log("HexClicked attack");
-                Attack(hex.occupying_unit, attacks_are_counterable);
+                HumanAttacked(hex.occupying_unit, attacks_are_counterable);
             }
         }
     }
 
-
+    public void HumanMovedTo(Hex to)
+    {
+        PathTo(to);
+        PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
+    }
     public void PathTo(Hex to)
     {
         // Check if that's a valid spot. Can't have more than one unit sit on the same spot, can't move to the spot we're already on
@@ -461,6 +500,7 @@ public class Unit : MonoBehaviour
                     SetLocation(to);
                     has_moved = true;
                     is_moving = true;
+
                     BattleManager.battle_manager.SetUnitsMovableTiles();
                 }
             }
@@ -472,16 +512,13 @@ public class Unit : MonoBehaviour
     {
         // Remove the effects from this 
         UnitMovedChangeEffects();
-
         if (this.location != null)
         {
-           // hex.ResetZoneOfControl();
             this.location.occupying_unit = null;
         }
         this.location = hex;
         hex.occupying_unit = this;
         this.location_coordinates = new Vector2(hex.coordinate.x, hex.coordinate.y);
-       // hex.SetZoneOfControl(this);
 
         // Get the effects on this hex
         GetHexEffects(hex);
@@ -490,6 +527,13 @@ public class Unit : MonoBehaviour
     public void GetHexEffects(Hex hex)
     {
         effects_on_unit.AddRange(hex.GetEffectsOnHex(this));
+        EvaluateEffects();
+    }
+
+
+    public void AddEffectToUnit(Effect effect)
+    {
+        effects_on_unit.Add(effect);
         EvaluateEffects();
     }
 
@@ -518,40 +562,42 @@ public class Unit : MonoBehaviour
     // Called when the unit has moved to remove the old hex's effect
     public void UnitMovedChangeEffects()
     {
-        foreach (Effect effect in effects_on_unit)
+        // Iterate through list backwards, so elements we remove don't change our ordering
+        for (int i = effects_on_unit.Count - 1; i >= 0; i--)
         {
-            if (effect.UnitMoved())
+            if (effects_on_unit[i].UnitMoved())
             {
-                remove_effects.Add(effect);
+                effects_on_unit[i].RemoveThisEffect();
+                effects_on_unit.RemoveAt(i);
             }
         }
-        RemoveEffects();
     }
     // Called at the start of the turn to remove time sensitive effects
     public void TurnStartEffects()
     {
-        foreach (Effect effect in effects_on_unit)
+        // Iterate through list backwards, so elements we remove don't change our ordering
+        for (int i = effects_on_unit.Count - 1; i >= 0; i--)
         {
-            if (effect.TurnStart())
+            if (effects_on_unit[i].TurnStart())
             {
-                remove_effects.Add(effect);
+                effects_on_unit[i].RemoveThisEffect();
+                effects_on_unit.RemoveAt(i);
             }
         }
-        RemoveEffects();
+
+        EvaluateEffects();
     }
-    // Removes effects in the remove_effects list
-    public void RemoveEffects()
+    public void ResetAndApplyEffects()
     {
-        while (remove_effects.Count > 0)
-        {
-            Effect effect = remove_effects[0];
-            effects_on_unit.Remove(effect);
-        }
-
-        remove_effects.Clear();
+        EvaluateEffects();
     }
 
 
+    public void HumanAttacked(Unit victim, bool attacks_are_counterable)
+    {
+        Attack(victim, attacks_are_counterable);
+        PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
+    }
     public void Attack(Unit victim, bool attack_is_counterable)
     {
         if (victim != this 
@@ -576,7 +622,7 @@ public class Unit : MonoBehaviour
     }
     public float TakeHit(Unit attacker, bool attack_is_counterable)
     {
-        float modified_damage = CalculateDamage(attacker);
+        int modified_damage = (int) CalculateDamage(attacker);
         health -= (int) modified_damage;
         Debug.Log(u_name + " took " + modified_damage + " damaged, " + health + " HP remaining from " + attacker.u_name);
 
