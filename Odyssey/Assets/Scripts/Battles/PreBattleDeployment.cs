@@ -95,7 +95,7 @@ public class PreBattleDeployment : MonoBehaviour
             SetUnitsRemainingText();
             SetDeployButtonText(unit_to_spawn_name, deployable_units[unit_to_spawn_name]);
             GameObject unit = BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex, true);
-            unit.GetComponent<Unit>().SetRotation(new Vector3(0, 0, 270));
+            unit.GetComponent<Unit>().SetImmediateRotation(270);
 
             // Disable the deployment of that unit if we're out of those units to deploy
             if (deployable_units[unit_to_spawn_name] <= 0)

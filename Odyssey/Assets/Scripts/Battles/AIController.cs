@@ -92,7 +92,7 @@ public class AI_Turn_Thread
                     // Check if we're in range. If we're not in range, we can't attack the unit
                     if (distance <= unit.GetRange())
                     {
-                        float cur_score = enemy.CalculateDamage(unit);
+                        float cur_score = enemy.CalculateDamage(unit, best_hex);
 
                         if (cur_score > best_target_score)
                         {
@@ -107,7 +107,7 @@ public class AI_Turn_Thread
                 // ROTATION
                 if (closest_enemy != null)
                 {
-                    unit.SetDesiredRotationTowards(best_hex.coordinate, closest_enemy.location.coordinate);//?? 
+                    unit.SetDesiredRotationTowards(best_hex.world_coordinates, closest_enemy.location.world_coordinates);//?? 
                 }
 
                 // If there's a suitable target, have the unit attack it once it gets to the right hex
@@ -163,7 +163,7 @@ public class AI_Turn_Thread
         List<Hex> potential_targets = HexMap.hex_map.HexesWithinRangeContainingEnemies(hex, cur_unit.GetRange(), cur_unit.owner);
         foreach (Hex target_hex in potential_targets)
         {
-            score = Mathf.Max(score, target_hex.occupying_unit.CalculateDamage(cur_unit));
+            score = Mathf.Max(score, target_hex.occupying_unit.CalculateDamage(cur_unit, target_hex));
 
             // Increase the score of this hex if we can attack them without being counterattacked
             if (cur_unit.attacks_are_counterable)

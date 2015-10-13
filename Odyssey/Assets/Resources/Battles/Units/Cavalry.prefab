@@ -40,8 +40,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 446232}
   - 212: {fileID: 21283548}
-  - 114: {fileID: 11438118}
   - 58: {fileID: 5841448}
+  - 114: {fileID: 11412110}
   m_Layer: 0
   m_Name: Cavalry
   m_TagString: Untagged
@@ -245,7 +245,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.10000002
---- !u!114 &11438118
+--- !u!114 &11412110
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 116934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3db36efbc96018f40bbda9a2154cf4e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7472ee72542a50748b63cee2c477766a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   location: {fileID: 0}
@@ -267,26 +267,29 @@ MonoBehaviour:
   is_moving: 0
   has_attacked: 0
   dead: 0
-  maximum_health: 150
-  normal_defence: .300000012
-  normal_ranged_defence: .5
+  maximum_health: 180
+  normal_defence: .200000003
+  normal_ranged_defence: .400000006
   normal_attack_range: 1
-  normal_damage: 70
-  normal_piercing_damage: 30
+  normal_damage: 60
+  normal_piercing_damage: 20
   normal_movement: 5
+  normal_flanking_bonus: .5
+  normal_bonus_vs_melee: 0
+  normal_bonus_vs_cavalry: 0
+  normal_bonus_vs_ranged: 0
   unit_type: 1
   is_ranged_unit: 0
   counter_attacks: 1
   counter_attack_radius: 60
   attacks_are_counterable: 1
   offensive_AI_score: 1
-  flanking_factor: 2
-  ally_grouping_score: 0
+  flanking_factor: 3
+  ally_grouping_score: .100000001
   facing: 0
   rotating: 0
-  u_name: Cavalry
-  u_description: Fleet and deadly, these horsemen smash into the unprotected flanks
-    of enemies.
+  u_name: Hippeus
+  u_description: Cavalry
   portrait: {fileID: 0}
   prefab_name: 
   unit_menu: {fileID: 0}
@@ -486,6 +489,42 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: unit_type
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_flanking_bonus
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_damage
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_movement
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: flanking_factor
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: u_name
+      value: Hippeus
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: u_description
+      value: Cavalry
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maximum_health
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_ranged_defence
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_defence
+      value: .200000003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

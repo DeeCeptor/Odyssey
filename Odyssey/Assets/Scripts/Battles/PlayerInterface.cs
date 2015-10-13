@@ -18,6 +18,11 @@ public class PlayerInterface : MonoBehaviour
     public GameObject summary_screen;
     public Text summary_screen_title;
 
+    // Battle prediction panel
+    public GameObject battle_prediction_panel;
+    public Slider enemy_hp_slider;
+    public Slider estimated_damage_slider;
+
     public Text turn_text;
     public Text favour_remaining_text;
 
@@ -57,6 +62,7 @@ public class PlayerInterface : MonoBehaviour
     {
         unit_panel.SetActive(false);
         terrain_panel.SetActive(false);
+        HideEstimatedDamagePanel();
     }
 	
 
@@ -188,6 +194,22 @@ public class PlayerInterface : MonoBehaviour
         {
             ShowUnitStatsPanel(selected_unit);
         }
+    }
+
+
+    public void ShowEstimatedDamagePanel(Unit target)
+    {
+        battle_prediction_panel.SetActive(true);
+
+        // Set enemy HP, out of their max HP
+        enemy_hp_slider.value = target.GetHealth() / target.GetMaxHealth();
+
+        // Estimate the amount of damage the selected unit will do to the target
+        estimated_damage_slider.value = target.CalculateDamage(selected_unit, selected_unit.location) / target.GetMaxHealth();
+    }
+    public void HideEstimatedDamagePanel()
+    {
+        battle_prediction_panel.SetActive(false);
     }
 
 

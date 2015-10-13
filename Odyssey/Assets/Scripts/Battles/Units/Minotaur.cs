@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Hoplite : Unit
+public class Minotaur : Unit
 {
 
 
@@ -9,7 +9,6 @@ public class Hoplite : Unit
     {
         base.AssignAbilities();
 
-        effects_on_unit.Add(new ShieldWall(this));
-        abilities.Add(new Phalanx(this));
+        abilities.Add(new BullCharge(this));
     }
 }

@@ -175,7 +175,7 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Spawning unit at " + unit.position);
             Hex pos = HexMap.hex_map.GetHexFromTopDownCoordinates(new Vector2(unit.position.x, (int)unit.position.y));
             GameObject new_unit = SpawnUnit(GetFaction(unit.faction_name), "Battles/Units/" + unit.unit_name, (int)pos.coordinate.x, (int)pos.coordinate.y, false);
-            new_unit.GetComponent<Unit>().SetRotation(new Vector3(0, 0, 90));
+            new_unit.GetComponent<Unit>().SetImmediateRotation(90);
         }
     }
 

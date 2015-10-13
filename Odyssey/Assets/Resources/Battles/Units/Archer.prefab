@@ -9,8 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 449454}
   - 212: {fileID: 21203856}
-  - 114: {fileID: 11457220}
   - 58: {fileID: 5829486}
+  - 114: {fileID: 11435438}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -245,7 +245,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.10000002
---- !u!114 &11457220
+--- !u!114 &11435438
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 102322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3db36efbc96018f40bbda9a2154cf4e4, type: 3}
+  m_Script: {fileID: 11500000, guid: d5cd1333809826b40b4761852521b8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   location: {fileID: 0}
@@ -267,26 +267,29 @@ MonoBehaviour:
   is_moving: 0
   has_attacked: 0
   dead: 0
-  maximum_health: 150
+  maximum_health: 140
   normal_defence: .100000001
-  normal_ranged_defence: .100000001
+  normal_ranged_defence: .300000012
   normal_attack_range: 3
   normal_damage: 50
-  normal_piercing_damage: 20
+  normal_piercing_damage: 15
   normal_movement: 3
+  normal_flanking_bonus: 0
+  normal_bonus_vs_melee: 0
+  normal_bonus_vs_cavalry: 0
+  normal_bonus_vs_ranged: 0
   unit_type: 2
   is_ranged_unit: 1
   counter_attacks: 0
   counter_attack_radius: 60
-  attacks_are_counterable: 0
+  attacks_are_counterable: 1
   offensive_AI_score: 1
-  flanking_factor: 1.5
+  flanking_factor: 0
   ally_grouping_score: .100000001
   facing: 0
   rotating: 0
   u_name: Archer
-  u_description: Armed with arrows that can pierce armour, these warriors fight best
-    from afar.
+  u_description: Archer description
   portrait: {fileID: 0}
   prefab_name: 
   unit_menu: {fileID: 0}
@@ -494,6 +497,46 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: unit_type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maximum_health
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_defence
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_damage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_piercing_damage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_attack_range
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: counter_attacks
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: attacks_are_counterable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: flanking_factor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: u_name
+      value: Archer
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: u_description
+      value: Archer description
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

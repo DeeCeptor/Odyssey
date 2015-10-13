@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 // An ability belong to a unit, and must be CAST/ACTIVATED by the user.
 // Either changes the stats of the unit/units or targets a space containing a unit.
@@ -18,16 +19,17 @@ public class Ability
     public bool targetable = false;     // Whether this ability needs a target or not. No target means the effect goes off immediately after clicking the ability button.
 
     public bool effects_self = true;    // If set to true, then this ability will simply apply effect_of_ability to the caster of this ability.
-    public Effect effect_of_ability;    // Many abilities simply add effects onto the current unit, or an AOE buff. Place those effects here.
+    public List<Effect> effects_of_ability = new List<Effect>();    // Many abilities simply add effects onto the current unit, or an AOE buff. Place those effects here.
 
     
     // Extend the constructor and a abilitys_effect if this ability simply adds an effect.
-    public Ability(string name, string description, Unit owner, int favour_cost)
+    public Ability(string name, string description, Unit owner, int favour_cost, bool applies_effect_to_self)
     {
         ability_name = name;
         ability_description = description;
         caster = owner;
         cost = favour_cost;
+        effects_self = applies_effect_to_self;
     }
 
 
@@ -74,6 +76,11 @@ public class Ability
     {
         // Simplest ability. Just adds an effect to change the untis stats
         if (effects_self)
-            caster.AddEffectToUnit(effect_of_ability.Clone(caster));
+        {
+            foreach (Effect effect in effects_of_ability)
+            {
+                caster.AddEffectToUnit(effect.Clone(caster));
+            }
+        }
     }
 }

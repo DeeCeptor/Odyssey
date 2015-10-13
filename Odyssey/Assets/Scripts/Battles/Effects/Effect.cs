@@ -11,6 +11,9 @@ public class Effect
     protected bool terrain_effect = false;
     protected bool position_dependent = false;  // If set to true, this effect is reevaluated every time a unit moves
 
+    public float offset;
+    public float percentage_offset;
+
     // Ability name and the unit it's affecting
     public Effect(string effect_name, string description, Unit receiver)
     {
@@ -23,7 +26,7 @@ public class Effect
     // Called to apply the effect to the unit. Often changes the stats of the unit. OVerride this when creating a new effect.
     public virtual void ApplyEffect()
     {
-
+        PlayerInterface.player_interface.RefreshStatsPanel(receiver);
     }
 
 

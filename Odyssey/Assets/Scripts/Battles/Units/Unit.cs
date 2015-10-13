@@ -41,25 +41,33 @@ public class Unit : MonoBehaviour
     // UNIT STATS
     // Normal stats are the base stats of the unit.
     // The non-normal stats are the current stats of the unit
-    public float maximum_health = 20;
-    float health = 20;
+    public float maximum_health = 200;
+    float health = 200;
     public float normal_defence = 0.3f;     // Defense is a percentage, from 0 to 1 of how much damage is blocked
     float defence = 0.3f;
     public float normal_ranged_defence = 0.3f;      // Specific 0 to 1 % blocked from ranged attacks
     float ranged_defence = 0.3f;
     public int normal_attack_range = 1;     // 1 is adjacent. 0 would mean unable to attack
     int attack_range = 1;
-    public float normal_damage = 8;     // Damage is blocked by defence
-    float damage = 8;
-    public float normal_piercing_damage = 2;    // Piercing damage ignores defence, making this stat extremely valuable
-    float piercing_damage;
+    public float normal_damage = 80;     // Damage is blocked by defence
+    float damage = 80;
+    public float normal_piercing_damage = 20;    // Piercing damage ignores defence, making this stat extremely valuable
+    float piercing_damage = 20;
     public int normal_movement = 3;     // How far this unit can move in a turn.
     int movement = 3;
+    public float normal_flanking_bonus = 0; // Bonus percentage damage we get from flanking a unit
+    float flanking_bonus;
+    public float normal_bonus_vs_melee = 0;     // Bonus percentage of overall damage we get against melee
+    float bonus_vs_melee = 0;
+    public float normal_bonus_vs_cavalry = 0;
+    float bonus_vs_cavalry = 0;
+    public float normal_bonus_vs_ranged = 0;
+    float bonus_vs_ranged = 0;
 
-    public Unit_Types unit_type;
+    public Unit_Types unit_type;    // Melee, ranged or cavalry. All units of these categories
     public bool is_ranged_unit = false;
     public bool counter_attacks = true;     // Counterattacks if the enemy is within range and in the frontal facing arc
-    public int counter_attack_radius = 60; // The difference in facing counter attacks can be done from. 60 means the front 3 hexes
+    public int counter_attack_radius = 60;  // The difference in facing counter attacks can be done from. 60 means the front 3 hexes
     public bool attacks_are_counterable = true;
 
 
@@ -151,11 +159,11 @@ public class Unit : MonoBehaviour
             // Rotate towards mouse
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
-            SetRotationTowards(this.transform.position, mousePos);
+            SetDesiredRotationTowards(this.transform.position, mousePos);
         }
     }
 
-
+    /*
     public void SetRotationTowards(Vector3 from, Vector3 towards)
     {
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, towards - from);
@@ -164,6 +172,7 @@ public class Unit : MonoBehaviour
         Vector3 angles = rotation.eulerAngles;
         angles.x = 0;
         angles.y = 0;
+        Debug.Log(u_name +  " angles " + angles.z);
 
         SetRotation(angles);
     }
@@ -201,6 +210,8 @@ public class Unit : MonoBehaviour
     }
     public void SetDesiredRotation(Vector3 angles)
     {
+        Debug.Log(this.u_name + " " + angles.z);
+
         // Snap to one of the hexagon directions
         if (angles.z >= 0 && angles.z < 60)
             angles.z = 30;
@@ -215,9 +226,49 @@ public class Unit : MonoBehaviour
         else if (angles.z >= 300 && angles.z < 360)
             angles.z = 330;
 
+
         // Set facing
         this.facing = (int)angles.z;
         desired_rotation_set = true;
+    }*/
+
+    public void SetDesiredRotationTowards(Vector3 from, Vector3 towards)
+    {
+        // Use euler angles so we're dealing with degrees 0-360
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, towards - from);
+        Vector3 angles = rotation.eulerAngles;
+        int angle = (int) angles.z;
+
+        SetRotation(angle);
+        desired_rotation_set = true;
+    }
+    public void SetRotation(int facing)
+    {
+        this.facing = GetHexagonalDirection(facing);
+        desired_rotation_set = true;
+    }
+    public void SetImmediateRotation(int facing)
+    {
+        this.facing = GetHexagonalDirection(facing);
+        this.transform.eulerAngles = new Vector3(0, 0, facing);
+    }
+    // Snaps the given direction to one of 6 hexagonal facings
+    public int GetHexagonalDirection(int facing)
+    {
+        int angle = 0;
+        if (facing >= 0 && facing < 60)
+            angle = 30;
+        else if (facing >= 60 && facing < 120)
+            angle = 90;
+        else if (facing >= 120 && facing < 180)
+            angle = 150;
+        else if (facing >= 180 && facing < 240)
+            angle = 210;
+        else if (facing >= 240 && facing < 300)
+            angle = 270;
+        else if (facing >= 300 && facing < 360)
+            angle = 330;
+        return angle;
     }
 
 
@@ -272,89 +323,12 @@ public class Unit : MonoBehaviour
         int angle_towards_unit = (int) rotation.eulerAngles.z;
         int angle_diff = (int)Mathf.Abs(((angle_towards_unit - this.facing + 180) % 360 - 180));    // Do math to get the difference in this units facing and the direction towards the enemy
 
-        return (Mathf.Abs(angle_diff) <= counter_attack_radius + 5);
+        // Go from 0 and 360, so we wrap around
+        return (Mathf.Abs(angle_diff) <= counter_attack_radius + 5
+            || Mathf.Abs(angle_diff) >= 360 - counter_attack_radius - 5);
     }
 
-
-    // Returns the health of the unit
-    public virtual float GetHealth()
-    {
-        return health;
-    }
-    public virtual float GetMaxHealth()
-    {
-        return maximum_health;
-    }
-
-    // Returns the attack damage of the unit
-    public virtual float GetDamage()
-    {
-        return damage;
-    }
-    // Adds to the units damage.
-    // Percent is 0-1. 0.10 means add 10% of its normal damage
-    public virtual void AdjustDamage(float constant_amount, float percent)
-    {
-        damage += constant_amount;
-        damage += normal_damage * percent;
-    }
-
-    // Returns the piercing damage of the unit. Piercing damage ignores the defense of the unit
-    public virtual float GetPiercingDamage()
-    {
-        return piercing_damage;
-    }
-    // Adds to the units piercing damage.
-    // Percent is 0-1. 0.10 means add 10% of its normal damage
-    public virtual void AdjustPiercingDamage(float constant_amount, float percent)
-    {
-        piercing_damage += constant_amount;
-        piercing_damage += piercing_damage * percent;
-    }
-
-    public virtual int GetRange()
-    {
-        return attack_range;
-    }
-    public virtual void AdjustRange(int amount)
-    {
-        attack_range = Mathf.Max(1, attack_range + amount);
-    }
-
-    // Returns the defence of the unit
-    public virtual float GetDefence()
-    {
-        return defence;
-    }
-    // Adds to the units damage.
-    // Percent is 0-1. 0.10 means add 10% of its normal defence
-    public virtual void AdjustDefence(float constant_amount)
-    {
-        defence = Mathf.Min(0.95f, Mathf.Max(0, defence + constant_amount));
-    }
-
-    // Returns the defence of the unit
-    public virtual float GetRangedDefence()
-    {
-        return ranged_defence;
-    }
-    // Adds to the units damage.
-    // Percent is 0-1. 0.10 means add 10% of its normal defence
-    public virtual void AdjustRangedDefence(float constant_amount)
-    {
-        ranged_defence = Mathf.Min(0.95f, Mathf.Max(0, ranged_defence + constant_amount));
-    }
-
-    public virtual int GetMovement()
-    {
-        return movement;
-    }
-    public virtual void AdjustMovement(int amount)
-    {
-        movement = Mathf.Max(0, movement + amount);
-    }
-
-
+    /*
     // Returns true if the other unit is within the frontal 3 arc of this units facing
     public bool FacingTowards(Unit unit)
     {
@@ -365,7 +339,7 @@ public class Unit : MonoBehaviour
 
         float angle = 180;
         return (Vector3.Angle(unit.transform.forward, transform.position - this.transform.position) <= angle);
-    }
+    }*/
 
 
     public virtual void Die()
@@ -378,8 +352,9 @@ public class Unit : MonoBehaviour
     }
     public virtual void RemoveUnit()
     {
-        if (PlayerInterface.player_interface.selected_unit == this)
+        if (this.transform.Find("UnitMenuCanvas") != null)
         {
+            Debug.Log("Removing parent");
             PlayerInterface.player_interface.unit_menu_canvas.transform.parent = null;  // Remove parent, so we don't destroy this game object
             PlayerInterface.player_interface.UnitDeselected();
         }
@@ -418,28 +393,39 @@ public class Unit : MonoBehaviour
     // Show the stats of this unit when the user mouses over
     void OnMouseEnter()
     {
+        PlayerInterface.player_interface.ShowTerrainStatsPanel(this.location);
         PlayerInterface.player_interface.ShowUnitStatsPanel(this);
     }
     void OnMouseExit()
     {
         if (PlayerInterface.player_interface.selected_unit != null)// && PlayerInterface.player_interface.selected_unit != this)
+        {
             PlayerInterface.player_interface.ShowUnitStatsPanel(PlayerInterface.player_interface.selected_unit);
+        }
         else
+        {
             PlayerInterface.player_interface.HideUnitStatsPanel();
+        }
+
+        PlayerInterface.player_interface.HideEstimatedDamagePanel();
     }
 
 
     // Attack unit if we right clicked on it and we have another unit selected
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1)     // Right clicked on unit
-            && !EventSystem.current.IsPointerOverGameObject()   // Make sure mouse is not over UI
+        if (!EventSystem.current.IsPointerOverGameObject()   // Make sure mouse is not over UI
             && PlayerInterface.player_interface.SelectedUnitAvailableToControl()
             && !PlayerInterface.player_interface.selected_unit.has_attacked
             && PlayerInterface.player_interface.selected_unit.owner.IsEnemy(this))
         {
-            Debug.Log("OnMouseOver attack");
-            PlayerInterface.player_interface.selected_unit.HumanAttacked(this, attacks_are_counterable);
+            PlayerInterface.player_interface.ShowEstimatedDamagePanel(this);
+
+            if (Input.GetMouseButtonDown(1))     // Right clicked on unit
+            {
+                Debug.Log("OnMouseOver attack");
+                PlayerInterface.player_interface.selected_unit.HumanAttacked(this, attacks_are_counterable);
+            }
         }
     }
     void OnMouseDown()      // Left clicked on unit
@@ -547,6 +533,10 @@ public class Unit : MonoBehaviour
         damage = normal_damage;
         piercing_damage = normal_piercing_damage;
         attack_range = normal_attack_range;
+        flanking_bonus = normal_flanking_bonus;
+        bonus_vs_melee = normal_bonus_vs_melee;
+        bonus_vs_ranged = normal_bonus_vs_ranged;
+        bonus_vs_cavalry = normal_bonus_vs_cavalry;
     }
     public void EvaluateEffects()
     {
@@ -597,6 +587,7 @@ public class Unit : MonoBehaviour
     {
         Attack(victim, attacks_are_counterable);
         PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
+        PlayerInterface.player_interface.HideEstimatedDamagePanel();
     }
     public void Attack(Unit victim, bool attack_is_counterable)
     {
@@ -622,9 +613,9 @@ public class Unit : MonoBehaviour
     }
     public float TakeHit(Unit attacker, bool attack_is_counterable)
     {
-        int modified_damage = (int) CalculateDamage(attacker);
+        int modified_damage = (int) CalculateDamage(attacker, attacker.location);
         health -= (int) modified_damage;
-        Debug.Log(u_name + " took " + modified_damage + " damaged, " + health + " HP remaining from " + attacker.u_name);
+        Debug.Log(u_name + " took " + modified_damage + " damage, " + " Flanking: " + !IsFacing(attacker) + ", " + health + " HP remaining from " + attacker.u_name);
 
         PlayerInterface.player_interface.CreateFloatingText(this.transform.position, modified_damage + "", false, 3.0f);
 
@@ -632,30 +623,178 @@ public class Unit : MonoBehaviour
             Die();
 
         // Check if we can counter attack
-        if (attack_is_counterable && counter_attacks && IsFacing(attacker) && HexMap.hex_map.InRange(this.location, attacker.location, this.GetRange()))
+        if (!dead)
         {
-            Debug.Log(u_name + " counterattacking " + attacker.u_name);
-            CounterAttack(attacker);
-        }
+            if (attack_is_counterable && counter_attacks && IsFacing(attacker) && HexMap.hex_map.InRange(this.location, attacker.location, this.GetRange()))
+            {
+                Debug.Log(u_name + " counterattacking " + attacker.u_name);
+                CounterAttack(attacker);
+            }
 
-        PlayerInterface.player_interface.RefreshUnitStatsPanel();
+            PlayerInterface.player_interface.RefreshUnitStatsPanel();
+        }
 
         return health;
     }
 
     // Returns how much damage the attacker would do to this unit
-    public float CalculateDamage(Unit attacker)
+    public float CalculateDamage(Unit attacker, Hex from)
     {
         // Have the damage be the percentage of the health remaining of this unit. Weak units don't do as much damage
         float raw_normal_damage = attacker.GetDamage() * (attacker.GetHealth() / attacker.GetMaxHealth());
         float raw_piercing_damage = attacker.GetPiercingDamage() * (attacker.GetHealth() / attacker.GetMaxHealth());
-        
+
+        // Get the right type of defence to use. Ranged defence from ranged units
+        float defence = 0;
+        if (attacker.is_ranged_unit)
+            defence = this.GetRangedDefence();
+        else
+            defence = this.GetDefence();
+
         // Modify the damage by the defence percentage. 10% defence means 90% of the damage is inflicted.
         float modified_normal_damage = raw_normal_damage - (raw_normal_damage * this.GetDefence());
 
         // Piercing damage is not affected by the enemy's defense.
-        // Every attack does a minimum of 1 damage.
-        float final_damage = Mathf.Max(1, modified_normal_damage + raw_piercing_damage);
-        return final_damage;
+        float damage = modified_normal_damage + raw_piercing_damage;
+
+        // Apply bonuses to damage that's been modified by the enemies' defence
+        // Apply bonus against specific type of unit
+        if (this.unit_type == Unit_Types.Melee)
+            damage += damage * GetMeleeBonus();
+        else if (this.unit_type == Unit_Types.Cavalry)
+            damage += damage * GetMeleeBonus();
+        else if (this.unit_type == Unit_Types.Ranged)
+            damage += damage * GetMeleeBonus();
+
+        // If the attacker is flanking, apply a flanking bonus
+        if (!IsFacing(from))
+        {
+            damage += damage * GetFlankingBonus();
+        }
+
+        return damage;
+    }
+
+
+
+
+    // UNIT STATS AND CHANGING THEM
+    // Returns the health of the unit
+    public virtual float GetHealth()
+    {
+        return health;
+    }
+    public virtual float GetMaxHealth()
+    {
+        return maximum_health;
+    }
+
+    // Returns the attack damage of the unit
+    public virtual float GetDamage()
+    {
+        return damage;
+    }
+    // Adds to the units damage.
+    // Percent is 0-1. 0.10 means add 10% of its normal damage
+    public virtual void AdjustDamage(float constant_amount, float percent)
+    {
+        damage += damage * percent;
+        damage += constant_amount;
+        damage = Mathf.Max(0, damage);  // Can't have negative damage
+    }
+
+    // Returns the piercing damage of the unit. Piercing damage ignores the defense of the unit
+    public virtual float GetPiercingDamage()
+    {
+        return piercing_damage;
+    }
+    // Adds to the units piercing damage.
+    // Percent is 0-1. 0.10 means add 10% of its normal damage
+    public virtual void AdjustPiercingDamage(float constant_amount, float percent)
+    {
+        piercing_damage += piercing_damage * percent;
+        piercing_damage += constant_amount;
+    }
+
+    public virtual int GetRange()
+    {
+        return attack_range;
+    }
+    public virtual void AdjustRange(int amount)
+    {
+        attack_range = Mathf.Max(1, attack_range + amount);
+    }
+
+    // Returns the defence of the unit
+    public virtual float GetDefence()
+    {
+        return defence;
+    }
+    // Adds to the units damage.
+    // Percent is 0-1. 0.10 means add 10% of its normal defence
+    public virtual void AdjustDefence(float constant_amount)
+    {
+        defence = Mathf.Min(0.95f, Mathf.Max(0, defence + constant_amount));
+    }
+
+    // Returns the defence of the unit
+    public virtual float GetRangedDefence()
+    {
+        return ranged_defence;
+    }
+    // Adds to the units damage.
+    // Percent is 0-1. 0.10 means add 10% of its normal defence
+    public virtual void AdjustRangedDefence(float constant_amount)
+    {
+        ranged_defence = Mathf.Min(0.95f, Mathf.Max(0, ranged_defence + constant_amount));
+    }
+
+    public virtual int GetMovement()
+    {
+        return movement;
+    }
+    public virtual void AdjustMovement(int amount)
+    {
+        movement = Mathf.Max(0, movement + amount);
+    }
+
+    // Percentage applied against overall damage against a target we are flanking.
+    public virtual float GetFlankingBonus()
+    {
+        return flanking_bonus;
+    }
+    public virtual void AdjustFlankingBonus(float constant_amount)
+    {
+        flanking_bonus = Mathf.Max(0, flanking_bonus + constant_amount);
+    }
+
+    // Percentage applied against overall damage against a target that is of type melee
+    public virtual float GetMeleeBonus()
+    {
+        return bonus_vs_melee;
+    }
+    public virtual void AdjustMeleeBonus(float constant_amount)
+    {
+        bonus_vs_melee = Mathf.Max(0, bonus_vs_melee + constant_amount);
+    }
+
+    // Percentage applied against overall damage against a target that is of type cavalry
+    public virtual float GetCavalryBonus()
+    {
+        return bonus_vs_cavalry;
+    }
+    public virtual void AdjustCavalryBonus(float constant_amount)
+    {
+        bonus_vs_cavalry = Mathf.Max(0, bonus_vs_cavalry + constant_amount);
+    }
+
+    // Percentage applied against overall damage against a target that is of type ranged
+    public virtual float GetRangedBonus()
+    {
+        return bonus_vs_ranged;
+    }
+    public virtual void AdjustRangedBonus(float constant_amount)
+    {
+        bonus_vs_ranged = Mathf.Max(0, bonus_vs_ranged + constant_amount);
     }
 }
