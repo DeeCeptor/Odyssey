@@ -13,6 +13,7 @@ GameObject:
   - 50: {fileID: 5011856}
   - 114: {fileID: 11400378}
   - 114: {fileID: 11452498}
+  - 114: {fileID: 11480686}
   m_Layer: 0
   m_Name: FloatingText
   m_TagString: Untagged
@@ -81,18 +82,18 @@ TextMesh:
   m_GameObject: {fileID: 145190}
   m_Text: asd
   m_OffsetZ: 0
-  m_CharacterSize: 30
+  m_CharacterSize: 10
   m_LineSpacing: 1
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4294967295
 --- !u!114 &11400378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,13 +118,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c2cfaeaf55abe04cbd1284ed01ecfe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11480686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 145190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5a00ea1c011b741820b758c8c63442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelSize: 1
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  resolutionDependant: 0
+  doubleResolution: 1024
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_CharacterSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_FontSize
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 145190}

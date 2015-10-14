@@ -163,74 +163,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    /*
-    public void SetRotationTowards(Vector3 from, Vector3 towards)
-    {
-        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, towards - from);
-
-        // Use euler angles so we're dealing with degrees 0-360
-        Vector3 angles = rotation.eulerAngles;
-        angles.x = 0;
-        angles.y = 0;
-        Debug.Log(u_name +  " angles " + angles.z);
-
-        SetRotation(angles);
-    }
-    public void SetRotation(Vector3 angles)
-    {
-        // Snap to one of the hexagon directions
-        if (angles.z >= 0 && angles.z < 60)
-            angles.z = 30;  // top left
-        else if (angles.z >= 60 && angles.z < 120)
-            angles.z = 90;  // left
-        else if (angles.z >= 120 && angles.z < 180)
-            angles.z = 150; // bottom left
-        else if (angles.z >= 180 && angles.z < 240)
-            angles.z = 210; // bottom right
-        else if (angles.z >= 240 && angles.z < 300)
-            angles.z = 270; // right
-        else if (angles.z >= 300 && angles.z < 360)
-            angles.z = 330; // top right
-
-        this.transform.eulerAngles = angles;
-
-        // Set facing
-        this.facing = (int)angles.z;
-    }
-    public void SetDesiredRotationTowards(Vector3 from, Vector3 towards)
-    {
-        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, towards - from);
-
-        // Use euler angles so we're dealing with degrees 0-360
-        Vector3 angles = rotation.eulerAngles;
-        angles.x = 0;
-        angles.y = 0;
-
-        SetDesiredRotation(angles);
-    }
-    public void SetDesiredRotation(Vector3 angles)
-    {
-        Debug.Log(this.u_name + " " + angles.z);
-
-        // Snap to one of the hexagon directions
-        if (angles.z >= 0 && angles.z < 60)
-            angles.z = 30;
-        else if (angles.z >= 60 && angles.z < 120)
-            angles.z = 90;
-        else if (angles.z >= 120 && angles.z < 180)
-            angles.z = 150;
-        else if (angles.z >= 180 && angles.z < 240)
-            angles.z = 210;
-        else if (angles.z >= 240 && angles.z < 300)
-            angles.z = 270;
-        else if (angles.z >= 300 && angles.z < 360)
-            angles.z = 330;
-
-
-        // Set facing
-        this.facing = (int)angles.z;
-        desired_rotation_set = true;
-    }*/
 
     public void SetDesiredRotationTowards(Vector3 from, Vector3 towards)
     {
@@ -617,7 +549,7 @@ public class Unit : MonoBehaviour
         health -= (int) modified_damage;
         Debug.Log(u_name + " took " + modified_damage + " damage, " + " Flanking: " + !IsFacing(attacker) + ", " + health + " HP remaining from " + attacker.u_name);
 
-        PlayerInterface.player_interface.CreateFloatingText(this.transform.position, modified_damage + "", false, 3.0f);
+        PlayerInterface.player_interface.CreateFloatingText(this.transform.position, "<i>" + modified_damage + "</i>", false, 3.0f);
 
         if (health <= 0)
             Die();
