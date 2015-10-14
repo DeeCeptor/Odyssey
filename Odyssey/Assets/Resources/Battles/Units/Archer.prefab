@@ -267,7 +267,7 @@ MonoBehaviour:
   is_moving: 0
   has_attacked: 0
   dead: 0
-  maximum_health: 140
+  maximum_health: 150
   normal_defence: .100000001
   normal_ranged_defence: .300000012
   normal_attack_range: 3
@@ -288,6 +288,9 @@ MonoBehaviour:
   ally_grouping_score: .100000001
   facing: 0
   rotating: 0
+  is_squad: 1
+  normal_squad_size: 5
+  remaining_individuals: 0
   u_name: Archer
   u_description: Archer description
   portrait: {fileID: 0}
@@ -500,7 +503,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maximum_health
-      value: 140
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: normal_defence

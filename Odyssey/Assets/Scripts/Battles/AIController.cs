@@ -52,70 +52,75 @@ public class AI_Turn_Thread
             try
             {
                 unit.attack_target = null;
-
-                //////// MOVING //////////
                 Hex best_hex = unit.location;   // Start off assuming where they are is the best location
-                best_hex.hex_score = EvaluateHexScore(unit, best_hex);
 
-                // Evaluate every hex this unit can move to
-                foreach (Hex hex in unit.tiles_I_can_move_to)
+                if (!unit.has_moved && !unit.has_attacked)
                 {
-                    hex.hex_score = EvaluateHexScore(unit, hex);
+                    //////// MOVING //////////
+                    best_hex.hex_score = EvaluateHexScore(unit, best_hex);
 
-                    if (hex.hex_score > best_hex.hex_score)
-                        best_hex = hex;
-                }
-
-                // We've gone through each hex. Move to that hex
-                unit.PathTo(best_hex);
-
-
-                /////// ATTACKING ////////
-                // Now that we know where we're ending up, evaluate the best target we can attack from there
-                Unit target = null;
-                float best_target_score = 0;
-                int closest_distance = 999;
-                Unit closest_enemy = null;
-                foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
-                {
-                    //////// FACING ////////////
-                    // Check if this is the closest enemy, so we can face towards them
-                    int distance = HexMap.hex_map.DistanceBetweenHexes(unit.location.coordinate, enemy.location.coordinate);
-                    if (distance < closest_distance)
+                    // Evaluate every hex this unit can move to
+                    foreach (Hex hex in unit.tiles_I_can_move_to)
                     {
-                        // This is the closest enemy we've evaluated. 
-                        closest_enemy = enemy;
-                        closest_distance = distance;
+                        hex.hex_score = EvaluateHexScore(unit, hex);
+
+                        if (hex.hex_score > best_hex.hex_score)
+                            best_hex = hex;
                     }
 
+                    // We've gone through each hex. Move to that hex
+                    unit.PathTo(best_hex);
+                }
 
-                    // Check if we're in range. If we're not in range, we can't attack the unit
-                    if (distance <= unit.GetRange())
+
+                if (!unit.has_attacked)
+                {
+                    /////// ATTACKING ////////
+                    // Now that we know where we're ending up, evaluate the best target we can attack from there
+                    Unit target = null;
+                    float best_target_score = 0;
+                    int closest_distance = 999;
+                    Unit closest_enemy = null;
+                    foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
                     {
-                        float cur_score = enemy.CalculateDamage(unit, best_hex);
-
-                        if (cur_score > best_target_score)
+                        //////// FACING ////////////
+                        // Check if this is the closest enemy, so we can face towards them
+                        int distance = HexMap.hex_map.DistanceBetweenHexes(unit.location.coordinate, enemy.location.coordinate);
+                        if (distance < closest_distance)
                         {
-                            // This is our best target to attack so far. Record it.
-                            target = enemy;
-                            best_target_score = cur_score;
+                            // This is the closest enemy we've evaluated. 
+                            closest_enemy = enemy;
+                            closest_distance = distance;
+                        }
+
+
+                        // Check if we're in range. If we're not in range, we can't attack the unit
+                        if (distance <= unit.GetRange())
+                        {
+                            float cur_score = enemy.CalculateDamage(unit, best_hex);
+
+                            if (cur_score > best_target_score)
+                            {
+                                // This is our best target to attack so far. Record it.
+                                target = enemy;
+                                best_target_score = cur_score;
+                            }
                         }
                     }
-                }
-                
 
-                // ROTATION
-                if (closest_enemy != null)
-                {
-                    unit.SetDesiredRotationTowards(best_hex.world_coordinates, closest_enemy.location.world_coordinates);//?? 
-                }
+                    // ROTATION
+                    if (closest_enemy != null)
+                    {
+                        unit.SetDesiredRotationTowards(best_hex.world_coordinates, closest_enemy.location.world_coordinates);//?? 
+                    }
 
-                // If there's a suitable target, have the unit attack it once it gets to the right hex
-                if (best_target_score > 0)
-                {
-                    //Debug.Log(unit.u_name + " attacking " + target.u_name);
-                    unit.attack_target = target;
-                }
+                    // If there's a suitable target, have the unit attack it once it gets to the right hex
+                    if (best_target_score > 0)
+                    {
+                        //Debug.Log(unit.u_name + " attacking " + target.u_name);
+                        unit.attack_target = target;
+                    }
+                }              
             }
             catch (Exception e)
             { Debug.Log("Exception executing " + faction.faction_name + " " + unit.u_name + "'s turn: " + e.Message);    }

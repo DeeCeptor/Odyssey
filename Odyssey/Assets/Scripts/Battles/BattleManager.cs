@@ -10,10 +10,11 @@ public class BattleManager : MonoBehaviour
     public bool pre_battle_deployment = false;
     public int round_number = 0;     // How long has this battle been going
     public bool human_turn = false;     // Is the human playing?
+    public Faction player_faction;
 
     public Faction current_player;     // Whose turn it currently is
     Queue<Faction> players_waiting_for_turn = new Queue<Faction>();     // FIFO queue showing what player's are waiting to do their turn this round
-    List<Faction> factions = new List<Faction>();   // The sides that are fighting in this fight
+    public List<Faction> factions = new List<Faction>();   // The sides that are fighting in this fight
 
 
     void Start()
@@ -41,6 +42,7 @@ public class BattleManager : MonoBehaviour
         Faction player_team = new Faction("Player", true, 1, Color.green);
         factions.Add(player_team);
         PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
+        player_faction = player_team;
     }
 
     IEnumerator InitializeBattle()
@@ -78,92 +80,11 @@ public class BattleManager : MonoBehaviour
             }
         }
 
+        // All factions created, populate battle statistics
+        PersistentBattleSettings.battle_settings.PopulateBattleStatistics();
+
         // Start the game
         StartRound();
-    }
-
-
-    IEnumerator Initialize()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-    
-        // Set units to inactive if this is a pre battle deployment
-        if (pre_battle_deployment)
-        {
-            Faction player_team = new Faction("Player", true, 1, Color.green);
-            factions.Add(player_team);
-            PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
-            
-            // Make the units draggable
-            foreach (Faction faction in factions)
-            {
-                foreach (Unit _unit in faction.units)
-                {
-                    _unit.active = false;
-                    _unit.gameObject.AddComponent<UnitDragDrop>();
-                }
-            }
-        }
-        // Regular battle
-        else
-        {
-            if (GameObject.Find("PlayerUnitPositions") != null)
-            {
-                SpawnPlayerDeployedUnits(); // Also gets the faction
-            }
-            // DEBUG SPAWN UNITS
-            else
-            {
-                Debug.Log("No player deployed units. Starting debug mode.");
-
-                Faction player_team = new Faction("Player", true, 1, Color.green);
-                factions.Add(player_team);
-                for (int x = -2; x < 2; x++)
-                {
-                    SpawnUnit(player_team, "Battles/Units/Hoplite", x, 0, false);
-                }
-                for (int x = -2; x < 2; x++)
-                {
-                    SpawnUnit(player_team, "Battles/Units/Archer", x, -1, false);
-                }
-                for (int x = -2; x < 2; x++)
-                {
-                    SpawnUnit(player_team, "Battles/Units/Cavalry", x, 1, false);
-                }
-            }
-            
-            // Set enemies regardless of how the player got units (deployed or debug)
-            Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
-            factions.Add(enemy_team);
-            /*
-            for (int x = -2; x < 1; x++)
-            {
-                SpawnUnit(enemy_team, "Battles/Units/Archer", x, 6, false);
-            }
-            for (int x = -2; x < 1; x++)
-            {
-                SpawnUnit(enemy_team, "Battles/Units/Cavalry", x, -6, false);
-            }*/
-
-            // Spawn units specified in the text file
-            SpawnUnitsPlacedOnMap();
-
-
-            // Set enemies. Everyone is an enemy of everyone currently
-            foreach (Faction faction_1 in factions)
-            {
-                foreach (Faction faction_2 in factions)
-                {
-                    if (faction_1 != faction_2)
-                        faction_1.enemies.Add(faction_2);
-                }
-            }
-
-            StartRound();
-        }
-
-        yield return null;
     }
 
 
@@ -208,16 +129,24 @@ public class BattleManager : MonoBehaviour
 
         if (!current_player.human_controlled || current_player.use_ai)
         {
-            // AI player. Let the AI play for them
-            PlayerInterface.player_interface.end_turn_button.interactable = false;
-            PlayerInterface.player_interface.AI_turn_button.interactable = false;
-            StartCoroutine(Wait_For_AI_Turn_To_End());
+            Do_AI_Turn();
         }
         else
         {
             PlayerInterface.player_interface.end_turn_button.interactable = true;
             PlayerInterface.player_interface.AI_turn_button.interactable = true;
         }
+    }
+    // AI's turn, regardless if this is player or enemy AI
+    public void Do_AI_Turn()
+    {
+        // AI player. Let the AI play for them
+        PlayerInterface.player_interface.UnhighlightHexes();
+        PlayerInterface.player_interface.UnitDeselected();
+        PlayerInterface.player_interface.end_turn_button.interactable = false;
+        PlayerInterface.player_interface.AI_turn_button.interactable = false;
+        PlayerInterface.player_interface.HideEstimatedDamagePanel();
+        StartCoroutine(Wait_For_AI_Turn_To_End());
     }
     IEnumerator Wait_For_AI_Turn_To_End()
     {
@@ -234,7 +163,7 @@ public class BattleManager : MonoBehaviour
     public void Do_Player_AI_Turn()
     {
         current_player.use_ai = true;
-        StartTurn();
+        Do_AI_Turn();
     }
 
 
@@ -351,6 +280,9 @@ public class BattleManager : MonoBehaviour
                         Defeat();
                     else
                         Victory();
+
+                    // Common stuff that happens regardless of who won
+                    PlayerInterface.player_interface.ShowSummaryScreen();
                 }
             }
         }
@@ -360,13 +292,13 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("Player defeated");
         PlayerInterface.player_interface.summary_screen_title.text = "Defeat";
-        PlayerInterface.player_interface.ShowSummaryScreen();
+        PersistentBattleSettings.battle_settings.victory = false;
     }
     public void Victory()
     {
         Debug.Log("Player victory");
         PlayerInterface.player_interface.summary_screen_title.text = "Victory";
-        PlayerInterface.player_interface.ShowSummaryScreen();
+        PersistentBattleSettings.battle_settings.victory = true;
     }
 
 

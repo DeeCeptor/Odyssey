@@ -84,6 +84,10 @@ public class Unit : MonoBehaviour
     private float tile_move_speed = 7f;
     private bool desired_rotation_set = false;
 
+    public bool is_squad = true;        // Heroes and some myth units are not squads
+    public int normal_squad_size = 5;   // Size of squads doesn't affect stats at all. Only used for recording casualties
+    public int remaining_individuals = 5;   // Heroes and some myth units only ever have 1 guy
+
     public string u_name = ""; // Name at the top of the unit panel
     public string u_description = "";  // Short description of the unit
     public Texture portrait;    // Unit portrait
@@ -97,6 +101,8 @@ public class Unit : MonoBehaviour
 
 	void Start ()
     {
+        remaining_individuals = normal_squad_size;
+
         unit_menu = this.transform.FindChild("UnitMenu").gameObject;
         //this.SetRotation(new Vector3(0, 0, 0));
         health = maximum_health;
@@ -236,16 +242,6 @@ public class Unit : MonoBehaviour
     // Used for deciding if this unit will counterattack the other unit
     public bool IsFacing(Unit unit)
     {
-        // Check if the other unit is within our frontal arc
-        /*
-        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, unit.transform.position - this.transform.position);
-        float angle_towards_unit = rotation.eulerAngles.z;
-        int angle_diff = (int) ((angle_towards_unit - this.facing + 180) % 360 - 180);    // Do math to get the difference in this units facing and the direction towards the enemy
-
-        Debug.Log("Victim: " + facing + " towards enemy: " + angle_towards_unit + " diff: " + angle_diff);
-
-        return (Mathf.Abs(angle_diff) <= counter_attack_radius);
-        */
         return IsFacing(unit.location);
     }
     // Is the unit facing this hex? (Used for counter attacking)
@@ -260,24 +256,14 @@ public class Unit : MonoBehaviour
             || Mathf.Abs(angle_diff) >= 360 - counter_attack_radius - 5);
     }
 
-    /*
-    // Returns true if the other unit is within the frontal 3 arc of this units facing
-    public bool FacingTowards(Unit unit)
-    {
-        //Vector3 direction = unit.transform.position - this.transform.position;
-        //direction.Normalize();
-
-        //float angle = Vector2.Angle(unit.transform.position, this.transform.position);
-
-        float angle = 180;
-        return (Vector3.Angle(unit.transform.forward, transform.position - this.transform.position) <= angle);
-    }*/
-
 
     public virtual void Die()
     {
         RemoveUnit();
         dead = true;
+
+        // Change status to having retreated
+        PersistentBattleSettings.battle_settings.units_lost[this.owner.faction_ID]++;
 
         // Check victory/defeat conditions
         BattleManager.battle_manager.CheckVictoryAndDefeat();
@@ -306,6 +292,8 @@ public class Unit : MonoBehaviour
         Debug.Log("Retreating unit " + u_name);
 
         // Change status to having retreated
+        PersistentBattleSettings.battle_settings.units_retreated[this.owner.faction_ID]++;
+        PersistentBattleSettings.battle_settings.individuals_retreated[this.owner.faction_ID] += remaining_individuals;
 
         // Remove from play
         RemoveUnit();
@@ -545,14 +533,33 @@ public class Unit : MonoBehaviour
     }
     public float TakeHit(Unit attacker, bool attack_is_counterable)
     {
+        int prev_remaining_individuals = remaining_individuals;
+
         int modified_damage = (int) CalculateDamage(attacker, attacker.location);
         health -= (int) modified_damage;
-        Debug.Log(u_name + " took " + modified_damage + " damage, " + " Flanking: " + !IsFacing(attacker) + ", " + health + " HP remaining from " + attacker.u_name);
+        Debug.Log(u_name + " took " + modified_damage + " damage, " + " Flanking: " + !IsFacing(attacker) + ", " + GetHealth() + " HP remaining from " + attacker.u_name);
 
-        PlayerInterface.player_interface.CreateFloatingText(this.transform.position, "<i>" + modified_damage + "</i>", false, 3.0f);
+        // Show floating damage text
+        PlayerInterface.player_interface.CreateFloatingText(this.transform.position, "<i>" + modified_damage + "</i>", true, 3.0f);
 
         if (health <= 0)
+        {
+            // We died, removed all the individuals left
+            PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += remaining_individuals;
+            remaining_individuals = 0;
+
             Die();
+        }
+        else
+        {
+            if (is_squad)
+            {
+                // We didn't die, calculate how many individuals we lost
+                int HP_per_individual = (int) GetMaxHealth() / normal_squad_size;
+                remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
+                PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (prev_remaining_individuals - remaining_individuals);
+            }
+        }
 
         // Check if we can counter attack
         if (!dead)

@@ -156,7 +156,8 @@ public class LevelFileParser
                     hex.deployment_zone = true;
                     return;
                 case ("r"):
-                    hex.retreat_zone = true;
+                    if (PersistentBattleSettings.battle_settings.can_retreat)   // Allow only allow retreating if the settings say we can
+                        hex.retreat_zone = true;
                     return;
             }
         }
