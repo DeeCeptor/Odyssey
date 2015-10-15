@@ -23,7 +23,8 @@ public class EventManagement : MonoBehaviour {
 	public float eventChance = 25f;
 	public bool paused = false;
     public static EventManagement gameController;
-	
+    public GameObject OverworldParent;
+
 	// Use this for initialization
 	void Start () {
 	player = GameObject.FindGameObjectWithTag("Player");
@@ -31,7 +32,8 @@ public class EventManagement : MonoBehaviour {
 	playerController = player.GetComponent<PlayerBoatController>();
 	enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
         gameController = this;
-	}
+        OverworldParent = GameObject.FindGameObjectWithTag("UniversalParent");
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -139,7 +141,7 @@ public class EventManagement : MonoBehaviour {
     {
         Pause();
         Instantiate(Resources.Load("ScrollTransitionCanvas"));
-        GameObject.FindGameObjectWithTag("UniversalParent").SetActive(false);
+        OverworldParent.SetActive(false);
         GameObject battleSettings = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
         PersistentBattleSettings battleScript = battleSettings.GetComponent<PersistentBattleSettings>();
         battleScript.path_to_battle_file = battleToStart;
@@ -154,7 +156,7 @@ public class EventManagement : MonoBehaviour {
     {
         //destroy battle
         
-        GameObject.FindGameObjectWithTag("UniversalParent").SetActive(true);
+        OverworldParent.SetActive(true);
         Unpause();
     }
 	
