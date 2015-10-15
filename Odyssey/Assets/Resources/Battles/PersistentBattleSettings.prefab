@@ -43,6 +43,12 @@ MonoBehaviour:
   can_retreat: 1
   must_include_main_hero: 0
   number_of_deployable_units: 7
+  victory: 0
+  hero_went_down: 0
+  units_lost: 
+  individuals_lost: 
+  units_retreated: 
+  individuals_retreated: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -82,19 +82,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &159084
+--- !u!1 &158132
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 498696}
-  - 114: {fileID: 11453440}
-  - 114: {fileID: 11477242}
+  - 4: {fileID: 404620}
+  - 114: {fileID: 11494802}
   m_Layer: 0
-  m_Name: RandomEventManager
-  m_TagString: EventController
+  m_Name: Spawner
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,6 +168,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &404620
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158132}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 426528}
+  m_RootOrder: 7
 --- !u!4 &410082
 Transform:
   m_ObjectHideFlags: 1
@@ -200,7 +211,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.48000002, y: -.460999995, z: .488215208}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
   - {fileID: 463704}
@@ -210,7 +221,7 @@ Transform:
   - {fileID: 427758}
   - {fileID: 428734}
   - {fileID: 458084}
-  - {fileID: 498696}
+  - {fileID: 404620}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &427758
@@ -286,18 +297,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 426528}
   m_RootOrder: 1
---- !u!4 &498696
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 159084}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_Children: []
-  m_Father: {fileID: 426528}
-  m_RootOrder: 7
 --- !u!20 &2002836
 Camera:
   m_ObjectHideFlags: 1
@@ -521,14 +520,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTroops: 100
-  healthyHoplites: 20
-  woundedHoplites: 0
-  healthySwordsmen: 20
-  woundedSwordsmen: 0
-  healthyArchers: 10
-  woundedArchers: 0
-  healthyCavalry: 10
-  woundedCavalry: 0
+  startingHoplites: 20
+  startingSwordsmen: 20
+  startingArchers: 10
+  startingCavalry: 10
+  startingSlingers: 10
   heroes:
   - {fileID: 145506}
 --- !u!114 &11431212
@@ -556,6 +552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e7b08df3195da438823820b78cebd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  injured: 0
   hitpoints: 10
   foodConsumption: .00499999989
   waterConsumption: .00999999978
@@ -576,34 +573,6 @@ MonoBehaviour:
   spear: 0
   sword: 0
   bow: 4
---- !u!114 &11453440
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 159084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5d2d7eb96a072b4aa37d8b5dcb3144a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  enemies: []
-  weather: []
-  resourceController: {fileID: 0}
-  playerController: {fileID: 0}
-  currentEvent: {fileID: 0}
-  islandEventIsOn: {fileID: 0}
-  seaEventList:
-  - {fileID: 130888, guid: d8ac96ee9472e2d41b883f8c104e0968, type: 2}
-  campingEventList: []
-  forestExploreEventList: []
-  desertExploreEventList: []
-  tropicalExploreEventList: []
-  framesPerCheckRegular: 240
-  framesPerCheck: 240
-  eventChance: 25
-  paused: 0
 --- !u!114 &11456030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -635,30 +604,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 3
---- !u!114 &11477242
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 159084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25c6e30fe091e99438d9e3ce0611ba20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weather:
-  - {fileID: 160574, guid: 3026c58ccd7dfaa42b3bc65114babd1c, type: 2}
-  npcs:
-  - {fileID: 157454, guid: b8e5e5d0cbee6db488ea612187e115fa, type: 2}
-  enemies: []
-  minNPCDistance: 20
-  maxNPCDistance: 50
-  maxWeatherDistance: 20
-  paused: 0
-  collidingWith: []
-  weatherSpawnDelay: 600
-  npcSpawnDelay: 300
-  npcNumber: 8
 --- !u!114 &11492990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -673,6 +618,32 @@ MonoBehaviour:
   display: {fileID: 0}
   Value: 0
   weight: 5
+--- !u!114 &11494802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c6e30fe091e99438d9e3ce0611ba20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weather:
+  - {fileID: 160574, guid: 3026c58ccd7dfaa42b3bc65114babd1c, type: 2}
+  - {fileID: 110408, guid: 8c5f29d02aa001143bd4a5e9dd305ed6, type: 2}
+  - {fileID: 128276, guid: 498056a8c3845974a80761215a9326ab, type: 2}
+  npcs:
+  - {fileID: 157454, guid: b8e5e5d0cbee6db488ea612187e115fa, type: 2}
+  enemies: []
+  minNPCDistance: 20
+  maxNPCDistance: 50
+  maxWeatherDistance: 20
+  paused: 0
+  collidingWith: []
+  weatherSpawnDelay: 600
+  npcSpawnDelay: 300
+  npcNumber: 8
 --- !u!124 &12424956
 Behaviour:
   m_ObjectHideFlags: 1

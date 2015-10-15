@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 446076}
   - 114: {fileID: 11410462}
-  - 114: {fileID: 11414380}
   m_Layer: 0
   m_Name: RandomEventManager
   m_TagString: EventController
@@ -24,8 +23,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -59.6117477, y: 53.9838791, z: -21.8895435}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -57,28 +56,6 @@ MonoBehaviour:
   framesPerCheck: 240
   eventChance: 25
   paused: 0
---- !u!114 &11414380
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25c6e30fe091e99438d9e3ce0611ba20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weather:
-  - {fileID: 160574, guid: 3026c58ccd7dfaa42b3bc65114babd1c, type: 2}
-  npcs:
-  - {fileID: 157454, guid: b8e5e5d0cbee6db488ea612187e115fa, type: 2}
-  minNPCDistance: 20
-  maxNPCDistance: 50
-  maxWeatherDistance: 20
-  paused: 0
-  weatherSpawnDelay: 600
-  npcSpawnDelay: 300
-  npcNumber: 8
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

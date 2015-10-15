@@ -133,10 +133,23 @@ public class EventManagement : MonoBehaviour {
         player.GetComponentInChildren<WeatherAndEnemySpawnScript>().Unpause();
     }
 
-    public void startBattle(string battleToStart)
+    public void StartBattle(string battleToStart,bool retreat,bool mustUsehero,int deployNumber)
     {
         GameObject.FindGameObjectWithTag("UniversalParent").SetActive(false);
-        Instantiate();
+        GameObject battleSettings = (GameObject)Instantiate(Resources.Load("/Resources/Battles/PersistentBattleSettings"));
+        PersistentBattleSettings battleScript = battleSettings.GetComponent<PersistentBattleSettings>();
+        battleScript.path_to_battle_file = battleToStart;
+        battleScript.number_of_deployable_units = deployNumber;
+        battleScript.must_include_main_hero = mustUsehero;
+        battleScript.can_retreat = retreat;
+        Pause();
+    }
+
+    public void EndBattle()
+    {
+        //destroy battle
+        Unpause();
+        GameObject.FindGameObjectWithTag("UniversalParent").SetActive(true);
     }
 	
 }

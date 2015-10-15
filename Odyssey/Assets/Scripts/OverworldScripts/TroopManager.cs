@@ -9,8 +9,8 @@ public class TroopManager : MonoBehaviour {
     public int startingArchers = 10;
     public int startingCavalry = 10;
     public int startingSlingers = 10;
-    public Dictionary<string, int> healthy;
-    public Dictionary<string, int> wounded;
+    public Dictionary<string, int> healthy = new Dictionary<string, int>();
+    public Dictionary<string, int> wounded = new Dictionary<string, int>();
     public GameObject[] heroes;
     public static TroopManager playerTroops;
 	// Use this for initialization

@@ -10,6 +10,7 @@ public class PirateEventFunctions : MonoBehaviour {
 	public ChoicesManager choiceManager;
 	public GameObject failureConversation;
 	public GameObject bribeConversation;
+    public string pathToBattle = "";
 	// Use this for initialization
 	void Start () {
 		resourceManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ResourceManager>();
@@ -25,8 +26,8 @@ public class PirateEventFunctions : MonoBehaviour {
 	
 	public void Fight()
 	{
-	//initiateBattle
-	eventController.EndEvent();
+        eventController.StartBattle(pathToBattle,false,false,7);
+	    eventController.EndEvent();
 	}
 	
 	public void Bribe()
