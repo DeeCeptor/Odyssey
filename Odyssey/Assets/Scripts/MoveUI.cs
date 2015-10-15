@@ -4,6 +4,8 @@ using System.Collections;
 // Moves a UI element over the scene to mask our loading. Check finished variable to see if it's in position to change scenes
 public class MoveUI : MonoBehaviour
 {
+    public static MoveUI transition_UI;
+
     RectTransform rect;
     public Vector3 movement_direction;
     Vector3 start_pos;
@@ -15,6 +17,12 @@ public class MoveUI : MonoBehaviour
     float cur_time;
     float max_time = 2;
     public bool finished = false;
+
+
+    void Awake ()
+    {
+        transition_UI = this;
+    }
 
 
     void Start () {

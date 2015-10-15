@@ -58,7 +58,10 @@ public class HexMap : MonoBehaviour
     {
         // Read in the file stored in persistent battle settings
         if (PersistentBattleSettings.battle_settings != null)
+        {
+            Debug.Log("PersistentBattleSettings path: " + PersistentBattleSettings.battle_settings.GetProperPathToFile());
             parser.ReadInLevel(Application.dataPath + PersistentBattleSettings.battle_settings.GetProperPathToFile());
+        }
         // No file to read in set. Must be debug mode. Just use my test file
         else
         {

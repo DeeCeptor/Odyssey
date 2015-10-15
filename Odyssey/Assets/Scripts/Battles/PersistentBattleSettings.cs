@@ -35,17 +35,19 @@ public class PersistentBattleSettings : MonoBehaviour
     void Awake ()
     {
         // If there's already a battle_settings, delete it. There should only be one battle settings
-        if (battle_settings != null)
-            Destroy(this.gameObject);
-
-        battle_settings = this;
+        if (PersistentBattleSettings.battle_settings != null)
+        {
+            Debug.Log("PersistentBattleSettings already exist. Destroy this script");
+            this.gameObject.SetActive(false);
+            DestroyImmediate(this.gameObject);
+            return;
+        }
+        else
+        {
+            battle_settings = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
-
-
-    void Start ()
-    {
-        DontDestroyOnLoad(this.gameObject);
-	}
 
 
     // Called after all factions have been created
