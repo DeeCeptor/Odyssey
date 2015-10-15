@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoveUI : MonoBehaviour {
+// Moves a UI element over the scene to mask our loading. Check finished variable to see if it's in position to change scenes
+public class MoveUI : MonoBehaviour
+{
     RectTransform rect;
     public Vector3 movement_direction;
     Vector3 start_pos;
     Vector3 left_pos = new Vector3(-1500, 0, 0);
 
+    public bool start_transitioning_out, start_transitioning_in;
     bool transition_out;
     bool transition_in;
     float cur_time;
@@ -17,7 +20,11 @@ public class MoveUI : MonoBehaviour {
     void Start () {
         rect = this.GetComponent<RectTransform>();
         start_pos = rect.localPosition;
-        TransitionOut();
+
+        if (start_transitioning_in)
+            TransitionIn();
+        else if (start_transitioning_out)
+            TransitionOut();
     }
 	
 
@@ -30,15 +37,21 @@ public class MoveUI : MonoBehaviour {
             rect.localPosition = rect.localPosition + movement_direction;
 
             if (cur_time >= max_time)
+            {
+                transition_in = false;
                 finished = true;
+            }
         }
         // Move from the far left to the center of the screen
         else if (transition_out)
         {
             rect.localPosition = Vector3.Lerp(left_pos, start_pos, Time.time - cur_time);
 
-            if (rect.localPosition == left_pos)
+            if (rect.localPosition == start_pos)
+            {
+                transition_out = false;
                 finished = true;
+            }
         }
 	}
 
@@ -48,7 +61,7 @@ public class MoveUI : MonoBehaviour {
     {
         rect.localPosition = left_pos;
         transition_out = true;
-        cur_time = Time.time; ;
+        cur_time = Time.time;
         finished = false;
     }
 

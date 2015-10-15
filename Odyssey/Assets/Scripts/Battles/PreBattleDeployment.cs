@@ -32,6 +32,8 @@ public class PreBattleDeployment : MonoBehaviour
         if (PersistentBattleSettings.battle_settings != null)
             maximum_deployable_units = PersistentBattleSettings.battle_settings.number_of_deployable_units;
 
+        
+
         // Add units we can deploy to the deployment panel
         deployable_units.Add("Hoplite", 6);
         deployable_units.Add("Cavalry", 3);
