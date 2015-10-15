@@ -58,4 +58,10 @@ public class PersistentBattleSettings : MonoBehaviour
 
         specific_individuals_lost = new Dictionary<string, int>[BattleManager.battle_manager.factions.Count + 1];
     }
+
+
+    public string GetProperPathToFile()
+    {
+        return "/Resources/Battles/LevelFiles/" + path_to_battle_file;
+    }
 }
