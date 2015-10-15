@@ -3,6 +3,7 @@ using System.Collections;
 
 public class HeroStats : MonoBehaviour {
 
+    public bool injured = false;
 	public int hitpoints = 10;
 	public float foodConsumption = 0.005f;
 	public float waterConsumption = 0.01f;

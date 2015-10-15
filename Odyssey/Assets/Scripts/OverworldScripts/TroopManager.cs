@@ -1,20 +1,33 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TroopManager : MonoBehaviour {
     public int totalTroops = 100;
-    public int healthyHoplites = 20;
-    public int woundedHoplites = 0;
-    public int healthySwordsmen = 20;
-    public int woundedSwordsmen = 0;
-    public int healthyArchers = 10;
-    public int woundedArchers = 0;
-    public int healthyCavalry = 10;
-    public int woundedCavalry = 0;
+    public int startingHoplites = 20;
+    public int startingSwordsmen = 20;
+    public int startingArchers = 10;
+    public int startingCavalry = 10;
+    public int startingSlingers = 10;
+    public Dictionary<string, int> healthy;
+    public Dictionary<string, int> wounded;
     public GameObject[] heroes;
+    public static TroopManager playerTroops;
 	// Use this for initialization
 	void Start () {
-	}
+        playerTroops = this;
+        healthy.Add("Hoplites",startingHoplites);
+        healthy.Add("Archers", startingArchers);
+        healthy.Add("Swordsmen", startingSwordsmen);
+        healthy.Add("Cavalry", startingHoplites);
+        healthy.Add("Slingers", startingHoplites);
+
+        wounded.Add("Hoplites", 0);
+        wounded.Add("Archers", 0);
+        wounded.Add("Swordsmen", 0);
+        wounded.Add("Cavalry", 0);
+        wounded.Add("Slingers", 0);
+    }
 	
 	// Update is called once per frame
 	void Update () {

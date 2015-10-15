@@ -135,7 +135,8 @@ public class EventManagement : MonoBehaviour {
 
     public void startBattle(string battleToStart)
     {
-
+        GameObject.FindGameObjectWithTag("UniversalParent").SetActive(false);
+        Instantiate();
     }
 	
 }
