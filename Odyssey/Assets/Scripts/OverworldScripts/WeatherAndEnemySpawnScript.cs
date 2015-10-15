@@ -57,11 +57,14 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
         }
         npcCounter = 0;
         rando = Random.insideUnitSphere;
-        randInt = Random.Range(0, weather.Length);
+        randInt = Random.Range(0, npcs.Length);
         mask = 1 << 10;
         mask = ~(mask);
         Vector3 randPoint = transform.position + (new Vector3(rando.x, 0, rando.z).normalized * Random.Range(minNPCDistance, maxNPCDistance));
-        collidingWith = Physics.OverlapSphere(randPoint, npcs[randInt].GetComponent<Collider>().bounds.size.x, mask);
+        if (npcs.Length > 0)
+        {
+            collidingWith = Physics.OverlapSphere(randPoint, npcs[randInt].GetComponent<Collider>().bounds.size.x, mask);
+        }
         if (collidingWith.Length > 0)
         {
             SpawnNPC();

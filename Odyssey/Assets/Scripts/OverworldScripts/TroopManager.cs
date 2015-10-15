@@ -270,7 +270,7 @@ public class TroopManager : MonoBehaviour {
 
     public void InjureRandom()
     {
-
+        
     }
 	
 	
