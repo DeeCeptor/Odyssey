@@ -294,7 +294,7 @@ MonoBehaviour:
   u_name: "Toxot\xE8s"
   u_description: Archer description
   portrait: {fileID: 0}
-  prefab_name: 
+  prefab_name: Archer
   unit_menu: {fileID: 0}
 --- !u!212 &21200464
 SpriteRenderer:
@@ -540,6 +540,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: u_description
       value: Archer description
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: prefab_name
+      value: Archer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

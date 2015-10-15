@@ -288,11 +288,14 @@ MonoBehaviour:
   ally_grouping_score: .100000001
   facing: 0
   rotating: 0
+  is_squad: 1
+  normal_squad_size: 5
+  remaining_individuals: 5
   u_name: Hoplite
   u_description: Armed with sheidl and spear, these warriors are trained to fight
     in defensive formations.
   portrait: {fileID: 0}
-  prefab_name: 
+  prefab_name: Hoplite
   unit_menu: {fileID: 0}
 --- !u!212 &21203156
 SpriteRenderer:
@@ -486,6 +489,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: normal_bonus_vs_cavalry
       value: .300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: prefab_name
+      value: Hoplite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

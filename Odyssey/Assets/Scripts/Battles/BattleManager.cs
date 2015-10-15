@@ -318,7 +318,7 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
 
         // Set overworld object as active
-        EventManagement.gameController.OverworldParent.SetActive(true);
+        EventManagement.gameController.EndBattle();
         MoveUI.transition_UI.TransitionIn();
         Debug.Log("Destroying battle scene");
 

@@ -295,7 +295,7 @@ MonoBehaviour:
   u_description: These sword armed warriors excel in one on one melee combat, but
     are vulnerable to ranged fire and can do little against hoplite formations.
   portrait: {fileID: 0}
-  prefab_name: 
+  prefab_name: Swordsman
   unit_menu: {fileID: 0}
 --- !u!212 &21208300
 SpriteRenderer:
@@ -485,7 +485,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: prefab_name
+      value: Swordsman
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 104454}

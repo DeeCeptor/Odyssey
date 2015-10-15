@@ -288,10 +288,13 @@ MonoBehaviour:
   ally_grouping_score: .100000001
   facing: 0
   rotating: 0
+  is_squad: 1
+  normal_squad_size: 5
+  remaining_individuals: 5
   u_name: Hippeus
   u_description: Cavalry
   portrait: {fileID: 0}
-  prefab_name: 
+  prefab_name: Cavalry
   unit_menu: {fileID: 0}
 --- !u!212 &21222964
 SpriteRenderer:
@@ -525,6 +528,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: normal_defence
       value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: prefab_name
+      value: Cavalry
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

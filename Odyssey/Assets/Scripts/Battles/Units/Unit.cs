@@ -95,7 +95,7 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public GameObject unit_menu;
 
-    public Faction owner;
+    public Faction owner; 
 
 
 	void Start ()
@@ -545,6 +545,12 @@ public class Unit : MonoBehaviour
         {
             // We died, removed all the individuals left
             PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += remaining_individuals;
+
+            // Record casualties in troop manager
+            if (TroopManager.playerTroops != null)
+            {
+                TroopManager.playerTroops.healthy[prefab_name] -= remaining_individuals;
+            }
             remaining_individuals = 0;
 
             Die();
@@ -557,6 +563,12 @@ public class Unit : MonoBehaviour
                 int HP_per_individual = (int) GetMaxHealth() / normal_squad_size;
                 remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
                 PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (prev_remaining_individuals - remaining_individuals);
+
+                // Record casualties in troop manager
+                if (TroopManager.playerTroops != null)
+                {
+                    TroopManager.playerTroops.healthy[prefab_name] -= (prev_remaining_individuals - remaining_individuals);
+                }
             }
         }
 

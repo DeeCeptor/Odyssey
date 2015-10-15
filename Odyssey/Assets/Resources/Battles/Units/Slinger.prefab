@@ -296,7 +296,7 @@ MonoBehaviour:
     are dangerous. These slingers are highly accurate, but lack the piercing power
     of arrows to go through armour.
   portrait: {fileID: 0}
-  prefab_name: 
+  prefab_name: Slinger
   unit_menu: {fileID: 0}
 --- !u!212 &21212908
 SpriteRenderer:
@@ -498,6 +498,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Color.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: prefab_name
+      value: Slinger
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
