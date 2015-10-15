@@ -36,7 +36,7 @@ public class PersistentBattleSettings : MonoBehaviour
     {
         // If there's already a battle_settings, delete it. There should only be one battle settings
         if (battle_settings != null)
-            Destroy(battle_settings.gameObject);
+            Destroy(this.gameObject);
 
         battle_settings = this;
     }

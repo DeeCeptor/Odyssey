@@ -32,26 +32,52 @@ public class PreBattleDeployment : MonoBehaviour
         if (PersistentBattleSettings.battle_settings != null)
             maximum_deployable_units = PersistentBattleSettings.battle_settings.number_of_deployable_units;
 
-        
-
-        // Add units we can deploy to the deployment panel
-        deployable_units.Add("Hoplite", 6);
-        deployable_units.Add("Cavalry", 3);
-        deployable_units.Add("Archer", 4);
-
-        foreach (KeyValuePair<string, int> pair in deployable_units)
+        // Get available units from the troop manager
+        if (TroopManager.playerTroops != null)
         {
-            GameObject newButton = Instantiate(deploy_unit_button) as GameObject;
-            newButton.name = pair.Key;
-            Button button = newButton.GetComponent<Button>();
-            Debug.Log(pair.Key + " x " + pair.Value);
-            string unit_name = pair.Key;
-            button.onClick.AddListener(() => SelectUnitFromDeploymentMenu(unit_name));
-            Text text = newButton.GetComponentInChildren<Text>();
-            text.text = pair.Key + " x " + pair.Value;
-            newButton.transform.SetParent(deployable_panel);
-            newButton.transform.localScale = new Vector3(1, 1, 1);
+            Debug.Log("Getting units from troop manager");
+
+            // Add units we can deploy to the deployment panel
+            foreach (KeyValuePair<string, int> pair in TroopManager.playerTroops.healthy)
+            {
+                GameObject newButton = Instantiate(deploy_unit_button) as GameObject;
+                newButton.name = pair.Key;
+                Button button = newButton.GetComponent<Button>();
+                Debug.Log(pair.Key + " x " + pair.Value);
+                string unit_name = pair.Key;
+                button.onClick.AddListener(() => SelectUnitFromDeploymentMenu(unit_name));
+                Text text = newButton.GetComponentInChildren<Text>();
+                text.text = pair.Key + " x " + pair.Value;
+                newButton.transform.SetParent(deployable_panel);
+                newButton.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
+        else
+        {
+            // Setting up debug available units
+            Debug.Log("Setting available debug units");
+
+            deployable_units.Add("Hoplite", 6);
+            deployable_units.Add("Cavalry", 3);
+            deployable_units.Add("Archer", 4);
+            deployable_units.Add("Slinger", 4);
+            deployable_units.Add("Swordsman", 4);
+
+            foreach (KeyValuePair<string, int> pair in deployable_units)
+            {
+                GameObject newButton = Instantiate(deploy_unit_button) as GameObject;
+                newButton.name = pair.Key;
+                Button button = newButton.GetComponent<Button>();
+                Debug.Log(pair.Key + " x " + pair.Value);
+                string unit_name = pair.Key;
+                button.onClick.AddListener(() => SelectUnitFromDeploymentMenu(unit_name));
+                Text text = newButton.GetComponentInChildren<Text>();
+                text.text = pair.Key + " x " + pair.Value;
+                newButton.transform.SetParent(deployable_panel);
+                newButton.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+
 
         SetUnitsRemainingText();
     }
