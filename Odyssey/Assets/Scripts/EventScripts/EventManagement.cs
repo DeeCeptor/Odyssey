@@ -139,7 +139,6 @@ public class EventManagement : MonoBehaviour {
 
     public void StartBattle(string battleToStart,bool retreat,bool mustUsehero,int deployNumber)
     {
-        Pause();
         Instantiate(Resources.Load("ScrollTransitionCanvas"));
         OverworldParent.SetActive(false);
         GameObject battleSettings = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
@@ -149,15 +148,14 @@ public class EventManagement : MonoBehaviour {
         battleScript.must_include_main_hero = mustUsehero;
         battleScript.can_retreat = retreat;
         Application.LoadLevelAdditive("TacticalBattle");
-       
+        paused = true;
     }
 
     public void EndBattle()
     {
         //destroy battle
-        
+        paused = false;
         OverworldParent.SetActive(true);
-        Unpause();
     }
 	
 }

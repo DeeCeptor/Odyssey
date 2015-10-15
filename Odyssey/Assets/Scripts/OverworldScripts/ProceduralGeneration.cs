@@ -48,8 +48,9 @@ GameObject curIsland;
 	    PlacePlayer();
     	Instantiate(eventController);
 	    GameObject newUI = (GameObject)Instantiate(ui,transform.position,transform.rotation);
-	
-	}
+        newUI.transform.parent = UniversalParent.transform;
+
+    }
 	
 	public void PlaceGoal()
 	{
