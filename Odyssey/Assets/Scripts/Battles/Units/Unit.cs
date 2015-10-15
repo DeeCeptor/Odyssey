@@ -91,7 +91,6 @@ public class Unit : MonoBehaviour
     public string u_name = ""; // Name at the top of the unit panel
     public string u_description = "";  // Short description of the unit
     public Texture portrait;    // Unit portrait
-    [HideInInspector]
     public string prefab_name;  // Exact name needed to load the prefab
     [HideInInspector]
     public GameObject unit_menu;

@@ -7,6 +7,8 @@ public class BattleManager : MonoBehaviour
 {
     [HideInInspector]
     public static BattleManager battle_manager;
+    public GameObject universal_battle_parent;
+
     public bool pre_battle_deployment = false;
     public int round_number = 0;     // How long has this battle been going
     public bool human_turn = false;     // Is the human playing?
@@ -300,7 +302,29 @@ public class BattleManager : MonoBehaviour
         PlayerInterface.player_interface.summary_screen_title.text = "Victory";
         PersistentBattleSettings.battle_settings.victory = true;
     }
+    public void LoadOverworld()
+    {
+        Debug.Log("Loading Overworld");
+        StartCoroutine(LoadingScreenToWorld());
 
+        
+    }
+    IEnumerator LoadingScreenToWorld()
+    {
+        MoveUI.transition_UI.TransitionOut();
+
+        // Wait until graphic fully covers screen
+        while (!MoveUI.transition_UI.finished)
+            yield return new WaitForSeconds(0.1f);
+
+        // Set overworld object as active
+        EventManagement.gameController.OverworldParent.SetActive(true);
+        MoveUI.transition_UI.TransitionIn();
+        Debug.Log("Destroying battle scene");
+
+        // Destroy the battle scene objects
+        Destroy(universal_battle_parent);
+    }
 
     public void EndPreBattleDeployment()
     {
