@@ -78,7 +78,7 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
             return;
         }
         GameObject npc = (GameObject)Instantiate(npcs[randInt],randPoint, Quaternion.AngleAxis(Random.Range(0, 360), Vector3.up));
-       
+        npc.transform.parent = GameObject.FindGameObjectWithTag("UniversalParent").transform;
         
     }
 
@@ -95,8 +95,8 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
             return;
         }
         GameObject weatherSpawned = (GameObject)Instantiate(weather[randInt], randPoint + new Vector3(0, weather[randInt].GetComponent<WeatherScript>().weatherHeight,0), Quaternion.AngleAxis(Random.Range(0, 360), Vector3.up));
-        
-       
+        weatherSpawned.transform.parent = GameObject.FindGameObjectWithTag("UniversalParent").transform;
+
     }
 
     public void Pause()

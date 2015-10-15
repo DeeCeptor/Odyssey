@@ -10,6 +10,7 @@ public GameObject goal;
 public GameObject[] npcs;
 public GameObject eventController;
 public GameObject ui;
+public GameObject UniversalParent;
 
 public int maxIslands = 40;
 public float islandSpace = 50;
@@ -23,13 +24,15 @@ int islandCounter = 0;
 Vector3 curPosition;
 GameObject curIsland;
 
+
 	
 	//if the position is valid
 	bool noGood = false;
 
 	// Use this for initialization
 	void Start () {
-	GenerateWorld();
+        UniversalParent = GameObject.FindGameObjectWithTag("UniversalParent");
+	    GenerateWorld();
 	}
 	
 	// Update is called once per frame
@@ -39,7 +42,7 @@ GameObject curIsland;
 	
 	public void GenerateWorld()
 	{
-	    Instantiate(ocean);
+	    Instantiate(ocean).transform.parent = UniversalParent.transform;
         PlaceGoal();
 	    PlaceIslands();
 	    PlacePlayer();
@@ -56,6 +59,7 @@ GameObject curIsland;
         islandZWidth = goal.GetComponent<Renderer>().bounds.extents.z;
         curPosition = new Vector3(Random.Range(-oceanXWidth + islandXWidth, oceanXWidth - islandXWidth), transform.position.y, Random.Range(-oceanZWidth + islandZWidth, oceanZWidth - islandZWidth));
         goal = (GameObject)Instantiate(goal, curPosition, transform.rotation);
+        goal.transform.parent = UniversalParent.transform;
         islandCounter = islandCounter + 1;
 
     }
@@ -90,7 +94,8 @@ GameObject curIsland;
 			{
 				GameObject pShip = (GameObject)Instantiate(player,curPosition,transform.rotation);
 				pShip.transform.Rotate(transform.up,Random.Range(0,360),Space.Self);
-			}
+                pShip.transform.parent = UniversalParent.transform;
+            }
 		}
 	}
 	
@@ -121,8 +126,9 @@ GameObject curIsland;
 		
 		if(!noGood)
 		{
-		Instantiate(curIsland,curPosition,transform.rotation);
-		islandCounter = islandCounter+1;
+                GameObject newIsland = (GameObject)Instantiate(curIsland, curPosition, transform.rotation);
+                newIsland.transform.parent = UniversalParent.transform;
+                islandCounter = islandCounter+1;
 		}
 		
 		noGood = false;

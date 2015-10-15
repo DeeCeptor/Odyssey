@@ -22,6 +22,7 @@ public class EventManagement : MonoBehaviour {
 	private int frameIterator = 0;
 	public float eventChance = 25f;
 	public bool paused = false;
+    public static EventManagement gameController;
 	
 	// Use this for initialization
 	void Start () {
@@ -29,6 +30,7 @@ public class EventManagement : MonoBehaviour {
 	resourceController = player.GetComponent<ResourceManager>();
 	playerController = player.GetComponent<PlayerBoatController>();
 	enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
+        gameController = this;
 	}
 	
 	// Update is called once per frame
@@ -136,6 +138,7 @@ public class EventManagement : MonoBehaviour {
     public void StartBattle(string battleToStart,bool retreat,bool mustUsehero,int deployNumber)
     {
         Pause();
+        Instantiate(Resources.Load("ScrollTransitionCanvas"));
         GameObject.FindGameObjectWithTag("UniversalParent").SetActive(false);
         GameObject battleSettings = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
         PersistentBattleSettings battleScript = battleSettings.GetComponent<PersistentBattleSettings>();
