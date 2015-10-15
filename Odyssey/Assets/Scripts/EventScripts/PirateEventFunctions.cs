@@ -26,8 +26,9 @@ public class PirateEventFunctions : MonoBehaviour {
 	
 	public void Fight()
 	{
+        eventController.EndEvent();
         eventController.StartBattle(pathToBattle,false,false,7);
-	    eventController.EndEvent();
+	   
 	}
 	
 	public void Bribe()

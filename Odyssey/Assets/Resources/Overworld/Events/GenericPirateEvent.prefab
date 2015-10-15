@@ -1012,7 +1012,7 @@ MonoBehaviour:
   choiceManager: {fileID: 0}
   failureConversation: {fileID: 139768}
   bribeConversation: {fileID: 152958}
-  pathToBattle: /Resources/Battles/LevelFiles/Level1.txt
+  pathToBattle: PirateBattle.txt
 --- !u!114 &11413910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2462,7 +2462,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: pathToBattle
-      value: /Resources/Battles/LevelFiles/Level1.txt
+      value: PirateBattle.txt
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

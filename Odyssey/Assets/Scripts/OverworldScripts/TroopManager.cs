@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class TroopManager : MonoBehaviour {
     public int totalTroops = 100;
-    public int startingHoplites = 20;
-    public int startingSwordsmen = 20;
-    public int startingArchers = 10;
+    public int startingHoplite = 20;
+    public int startingSwordsman = 20;
+    public int startingArcher = 10;
     public int startingCavalry = 10;
-    public int startingSlingers = 10;
+    public int startingSlinger = 10;
     public Dictionary<string, int> healthy = new Dictionary<string, int>();
     public Dictionary<string, int> wounded = new Dictionary<string, int>();
     public GameObject[] heroes;
@@ -16,17 +16,17 @@ public class TroopManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         playerTroops = this;
-        healthy.Add("Hoplites",startingHoplites);
-        healthy.Add("Archers", startingArchers);
-        healthy.Add("Swordsmen", startingSwordsmen);
-        healthy.Add("Cavalry", startingHoplites);
-        healthy.Add("Slingers", startingHoplites);
+        healthy.Add("Hoplite",startingHoplite);
+        healthy.Add("Archer", startingArcher);
+        healthy.Add("Swordsman", startingSwordsman);
+        healthy.Add("Cavalry", startingCavalry);
+        healthy.Add("Slinger", startingSlinger);
 
-        wounded.Add("Hoplites", 0);
-        wounded.Add("Archers", 0);
-        wounded.Add("Swordsmen", 0);
+        wounded.Add("Hoplite", 0);
+        wounded.Add("Archer", 0);
+        wounded.Add("Swordsman", 0);
         wounded.Add("Cavalry", 0);
-        wounded.Add("Slingers", 0);
+        wounded.Add("Slinger", 0);
     }
 	
 	// Update is called once per frame
