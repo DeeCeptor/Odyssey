@@ -288,9 +288,10 @@ MonoBehaviour:
   ally_grouping_score: .100000001
   facing: 0
   rotating: 0
+  hero: 0
   is_squad: 1
-  normal_squad_size: 5
-  remaining_individuals: 5
+  normal_squad_size: 10
+  remaining_individuals: 10
   u_name: Hippeus
   u_description: Cavalry
   portrait: {fileID: 0}
@@ -532,6 +533,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: prefab_name
       value: Cavalry
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normal_squad_size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: remaining_individuals
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -319,6 +319,7 @@ public class PlayerInterface : MonoBehaviour
     public void CreateFloatingText(Vector3 position, string text, bool random_velocity, float time_to_die)
     {
         GameObject instance = Instantiate(Resources.Load("FloatingText", typeof(GameObject))) as GameObject;
+        instance.transform.parent = BattleManager.battle_manager.universal_battle_parent.transform;
         position.z = -6;
         instance.transform.position = position;
         instance.GetComponent<TextMesh>().text = text;

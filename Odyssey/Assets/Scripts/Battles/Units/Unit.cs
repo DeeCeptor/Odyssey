@@ -84,6 +84,7 @@ public class Unit : MonoBehaviour
     private float tile_move_speed = 7f;
     private bool desired_rotation_set = false;
 
+    public bool hero = false;
     public bool is_squad = true;        // Heroes and some myth units are not squads
     public int normal_squad_size = 5;   // Size of squads doesn't affect stats at all. Only used for recording casualties
     public int remaining_individuals = 5;   // Heroes and some myth units only ever have 1 guy
@@ -258,11 +259,18 @@ public class Unit : MonoBehaviour
 
     public virtual void Die()
     {
-        RemoveUnit();
+        // Add 1 favour since we killed an enemy
+        if (this.owner.IsEnemy(BattleManager.battle_manager.player_faction))
+        {
+            GodsManager.gods_manager.ModifyFavour(1);
+        }
+
         dead = true;
 
         // Change status to having retreated
         PersistentBattleSettings.battle_settings.units_lost[this.owner.faction_ID]++;
+
+        RemoveUnit();
 
         // Check victory/defeat conditions
         BattleManager.battle_manager.CheckVictoryAndDefeat();
@@ -547,9 +555,10 @@ public class Unit : MonoBehaviour
             PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += remaining_individuals;
 
             // Record casualties in troop manager
-            if (TroopManager.playerTroops != null)
+            if (TroopManager.playerTroops != null && owner == BattleManager.battle_manager.player_faction)
             {
                 TroopManager.playerTroops.healthy[prefab_name] -= remaining_individuals;
+                Debug.Log("Remaining " + prefab_name + ": " + TroopManager.playerTroops.healthy[prefab_name]);
             }
             remaining_individuals = 0;
 
@@ -565,9 +574,10 @@ public class Unit : MonoBehaviour
                 PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (prev_remaining_individuals - remaining_individuals);
 
                 // Record casualties in troop manager
-                if (TroopManager.playerTroops != null)
+                if (TroopManager.playerTroops != null && owner == BattleManager.battle_manager.player_faction)
                 {
                     TroopManager.playerTroops.healthy[prefab_name] -= (prev_remaining_individuals - remaining_individuals);
+                    Debug.Log("Remaining " + prefab_name + ": " + TroopManager.playerTroops.healthy[prefab_name]);
                 }
             }
         }

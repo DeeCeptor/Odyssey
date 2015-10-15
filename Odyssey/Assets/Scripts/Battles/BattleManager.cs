@@ -244,6 +244,7 @@ public class BattleManager : MonoBehaviour
         Unit unit = instance.GetComponent<Unit>();
         unit.owner = owning_faction;
         owning_faction.units.Add(unit);
+        instance.transform.parent = this.universal_battle_parent.transform;
 
         // Spawn the unit in a non impassasble and non occupied space
         HexMap.hex_map.WarpUnitTo(unit, HexMap.hex_map.Nearest_Unoccupied_Passable_Hex(HexMap.hex_map.GetHex(x, y)));

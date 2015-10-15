@@ -42,6 +42,15 @@ public class PreBattleDeployment : MonoBehaviour
             {
                 deployable_units.Add(pair.Key, pair.Value / 10);
             }
+
+            // Add available heroes to the fray
+            foreach (GameObject hero_obj in TroopManager.playerTroops.heroes)
+            {
+                // Get the stats from the hero stats script
+                HeroStats hero_stats = hero_obj.GetComponent<HeroStats>();
+
+                deployable_units.Add("Odysseus", 1);
+            }
         }
         else
         {

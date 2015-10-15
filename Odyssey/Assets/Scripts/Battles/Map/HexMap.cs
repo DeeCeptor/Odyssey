@@ -97,6 +97,7 @@ public class HexMap : MonoBehaviour
 
                 float x_pos = x_coord * x_offset + y * x_offset / 2;
                 float y_pos = y * y_offset;
+                instance.transform.parent = BattleManager.battle_manager.universal_battle_parent.transform;
                 instance.transform.position = new Vector3(x_pos, y_pos, 1);
                 Hex hex = instance.GetComponent<Hex>();
                 hex.deployment_zone = p_hex.deployment_zone;
