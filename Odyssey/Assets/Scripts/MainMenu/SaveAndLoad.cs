@@ -1,15 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
-public class SaveAndLoad : MonoBehaviour {
+public static class SaveAndLoad
+{
+    public static List<World> savedGames = new List<World>();
+    public static void Save(string Filename)
+    {
+        Load();
+        World.curWorld.getCurrent();
+        savedGames.Add(World.curWorld);
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/savedGames.sv");
+        bf.Serialize(file, SaveAndLoad.savedGames);
+        file.Close();
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public static void Load()
+    {
+        if (File.Exists(Application.persistentDataPath + "/savedGames.sv"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/savedGames.sv", FileMode.Open);
+            SaveAndLoad.savedGames = bf.Deserialize(file) as List<World>;
+            file.Close();
+        }
+    }
 }

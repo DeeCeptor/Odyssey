@@ -109,7 +109,7 @@ public class EventManagement : MonoBehaviour {
         {
             weather[i].GetComponent<WeatherScript>().Pause();
         }
-        GetComponent<WeatherAndEnemySpawnScript>().Pause();
+        player.GetComponentInChildren<WeatherAndEnemySpawnScript>().Pause();
     }
 	
 	public void Unpause()
@@ -130,7 +130,12 @@ public class EventManagement : MonoBehaviour {
         {
             enemies[i].GetComponent<OverworldEnemyScript>().Unpause();
         }
-        GetComponent<WeatherAndEnemySpawnScript>().Unpause();
+        player.GetComponentInChildren<WeatherAndEnemySpawnScript>().Unpause();
+    }
+
+    public void startBattle(string battleToStart)
+    {
+
     }
 	
 }
