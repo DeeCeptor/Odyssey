@@ -7,14 +7,13 @@ using System.IO;
 public static class SaveAndLoad
 {
     public static List<World> savedGames = new List<World>();
-    public static void Save(string Filename)
+    public static World savedWorld;
+    public static void Save()
     {
-        Load();
         World.curWorld.getCurrent();
-        savedGames.Add(World.curWorld);
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGames.sv");
-        bf.Serialize(file, SaveAndLoad.savedGames);
+        bf.Serialize(file, World.curWorld);
         file.Close();
     }
 
@@ -24,7 +23,7 @@ public static class SaveAndLoad
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/savedGames.sv", FileMode.Open);
-            SaveAndLoad.savedGames = bf.Deserialize(file) as List<World>;
+            savedWorld = bf.Deserialize(file) as World;
             file.Close();
         }
     }
