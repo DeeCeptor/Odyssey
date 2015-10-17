@@ -369,7 +369,7 @@ public class Unit : MonoBehaviour
     {
         foreach (Hex hex in this.tiles_I_can_move_to)
         {
-            hex.HighlightHex();
+            hex.HighlightMoveHex();
         }
     }
 

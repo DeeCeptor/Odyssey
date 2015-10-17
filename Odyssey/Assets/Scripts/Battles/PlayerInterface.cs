@@ -126,11 +126,22 @@ public class PlayerInterface : MonoBehaviour
             //unit.unit_menu.SetActive(true);
 
             PopulateAbilitiesMenu(unit);
+
+            // Check all enemies and see if they are within attack range of the selected unit
+            foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
+            {
+                if (HexMap.hex_map.InRange(unit.location, enemy.location, unit.GetRange()))
+                {
+                    enemy.location.HighlightAttackableHex();
+                }
+            }
         }
 
         UnhighlightHexes();
 
         unit.HighlightHexesWeCanMoveTo();
+
+        HighlightAttacksFrom(unit, unit.location);
     }
 
 
@@ -280,11 +291,49 @@ public class PlayerInterface : MonoBehaviour
     }
 
 
+    // Removes hex aura from all hexes
     public void UnhighlightHexes()
     {
         foreach (Hex hex in HexMap.hex_map.all_hexes)
         {
             hex.UnhighlightHex();
+        }
+    }
+    public void UnhightlightEnemyHexes()
+    {
+        foreach (Unit enemy in BattleManager.battle_manager.player_faction.GetAllEnemyUnits())
+        {
+            enemy.location.UnhighlightHex();
+        }
+    }
+
+
+    // If the unit can attack, highlight all enemies we can hit from this hex
+    public void HighlightAttacksFrom(Unit unit, Hex hex)
+    {
+        if (!unit.has_attacked)
+        {
+            foreach (Unit enemy in unit.owner.GetAllEnemyUnits())
+            {
+                if (HexMap.hex_map.InRange(hex, enemy.location, unit.GetRange()))
+                {
+                    enemy.location.HighlightAttackableHex();
+                }
+            }
+        }
+    }
+    public void HighlightAttacksFromUnitLocationAndFrom(Unit unit, Hex hex)
+    {
+        if (!unit.has_attacked)
+        {
+            foreach (Unit enemy in selected_unit.owner.GetAllEnemyUnits())
+            {
+                if (HexMap.hex_map.InRange(hex, enemy.location, unit.GetRange())
+                    || HexMap.hex_map.InRange(unit.location, enemy.location, unit.GetRange()))
+                {
+                    enemy.location.HighlightAttackableHex();
+                }
+            }
         }
     }
 
@@ -297,6 +346,15 @@ public class PlayerInterface : MonoBehaviour
                 highlighted_hex.UnMouseHighlight();
             highlighted_hex = hex;
             highlighted_hex.MouseHighlight();
+
+            UnhightlightEnemyHexes();
+
+            // Highlight all hexes the selected can attack from this hex
+            if (SelectedUnitAvailableToControl()
+                && (hex.IsHighlighted() || hex.occupying_unit == selected_unit))
+            {
+                HighlightAttacksFromUnitLocationAndFrom(selected_unit, hex);
+            }
         }
         //highlighted_hex = hex;
 

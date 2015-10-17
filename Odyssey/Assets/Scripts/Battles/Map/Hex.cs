@@ -17,8 +17,10 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     [HideInInspector]
     public Unit occupying_unit;     // Unit that's on this hex, if there is one
 
-	private Color highlighted_color = Color.blue;
-	private Color mouse_highlighted_color = Color.green;
+    private SpriteRenderer aura;
+	private Color highlighted_move_color = Color.blue;
+    private Color highlighted_attack_color = Color.red;
+    private Color mouse_highlighted_color = Color.green;
 	private Color previous_color;
 	Color regular_color = Color.white;
 
@@ -53,6 +55,8 @@ public class Hex : MonoBehaviour, IComparable<Hex>
         //regular_material = this.GetComponent<MeshRenderer>().material;
         //regular_color = this.GetComponent<SpriteRenderer>().color;
         world_coordinates = this.transform.position;
+        aura = this.transform.FindChild("HexAura").GetComponent<SpriteRenderer>();
+        aura.gameObject.SetActive(false);
     }
 
 	
@@ -110,15 +114,19 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     }
 
 
-    public void HighlightHex()
+    public void HighlightMoveHex()
     {
-		this.GetComponent<SpriteRenderer>().color = highlighted_color;
-        //this.GetComponent<MeshRenderer>().material = highlighted_material;
+        aura.gameObject.SetActive(true);
+		aura.color = highlighted_move_color;
+    }
+    public void HighlightAttackableHex()
+    {
+        aura.gameObject.SetActive(true);
+        aura.color = highlighted_attack_color;
     }
     public void UnhighlightHex()
     {
-		this.GetComponent<SpriteRenderer>().color = regular_color;
-        //this.GetComponent<MeshRenderer>().material = regular_material;
+        aura.gameObject.SetActive(false);
     }
     public void MouseHighlight()
     {
@@ -134,9 +142,7 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     }
     public bool IsHighlighted()
     {
-        //return this.GetComponent<MeshRenderer>().material == highlighted_material;
-		return this.GetComponent<SpriteRenderer>().color == Color.blue;
-
+        return aura.gameObject.active;
     }
 
 
