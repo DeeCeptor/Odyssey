@@ -41,7 +41,8 @@ public class PreBattleDeployment : MonoBehaviour
             // Add units we can deploy to the deployment panel
             foreach (KeyValuePair<string, int> pair in TroopManager.playerTroops.healthy)
             {
-                deployable_units.Add(pair.Key, pair.Value / 10);
+                if (pair.Value > 0)
+                    deployable_units.Add(pair.Key, pair.Value / 10);
             }
 
             // Add available non-wounded heroes to be deployed
@@ -82,6 +83,9 @@ public class PreBattleDeployment : MonoBehaviour
             text.text = pair.Key + " x " + pair.Value;
             newButton.transform.SetParent(deployable_panel);
             newButton.transform.localScale = new Vector3(1, 1, 1);
+
+            if (pair.Value <= 0)
+                button.interactable = false;
         }
 
         SetUnitsRemainingText();
@@ -129,6 +133,7 @@ public class PreBattleDeployment : MonoBehaviour
             SetDeployButtonText(unit_to_spawn_name, deployable_units[unit_to_spawn_name]);
             GameObject unit = BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex, true);
             Unit unit_script = unit.GetComponent<Unit>();
+            unit_script.Initialize();
             unit_script.SetImmediateRotation(270);
 
             // Disable the deployment of that unit if we're out of those units to deploy

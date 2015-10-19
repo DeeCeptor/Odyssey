@@ -38,6 +38,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _ReflectionTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _ParallaxMap
         second:
           m_Texture: {fileID: 0}
@@ -94,14 +101,21 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _ReflectionTex
+          name: _RefractionTex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _RefractionTex
+          name: _Ramp
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _ToonShade
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -119,6 +133,10 @@ Material:
         first:
           name: _Cutoff
         second: .5
+      data:
+        first:
+          name: _WaveScale
+        second: .063000001
       data:
         first:
           name: _Parallax
@@ -157,16 +175,16 @@ Material:
         second: 0
       data:
         first:
-          name: _WaveScale
-        second: .063000001
-      data:
-        first:
           name: _ReflDistort
         second: .439999998
       data:
         first:
           name: _RefrDistort
         second: .400000006
+      data:
+        first:
+          name: _Outline
+        second: .00499999989
     m_Colors:
       data:
         first:
@@ -178,13 +196,17 @@ Material:
         second: {r: .0583910234, g: .287256926, b: .661764741, a: 1}
       data:
         first:
-          name: _RefrColor
-        second: {r: .340000004, g: .850000024, b: .920000017, a: 1}
-      data:
-        first:
           name: WaveSpeed
         second: {r: 19, g: 9, b: -16, a: -7}
       data:
         first:
+          name: _RefrColor
+        second: {r: .354941577, g: .695854902, b: .742647052, a: 1}
+      data:
+        first:
           name: _HorizonColor
         second: {r: .172000006, g: .463, b: .435000002, a: 1}
+      data:
+        first:
+          name: _OutlineColor
+        second: {r: 0, g: 0, b: 0, a: 1}

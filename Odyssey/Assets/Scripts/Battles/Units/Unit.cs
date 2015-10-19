@@ -95,15 +95,17 @@ public class Unit : MonoBehaviour
     public string prefab_name;  // Exact name needed to load the prefab
     [HideInInspector]
     public GameObject unit_menu;
+    public GameObject unit_sprite;
 
     public Faction owner; 
 
 
 	void Start ()
     {
+        Initialize();
+
         remaining_individuals = normal_squad_size;
 
-        unit_menu = this.transform.FindChild("UnitMenu").gameObject;
         //this.SetRotation(new Vector3(0, 0, 0));
         health = maximum_health;
 
@@ -112,6 +114,13 @@ public class Unit : MonoBehaviour
 
         //ResetStats();
         AssignAbilities();
+    }
+
+
+    public void Initialize()
+    {
+        unit_menu = this.transform.FindChild("UnitMenu").gameObject;
+        unit_sprite = this.transform.FindChild("UnitSprite").gameObject;
     }
 
 
@@ -126,7 +135,7 @@ public class Unit : MonoBehaviour
     {
         if (desired_rotation_set)
         {
-            this.transform.eulerAngles = new Vector3(0, 0, facing);
+            unit_sprite.transform.eulerAngles = new Vector3(0, 0, facing);
             desired_rotation_set = false;
         }
         // Check if we should be moving
@@ -188,7 +197,7 @@ public class Unit : MonoBehaviour
     public void SetImmediateRotation(int facing)
     {
         this.facing = GetHexagonalDirection(facing);
-        this.transform.eulerAngles = new Vector3(0, 0, facing);
+        unit_sprite.transform.eulerAngles = new Vector3(0, 0, facing);
     }
     // Snaps the given direction to one of 6 hexagonal facings
     public int GetHexagonalDirection(int facing)
@@ -607,12 +616,14 @@ public class Unit : MonoBehaviour
         // Get the right type of defence to use. Ranged defence from ranged units
         float defence = 0;
         if (attacker.is_ranged_unit)
+        {
             defence = this.GetRangedDefence();
+        }
         else
             defence = this.GetDefence();
 
         // Modify the damage by the defence percentage. 10% defence means 90% of the damage is inflicted.
-        float modified_normal_damage = raw_normal_damage - (raw_normal_damage * this.GetDefence());
+        float modified_normal_damage = raw_normal_damage - (raw_normal_damage * defence);
 
         // Piercing damage is not affected by the enemy's defense.
         float damage = modified_normal_damage + raw_piercing_damage;

@@ -180,7 +180,7 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     void OnMouseOver()
     {
         PlayerInterface.player_interface.MousedOverHex(this);
-
+         
         // left click
         if (Input.GetMouseButtonDown(0)
             && !EventSystem.current.IsPointerOverGameObject()   // Make sure mouse is not over UI

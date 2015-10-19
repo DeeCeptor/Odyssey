@@ -41,7 +41,7 @@ public class PersistentBattleSettings : MonoBehaviour
         {
             Debug.Log("PersistentBattleSettings already exist. Destroy this script");
             this.gameObject.SetActive(false);
-            DestroyImmediate(this.gameObject);
+            //DestroyImmediate(this.gameObject);
             return;
         }
         else
