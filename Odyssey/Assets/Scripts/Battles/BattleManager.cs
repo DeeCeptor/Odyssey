@@ -18,10 +18,13 @@ public class BattleManager : MonoBehaviour
     Queue<Faction> players_waiting_for_turn = new Queue<Faction>();     // FIFO queue showing what player's are waiting to do their turn this round
     public List<Faction> factions = new List<Faction>();   // The sides that are fighting in this fight
 
+    void Awake()
+    {
+        battle_manager = this;
+    }
 
     void Start()
     {
-        battle_manager = this;
         StartCoroutine(InitializePreBattleDeployment());
     }
 
@@ -98,6 +101,7 @@ public class BattleManager : MonoBehaviour
             Debug.Log("Spawning unit at " + unit.position);
             Hex pos = HexMap.hex_map.GetHexFromTopDownCoordinates(new Vector2(unit.position.x, (int)unit.position.y));
             GameObject new_unit = SpawnUnit(GetFaction(unit.faction_name), "Battles/Units/" + unit.unit_name, (int)pos.coordinate.x, (int)pos.coordinate.y, false);
+            new_unit.GetComponent<Unit>().Initialize();
             new_unit.GetComponent<Unit>().SetImmediateRotation(90);
         }
     }

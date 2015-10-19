@@ -218,7 +218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &246146435
 Light:
   m_ObjectHideFlags: 0
@@ -301,6 +301,10 @@ Prefab:
     - target: {fileID: 482890, guid: c752e751809347a4b818f4637239cb30, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 168400, guid: c752e751809347a4b818f4637239cb30, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c752e751809347a4b818f4637239cb30, type: 2}
@@ -515,6 +519,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e7b08df3195da438823820b78cebd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hero_name: Odysseus
+  injured: 0
   hitpoints: 10
   foodConsumption: .00499999989
   waterConsumption: .00999999978
@@ -535,6 +541,7 @@ MonoBehaviour:
   spear: 0
   sword: 0
   bow: 4
+  weaponType: 0
 --- !u!1 &790620734
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +668,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7350b65a6431f604a8496c39db1ac9c5, type: 2}
+    - target: {fileID: 136608, guid: fce4fed67e7473a499ebc4aae4a6ab23, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fce4fed67e7473a499ebc4aae4a6ab23, type: 2}
   m_IsPrefabParent: 0
@@ -756,7 +767,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1481964765
 Transform:
   m_ObjectHideFlags: 0
@@ -987,6 +998,7 @@ MonoBehaviour:
   framesPerCheck: 240
   eventChance: 25
   paused: 0
+  OverworldParent: {fileID: 0}
 --- !u!1001 &1752982715
 Prefab:
   m_ObjectHideFlags: 0
@@ -1266,12 +1278,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c6b0819bb42722b40be561c32c3e0592, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c6b0819bb42722b40be561c32c3e0592, type: 2}
       propertyPath: Water
       value: 
       objectReference: {fileID: 1967111436}
+    - target: {fileID: 100004, guid: c6b0819bb42722b40be561c32c3e0592, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c6b0819bb42722b40be561c32c3e0592, type: 2}
   m_IsPrefabParent: 0
@@ -1382,9 +1398,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTroops: 100
-  units:
-  - {fileID: 1884177952}
-  - {fileID: 519188698}
+  startingHoplite: 20
+  startingSwordsman: 20
+  startingArcher: 10
+  startingCavalry: 10
+  startingSlinger: 10
   heroes:
   - {fileID: 786653761}
 --- !u!1001 &1966890756
@@ -1538,6 +1556,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22499138, guid: 3abd51b5600236442b7fc1b368f38b1d, type: 2}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 166864, guid: 3abd51b5600236442b7fc1b368f38b1d, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -13,8 +13,9 @@ public class PreBattleDeployment : MonoBehaviour
     public int cur_deployed_units = 0;
     public int maximum_deployable_units = 10;
 
-    // String that contains the location of the prefab to spawn
-    public string unit_to_spawn;
+    public Dictionary<string, HeroStats> deployable_heroes = new Dictionary<string, HeroStats>();   // Contains the stats of all deployable heroes
+
+    public string unit_to_spawn;        // String that contains the location of the prefab to spawn
     public string unit_to_spawn_name;
     public GameObject deployable_sprite;    // Sprite that follows the mouse to show the unit we're going to spawn
     public GameObject deploy_unit_button;   // Button to populate our deploy units list
@@ -40,16 +41,20 @@ public class PreBattleDeployment : MonoBehaviour
             // Add units we can deploy to the deployment panel
             foreach (KeyValuePair<string, int> pair in TroopManager.playerTroops.healthy)
             {
-                deployable_units.Add(pair.Key, pair.Value / 10);
+                if (pair.Value > 0)
+                    deployable_units.Add(pair.Key, pair.Value / 10);
             }
 
-            // Add available heroes to the fray
+            // Add available non-wounded heroes to be deployed
             foreach (GameObject hero_obj in TroopManager.playerTroops.heroes)
             {
                 // Get the stats from the hero stats script
                 HeroStats hero_stats = hero_obj.GetComponent<HeroStats>();
-
-                deployable_units.Add("Odysseus", 1);
+                if (!hero_stats.injured)
+                {
+                    deployable_units.Add(hero_stats.hero_name, 1);
+                    deployable_heroes.Add(hero_stats.hero_name, hero_stats);
+                }
             }
         }
         else
@@ -78,6 +83,9 @@ public class PreBattleDeployment : MonoBehaviour
             text.text = pair.Key + " x " + pair.Value;
             newButton.transform.SetParent(deployable_panel);
             newButton.transform.localScale = new Vector3(1, 1, 1);
+
+            if (pair.Value <= 0)
+                button.interactable = false;
         }
 
         SetUnitsRemainingText();
@@ -124,7 +132,9 @@ public class PreBattleDeployment : MonoBehaviour
             SetUnitsRemainingText();
             SetDeployButtonText(unit_to_spawn_name, deployable_units[unit_to_spawn_name]);
             GameObject unit = BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex, true);
-            unit.GetComponent<Unit>().SetImmediateRotation(270);
+            Unit unit_script = unit.GetComponent<Unit>();
+            unit_script.Initialize();
+            unit_script.SetImmediateRotation(270);
 
             // Disable the deployment of that unit if we're out of those units to deploy
             if (deployable_units[unit_to_spawn_name] <= 0)
@@ -132,6 +142,24 @@ public class PreBattleDeployment : MonoBehaviour
                 deployable_panel.FindChild(unit_to_spawn_name).gameObject.GetComponent<Button>().interactable = false;
                 unit_to_spawn = "";
                 unit_to_spawn_name = "";
+            }
+
+            // Check if this is a hero
+            HeroStats hero_stats;
+            if (deployable_heroes.TryGetValue(unit_to_spawn_name, out hero_stats))
+            {
+                Debug.Log("Adding stats and ability for hero " + hero_stats.hero_name);
+
+                switch (hero_stats.weaponType)
+                {
+                    case Hero_Weapon_Skill_Types.Ranged:
+                        AddRangedHeroAbilities(unit_script, hero_stats);
+                        break;
+                }
+
+                AlterHeroStats(unit_script, hero_stats);
+
+                unit_script.ResetStats();
             }
         }
     }
@@ -176,5 +204,39 @@ public class PreBattleDeployment : MonoBehaviour
         // Activate and set deployable sprite
         deployable_sprite.SetActive(true);
         deployable_sprite.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+
+    // Based on the heroes stats, alter the units stats
+    public void AlterHeroStats(Unit hero, HeroStats hero_stats)
+    {
+        hero.maximum_health += hero_stats.strength * 30;    // 30 HP per strength
+    }
+
+
+    // Adds an ability per level of bow skill
+    public void AddRangedHeroAbilities(Unit hero, HeroStats hero_stats)
+    {
+        for(int weapon_level = 1; weapon_level < hero_stats.bow; weapon_level++)
+        {
+            switch (weapon_level)
+            {
+                case 1:
+                    hero.abilities.Add(new ShotOfLegends(hero));
+                    break;
+                case 2:
+                    hero.normal_attack_range++;
+                    break;
+                case 3:
+                    hero.counter_attacks = true;
+                    break;
+                case 4:
+                    hero.abilities.Add(new PiercingShot(hero));
+                    break;
+                case 5:
+                    // Speed shooting. Not implemented
+                    break;
+            }
+        }
     }
 }
