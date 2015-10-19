@@ -52,6 +52,7 @@ public class PreBattleDeployment : MonoBehaviour
                 HeroStats hero_stats = hero_obj.GetComponent<HeroStats>();
                 if (!hero_stats.injured)
                 {
+                    Debug.Log("Adding hero to deployment list: " + hero_stats.hero_name);
                     deployable_units.Add(hero_stats.hero_name, 1);
                     deployable_heroes.Add(hero_stats.hero_name, hero_stats);
                 }
@@ -136,14 +137,6 @@ public class PreBattleDeployment : MonoBehaviour
             unit_script.Initialize();
             unit_script.SetImmediateRotation(270);
 
-            // Disable the deployment of that unit if we're out of those units to deploy
-            if (deployable_units[unit_to_spawn_name] <= 0)
-            {
-                deployable_panel.FindChild(unit_to_spawn_name).gameObject.GetComponent<Button>().interactable = false;
-                unit_to_spawn = "";
-                unit_to_spawn_name = "";
-            }
-
             // Check if this is a hero
             HeroStats hero_stats;
             if (deployable_heroes.TryGetValue(unit_to_spawn_name, out hero_stats))
@@ -160,6 +153,14 @@ public class PreBattleDeployment : MonoBehaviour
                 AlterHeroStats(unit_script, hero_stats);
 
                 unit_script.ResetStats();
+            }
+
+            // Disable the deployment of that unit if we're out of those units to deploy
+            if (deployable_units[unit_to_spawn_name] <= 0)
+            {
+                deployable_panel.FindChild(unit_to_spawn_name).gameObject.GetComponent<Button>().interactable = false;
+                unit_to_spawn = "";
+                unit_to_spawn_name = "";
             }
         }
     }

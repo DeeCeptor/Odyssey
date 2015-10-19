@@ -404,6 +404,8 @@ public class PlayerInterface : MonoBehaviour
     }
     public void ShowSummaryScreen()
     {
+        // Set the text of the casualties
+
         summary_screen.SetActive(true);
     }
 }

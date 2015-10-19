@@ -63,6 +63,9 @@ public class Unit : MonoBehaviour
     float bonus_vs_cavalry = 0;
     public float normal_bonus_vs_ranged = 0;
     float bonus_vs_ranged = 0;
+    public int attacks_per_turn = 1;    // Some units can attack multiple times a turn
+    public int remaining_attacks_this_turn = 1;
+    public int normal_attacks_per_turn = 1;
 
     public Unit_Types unit_type;    // Melee, ranged or cavalry. All units of these categories
     public bool is_ranged_unit = false;
@@ -131,7 +134,7 @@ public class Unit : MonoBehaviour
     }
 
 
-	void Update ()
+	void Update()
     {
         if (desired_rotation_set)
         {
@@ -141,12 +144,10 @@ public class Unit : MonoBehaviour
         // Check if we should be moving
         else if (movement_path != null && movement_path.Count > 0)
         {
-            //transform.LookAt(movement_path[0].transform.position);
-            //transform.position = Vector3.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
+            PlayerInterface.player_interface.end_turn_button.interactable = false;
+
             Vector3 pos = Vector2.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * tile_move_speed);
-            //pos.z = 0;
             transform.position = pos;
-            //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
             if ((Vector2) transform.position == (Vector2) movement_path[0].transform.position)
             {
@@ -230,6 +231,8 @@ public class Unit : MonoBehaviour
             ready_to_be_controlled = true;
 
         TurnStartEffects();
+
+        remaining_attacks_this_turn = attacks_per_turn;
     }
     public virtual void EndTurn()
     {
@@ -359,8 +362,8 @@ public class Unit : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))     // Right clicked on unit
             {
-                Debug.Log("OnMouseOver attack");
-                PlayerInterface.player_interface.selected_unit.HumanAttacked(this, attacks_are_counterable);
+                Debug.Log("OnMouseOver attack " + attacks_are_counterable);
+                PlayerInterface.player_interface.selected_unit.HumanAttacked(this, PlayerInterface.player_interface.selected_unit.attacks_are_counterable);
             }
         }
     }
@@ -397,8 +400,7 @@ public class Unit : MonoBehaviour
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
             {
-                Debug.Log("HexClicked attack");
-                HumanAttacked(hex.occupying_unit, attacks_are_counterable);
+                HumanAttacked(hex.occupying_unit, this.attacks_are_counterable);
             }
         }
     }
@@ -519,9 +521,9 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void HumanAttacked(Unit victim, bool attacks_are_counterable)
+    public void HumanAttacked(Unit victim, bool attack_is_counterable)
     {
-        Attack(victim, attacks_are_counterable);
+        Attack(victim, attack_is_counterable);
         PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
         PlayerInterface.player_interface.HideEstimatedDamagePanel();
     }
@@ -534,8 +536,13 @@ public class Unit : MonoBehaviour
             && HexMap.hex_map.InRange(this.location, victim.location, attack_range))
         {
             victim.TakeHit(this, attack_is_counterable);
-            has_attacked = true;
-            active = false;
+
+            remaining_attacks_this_turn--;
+            if (remaining_attacks_this_turn <= 0)
+            {
+                has_attacked = true;
+                active = false;
+            }
         }
     }
     public void CounterAttack(Unit victim)
@@ -564,7 +571,9 @@ public class Unit : MonoBehaviour
             PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += remaining_individuals;
 
             // Record casualties in troop manager
-            if (TroopManager.playerTroops != null && owner == BattleManager.battle_manager.player_faction)
+            if (TroopManager.playerTroops != null 
+                && !hero
+                && owner == BattleManager.battle_manager.player_faction)
             {
                 TroopManager.playerTroops.healthy[prefab_name] -= remaining_individuals;
                 Debug.Log("Remaining " + prefab_name + ": " + TroopManager.playerTroops.healthy[prefab_name]);
@@ -594,7 +603,10 @@ public class Unit : MonoBehaviour
         // Check if we can counter attack
         if (!dead)
         {
-            if (attack_is_counterable && counter_attacks && IsFacing(attacker) && HexMap.hex_map.InRange(this.location, attacker.location, this.GetRange()))
+            if (attack_is_counterable
+                && counter_attacks 
+                && IsFacing(attacker) 
+                && HexMap.hex_map.InRange(this.location, attacker.location, this.GetRange()))
             {
                 Debug.Log(u_name + " counterattacking " + attacker.u_name);
                 CounterAttack(attacker);

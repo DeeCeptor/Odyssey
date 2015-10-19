@@ -189,18 +189,22 @@ public class BattleManager : MonoBehaviour
                 unit.EndTurn();
             }
 
-            if (players_waiting_for_turn.Count > 0)
+            if (!CheckVictoryAndDefeat())
             {
-                // Set the next player's turn
-                current_player = players_waiting_for_turn.Dequeue();
-                StartTurn();
+                if (players_waiting_for_turn.Count > 0)
+                {
+                    // Set the next player's turn
+                    current_player = players_waiting_for_turn.Dequeue();
+                    StartTurn();
+                }
+                else
+                {
+                    // Everyone's had a turn. Start a new round
+                    StartRound();
+                }
             }
             else
-            {
-                // Everyone's had a turn. Start a new round
-                CheckVictoryAndDefeat();
-                StartRound();
-            }
+                return;
         }
     }
 
@@ -273,8 +277,9 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    // If a player has no more units, the fight's over
-    public void CheckVictoryAndDefeat()
+    // If a player has no more units, the fight's over.
+    // Return true if the game is over, false otherwise
+    public bool CheckVictoryAndDefeat()
     {
         if (!pre_battle_deployment)
         {
@@ -290,9 +295,12 @@ public class BattleManager : MonoBehaviour
 
                     // Common stuff that happens regardless of who won
                     PlayerInterface.player_interface.ShowSummaryScreen();
+
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public void Defeat()
