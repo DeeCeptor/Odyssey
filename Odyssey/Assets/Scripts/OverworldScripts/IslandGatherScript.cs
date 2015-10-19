@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class IslandGatherScript : MonoBehaviour {
 
 public float percentGathered =0f;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+[System.Serializable]
 public class OverworldEnemyScript : MonoBehaviour {
 	public GameObject collisionEvent;
 	public float speed = 1f;

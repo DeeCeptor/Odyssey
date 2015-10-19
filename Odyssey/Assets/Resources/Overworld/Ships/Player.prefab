@@ -520,13 +520,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTroops: 100
-  startingHoplites: 20
-  startingSwordsmen: 20
-  startingArchers: 10
+  startingHoplite: 20
+  startingSwordsman: 20
+  startingArcher: 10
   startingCavalry: 10
-  startingSlingers: 10
+  startingSlinger: 10
   heroes:
   - {fileID: 145506}
+  troopNums: 
 --- !u!114 &11431212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -661,6 +662,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Range
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Intensity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

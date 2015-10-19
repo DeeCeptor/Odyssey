@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class PlayerBoatController : MonoBehaviour {
 	public float speed = 1f;
 	public float fastSpeed = 1.5f;

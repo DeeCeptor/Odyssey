@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class OverworldMenu : MonoBehaviour {
 
     public GameObject overUi;
     public Transform menuUI;
+    public Transform errorPopup;
 	// Use this for initialization
 	void Start () {
-        overUi = GameObject.Find("OverworldUI");
-        menuUI = gameObject.transform.FindChild("OverworldMenu");
+        overUi = GameObject.FindGameObjectWithTag("OverworldUI");
+       // menuUI = gameObject.transform.FindChild("OverworldMenu");
+      //  errorPopup = menuUI.FindChild("Error");
 	}
 	
 	// Update is called once per frame
@@ -18,6 +21,10 @@ public class OverworldMenu : MonoBehaviour {
             overUi.SetActive(false);
             menuUI.gameObject.SetActive(true);
             gameObject.GetComponent<EventManagement>().Pause();
+        }
+        if(errorPopup.gameObject.activeInHierarchy ==true && Input.anyKey)
+        {
+            errorPopup.gameObject.SetActive(false);
         }
 	}
 
@@ -41,5 +48,13 @@ public class OverworldMenu : MonoBehaviour {
     public void Load()
     {
         SaveAndLoad.Load();
+        if (SaveAndLoad.savedWorld == null)
+        {
+            Application.LoadLevel("LoadGameScene");
+        }
+        else
+        {
+            errorPopup.gameObject.SetActive(true);
+        }
     }
 }

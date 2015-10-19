@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+[System.Serializable]
 public class DieAndReplace : MonoBehaviour {
 
     private float counterToDie = 0;

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class CargoStats : MonoBehaviour {
 
 //object to display in cargo menu

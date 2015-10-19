@@ -57,6 +57,7 @@ public class EventManagement : MonoBehaviour {
 	{
         
 		currentEvent = Instantiate(eventToHave);
+        currentEvent.transform.parent = GameObject.FindGameObjectWithTag("UniversalParent").transform;
 		Pause();
 	}
 	
@@ -66,7 +67,8 @@ public class EventManagement : MonoBehaviour {
 	{
 		islandEventIsOn = island;
 		currentEvent = Instantiate(eventToHave);
-		Pause();
+        currentEvent.transform.parent = GameObject.FindGameObjectWithTag("UniversalParent").transform;
+        Pause();
 	}
 	
 	public void ExploreForestIsland()

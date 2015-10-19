@@ -13,8 +13,9 @@ public class TroopManager : MonoBehaviour {
     public Dictionary<string, int> wounded = new Dictionary<string, int>();
     public GameObject[] heroes;
     public static TroopManager playerTroops;
-	// Use this for initialization
-	void Start () {
+    public int[] troopNums;
+    // Use this for initialization
+    void Start () {
         playerTroops = this;
         healthy.Add("Hoplite",startingHoplite);
         healthy.Add("Archer", startingArcher);
@@ -33,6 +34,20 @@ public class TroopManager : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public int getTroopNum()
+    {
+        int troops = 0;
+        Dictionary<string,int>.ValueCollection healthyUnits = healthy.Values;
+        healthyUnits.CopyTo(troopNums,0);
+        Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
+        woundedUnits.CopyTo(troopNums, troopNums.Length);
+        for(int i = 0; i < troopNums.Length;i++)
+        {
+            troops = troops + troopNums[i];
+        }
+        return troops;
+    }
 	
 	public void AddHero(GameObject hero)
 	{
@@ -281,8 +296,59 @@ public class TroopManager : MonoBehaviour {
 		return max;
 	}
 
-    public void InjureRandom()
+    public void InjureRandom(int numToInjure)
     {
+        int troops = 0;
+        int[] healthyTroopNums = new int[] { };
+        int[] woundedTroopNums = new int[] { };
+        string[] keyArray = new string[] { };
+        string curKey;
+        Dictionary<string, int>.ValueCollection healthyUnits = healthy.Values;
+        healthyUnits.CopyTo(healthyTroopNums, 0);
+        Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
+        woundedUnits.CopyTo(woundedTroopNums, troopNums.Length);
+        Dictionary<string, int>.KeyCollection keys = healthy.Keys;
+        keys.CopyTo(keyArray, troopNums.Length);
+        troops = getTroopNum();
+        //if there are troops to injure
+        if (troops > 0)
+        {
+            //for each injury
+            for (int i = 0; i < numToInjure; i++)
+            {
+                troops = getTroopNum();
+                //find a random number corresponding to an individual troop
+                int randInt = Random.Range(0, troops);
+                //find which unit that number belongs to
+                int numsSearched = 0;
+                for(int x = 0; x<healthyTroopNums.Length + woundedTroopNums.Length; x++)
+                {
+                    if(x<healthyTroopNums.Length)
+                    {
+                        numsSearched = numsSearched + healthyTroopNums[x];
+                        if(randInt < numsSearched)
+                        {
+                            healthyTroopNums[x] = healthyTroopNums[x] - 1;
+                            woundedTroopNums[x] = woundedTroopNums[x] + 1;
+                            curKey = keyArray[x];
+                            healthy[curKey] = healthy[curKey] - 1;
+                            wounded[curKey] = wounded[curKey] + 1;
+                        }
+                    }
+                    else
+                    {
+                        //if it wounds a wounded troop it kills it
+                        numsSearched = numsSearched + woundedTroopNums[x];
+                        if (randInt < numsSearched)
+                        {
+                            woundedTroopNums[x] = woundedTroopNums[x] - 1;
+                            curKey = keyArray[x];
+                            wounded[curKey] = wounded[curKey] - 1;
+                        }
+                    }
+                }
+            }
+        }
         
     }
 	

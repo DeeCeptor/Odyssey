@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class CameraControl : MonoBehaviour {
 public float turnSpeed = 3f;
 

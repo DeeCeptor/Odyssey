@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class WeatherAndEnemySpawnScript : MonoBehaviour {
     public GameObject[] weather;
     public GameObject[] npcs;

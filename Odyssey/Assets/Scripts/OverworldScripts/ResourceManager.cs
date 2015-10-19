@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
 public class ResourceManager : MonoBehaviour {
 //display texts for present amount
 public GameObject waterText;

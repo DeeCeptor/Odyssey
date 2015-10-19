@@ -10,6 +10,7 @@ public static class SaveAndLoad
     public static World savedWorld;
     public static void Save()
     {
+        World.curWorld = new World();
         World.curWorld.getCurrent();
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGames.sv");
@@ -25,6 +26,10 @@ public static class SaveAndLoad
             FileStream file = File.Open(Application.persistentDataPath + "/savedGames.sv", FileMode.Open);
             savedWorld = bf.Deserialize(file) as World;
             file.Close();
+        }
+        else
+        {
+            savedWorld = null;
         }
     }
 }

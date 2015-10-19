@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class HeroStats : MonoBehaviour {
 
     public bool injured = false;

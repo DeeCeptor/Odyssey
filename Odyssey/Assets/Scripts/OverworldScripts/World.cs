@@ -1,12 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
 public class World : MonoBehaviour {
-    public GameObject[] Islands;
-    public GameObject player;
-    public GameObject[] weather;
-    public GameObject[] npcs;
+   public Transform[] Islands;
+    public string[] islandPrefabs;
+
+    public Transform playerBoat;
+    public string playerPrefab;
+    public float food;
+    public float water;
+    public float treasure;
+    public float wood;
+    public float hull;
+    public int sailors;
+    public float stamina;
+    public float morale;
+
+ //  public GameObject player;
+ //  public GameObject[] weather;
+  //  public GameObject[] npcs;
+//    public GameObject eventManager;
 
     public static World curWorld;
 	// Use this for initialization
@@ -21,18 +34,18 @@ public class World : MonoBehaviour {
 
     public void getCurrent()
     {
-        Islands = GameObject.FindGameObjectsWithTag("Island");
-        player = GameObject.FindGameObjectWithTag("Player");
-        weather = GameObject.FindGameObjectsWithTag("Weather");
-        npcs = GameObject.FindGameObjectsWithTag("OverworldEnemy");
+        //eventManager = GameObject.FindGameObjectWithTag("EventController");
+      //  player = GameObject.FindGameObjectWithTag("Player");
+      //  weather = GameObject.FindGameObjectsWithTag("Weather");
+       // npcs = GameObject.FindGameObjectsWithTag("OverworldEnemy");
     }
 
     public World()
     {
-        Islands = GameObject.FindGameObjectsWithTag("Island");
-        player = GameObject.FindGameObjectWithTag("Player");
-        weather = GameObject.FindGameObjectsWithTag("Weather");
-        npcs = GameObject.FindGameObjectsWithTag("OverworldEnemy");
+      //  curWorld = this;
+  //      player = GameObject.FindGameObjectWithTag("Player");
+     //   weather = GameObject.FindGameObjectsWithTag("Weather");
+     //   npcs = GameObject.FindGameObjectsWithTag("OverworldEnemy");
     }
 
 }

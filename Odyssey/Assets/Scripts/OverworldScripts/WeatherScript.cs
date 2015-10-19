@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+[System.Serializable]
 public class WeatherScript : MonoBehaviour {
     public string weatherType;
     //damage to hull if ship not anchored

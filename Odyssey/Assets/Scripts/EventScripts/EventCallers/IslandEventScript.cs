@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class IslandEventScript : MonoBehaviour {
 
 public bool explored = false;

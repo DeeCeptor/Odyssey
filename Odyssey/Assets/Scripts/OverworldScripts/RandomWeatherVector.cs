@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+[System.Serializable]
 public class RandomWeatherVector : WeatherScript {
 
     public float weatherSpeed = 0.5f;
