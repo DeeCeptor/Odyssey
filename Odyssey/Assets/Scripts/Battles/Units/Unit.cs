@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
     public Unit attack_target;  // Used for AI units. Who they will attack when they've reached their destination
     [HideInInspector]
     public List<Hex> tiles_I_can_move_to;   // Tiles that will be highlighted when the user clicks on the unit
+	List<SpriteAnimInstruct> sprites =  new List<SpriteAnimInstruct>();	// Animations are called over each SpiteAnimInstruct
 
     // UNIT ACTIVATION
     [HideInInspector]
@@ -113,10 +114,23 @@ public class Unit : MonoBehaviour
         health = maximum_health;
 
         // Set aura so we can tell which faction this player belongs to
-        this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
+        //this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
 
         //ResetStats();
         AssignAbilities();
+
+		SpriteAnimInstruct[] all_sprites = this.gameObject.GetComponentsInChildren<SpriteAnimInstruct>();
+		// Register all children who have SpriteAnimInstructs
+		if (all_sprites.Length > 0)
+		{
+			sprites.AddRange(all_sprites);
+		}
+
+		// Set colour tinting of sprites
+		foreach (SpriteAnimInstruct instructs in sprites)
+		{
+			instructs.GetComponent<SpriteRenderer>().color = owner.unit_color;
+		}
     }
 
 
@@ -126,6 +140,21 @@ public class Unit : MonoBehaviour
         unit_sprite = this.transform.FindChild("UnitSprite").gameObject;
     }
 
+
+	public void MoveAnimation()
+	{
+		foreach (SpriteAnimInstruct instruct in sprites)
+		{
+			instruct.MoveAnim();
+		}
+	}
+	public void AttackAnimation()
+	{
+		foreach (SpriteAnimInstruct instruct in sprites)
+		{
+			instruct.AttackAnim();
+		}
+	}
 
     // Override this in the super class
     public virtual void AssignAbilities()
@@ -422,6 +451,7 @@ public class Unit : MonoBehaviour
                 this.movement_path = HexMap.hex_map.AStarFindPath(this.location, to, movement, this.owner);
                 if (movement_path.Count > 0)
                 {
+					MoveAnimation();
                     SetLocation(to);
                     has_moved = true;
                     is_moving = true;
@@ -536,6 +566,7 @@ public class Unit : MonoBehaviour
             && this.owner.IsEnemy(victim)
             && HexMap.hex_map.InRange(this.location, victim.location, attack_range))
         {
+			AttackAnimation();
             victim.TakeHit(this, attack_is_counterable);
 
             remaining_attacks_this_turn--;
