@@ -10,14 +10,17 @@ public class Faction
     public bool human_controlled;  // Used by the human player?
     private AIController AI;
     public bool use_ai = false;
-    public Color faction_color;
 
-    public Faction(string name, bool controlled_by_human, int ID, Color color)
+    public Color faction_color;	// Colour of the facing aura
+	public Color unit_color;	// Colour tinting of the unit itself. White is default.
+
+    public Faction(string name, bool controlled_by_human, int ID, Color aura_colour, Color unit_tint)
     {
         faction_ID = ID;
         human_controlled = controlled_by_human;
         faction_name = name;
-        faction_color = color;
+		faction_color = aura_colour;
+		unit_color = unit_tint;
         AI = new AIController(this);
     }
     public void SetAI(AIController faction_AI)

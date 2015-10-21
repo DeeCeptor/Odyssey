@@ -44,7 +44,7 @@ public class BattleManager : MonoBehaviour
         // Undarken hexes we can deploy on
         HexMap.hex_map.UndarkenDeploymentHexes();
 
-        Faction player_team = new Faction("Player", true, 1, Color.green);
+        Faction player_team = new Faction("Player", true, 1, Color.green, Color.white);
         factions.Add(player_team);
         PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
         player_faction = player_team;
@@ -87,7 +87,7 @@ public class BattleManager : MonoBehaviour
     public void SpawnUnitsPlacedOnMap()
     {
         // Set up the enemy AI faction
-        Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
+        Faction enemy_team = new Faction("Enemies", false, 2, Color.red, new Color(197f / 255f, 119f / 255f, 119f / 255f));
         factions.Add(enemy_team);
 
         foreach (PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
