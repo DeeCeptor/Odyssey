@@ -48,6 +48,10 @@ public class BattleManager : MonoBehaviour
         factions.Add(player_team);
         PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
         player_faction = player_team;
+
+        // If the battle setting lets us see the enemy positions before deploying
+        if (PersistentBattleSettings.battle_settings.show_enemy_units_in_deployment)
+            SpawnUnitsPlacedOnMap();
     }
 
     IEnumerator InitializeBattle()
@@ -68,22 +72,8 @@ public class BattleManager : MonoBehaviour
         // Undarken all hexes
         HexMap.hex_map.UndarkenAllHexes();
 
-        // Set up the enemy AI faction
-        Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
-        factions.Add(enemy_team);
-
-        // Spawn enemies placed on the map designated in the text file
-        SpawnUnitsPlacedOnMap();
-
-        // Set enemies. Everyone is an enemy of everyone currently
-        foreach (Faction faction_1 in factions)
-        {
-            foreach (Faction faction_2 in factions)
-            {
-                if (faction_1 != faction_2)
-                    faction_1.enemies.Add(faction_2);
-            }
-        }
+        if (!PersistentBattleSettings.battle_settings.show_enemy_units_in_deployment)
+            SpawnUnitsPlacedOnMap();
 
         // All factions created, populate battle statistics
         PersistentBattleSettings.battle_settings.PopulateBattleStatistics();
@@ -96,13 +86,27 @@ public class BattleManager : MonoBehaviour
     // Place all the units specified in the battle text file onto the map
     public void SpawnUnitsPlacedOnMap()
     {
-        foreach(PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
+        // Set up the enemy AI faction
+        Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
+        factions.Add(enemy_team);
+
+        foreach (PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
         {
-            Debug.Log("Spawning unit at " + unit.position);
+            //Debug.Log("Spawning unit at " + unit.position);
             Hex pos = HexMap.hex_map.GetHexFromTopDownCoordinates(new Vector2(unit.position.x, (int)unit.position.y));
             GameObject new_unit = SpawnUnit(GetFaction(unit.faction_name), "Battles/Units/" + unit.unit_name, (int)pos.coordinate.x, (int)pos.coordinate.y, false);
             new_unit.GetComponent<Unit>().Initialize();
             new_unit.GetComponent<Unit>().SetImmediateRotation(90);
+        }
+
+        // Set enemies. Everyone is an enemy of everyone currently
+        foreach (Faction faction_1 in factions)
+        {
+            foreach (Faction faction_2 in factions)
+            {
+                if (faction_1 != faction_2)
+                    faction_1.enemies.Add(faction_2);
+            }
         }
     }
 

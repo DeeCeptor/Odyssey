@@ -135,7 +135,18 @@ public class PreBattleDeployment : MonoBehaviour
             GameObject unit = BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex, true);
             Unit unit_script = unit.GetComponent<Unit>();
             unit_script.Initialize();
-            unit_script.SetImmediateRotation(270);
+
+            // If there are viewable enemies on the field, face towards the nearest
+            List<Unit> enemies = BattleManager.battle_manager.player_faction.GetAllEnemyUnits();
+            Debug.Log(enemies.Count);
+            if (enemies.Count > 0)
+            {
+                unit_script.SetImmediateRotation(
+                    unit_script.GetAngleTowards(unit_script.location.world_coordinates,
+                    BattleManager.battle_manager.player_faction.GetClosestEnemy(unit_script).location.world_coordinates));
+            }
+            else
+                unit_script.SetImmediateRotation(270);
 
             // Check if this is a hero
             HeroStats hero_stats;

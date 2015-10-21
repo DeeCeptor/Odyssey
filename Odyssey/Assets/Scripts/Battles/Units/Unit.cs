@@ -144,8 +144,6 @@ public class Unit : MonoBehaviour
         // Check if we should be moving
         else if (movement_path != null && movement_path.Count > 0)
         {
-            PlayerInterface.player_interface.end_turn_button.interactable = false;
-
             Vector3 pos = Vector2.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * tile_move_speed);
             transform.position = pos;
 
@@ -180,13 +178,16 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void SetDesiredRotationTowards(Vector3 from, Vector3 towards)
+    public int GetAngleTowards(Vector3 from, Vector3 towards)
     {
         // Use euler angles so we're dealing with degrees 0-360
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, towards - from);
         Vector3 angles = rotation.eulerAngles;
-        int angle = (int) angles.z;
-
+        return (int)angles.z;
+    }
+    public void SetDesiredRotationTowards(Vector3 from, Vector3 towards)
+    {
+        int angle = GetAngleTowards(from, towards);
         SetRotation(angle);
         desired_rotation_set = true;
     }
@@ -262,7 +263,7 @@ public class Unit : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, hex.world_coordinates - this.location.world_coordinates);//this.transform.position);
         int angle_towards_unit = (int) rotation.eulerAngles.z;
         int angle_diff = (int)Mathf.Abs(((angle_towards_unit - this.facing + 180) % 360 - 180));    // Do math to get the difference in this units facing and the direction towards the enemy
-
+        //Debug.Log(angle_diff);
         // Go from 0 and 360, so we wrap around
         return (Mathf.Abs(angle_diff) <= counter_attack_radius + 5
             || Mathf.Abs(angle_diff) >= 360 - counter_attack_radius - 5);
@@ -643,16 +644,16 @@ public class Unit : MonoBehaviour
         // Apply bonuses to damage that's been modified by the enemies' defence
         // Apply bonus against specific type of unit
         if (this.unit_type == Unit_Types.Melee)
-            damage += damage * GetMeleeBonus();
+            damage += damage * attacker.GetMeleeBonus();
         else if (this.unit_type == Unit_Types.Cavalry)
-            damage += damage * GetMeleeBonus();
+            damage += damage * attacker.GetMeleeBonus();
         else if (this.unit_type == Unit_Types.Ranged)
-            damage += damage * GetMeleeBonus();
+            damage += damage * attacker.GetMeleeBonus();
 
         // If the attacker is flanking, apply a flanking bonus
         if (!IsFacing(from))
         {
-            damage += damage * GetFlankingBonus();
+            damage += damage * attacker.GetFlankingBonus();
         }
 
         return damage;

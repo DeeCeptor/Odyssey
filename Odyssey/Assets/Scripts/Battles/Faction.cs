@@ -63,4 +63,25 @@ public class Faction
     {
         return units;
     }
+
+
+    // Returns the closest enemy. Returns the given unit if there are no enemies
+    public Unit GetClosestEnemy(Unit unit)
+    {
+        List<Unit> enemies = GetAllEnemyUnits();
+        int closest_distance = 99;
+        Unit closest_enemy = unit;
+        foreach (Unit enemy in enemies)
+        {
+            int distance = HexMap.hex_map.DistanceBetweenHexes(unit.location.coordinate, enemy.location.coordinate);
+
+            if (distance < closest_distance)
+            {
+                closest_enemy = enemy;
+                closest_distance = distance;
+            }
+        }
+
+        return closest_enemy;
+    }
 }
