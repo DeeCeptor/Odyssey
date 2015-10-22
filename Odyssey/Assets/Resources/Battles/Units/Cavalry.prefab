@@ -115,22 +115,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &149976
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 423462}
-  - 212: {fileID: 21299532}
-  m_Layer: 0
-  m_Name: PlayerAura
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &153788
 GameObject:
   m_ObjectHideFlags: 1
@@ -279,18 +263,6 @@ Transform:
   - {fileID: 435694}
   m_Father: {fileID: 459888}
   m_RootOrder: 2
---- !u!4 &423462
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149976}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: .5}
-  m_LocalScale: {x: 1, y: 1, z: 2}
-  m_Children: []
-  m_Father: {fileID: 446232}
-  m_RootOrder: 1
 --- !u!4 &427652
 Transform:
   m_ObjectHideFlags: 1
@@ -341,7 +313,6 @@ Transform:
   m_LocalScale: {x: .25, y: .25, z: 1}
   m_Children:
   - {fileID: 427652}
-  - {fileID: 423462}
   - {fileID: 458704}
   - {fileID: 459888}
   m_Father: {fileID: 0}
@@ -358,7 +329,7 @@ Transform:
   m_Children:
   - {fileID: 486406}
   m_Father: {fileID: 446232}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &459888
 Transform:
   m_ObjectHideFlags: 1
@@ -373,7 +344,7 @@ Transform:
   - {fileID: 470314}
   - {fileID: 423030}
   m_Father: {fileID: 446232}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &470314
 Transform:
   m_ObjectHideFlags: 1
@@ -716,7 +687,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e8bc290b9f64ae4a88fa8c0761f07f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a710ed3b02fb75f4482751a95669751b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21292114
 SpriteRenderer:
@@ -770,32 +741,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!212 &21299532
-SpriteRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149976}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2b96439affe9aa644966ad214994f3f4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: .533999979}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -99,22 +99,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &133528
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 464402}
-  - 212: {fileID: 21217416}
-  m_Layer: 0
-  m_Name: PlayerAura
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &137682
 GameObject:
   m_ObjectHideFlags: 1
@@ -314,11 +298,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 0}
+  m_LocalPosition: {x: -.50999999, y: -1.53999996, z: 0}
   m_LocalScale: {x: .25, y: .25, z: 1}
   m_Children:
   - {fileID: 454008}
-  - {fileID: 464402}
   - {fileID: 484630}
   - {fileID: 474062}
   m_Father: {fileID: 0}
@@ -437,18 +420,6 @@ Transform:
   - {fileID: 420878}
   m_Father: {fileID: 402230}
   m_RootOrder: 0
---- !u!4 &464402
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133528}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: .5}
-  m_LocalScale: {x: 1, y: 1, z: 2}
-  m_Children: []
-  m_Father: {fileID: 402230}
-  m_RootOrder: 1
 --- !u!4 &469866
 Transform:
   m_ObjectHideFlags: 1
@@ -481,7 +452,7 @@ Transform:
   m_GameObject: {fileID: 151986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 484630}
   m_RootOrder: 0
@@ -501,7 +472,7 @@ Transform:
   - {fileID: 437900}
   - {fileID: 439194}
   m_Father: {fileID: 402230}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &478238
 Transform:
   m_ObjectHideFlags: 1
@@ -523,11 +494,11 @@ Transform:
   m_GameObject: {fileID: 109356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .600000024, y: .600000024, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 473144}
   m_Father: {fileID: 402230}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &493878
 Transform:
   m_ObjectHideFlags: 1
@@ -565,7 +536,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .699999988
+  m_Radius: 3.4000001
 --- !u!95 &9518894
 Animator:
   serializedVersion: 3
@@ -699,8 +670,8 @@ MonoBehaviour:
   rotating: 0
   hero: 0
   is_squad: 1
-  normal_squad_size: 10
-  remaining_individuals: 10
+  normal_squad_size: 5
+  remaining_individuals: 5
   u_name: "Sphendonet\xE8s"
   u_description: Whether the target be nobles or peasants, rocks thrown at high speeds
     are dangerous. These slingers are highly accurate, but lack the piercing power
@@ -790,32 +761,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8baef75fbd52a79458c9f16cf2fc7d8b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!212 &21217416
-SpriteRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133528}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2b96439affe9aa644966ad214994f3f4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: .527999997}
 --- !u!212 &21223802
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -866,7 +811,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e8bc290b9f64ae4a88fa8c0761f07f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a710ed3b02fb75f4482751a95669751b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21234510
 SpriteRenderer:

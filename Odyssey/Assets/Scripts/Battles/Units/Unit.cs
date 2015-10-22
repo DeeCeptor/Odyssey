@@ -114,7 +114,7 @@ public class Unit : MonoBehaviour
         health = maximum_health;
 
         // Set aura so we can tell which faction this player belongs to
-        //this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
+        this.transform.FindChild("UnitSprite/Facing").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
 
         //ResetStats();
         AssignAbilities();
