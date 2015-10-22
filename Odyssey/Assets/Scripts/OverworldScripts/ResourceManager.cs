@@ -94,7 +94,7 @@ public WeatherScript weatherAtIndex;
 	waterText = GameObject.Find("WaterMonitor");
 	foodText = GameObject.Find("FoodMonitor");
 	moraleText = GameObject.Find("MoraleMonitor");
-	sailorText = GameObject.Find("SailorsMonitor");
+	sailorText = GameObject.Find("SailorMonitor");
 	staminaText = GameObject.Find("StaminaMonitor");
 	healthText = GameObject.Find("HealthMonitor");
 	hullText = GameObject.Find("HullMonitor");

@@ -42,6 +42,8 @@ GameObject curIsland;
 	
 	public void GenerateWorld()
 	{
+        GameObject newUI = (GameObject)Instantiate(ui, transform.position, transform.rotation);
+        newUI.transform.parent = UniversalParent.transform;
         ocean = (GameObject)Instantiate(ocean, transform.position, transform.rotation);
         ocean.transform.parent = UniversalParent.transform;
         ocean.transform.Rotate(transform.right, 90, Space.Self);
@@ -49,9 +51,7 @@ GameObject curIsland;
 	    PlaceIslands();
 	    PlacePlayer();
     	Instantiate(eventController);
-	    GameObject newUI = (GameObject)Instantiate(ui,transform.position,transform.rotation);
-        newUI.transform.parent = UniversalParent.transform;
-
+	    
     }
 	
 	public void PlaceGoal()

@@ -400,4 +400,17 @@ public class TroopManager : MonoBehaviour {
             }
         }
     }
+
+    public bool DieOrNot()
+    {
+        int randInt = Random.Range(1,101);
+        if (randInt > 40 + getMedicene() * 5)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
