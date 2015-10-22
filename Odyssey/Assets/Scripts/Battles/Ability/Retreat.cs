@@ -8,6 +8,7 @@ public class Retreat : Ability
     public Retreat(Unit owner)
         : base("Retreat", "Retreats this unit from combat. There is no honour in pointless defeat.", owner, 0, false)
     {
+        cast_before_attack = true;
         effects_self = false;
     }
 

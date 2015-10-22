@@ -12,6 +12,7 @@ public class Ability
     public bool takes_attack_action = false;    // If true, this ability sets the unit's has_attacked to true
     public bool cast_before_move = false;   // Cannot cast if unit has moved
     public bool cast_before_attack = false; // Cannot cast if unit has attacked
+    public bool cast_after_attack = false;  // Can only cast after the unit has attacked
     public int cost;    // How much god favour it costs to use this ability
     public Unit caster; // Unit whose ability menu we're using to cast this ability
     public string ability_name; // Human readable name that shows when the user mouses over
@@ -42,6 +43,7 @@ public class Ability
             && (!takes_attack_action || (!caster.has_attacked))
             && (!cast_before_move || (!caster.has_moved))
             && (!cast_before_attack || (!caster.has_attacked))
+            && (!cast_after_attack || (caster.has_attacked))
             );
     }
     public void TryToCastAbility()

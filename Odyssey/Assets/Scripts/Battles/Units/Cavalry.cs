@@ -9,6 +9,6 @@ public class Cavalry : Unit
     {
         base.AssignAbilities();
 
-        abilities.Add(new HorseOfPoseidon(this));
+        abilities.Add(new HitAndRun(this));
     }
 }

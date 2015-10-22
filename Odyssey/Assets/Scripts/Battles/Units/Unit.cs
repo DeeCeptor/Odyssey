@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public enum Unit_Types { Melee, Cavalry, Ranged };
 
@@ -143,17 +144,31 @@ public class Unit : MonoBehaviour
     }
 
 
-	public void MoveAnimation()
+    public void PlayAttackSound()
+    {
+
+    }
+    public void PlayMovingSound()
+    {
+
+    }
+
+    public void MoveAnimation()
 	{
-		foreach (SpriteAnimInstruct instruct in sprites)
+        PlayMovingSound();
+
+        foreach (SpriteAnimInstruct instruct in sprites)
 		{
 			instruct.MoveAnim();
 		}
 	}
 	public void AttackAnimation()
 	{
-		foreach (SpriteAnimInstruct instruct in sprites)
+        PlayAttackSound();
+
+        foreach (SpriteAnimInstruct instruct in sprites)
 		{
+            //yield return new WaitForSeconds(Random.value / 50);
 			instruct.AttackAnim();
 		}
 	}
@@ -236,9 +251,9 @@ public class Unit : MonoBehaviour
         this.facing = GetHexagonalDirection(facing);
         desired_rotation_set = true;
     }
-    public void SetImmediateRotation(int facing)
+    public void SetImmediateRotation(int inc_facing)
     {
-        this.facing = GetHexagonalDirection(facing);
+        this.facing = GetHexagonalDirection(inc_facing);
         unit_sprite.transform.eulerAngles = new Vector3(0, 0, facing);
         SetSpritesFacing(facing);
     }
@@ -343,6 +358,7 @@ public class Unit : MonoBehaviour
         if (this.owner.IsEnemy(BattleManager.battle_manager.player_faction))
         {
             GodsManager.gods_manager.ModifyFavour(1);
+            PlayerInterface.player_interface.CreateFloatingText(this.transform.position + new Vector3(0, 0.5f, 0), "<i>+1 Favour</i>", true, 3.0f);
         }
 
         dead = true;
@@ -476,7 +492,6 @@ public class Unit : MonoBehaviour
     public void HumanMovedTo(Hex to)
     {
         PathTo(to);
-        Debug.Log("A");
         PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
     }
     // Returns true if unit actually pathed to location
@@ -617,7 +632,7 @@ public class Unit : MonoBehaviour
             if (remaining_attacks_this_turn <= 0)
             {
                 has_attacked = true;
-                active = false;
+                //active = false;
             }
 
             return true;
@@ -643,7 +658,7 @@ public class Unit : MonoBehaviour
         Debug.Log(u_name + " took " + modified_damage + " damage, " + " Flanking: " + !IsFacing(attacker) + ", " + GetHealth() + " HP remaining from " + attacker.u_name);
 
         // Show floating damage text
-        PlayerInterface.player_interface.CreateFloatingText(this.transform.position, "<i>" + modified_damage + "</i>", true, 3.0f);
+        PlayerInterface.player_interface.CreateFloatingText(this.transform.position + new Vector3(0, 0.5f, 0), "<i>" + modified_damage + "</i>", true, 3.0f);
         int num_died = 0;
 
         if (health <= 0)
