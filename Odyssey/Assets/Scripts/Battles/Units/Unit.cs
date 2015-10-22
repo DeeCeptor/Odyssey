@@ -120,13 +120,6 @@ public class Unit : MonoBehaviour
         //ResetStats();
         AssignAbilities();
 
-		SpriteAnimInstruct[] all_sprites = this.gameObject.GetComponentsInChildren<SpriteAnimInstruct>();
-		// Register all children who have SpriteAnimInstructs
-		if (all_sprites.Length > 0)
-		{
-			sprites.AddRange(all_sprites);
-		}
-
 		// Set colour tinting of sprites
 		foreach (SpriteAnimInstruct instructs in sprites)
 		{
@@ -137,6 +130,14 @@ public class Unit : MonoBehaviour
 
     public void Initialize()
     {
+        SpriteAnimInstruct[] all_sprites = this.gameObject.GetComponentsInChildren<SpriteAnimInstruct>();
+        // Register all children who have SpriteAnimInstructs
+        if (all_sprites.Length > 0)
+        {
+            sprites.AddRange(all_sprites);
+        }
+
+
         unit_menu = this.transform.FindChild("UnitMenu").gameObject;
         unit_sprite = this.transform.FindChild("UnitSprite").gameObject;
     }
@@ -169,6 +170,7 @@ public class Unit : MonoBehaviour
         if (desired_rotation_set)
         {
             unit_sprite.transform.eulerAngles = new Vector3(0, 0, facing);
+            SetSpritesFacing(facing);
             desired_rotation_set = false;
         }
         // Check if we should be moving
@@ -238,24 +240,51 @@ public class Unit : MonoBehaviour
     {
         this.facing = GetHexagonalDirection(facing);
         unit_sprite.transform.eulerAngles = new Vector3(0, 0, facing);
+        SetSpritesFacing(facing);
     }
     // Snaps the given direction to one of 6 hexagonal facings
     public int GetHexagonalDirection(int facing)
     {
         int angle = 0;
-        if (facing >= 0 && facing < 60)
+        if (facing >= 0 && facing < 60) // top left
             angle = 30;
-        else if (facing >= 60 && facing < 120)
+        else if (facing >= 60 && facing < 120)  // left
             angle = 90;
-        else if (facing >= 120 && facing < 180)
+        else if (facing >= 120 && facing < 180) // bottom left
             angle = 150;
-        else if (facing >= 180 && facing < 240)
+        else if (facing >= 180 && facing < 240) // bottom right
             angle = 210;
-        else if (facing >= 240 && facing < 300)
+        else if (facing >= 240 && facing < 300) // right
             angle = 270;
-        else if (facing >= 300 && facing < 360)
+        else if (facing >= 300 && facing < 360) // top right
             angle = 330;
         return angle;
+    }
+    public void SetSpritesFacing(int facing)
+    {
+        Debug.Log(facing);
+        // Should be facing left, -1
+        if (facing < 180)
+        {
+            foreach (SpriteAnimInstruct sprite in sprites)
+            {
+                Vector3 cur_scale = sprite.gameObject.transform.parent.localScale;
+
+                cur_scale.x = -Mathf.Abs(cur_scale.x);
+                sprite.gameObject.transform.parent.localScale = cur_scale;
+            }
+        }
+        // Facing right, 1
+        else
+        {
+            foreach (SpriteAnimInstruct sprite in sprites)
+            {
+                Vector3 cur_scale = sprite.gameObject.transform.parent.localScale;
+
+                cur_scale.x = Mathf.Abs(cur_scale.x);
+                sprite.gameObject.transform.parent.localScale = cur_scale;
+            }
+        }
     }
 
 
