@@ -48,8 +48,20 @@ public class TroopManager : MonoBehaviour {
         }
         return troops;
     }
-	
-	public void AddHero(GameObject hero)
+
+    public int getWoundedTroopNum()
+    {
+        int troops = 0;
+        Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
+        woundedUnits.CopyTo(troopNums, 0);
+        for (int i = 0; i < troopNums.Length; i++)
+        {
+            troops = troops + troopNums[i];
+        }
+        return troops;
+    }
+
+    public void AddHero(GameObject hero)
 	{
 		hero.transform.SetParent(transform);
 		heroes[heroes.Length] = hero;
@@ -299,34 +311,39 @@ public class TroopManager : MonoBehaviour {
     public void InjureRandom(int numToInjure)
     {
         int troops = 0;
-        int[] healthyTroopNums = new int[] { };
-        int[] woundedTroopNums = new int[] { };
-        string[] keyArray = new string[] { };
+        int[] healthyTroopNums;
+        int[] woundedTroopNums;
+        string[] keyArray;
         string curKey;
         Dictionary<string, int>.ValueCollection healthyUnits = healthy.Values;
+        healthyTroopNums = new int[healthyUnits.Count];
         healthyUnits.CopyTo(healthyTroopNums, 0);
         Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
+        woundedTroopNums = new int[woundedUnits.Count];
         woundedUnits.CopyTo(woundedTroopNums, troopNums.Length);
         Dictionary<string, int>.KeyCollection keys = healthy.Keys;
+        keyArray = new string[keys.Count];
         keys.CopyTo(keyArray, troopNums.Length);
         troops = getTroopNum();
         //if there are troops to injure
-        if (troops > 0)
+
+        //for each injury
+        for (int i = 0; i < numToInjure; i++)
         {
-            //for each injury
-            for (int i = 0; i < numToInjure; i++)
+            troops = getTroopNum();
+            if (troops > 0)
             {
-                troops = getTroopNum();
+                
                 //find a random number corresponding to an individual troop
                 int randInt = Random.Range(0, troops);
                 //find which unit that number belongs to
                 int numsSearched = 0;
-                for(int x = 0; x<healthyTroopNums.Length + woundedTroopNums.Length; x++)
+                for (int x = 0; x < healthyTroopNums.Length + woundedTroopNums.Length; x++)
                 {
-                    if(x<healthyTroopNums.Length)
+                    if (x < healthyTroopNums.Length)
                     {
                         numsSearched = numsSearched + healthyTroopNums[x];
-                        if(randInt < numsSearched)
+                        if (randInt < numsSearched)
                         {
                             healthyTroopNums[x] = healthyTroopNums[x] - 1;
                             woundedTroopNums[x] = woundedTroopNums[x] + 1;
@@ -349,20 +366,38 @@ public class TroopManager : MonoBehaviour {
                 }
             }
         }
-        
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+    public void healRandom(int numToHeal)
+    {
+        int troops = 0;
+        int[] woundedTroopNums = new int[] { };
+        string[] keyArray = new string[] { };
+        string curKey;
+        Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
+        woundedUnits.CopyTo(woundedTroopNums, troopNums.Length);
+        Dictionary<string, int>.KeyCollection keys = healthy.Keys;
+        keys.CopyTo(keyArray, 0);
+        troops = getWoundedTroopNum();
+        for (int i = 0; i < numToHeal; i++)
+        {
+            troops = getWoundedTroopNum();
+            if (troops > 0)
+            {
+                int randInt = Random.Range(0, troops);
+                //find which unit that number belongs to
+                int numsSearched = 0;
+                for (int x = 0; x < woundedTroopNums.Length; x++)
+                {
+                    numsSearched = numsSearched + woundedTroopNums[x];
+                    if (randInt < numsSearched)
+                    {
+                        woundedTroopNums[x] = woundedTroopNums[x] - 1;
+                        curKey = keyArray[x];
+                        wounded[curKey] = wounded[curKey] - 1;
+                    }
+                }
+            }
+        }
+    }
 }

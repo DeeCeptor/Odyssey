@@ -101,7 +101,7 @@ GameObject:
   - 54: {fileID: 47418191}
   m_Layer: 0
   m_Name: Map
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,10 +133,10 @@ Camera:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 47418184}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: .426470578, g: .379411787, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -144,10 +144,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 5000
+  far clip plane: 200
   field of view: 60
   orthographic: 1
-  orthographic size: 1000
+  orthographic size: 100
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -167,8 +167,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 47418184}
-  m_LocalRotation: {x: .707106948, y: 0, z: 0, w: .70710665}
-  m_LocalPosition: {x: 0, y: 3712, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -186,13 +186,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapPanSpeed: 1
   ocean: {fileID: 0}
-  active: 0
-  minSize: 200
-  maxSize: 1000
+  minSize: 20
+  maxSize: 500
   eventHandler: {fileID: 0}
   camera: {fileID: 0}
   oceanXWidth: 0
-  oceanZWidth: 0
+  oceanYWidth: 0
 --- !u!54 &47418191
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -246,6 +245,10 @@ Prefab:
     - target: {fileID: 405168, guid: 89dda48d20cc3484698494b1761ffc73, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11493084, guid: 89dda48d20cc3484698494b1761ffc73, type: 2}
+      propertyPath: maxIslands
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 89dda48d20cc3484698494b1761ffc73, type: 2}

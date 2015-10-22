@@ -121,6 +121,7 @@ public WeatherScript weatherAtIndex;
 			Consume(1);
 			CalcWeight();
             Weather();
+            injureAndheal();
 		}
 		if(!anchored)
 		{
@@ -386,6 +387,18 @@ public WeatherScript weatherAtIndex;
 		}
 		else return false;
 	}
+
+    public void injureAndheal()
+    {
+        if(health>50)
+        {
+            troopManager.healRandom((int)health / 10 - 50);
+        }
+        else
+        {
+            troopManager.InjureRandom((int)health / 10 - 50);
+        }
+    }
 	
 	public void Pause()
 	{

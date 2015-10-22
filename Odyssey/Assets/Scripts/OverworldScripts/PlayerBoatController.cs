@@ -16,7 +16,7 @@ public class PlayerBoatController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	resource = GetComponent<ResourceManager>();
-        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionY;
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation| RigidbodyConstraints.FreezePositionZ;
     }
 	
 	// Update is called once per frame
@@ -27,19 +27,16 @@ public class PlayerBoatController : MonoBehaviour {
 	    	if(moveRate == 0)
 	    	{
 	    		gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*slowSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-	    		transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
 	    	}
 	
 	    	if(moveRate == 1)
 	    	{
 	    		gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*speed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-	    		transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
 	    	}
 	
 	    	if(moveRate == 2)
 	    	{
 		    	gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*fastSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-		    	transform.Rotate(Input.GetAxis("Horizontal")*turnSpeed*transform.up);
 		    }
 
             LayerMask mask = 1 << 10;

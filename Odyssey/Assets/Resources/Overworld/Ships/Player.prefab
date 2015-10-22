@@ -12,7 +12,7 @@ GameObject:
   - 114: {fileID: 11406076}
   - 54: {fileID: 5463304}
   - 65: {fileID: 6510764}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -28,23 +28,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 463704}
   - 114: {fileID: 11492990}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wood (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &118922
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 433244}
-  m_Layer: 9
-  m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +44,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 485238}
   - 114: {fileID: 11431212}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +60,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 411342}
   - 114: {fileID: 11446638}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Odysseus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +92,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 458084}
   - 114: {fileID: 11424536}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: TroopManager
   m_TagString: TroopManager
   m_Icon: {fileID: 0}
@@ -124,29 +109,9 @@ GameObject:
   - 4: {fileID: 427758}
   - 33: {fileID: 3327396}
   - 23: {fileID: 2372830}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: RailRight.005
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &181168
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 428734}
-  - 20: {fileID: 2002836}
-  - 92: {fileID: 9291108}
-  - 124: {fileID: 12424956}
-  - 81: {fileID: 8158376}
-  - 114: {fileID: 11476022}
-  m_Layer: 9
-  m_Name: Main Camera
-  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,7 +126,7 @@ GameObject:
   - 4: {fileID: 410082}
   - 33: {fileID: 3306910}
   - 23: {fileID: 2344288}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: BoatTop.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +144,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 426528}
-  m_RootOrder: 7
+  m_RootOrder: 5
 --- !u!4 &410082
 Transform:
   m_ObjectHideFlags: 1
@@ -211,15 +176,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_LocalPosition: {x: -1053.76123, y: 1964.05591, z: -10.0556793}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 463704}
   - {fileID: 485238}
   - {fileID: 410082}
-  - {fileID: 433244}
   - {fileID: 427758}
-  - {fileID: 428734}
   - {fileID: 458084}
   - {fileID: 404620}
   m_Father: {fileID: 0}
@@ -235,30 +198,6 @@ Transform:
   m_LocalScale: {x: 100, y: 100.000008, z: 100.000008}
   m_Children: []
   m_Father: {fileID: 426528}
-  m_RootOrder: 4
---- !u!4 &428734
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181168}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.41999996, z: -6.32999992}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 426528}
-  m_RootOrder: 5
---- !u!4 &433244
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118922}
-  m_LocalRotation: {x: -.0892816931, y: .358066916, z: -.210611388, w: .905240119}
-  m_LocalPosition: {x: -6.77845621, y: 6.14540434, z: 6.67659473}
-  m_LocalScale: {x: 100, y: 100.000008, z: 100}
-  m_Children: []
-  m_Father: {fileID: 426528}
   m_RootOrder: 3
 --- !u!4 &458084
 Transform:
@@ -272,7 +211,7 @@ Transform:
   m_Children:
   - {fileID: 411342}
   m_Father: {fileID: 426528}
-  m_RootOrder: 6
+  m_RootOrder: 4
 --- !u!4 &463704
 Transform:
   m_ObjectHideFlags: 1
@@ -297,40 +236,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 426528}
   m_RootOrder: 1
---- !u!20 &2002836
-Camera:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181168}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: .300000012
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: .0219999999
-  m_StereoMirrorMode: 0
 --- !u!23 &2344288
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -421,20 +326,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.03999996, y: 1, z: 9.31000042}
   m_Center: {x: 0, y: 0, z: .49000001}
---- !u!81 &8158376
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181168}
-  m_Enabled: 1
---- !u!92 &9291108
-Behaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181168}
-  m_Enabled: 1
 --- !u!114 &11406076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -520,10 +411,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTroops: 100
-  startingHoplite: 20
+  startingHoplite: 30
   startingSwordsman: 20
-  startingArcher: 10
-  startingCavalry: 10
+  startingArcher: 20
+  startingCavalry: 20
   startingSlinger: 10
   heroes:
   - {fileID: 145506}
@@ -553,6 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e7b08df3195da438823820b78cebd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hero_name: Odysseus
   injured: 0
   hitpoints: 10
   foodConsumption: .00499999989
@@ -574,6 +466,7 @@ MonoBehaviour:
   spear: 0
   sword: 0
   bow: 4
+  weaponType: 0
 --- !u!114 &11456030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -593,18 +486,6 @@ MonoBehaviour:
   resource: {fileID: 0}
   islandParkedAt: {fileID: 0}
   paused: 0
---- !u!114 &11476022
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a53697a47aa694bab5dc640ec5f748, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnSpeed: 3
 --- !u!114 &11492990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -637,21 +518,14 @@ MonoBehaviour:
   npcs:
   - {fileID: 157454, guid: b8e5e5d0cbee6db488ea612187e115fa, type: 2}
   enemies: []
-  minNPCDistance: 20
-  maxNPCDistance: 50
+  minNPCDistance: 40
+  maxNPCDistance: 60
   maxWeatherDistance: 20
   paused: 0
   collidingWith: []
   weatherSpawnDelay: 600
   npcSpawnDelay: 300
   npcNumber: 8
---- !u!124 &12424956
-Behaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 181168}
-  m_Enabled: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -661,7 +535,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Range
@@ -670,6 +544,38 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Intensity
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startingHoplite
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startingCavalry
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startingArcher
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minNPCDistance
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxNPCDistance
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
