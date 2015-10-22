@@ -87,6 +87,7 @@ public class Unit : MonoBehaviour
     public bool rotating = false;
     private float tile_move_speed = 7f;
     private bool desired_rotation_set = false;
+    private bool play_move_animation = false;
 
     public bool hero = false;
     public bool is_squad = true;        // Heroes and some myth units are not squads
@@ -173,6 +174,12 @@ public class Unit : MonoBehaviour
         // Check if we should be moving
         else if (movement_path != null && movement_path.Count > 0)
         {
+            if (play_move_animation)
+            {
+                play_move_animation = false;
+                MoveAnimation();
+            }
+
             Vector3 pos = Vector2.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * tile_move_speed);
             transform.position = pos;
 
@@ -192,7 +199,9 @@ public class Unit : MonoBehaviour
         else if (attack_target != null)
         {
             // Initiate an attack on the target once we're done moving
-            this.Attack(attack_target, attacks_are_counterable);
+            if (this.Attack(attack_target, attacks_are_counterable))
+                AttackAnimation();
+
             attack_target = null;
 
             is_moving = false;
@@ -426,7 +435,6 @@ public class Unit : MonoBehaviour
             if (hex.occupying_unit == null && hex != location && !this.has_moved)
             {
                 PlayerInterface.player_interface.UnhighlightHexes();
-                HumanMovedTo(hex);
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
             {
@@ -438,9 +446,11 @@ public class Unit : MonoBehaviour
     public void HumanMovedTo(Hex to)
     {
         PathTo(to);
+
         PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
     }
-    public void PathTo(Hex to)
+    // Returns true if unit actually pathed to location
+    public bool PathTo(Hex to)
     {
         // Check if that's a valid spot. Can't have more than one unit sit on the same spot, can't move to the spot we're already on
         if (to.occupying_unit == null && to != this.location)
@@ -451,17 +461,19 @@ public class Unit : MonoBehaviour
                 this.movement_path = HexMap.hex_map.AStarFindPath(this.location, to, movement, this.owner);
                 if (movement_path.Count > 0)
                 {
-					MoveAnimation();
                     SetLocation(to);
                     has_moved = true;
                     is_moving = true;
+                    play_move_animation = true;
 
                     BattleManager.battle_manager.SetUnitsMovableTiles();
+                    return true;
                 }
             }
         }
-    } 
 
+        return false;
+    }
 
     public void SetLocation(Hex hex)
     {
@@ -554,19 +566,21 @@ public class Unit : MonoBehaviour
 
     public void HumanAttacked(Unit victim, bool attack_is_counterable)
     {
-        Attack(victim, attack_is_counterable);
+        if (Attack(victim, attack_is_counterable))
+            AttackAnimation();
+
         PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
         PlayerInterface.player_interface.HideEstimatedDamagePanel();
     }
-    public void Attack(Unit victim, bool attack_is_counterable)
+    // Whether attack was actually initiated
+    public bool Attack(Unit victim, bool attack_is_counterable)
     {
-        if (victim != this 
-            && !this.has_attacked 
-            && this.active 
+        if (victim != this
+            && !this.has_attacked
+            && this.active
             && this.owner.IsEnemy(victim)
             && HexMap.hex_map.InRange(this.location, victim.location, attack_range))
         {
-			AttackAnimation();
             victim.TakeHit(this, attack_is_counterable);
 
             remaining_attacks_this_turn--;
@@ -575,7 +589,11 @@ public class Unit : MonoBehaviour
                 has_attacked = true;
                 active = false;
             }
+
+            return true;
         }
+        else
+            return false;
     }
     public void CounterAttack(Unit victim)
     {
@@ -621,7 +639,21 @@ public class Unit : MonoBehaviour
                 // We didn't die, calculate how many individuals we lost
                 int HP_per_individual = (int) GetMaxHealth() / normal_squad_size;
                 remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
-                PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (prev_remaining_individuals - remaining_individuals);
+                int num_died = prev_remaining_individuals - remaining_individuals;
+                PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
+
+                // Remove a sprite for each person who died
+                for (int x = 0; x < num_died; x++)
+                {
+                    foreach (SpriteAnimInstruct sprite in sprites)
+                    {
+                        if (sprite.gameObject.active)
+                        {
+                            sprite.gameObject.SetActive(false);
+                            break;
+                        }
+                    }
+                }
 
                 // Record casualties in troop manager
                 if (TroopManager.playerTroops != null && owner == BattleManager.battle_manager.player_faction)
