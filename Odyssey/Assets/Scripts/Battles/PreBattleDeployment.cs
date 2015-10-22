@@ -138,7 +138,6 @@ public class PreBattleDeployment : MonoBehaviour
 
             // If there are viewable enemies on the field, face towards the nearest
             List<Unit> enemies = BattleManager.battle_manager.player_faction.GetAllEnemyUnits();
-            Debug.Log(enemies.Count);
             if (enemies.Count > 0)
             {
                 unit_script.SetImmediateRotation(
