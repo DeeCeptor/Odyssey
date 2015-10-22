@@ -434,6 +434,7 @@ public class Unit : MonoBehaviour
             // Check if that's a valid spot. Can't have more than one unit sit on the same spot, can't move to the spot we're already on
             if (hex.occupying_unit == null && hex != location && !this.has_moved)
             {
+                HumanMovedTo(hex);
                 PlayerInterface.player_interface.UnhighlightHexes();
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
@@ -446,7 +447,7 @@ public class Unit : MonoBehaviour
     public void HumanMovedTo(Hex to)
     {
         PathTo(to);
-
+        Debug.Log("A");
         PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
     }
     // Returns true if unit actually pathed to location
@@ -614,6 +615,7 @@ public class Unit : MonoBehaviour
 
         // Show floating damage text
         PlayerInterface.player_interface.CreateFloatingText(this.transform.position, "<i>" + modified_damage + "</i>", true, 3.0f);
+        int num_died = 0;
 
         if (health <= 0)
         {
@@ -628,9 +630,8 @@ public class Unit : MonoBehaviour
                 TroopManager.playerTroops.healthy[prefab_name] -= remaining_individuals;
                 Debug.Log("Remaining " + prefab_name + ": " + TroopManager.playerTroops.healthy[prefab_name]);
             }
+            num_died = remaining_individuals;
             remaining_individuals = 0;
-
-            Die();
         }
         else
         {
@@ -639,21 +640,10 @@ public class Unit : MonoBehaviour
                 // We didn't die, calculate how many individuals we lost
                 int HP_per_individual = (int) GetMaxHealth() / normal_squad_size;
                 remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
-                int num_died = prev_remaining_individuals - remaining_individuals;
+                num_died = prev_remaining_individuals - remaining_individuals;
                 PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
 
-                // Remove a sprite for each person who died
-                for (int x = 0; x < num_died; x++)
-                {
-                    foreach (SpriteAnimInstruct sprite in sprites)
-                    {
-                        if (sprite.gameObject.active)
-                        {
-                            sprite.gameObject.SetActive(false);
-                            break;
-                        }
-                    }
-                }
+                Debug.Log(modified_damage + ", HP per individual: " + HP_per_individual + " num died: " + num_died);
 
                 // Record casualties in troop manager
                 if (TroopManager.playerTroops != null && owner == BattleManager.battle_manager.player_faction)
@@ -663,6 +653,21 @@ public class Unit : MonoBehaviour
                 }
             }
         }
+
+        // Remove a sprite for each person who died
+        for (int x = 0; x < num_died; x++)
+        {
+            for (int y = 0; y < sprites.Count; y++)
+            {
+                sprites[y].gameObject.transform.parent.transform.parent = null;
+                sprites[y].gameObject.transform.parent.gameObject.AddComponent<RotateSideways>();
+                sprites.Remove(sprites[y]);
+                break;
+            }
+        }
+
+        if (health <= 0)
+            Die();
 
         // Check if we can counter attack
         if (!dead)
