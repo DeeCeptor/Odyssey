@@ -9,6 +9,6 @@ public class Swordsman : Unit
     {
         base.AssignAbilities();
 
-        abilities.Add(new HorseOfPoseidon(this));
+        abilities.Add(new Duellist(this));
     }
 }

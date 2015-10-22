@@ -60,6 +60,9 @@ public class LevelFileParser
                 // Read in hex terrain information and deployment points and retreat points
                 while ((line = file.ReadLine()) != null)
                 {
+                    // Remove any stupid quotes excel puts in
+                    line = line.Replace("\"", "");
+
                     // We're done reading in tiles if we encounter an open bracket
                     if (line.Contains("{"))
                         break;
@@ -126,21 +129,29 @@ public class LevelFileParser
     {
         switch (word_input)
         {
-            case ("N"):
-                return "Hex";
+            case ("P"): // Normal plains hex
+                return "PlainsHex";
+            case ("N"): // Normal plains hex
+                return "PlainsHex";
+            case ("G"): 
+                return "GrassHex";
             case ("F"):
                 return "ForestHex";
             case ("R"):
                 return "RuinsHex";
             case ("S"):
                 return "SwampHex";
-            case ("W"):
+            case ("W"):     // Inland water hex
                 return "WaterHex";
             case ("H"):
                 return "HillHex";
+            case ("M"):
+                return "MountainsHex";
+            case ("O"):    // Ocean hex
+                return "OceanHex";
         }
 
-        Debug.Log("No hex type found. Returning Hex");
+        Debug.Log(word_input + " , no hex type found. Returning Hex");
         return "Hex";
     }
 

@@ -139,7 +139,7 @@ MonoBehaviour:
   h_name: Forest
   h_description: A thick grove of trees that provides excellent cover against ranged
     attacks.
-  cost_to_enter_hex: 1
+  cost_to_enter_hex: 2
   impassable: 0
   deployment_zone: 0
   retreat_zone: 0
@@ -255,6 +255,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.z
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cost_to_enter_hex
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

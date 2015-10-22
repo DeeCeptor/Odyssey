@@ -44,10 +44,14 @@ public class BattleManager : MonoBehaviour
         // Undarken hexes we can deploy on
         HexMap.hex_map.UndarkenDeploymentHexes();
 
-        Faction player_team = new Faction("Player", true, 1, Color.green);
+        Faction player_team = new Faction("Player", true, 1, Color.green, Color.white);
         factions.Add(player_team);
         PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
         player_faction = player_team;
+
+        // If the battle setting lets us see the enemy positions before deploying
+        if (PersistentBattleSettings.battle_settings.show_enemy_units_in_deployment)
+            SpawnUnitsPlacedOnMap();
     }
 
     IEnumerator InitializeBattle()
@@ -68,22 +72,8 @@ public class BattleManager : MonoBehaviour
         // Undarken all hexes
         HexMap.hex_map.UndarkenAllHexes();
 
-        // Set up the enemy AI faction
-        Faction enemy_team = new Faction("Enemies", false, 2, Color.red);
-        factions.Add(enemy_team);
-
-        // Spawn enemies placed on the map designated in the text file
-        SpawnUnitsPlacedOnMap();
-
-        // Set enemies. Everyone is an enemy of everyone currently
-        foreach (Faction faction_1 in factions)
-        {
-            foreach (Faction faction_2 in factions)
-            {
-                if (faction_1 != faction_2)
-                    faction_1.enemies.Add(faction_2);
-            }
-        }
+        if (!PersistentBattleSettings.battle_settings.show_enemy_units_in_deployment)
+            SpawnUnitsPlacedOnMap();
 
         // All factions created, populate battle statistics
         PersistentBattleSettings.battle_settings.PopulateBattleStatistics();
@@ -96,13 +86,27 @@ public class BattleManager : MonoBehaviour
     // Place all the units specified in the battle text file onto the map
     public void SpawnUnitsPlacedOnMap()
     {
-        foreach(PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
+        // Set up the enemy AI faction
+        Faction enemy_team = new Faction("Enemies", false, 2, Color.red, new Color(197f / 255f, 119f / 255f, 119f / 255f));
+        factions.Add(enemy_team);
+
+        foreach (PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
         {
-            Debug.Log("Spawning unit at " + unit.position);
+            //Debug.Log("Spawning unit at " + unit.position);
             Hex pos = HexMap.hex_map.GetHexFromTopDownCoordinates(new Vector2(unit.position.x, (int)unit.position.y));
             GameObject new_unit = SpawnUnit(GetFaction(unit.faction_name), "Battles/Units/" + unit.unit_name, (int)pos.coordinate.x, (int)pos.coordinate.y, false);
             new_unit.GetComponent<Unit>().Initialize();
             new_unit.GetComponent<Unit>().SetImmediateRotation(90);
+        }
+
+        // Set enemies. Everyone is an enemy of everyone currently
+        foreach (Faction faction_1 in factions)
+        {
+            foreach (Faction faction_2 in factions)
+            {
+                if (faction_1 != faction_2)
+                    faction_1.enemies.Add(faction_2);
+            }
         }
     }
 
@@ -189,18 +193,22 @@ public class BattleManager : MonoBehaviour
                 unit.EndTurn();
             }
 
-            if (players_waiting_for_turn.Count > 0)
+            if (!CheckVictoryAndDefeat())
             {
-                // Set the next player's turn
-                current_player = players_waiting_for_turn.Dequeue();
-                StartTurn();
+                if (players_waiting_for_turn.Count > 0)
+                {
+                    // Set the next player's turn
+                    current_player = players_waiting_for_turn.Dequeue();
+                    StartTurn();
+                }
+                else
+                {
+                    // Everyone's had a turn. Start a new round
+                    StartRound();
+                }
             }
             else
-            {
-                // Everyone's had a turn. Start a new round
-                CheckVictoryAndDefeat();
-                StartRound();
-            }
+                return;
         }
     }
 
@@ -273,8 +281,9 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    // If a player has no more units, the fight's over
-    public void CheckVictoryAndDefeat()
+    // If a player has no more units, the fight's over.
+    // Return true if the game is over, false otherwise
+    public bool CheckVictoryAndDefeat()
     {
         if (!pre_battle_deployment)
         {
@@ -290,9 +299,12 @@ public class BattleManager : MonoBehaviour
 
                     // Common stuff that happens regardless of who won
                     PlayerInterface.player_interface.ShowSummaryScreen();
+
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public void Defeat()

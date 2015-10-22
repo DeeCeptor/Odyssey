@@ -1,24 +1,24 @@
-11 12
-
-R		R		F		F		H		R		R		F		F		H		H
+11 12																					
+																					
+R		R		F		F		H		R		R		F		F		H		H	
 	R		F		F		F		H		R		F		F		F		H		H
-F		F		F		F		H		R		F		F		F		H		H
+F		F		F		F		H		R		F		F		F		H		H	
 	W		W		W		W		H		W		W		W		W		H		H
-F		F,d		F		F		H		R		F		F		F		H		H
-	R,d		F,d		F		F		H		R		F		F		F		H		H
-F,r		F,d		F,d		F		H		R		F		F		F		H		H
-	F,r		F,d		F		F		H		R		F		F		F		H		H
-N,r		W,d		N,d		W		F		N		W		N		W		F		H
-	R,d		R,d		F		F		H		R		R		F		F		H		H
-R		R,d		F		F		H		R		R		F		F		H		H
+F		"F,d"		F		F		H		R		F		F		F		H		H	
+	"R,d"		"F,d"		F		F		H		R		F		F		F		H		H
+"F,r"		"F,d"		"F,d"		F		H		R		F		F		F		H		H	
+	"F,r"		"F,d"		F		F		H		R		F		F		F		H		H
+"N,r"		"W,d"		"N,d"		W		F		N		W		N		W		F		H	
+	"R,d"		"R,d"		F		F		H		R		R		F		F		H		H
+R		"R,d"		F		F		H		R		R		F		F		H		H	
 	R		R		F		F		H		R		R		F		F		H		H
-R		R		F		F		H		R		R		F		F		H		H
-
-
-{
-Enemies Cavalry 10,1
-Enemies Hoplite 10,2
-Enemies Slinger 9,3
-Enemies Archer 9,2
-Enemies Swordsman 9,1
-}
+R		R		F		F		H		R		R		F		F		H		H	
+																					
+																					
+{																					
+"Enemies Cavalry 10,1"																					
+"Enemies Hoplite 10,2"																					
+"Enemies Slinger 9,3"																					
+"Enemies Archer 9,2"																					
+"Enemies Swordsman 9,1"																					
+}																					

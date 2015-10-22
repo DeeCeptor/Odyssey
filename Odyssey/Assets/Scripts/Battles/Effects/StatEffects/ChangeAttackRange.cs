@@ -7,7 +7,7 @@ public class ChangeAttackRange : Effect
     int duration;
 
     public ChangeAttackRange(Unit receiver, int adjust_by, int offset_duration)
-        : base("Altered Attack Range", "Movement speed changed by " + adjust_by, receiver)
+        : base("Altered Attack Range", "Attack range changed by " + adjust_by, receiver)
     {
         offset = adjust_by;
         duration = offset_duration;
@@ -18,7 +18,7 @@ public class ChangeAttackRange : Effect
 
     public override void ApplyEffect()
     {
-        Debug.Log("Applying " + receiver.u_name + " for movement " + offset);
+        Debug.Log("Applying " + receiver.u_name + " for attack range " + offset);
         receiver.AdjustRange((int) offset);
 
         base.ApplyEffect();

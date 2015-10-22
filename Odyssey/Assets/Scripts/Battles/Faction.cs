@@ -10,14 +10,17 @@ public class Faction
     public bool human_controlled;  // Used by the human player?
     private AIController AI;
     public bool use_ai = false;
-    public Color faction_color;
 
-    public Faction(string name, bool controlled_by_human, int ID, Color color)
+    public Color faction_color;	// Colour of the facing aura
+	public Color unit_color;	// Colour tinting of the unit itself. White is default.
+
+    public Faction(string name, bool controlled_by_human, int ID, Color aura_colour, Color unit_tint)
     {
         faction_ID = ID;
         human_controlled = controlled_by_human;
         faction_name = name;
-        faction_color = color;
+		faction_color = aura_colour;
+		unit_color = unit_tint;
         AI = new AIController(this);
     }
     public void SetAI(AIController faction_AI)
@@ -62,5 +65,26 @@ public class Faction
     public List<Unit> GetAllAllyUnits()
     {
         return units;
+    }
+
+
+    // Returns the closest enemy. Returns the given unit if there are no enemies
+    public Unit GetClosestEnemy(Unit unit)
+    {
+        List<Unit> enemies = GetAllEnemyUnits();
+        int closest_distance = 99;
+        Unit closest_enemy = unit;
+        foreach (Unit enemy in enemies)
+        {
+            int distance = HexMap.hex_map.DistanceBetweenHexes(unit.location.coordinate, enemy.location.coordinate);
+
+            if (distance < closest_distance)
+            {
+                closest_enemy = enemy;
+                closest_distance = distance;
+            }
+        }
+
+        return closest_enemy;
     }
 }

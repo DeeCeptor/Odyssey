@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
     public Unit attack_target;  // Used for AI units. Who they will attack when they've reached their destination
     [HideInInspector]
     public List<Hex> tiles_I_can_move_to;   // Tiles that will be highlighted when the user clicks on the unit
+	List<SpriteAnimInstruct> sprites =  new List<SpriteAnimInstruct>();	// Animations are called over each SpiteAnimInstruct
 
     // UNIT ACTIVATION
     [HideInInspector]
@@ -63,6 +64,9 @@ public class Unit : MonoBehaviour
     float bonus_vs_cavalry = 0;
     public float normal_bonus_vs_ranged = 0;
     float bonus_vs_ranged = 0;
+    public int attacks_per_turn = 1;    // Some units can attack multiple times a turn
+    public int remaining_attacks_this_turn = 1;
+    public int normal_attacks_per_turn = 1;
 
     public Unit_Types unit_type;    // Melee, ranged or cavalry. All units of these categories
     public bool is_ranged_unit = false;
@@ -110,10 +114,23 @@ public class Unit : MonoBehaviour
         health = maximum_health;
 
         // Set aura so we can tell which faction this player belongs to
-        this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
+        //this.transform.FindChild("PlayerAura").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
 
         //ResetStats();
         AssignAbilities();
+
+		SpriteAnimInstruct[] all_sprites = this.gameObject.GetComponentsInChildren<SpriteAnimInstruct>();
+		// Register all children who have SpriteAnimInstructs
+		if (all_sprites.Length > 0)
+		{
+			sprites.AddRange(all_sprites);
+		}
+
+		// Set colour tinting of sprites
+		foreach (SpriteAnimInstruct instructs in sprites)
+		{
+			instructs.GetComponent<SpriteRenderer>().color = owner.unit_color;
+		}
     }
 
 
@@ -124,6 +141,21 @@ public class Unit : MonoBehaviour
     }
 
 
+	public void MoveAnimation()
+	{
+		foreach (SpriteAnimInstruct instruct in sprites)
+		{
+			instruct.MoveAnim();
+		}
+	}
+	public void AttackAnimation()
+	{
+		foreach (SpriteAnimInstruct instruct in sprites)
+		{
+			instruct.AttackAnim();
+		}
+	}
+
     // Override this in the super class
     public virtual void AssignAbilities()
     {
@@ -131,7 +163,7 @@ public class Unit : MonoBehaviour
     }
 
 
-	void Update ()
+	void Update()
     {
         if (desired_rotation_set)
         {
@@ -141,12 +173,8 @@ public class Unit : MonoBehaviour
         // Check if we should be moving
         else if (movement_path != null && movement_path.Count > 0)
         {
-            //transform.LookAt(movement_path[0].transform.position);
-            //transform.position = Vector3.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * 3f);
             Vector3 pos = Vector2.MoveTowards(transform.position, movement_path[0].transform.position, Time.deltaTime * tile_move_speed);
-            //pos.z = 0;
             transform.position = pos;
-            //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
             if ((Vector2) transform.position == (Vector2) movement_path[0].transform.position)
             {
@@ -179,13 +207,16 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void SetDesiredRotationTowards(Vector3 from, Vector3 towards)
+    public int GetAngleTowards(Vector3 from, Vector3 towards)
     {
         // Use euler angles so we're dealing with degrees 0-360
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, towards - from);
         Vector3 angles = rotation.eulerAngles;
-        int angle = (int) angles.z;
-
+        return (int)angles.z;
+    }
+    public void SetDesiredRotationTowards(Vector3 from, Vector3 towards)
+    {
+        int angle = GetAngleTowards(from, towards);
         SetRotation(angle);
         desired_rotation_set = true;
     }
@@ -230,6 +261,8 @@ public class Unit : MonoBehaviour
             ready_to_be_controlled = true;
 
         TurnStartEffects();
+
+        remaining_attacks_this_turn = attacks_per_turn;
     }
     public virtual void EndTurn()
     {
@@ -259,7 +292,7 @@ public class Unit : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, hex.world_coordinates - this.location.world_coordinates);//this.transform.position);
         int angle_towards_unit = (int) rotation.eulerAngles.z;
         int angle_diff = (int)Mathf.Abs(((angle_towards_unit - this.facing + 180) % 360 - 180));    // Do math to get the difference in this units facing and the direction towards the enemy
-
+        //Debug.Log(angle_diff);
         // Go from 0 and 360, so we wrap around
         return (Mathf.Abs(angle_diff) <= counter_attack_radius + 5
             || Mathf.Abs(angle_diff) >= 360 - counter_attack_radius - 5);
@@ -359,8 +392,8 @@ public class Unit : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))     // Right clicked on unit
             {
-                Debug.Log("OnMouseOver attack");
-                PlayerInterface.player_interface.selected_unit.HumanAttacked(this, attacks_are_counterable);
+                Debug.Log("OnMouseOver attack " + attacks_are_counterable);
+                PlayerInterface.player_interface.selected_unit.HumanAttacked(this, PlayerInterface.player_interface.selected_unit.attacks_are_counterable);
             }
         }
     }
@@ -397,8 +430,7 @@ public class Unit : MonoBehaviour
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
             {
-                Debug.Log("HexClicked attack");
-                HumanAttacked(hex.occupying_unit, attacks_are_counterable);
+                HumanAttacked(hex.occupying_unit, this.attacks_are_counterable);
             }
         }
     }
@@ -419,6 +451,7 @@ public class Unit : MonoBehaviour
                 this.movement_path = HexMap.hex_map.AStarFindPath(this.location, to, movement, this.owner);
                 if (movement_path.Count > 0)
                 {
+					MoveAnimation();
                     SetLocation(to);
                     has_moved = true;
                     is_moving = true;
@@ -519,9 +552,9 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void HumanAttacked(Unit victim, bool attacks_are_counterable)
+    public void HumanAttacked(Unit victim, bool attack_is_counterable)
     {
-        Attack(victim, attacks_are_counterable);
+        Attack(victim, attack_is_counterable);
         PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
         PlayerInterface.player_interface.HideEstimatedDamagePanel();
     }
@@ -533,9 +566,15 @@ public class Unit : MonoBehaviour
             && this.owner.IsEnemy(victim)
             && HexMap.hex_map.InRange(this.location, victim.location, attack_range))
         {
+			AttackAnimation();
             victim.TakeHit(this, attack_is_counterable);
-            has_attacked = true;
-            active = false;
+
+            remaining_attacks_this_turn--;
+            if (remaining_attacks_this_turn <= 0)
+            {
+                has_attacked = true;
+                active = false;
+            }
         }
     }
     public void CounterAttack(Unit victim)
@@ -564,7 +603,9 @@ public class Unit : MonoBehaviour
             PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += remaining_individuals;
 
             // Record casualties in troop manager
-            if (TroopManager.playerTroops != null && owner == BattleManager.battle_manager.player_faction)
+            if (TroopManager.playerTroops != null 
+                && !hero
+                && owner == BattleManager.battle_manager.player_faction)
             {
                 TroopManager.playerTroops.healthy[prefab_name] -= remaining_individuals;
                 Debug.Log("Remaining " + prefab_name + ": " + TroopManager.playerTroops.healthy[prefab_name]);
@@ -594,7 +635,10 @@ public class Unit : MonoBehaviour
         // Check if we can counter attack
         if (!dead)
         {
-            if (attack_is_counterable && counter_attacks && IsFacing(attacker) && HexMap.hex_map.InRange(this.location, attacker.location, this.GetRange()))
+            if (attack_is_counterable
+                && counter_attacks 
+                && IsFacing(attacker) 
+                && HexMap.hex_map.InRange(this.location, attacker.location, this.GetRange()))
             {
                 Debug.Log(u_name + " counterattacking " + attacker.u_name);
                 CounterAttack(attacker);
@@ -631,16 +675,16 @@ public class Unit : MonoBehaviour
         // Apply bonuses to damage that's been modified by the enemies' defence
         // Apply bonus against specific type of unit
         if (this.unit_type == Unit_Types.Melee)
-            damage += damage * GetMeleeBonus();
+            damage += damage * attacker.GetMeleeBonus();
         else if (this.unit_type == Unit_Types.Cavalry)
-            damage += damage * GetMeleeBonus();
+            damage += damage * attacker.GetMeleeBonus();
         else if (this.unit_type == Unit_Types.Ranged)
-            damage += damage * GetMeleeBonus();
+            damage += damage * attacker.GetMeleeBonus();
 
         // If the attacker is flanking, apply a flanking bonus
         if (!IsFacing(from))
         {
-            damage += damage * GetFlankingBonus();
+            damage += damage * attacker.GetFlankingBonus();
         }
 
         return damage;

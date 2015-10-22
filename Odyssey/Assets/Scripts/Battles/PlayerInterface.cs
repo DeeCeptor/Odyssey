@@ -350,10 +350,12 @@ public class PlayerInterface : MonoBehaviour
             UnhightlightEnemyHexes();
 
             // Highlight all hexes the selected can attack from this hex
-            if (SelectedUnitAvailableToControl()
-                && (hex.IsHighlighted() || hex.occupying_unit == selected_unit))
+            if (SelectedUnitAvailableToControl())
             {
-                HighlightAttacksFromUnitLocationAndFrom(selected_unit, hex);
+                if (hex.IsHighlighted() || hex.occupying_unit == selected_unit)
+                    HighlightAttacksFromUnitLocationAndFrom(selected_unit, hex);
+                else
+                    HighlightAttacksFromUnitLocationAndFrom(selected_unit, selected_unit.location);
             }
         }
         //highlighted_hex = hex;
@@ -404,6 +406,8 @@ public class PlayerInterface : MonoBehaviour
     }
     public void ShowSummaryScreen()
     {
+        // Set the text of the casualties
+
         summary_screen.SetActive(true);
     }
 }

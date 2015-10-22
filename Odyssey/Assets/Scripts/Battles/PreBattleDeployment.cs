@@ -52,6 +52,7 @@ public class PreBattleDeployment : MonoBehaviour
                 HeroStats hero_stats = hero_obj.GetComponent<HeroStats>();
                 if (!hero_stats.injured)
                 {
+                    Debug.Log("Adding hero to deployment list: " + hero_stats.hero_name);
                     deployable_units.Add(hero_stats.hero_name, 1);
                     deployable_heroes.Add(hero_stats.hero_name, hero_stats);
                 }
@@ -134,15 +135,18 @@ public class PreBattleDeployment : MonoBehaviour
             GameObject unit = BattleManager.battle_manager.SpawnUnit(player_faction, unit_to_spawn, PlayerInterface.player_interface.highlighted_hex, true);
             Unit unit_script = unit.GetComponent<Unit>();
             unit_script.Initialize();
-            unit_script.SetImmediateRotation(270);
 
-            // Disable the deployment of that unit if we're out of those units to deploy
-            if (deployable_units[unit_to_spawn_name] <= 0)
+            // If there are viewable enemies on the field, face towards the nearest
+            List<Unit> enemies = BattleManager.battle_manager.player_faction.GetAllEnemyUnits();
+            Debug.Log(enemies.Count);
+            if (enemies.Count > 0)
             {
-                deployable_panel.FindChild(unit_to_spawn_name).gameObject.GetComponent<Button>().interactable = false;
-                unit_to_spawn = "";
-                unit_to_spawn_name = "";
+                unit_script.SetImmediateRotation(
+                    unit_script.GetAngleTowards(unit_script.location.world_coordinates,
+                    BattleManager.battle_manager.player_faction.GetClosestEnemy(unit_script).location.world_coordinates));
             }
+            else
+                unit_script.SetImmediateRotation(270);
 
             // Check if this is a hero
             HeroStats hero_stats;
@@ -160,6 +164,14 @@ public class PreBattleDeployment : MonoBehaviour
                 AlterHeroStats(unit_script, hero_stats);
 
                 unit_script.ResetStats();
+            }
+
+            // Disable the deployment of that unit if we're out of those units to deploy
+            if (deployable_units[unit_to_spawn_name] <= 0)
+            {
+                deployable_panel.FindChild(unit_to_spawn_name).gameObject.GetComponent<Button>().interactable = false;
+                unit_to_spawn = "";
+                unit_to_spawn_name = "";
             }
         }
     }

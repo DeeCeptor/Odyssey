@@ -15,6 +15,24 @@ public class Main_Menu : MonoBehaviour
     }
 
 
+    public void To_Kickstarter()
+    {
+        Application.OpenURL("https://kickstarter.com");
+    }
+
+
+    public void To_SteamGreenlight()
+    {
+        Application.OpenURL("https://steamcommunity.com/greenlight/");
+    }
+
+
+    public void To_Feedback()
+    {
+        Application.OpenURL("https://google.com/drive");
+    }
+
+
     public void Quit()
     {
         Application.Quit();
