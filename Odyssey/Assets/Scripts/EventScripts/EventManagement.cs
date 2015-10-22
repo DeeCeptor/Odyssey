@@ -134,7 +134,10 @@ public class EventManagement : MonoBehaviour {
         }
         for (int i = 0; i < enemies.Length; i++)
         {
-            enemies[i].GetComponent<OverworldEnemyScript>().Unpause();
+            if (enemies[i] != null)
+            {
+                enemies[i].GetComponent<OverworldEnemyScript>().Unpause();
+            }
         }
         player.GetComponentInChildren<WeatherAndEnemySpawnScript>().Unpause();
     }

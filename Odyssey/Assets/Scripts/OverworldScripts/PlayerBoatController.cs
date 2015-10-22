@@ -1,54 +1,94 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 public class PlayerBoatController : MonoBehaviour {
 	public float speed = 1f;
 	public float fastSpeed = 1.5f;
 	public float slowSpeed = 0.5f;
 	public float turnSpeed = 0.2f;
 	private int moveRate = 1;
+    public float minDistToPoint;
 	public float encounterRange = 5;
 	public ResourceManager resource;
 	public GameObject islandParkedAt;
+    // vertices in a line the boat must follow
+    public Queue<Vector3> vertices;
+    public int vertexIndex = 0;
+    //distance to vertex for it to be counted as explored
+    public float vertexDist = 0.1f;
+    public Vector2 dir;
+   
 
 	
 	public bool paused = false;
 	
 	// Use this for initialization
 	void Start () {
-	resource = GetComponent<ResourceManager>();
-        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation| RigidbodyConstraints.FreezePositionZ;
+	    resource = GetComponent<ResourceManager>();
     }
 	
+    void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.Mouse0))
+      //  {
+      //      numberOfPoints = 0;
+      //      lineRender.SetVertexCount(0);
+     //       EventManagement.gameController.Pause();
+  //      }
+   //     else if (Input.GetKey(KeyCode.Mouse0))
+  //      {
+  //          numberOfPoints++;
+ //           lineRender.SetVertexCount(numberOfPoints);
+            
+    //        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+ //           worldPos.z = 10;
+  //          lineRender.SetPosition(numberOfPoints - 1, worldPos);
+ //       }
+ //       else
+  //      {
+  //          EventManagement.gameController.Unpause();
+  //      }
+    }
 	// Update is called once per frame
 	void FixedUpdate () {
 	    if(!paused)
 	    {
-	
-	    	if(moveRate == 0)
-	    	{
-	    		gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*slowSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-	    	}
-	
-	    	if(moveRate == 1)
-	    	{
-	    		gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*speed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-	    	}
-	
-	    	if(moveRate == 2)
-	    	{
-		    	gameObject.GetComponent<Rigidbody>().velocity = Input.GetAxis("Vertical")*fastSpeed*transform.forward*((resource.stamina + 50f)/100f)*(1+(resource.poseidonsFavour/500f));
-		    }
+            if (0 < vertices.Count)
+            {
+                dir = (vertices.Peek() - transform.position);
+                if (moveRate == 0)
+                {
+                    gameObject.GetComponent<Rigidbody2D>().velocity = dir.normalized*slowSpeed * ((resource.stamina + 50f) / 100f) * (1 + (resource.poseidonsFavour / 500f));
+                }
+
+                if (moveRate == 1)
+                {
+                    gameObject.GetComponent<Rigidbody2D>().velocity = speed * dir.normalized* ((resource.stamina + 50f) / 100f) * (1 + (resource.poseidonsFavour / 500f));
+                }
+
+                if (moveRate == 2)
+                {
+                    gameObject.GetComponent<Rigidbody2D>().velocity = fastSpeed * dir.normalized * ((resource.stamina + 50f) / 100f) * (1 + (resource.poseidonsFavour / 500f));
+                }
+                if(dir.magnitude<vertexDist)
+                {
+                    vertices.Dequeue();
+                    Debug.Log(vertices.Count.ToString());
+                }
+            }
+            
 
             LayerMask mask = 1 << 10;
             Collider[] currentWeather = Physics.OverlapSphere(transform.position, 0.1f, mask);
 
             for (int i = 0; i< currentWeather.Length; i++)
                  {
-                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity * currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherSpeedDown;
-                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity + currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherDirection;
+                    gameObject.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity * currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherSpeedDown;
+                   // gameObject.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity + currentWeather[i].gameObject.GetComponent<WeatherScript>().weatherDirection;
                 }
          
-	}
+	    }
 	}
 	
 	public void SlowSpeed()
@@ -75,7 +115,7 @@ public class PlayerBoatController : MonoBehaviour {
 	public void Pause()
 	{
 		paused = true;
-		gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
 		
 	}
 	
