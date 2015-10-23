@@ -400,7 +400,8 @@ public class TroopManager : MonoBehaviour {
             }
         }
     }
-
+    
+    // Returns true if not dead, false otherwise
     public bool DieOrNot()
     {
         int randInt = Random.Range(1,101);

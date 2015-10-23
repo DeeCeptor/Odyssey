@@ -348,12 +348,12 @@ MonoBehaviour:
   facing: 0
   rotating: 0
   hero: 0
-  is_squad: 1
+  is_squad: 0
   normal_squad_size: 1
   remaining_individuals: 1
   u_name: Cyclops
   u_description: CYCLOPS!
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: aba8f6a17d028bb4cbcba0d7dbbc5621, type: 3}
   prefab_name: Cyclops
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
@@ -493,7 +493,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: is_squad
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196530}

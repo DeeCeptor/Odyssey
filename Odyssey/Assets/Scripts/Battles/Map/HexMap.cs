@@ -127,8 +127,15 @@ public class HexMap : MonoBehaviour
                         break;
                 }
 
+                // Add retreat ability and retreat art to hex
                 if (hex.retreat_zone)
+                {
+                    GameObject r_instance = Instantiate(Resources.Load("Battles/Hexes/RetreatHexArt" , typeof(GameObject))) as GameObject;
+                    r_instance.transform.parent = hex.gameObject.transform;
+                    r_instance.transform.localScale = new Vector3(1, 1, 1);
+                    r_instance.transform.position = new Vector3(x_pos, y_pos, 0.5f);
                     hex.effects_on_hex.Add(new RetreatHex(null));
+                }
 
 
                 // Set boundaries and camera boundaries

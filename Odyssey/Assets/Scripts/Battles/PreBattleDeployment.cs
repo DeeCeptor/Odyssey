@@ -14,10 +14,11 @@ public class PreBattleDeployment : MonoBehaviour
     public int maximum_deployable_units = 10;
 
     public Dictionary<string, HeroStats> deployable_heroes = new Dictionary<string, HeroStats>();   // Contains the stats of all deployable heroes
+    public Dictionary<string, string> unit_art = new Dictionary<string, string>();
 
     public string unit_to_spawn;        // String that contains the location of the prefab to spawn
     public string unit_to_spawn_name;
-    public GameObject deployable_sprite;    // Sprite that follows the mouse to show the unit we're going to spawn
+    public SpriteRenderer deployable_sprite;    // Sprite that follows the mouse to show the unit we're going to spawn
     public GameObject deploy_unit_button;   // Button to populate our deploy units list
     public Transform deployable_panel;      // Panel that gets populated with buttons to deploy units
     public Text units_remaining_text;
@@ -68,6 +69,10 @@ public class PreBattleDeployment : MonoBehaviour
             deployable_units.Add("Archer", 4);
             deployable_units.Add("Slinger", 4);
             deployable_units.Add("Swordsman", 4);
+            deployable_units.Add("Cyclops", 4);
+            deployable_units.Add("Minotaur", 4);
+            deployable_units.Add("CentaurWarrior", 4);
+            deployable_units.Add("CentaurMarksman", 4);
         }
 
 
@@ -79,11 +84,18 @@ public class PreBattleDeployment : MonoBehaviour
             Button button = newButton.GetComponent<Button>();
             Debug.Log(pair.Key + " x " + pair.Value);
             string unit_name = pair.Key;
-            button.onClick.AddListener(() => SelectUnitFromDeploymentMenu(unit_name));
+            button.onClick.AddListener(() => SelectUnitFromDeploymentMenu(unit_name, button));
             Text text = newButton.GetComponentInChildren<Text>();
             text.text = pair.Key + " x " + pair.Value;
             newButton.transform.SetParent(deployable_panel);
             newButton.transform.localScale = new Vector3(1, 1, 1);
+
+            // Set the button image by instantiating a unit and then grabbing its sprite
+            GameObject instance = Instantiate(Resources.Load("Battles/Units/" + unit_name, typeof(GameObject))) as GameObject;
+            Unit unit = instance.GetComponent<Unit>();
+            button.image.sprite = unit.portrait;
+
+            GameObject.Destroy(instance);
 
             if (pair.Value <= 0)
                 button.interactable = false;
@@ -97,9 +109,6 @@ public class PreBattleDeployment : MonoBehaviour
     {
 	    if (unit_to_spawn != "")
         {
-            // If we have a unit to spawn have the sprite follow the mouse
-            deployable_sprite.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
             // Left click to deploy the unit
             if (Input.GetMouseButtonDown(0)
                 && !EventSystem.current.IsPointerOverGameObject()
@@ -171,6 +180,7 @@ public class PreBattleDeployment : MonoBehaviour
                 deployable_panel.FindChild(unit_to_spawn_name).gameObject.GetComponent<Button>().interactable = false;
                 unit_to_spawn = "";
                 unit_to_spawn_name = "";
+                deployable_sprite.gameObject.SetActive(false);
             }
         }
     }
@@ -178,7 +188,7 @@ public class PreBattleDeployment : MonoBehaviour
     {
         cur_deployed_units--;
         SetUnitsRemainingText();
-        string name = PlayerInterface.player_interface.highlighted_hex.occupying_unit.u_name;
+        string name = PlayerInterface.player_interface.highlighted_hex.occupying_unit.prefab_name;
         Debug.Log("Undeploying " + name);
 
         deployable_units[name] = deployable_units[name] + 1;
@@ -206,15 +216,15 @@ public class PreBattleDeployment : MonoBehaviour
     }
 
 
-    public void SelectUnitFromDeploymentMenu(string unit_name)
+    public void SelectUnitFromDeploymentMenu(string unit_name, Button button)
     {
         Debug.Log("Selected " + unit_name + " to deploy");
         unit_to_spawn = "Battles/Units/" + unit_name;
         unit_to_spawn_name = unit_name;
 
         // Activate and set deployable sprite
-        deployable_sprite.SetActive(true);
-        deployable_sprite.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        deployable_sprite.gameObject.SetActive(true);
+        deployable_sprite.sprite = button.image.sprite;
     }
 
 

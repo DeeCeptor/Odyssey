@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlayerInterface : MonoBehaviour 
 {
@@ -46,6 +47,8 @@ public class PlayerInterface : MonoBehaviour
     public Text terrain_name;
     public Text terrain_description;
 
+    public Text PlayerLosses;
+    public Text EnemyLosses;
 
     public Unit selected_unit;
     [HideInInspector]
@@ -358,7 +361,7 @@ public class PlayerInterface : MonoBehaviour
                     HighlightAttacksFromUnitLocationAndFrom(selected_unit, selected_unit.location);
             }
         }
-        //highlighted_hex = hex;
+        highlighted_hex = hex;
 
         ShowTerrainStatsPanel(hex);
     }
@@ -407,6 +410,23 @@ public class PlayerInterface : MonoBehaviour
     public void ShowSummaryScreen()
     {
         // Set the text of the casualties
+        // Show the player casualties
+        string text = "";
+        foreach (KeyValuePair<string, Casualty> entry in PersistentBattleSettings.battle_settings.casualties[BattleManager.battle_manager.player_faction.faction_ID])
+        {
+            Casualty casualty = entry.Value;
+            text += casualty.name + "\t" + casualty.num_wounded + " wounded, " + casualty.num_killed + " dead\n";
+            PlayerLosses.text = text;
+        }
+
+        // Show the enemy casualties
+        text = "";
+        foreach (KeyValuePair<string, Casualty> entry in PersistentBattleSettings.battle_settings.casualties[BattleManager.battle_manager.enemy_faction.faction_ID])
+        {
+            Casualty casualty = entry.Value;
+            text += casualty.name + "\t" + casualty.num_wounded + " wounded, " + casualty.num_killed + " dead\n";
+            EnemyLosses.text = text;
+        }
 
         summary_screen.SetActive(true);
     }
