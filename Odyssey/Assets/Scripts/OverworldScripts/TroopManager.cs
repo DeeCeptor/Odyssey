@@ -39,8 +39,9 @@ public class TroopManager : MonoBehaviour {
     {
         int troops = 0;
         Dictionary<string,int>.ValueCollection healthyUnits = healthy.Values;
-        healthyUnits.CopyTo(troopNums,0);
         Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
+        troopNums = new int[healthyUnits.Count + woundedUnits.Count];
+        healthyUnits.CopyTo(troopNums, 0);
         woundedUnits.CopyTo(troopNums, troopNums.Length);
         for(int i = 0; i < troopNums.Length;i++)
         {
@@ -53,6 +54,7 @@ public class TroopManager : MonoBehaviour {
     {
         int troops = 0;
         Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
+        troopNums = new int[woundedUnits.Count];
         woundedUnits.CopyTo(troopNums, 0);
         for (int i = 0; i < troopNums.Length; i++)
         {
@@ -311,19 +313,16 @@ public class TroopManager : MonoBehaviour {
     public void InjureRandom(int numToInjure)
     {
         int troops = 0;
-        int[] healthyTroopNums;
-        int[] woundedTroopNums;
-        string[] keyArray;
+        Dictionary<string, int>.KeyCollection keys = TroopManager.playerTroops.healthy.Keys;
+        Dictionary<string, int>.ValueCollection healthyUnits = TroopManager.playerTroops.healthy.Values;
+        Dictionary<string, int>.ValueCollection woundedUnits = TroopManager.playerTroops.wounded.Values;
+        string[] keyArray = new string[keys.Count];
         string curKey;
-        Dictionary<string, int>.ValueCollection healthyUnits = healthy.Values;
-        healthyTroopNums = new int[healthyUnits.Count];
+        int[] healthyTroopNums = new int[healthyUnits.Count];
+        int[] woundedTroopNums = new int[woundedUnits.Count];
         healthyUnits.CopyTo(healthyTroopNums, 0);
-        Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
-        woundedTroopNums = new int[woundedUnits.Count];
-        woundedUnits.CopyTo(woundedTroopNums, troopNums.Length);
-        Dictionary<string, int>.KeyCollection keys = healthy.Keys;
-        keyArray = new string[keys.Count];
-        keys.CopyTo(keyArray, troopNums.Length);
+        woundedUnits.CopyTo(woundedTroopNums,0);
+        keys.CopyTo(keyArray, 0);
         troops = getTroopNum();
         //if there are troops to injure
 
@@ -371,12 +370,12 @@ public class TroopManager : MonoBehaviour {
     public void healRandom(int numToHeal)
     {
         int troops = 0;
-        int[] woundedTroopNums = new int[] { };
-        string[] keyArray = new string[] { };
         string curKey;
         Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
-        woundedUnits.CopyTo(woundedTroopNums, troopNums.Length);
+        int[] woundedTroopNums = new int[woundedUnits.Count];
+        woundedUnits.CopyTo(woundedTroopNums, 0);
         Dictionary<string, int>.KeyCollection keys = healthy.Keys;
+        string[] keyArray = new string[keys.Count];
         keys.CopyTo(keyArray, 0);
         troops = getWoundedTroopNum();
         for (int i = 0; i < numToHeal; i++)
