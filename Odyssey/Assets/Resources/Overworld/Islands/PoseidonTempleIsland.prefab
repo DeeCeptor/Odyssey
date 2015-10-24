@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -69.4211884, y: 26, z: 26.488945}
+  m_LocalPosition: {x: 301.495972, y: 419.034424, z: 188.405731}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -69,8 +69,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explored: 0
-  eventToCall: {fileID: 141242}
-  eventToCallExplored: {fileID: 141242}
+  eventToCall: {fileID: 166284, guid: 783a04d665dedb847bb613a491b86a80, type: 2}
+  eventToCallExplored: {fileID: 166284, guid: 783a04d665dedb847bb613a491b86a80, type: 2}
   eventHandler: {fileID: 0}
   templeDestroyed: 0
   destroyedEvent: {fileID: 115882, guid: b367709d463818a479cce14573b66088, type: 2}
