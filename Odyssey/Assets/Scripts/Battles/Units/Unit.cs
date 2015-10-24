@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum Unit_Types { Melee, Cavalry, Ranged };
 
@@ -97,7 +98,7 @@ public class Unit : MonoBehaviour
 
     public string u_name = ""; // Name at the top of the unit panel
     public string u_description = "";  // Short description of the unit
-    public Texture portrait;    // Unit portrait
+    public Sprite portrait;    // Unit portrait
     public string prefab_name;  // Exact name needed to load the prefab
     [HideInInspector]
     public GameObject unit_menu;
@@ -416,6 +417,7 @@ public class Unit : MonoBehaviour
     // Show the stats of this unit when the user mouses over
     void OnMouseEnter()
     {
+        PlayerInterface.player_interface.MousedOverHex(this.location);
         PlayerInterface.player_interface.ShowTerrainStatsPanel(this.location);
         PlayerInterface.player_interface.ShowUnitStatsPanel(this);
     }
@@ -661,55 +663,31 @@ public class Unit : MonoBehaviour
         PlayerInterface.player_interface.CreateFloatingText(this.transform.position + new Vector3(0, 0.5f, 0), "<i>" + modified_damage + "</i>", true, 3.0f);
         int num_died = 0;
 
-        if (health <= 0)
+        if (is_squad)
         {
-            // We died, removed all the individuals left
-            PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += remaining_individuals;
+            // We didn't die, calculate how many individuals we lost
+            int HP_per_individual = (int) GetMaxHealth() / normal_squad_size;
+            remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
+            num_died = prev_remaining_individuals - remaining_individuals;
 
-            // Record casualties in troop manager
-            if (TroopManager.playerTroops != null 
-                && !hero
-                && owner == BattleManager.battle_manager.player_faction)
-            {
-                TroopManager.playerTroops.healthy[prefab_name] -= remaining_individuals;
-                Debug.Log("Remaining " + prefab_name + ": " + TroopManager.playerTroops.healthy[prefab_name]);
-            }
-            num_died = remaining_individuals;
-            remaining_individuals = 0;
+            SetKilledOrWounded(num_died);
+
+            PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
+
+            Debug.Log(modified_damage + ", HP per individual: " + HP_per_individual + " num died: " + num_died);
         }
         else
         {
-            if (is_squad)
+            // Not a squad. Is individual. Only dies if HP <= 0
+            if (GetHealth() <= 0)
             {
-                // We didn't die, calculate how many individuals we lost
-                int HP_per_individual = (int) GetMaxHealth() / normal_squad_size;
-                remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
-                num_died = prev_remaining_individuals - remaining_individuals;
-                PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
-
-                Debug.Log(modified_damage + ", HP per individual: " + HP_per_individual + " num died: " + num_died);
-
-                // Record casualties in troop manager
-                if (TroopManager.playerTroops != null && owner == BattleManager.battle_manager.player_faction)
-                {
-                    TroopManager.playerTroops.healthy[prefab_name] -= (prev_remaining_individuals - remaining_individuals);
-                    Debug.Log("Remaining " + prefab_name + ": " + TroopManager.playerTroops.healthy[prefab_name]);
-                }
+                // Everyone is down
+                num_died = remaining_individuals;
+                SetKilledOrWounded(remaining_individuals);
+                remaining_individuals = 0;
             }
         }
-
-        // Remove a sprite for each person who died
-        for (int x = 0; x < num_died; x++)
-        {
-            for (int y = 0; y < sprites.Count; y++)
-            {
-                sprites[y].gameObject.transform.parent.transform.parent = null;
-                sprites[y].gameObject.transform.parent.gameObject.AddComponent<RotateSideways>();
-                sprites.Remove(sprites[y]);
-                break;
-            }
-        }
-
+        
         if (health <= 0)
             Die();
 
@@ -729,6 +707,89 @@ public class Unit : MonoBehaviour
         }
 
         return health;
+    }
+
+
+    // Changes the troop manager and records the casualties
+    public void SetKilledOrWounded(int number_o_casualties)
+    {
+        for (int x = 0; x < number_o_casualties; x++)
+        {
+            bool killed = true;
+
+            // Record casualties in troop manager
+            if (TroopManager.playerTroops != null
+                && owner == BattleManager.battle_manager.player_faction)
+            {
+
+                // No matter what, they won't be fighting again for while
+                TroopManager.playerTroops.healthy[prefab_name]--;
+
+                if (hero)
+                {
+                    // Heroes only get wounded and cannot die
+                    TroopManager.playerTroops.wounded[prefab_name]++;
+                    killed = false;
+                }
+                else
+                {
+                    // Check if the unit died
+                    // True if not dead
+                    if (TroopManager.playerTroops.DieOrNot())
+                    {
+                        // Wounded
+                        TroopManager.playerTroops.wounded[prefab_name]++;
+                        killed = false;
+                    }
+                    // Died. Already removed from healthy dictionary. Nothing else needs to be done.
+                }
+                Debug.Log("Remaining " + prefab_name + ": " + TroopManager.playerTroops.healthy[prefab_name]);
+            }
+            else
+            {
+                // Debug battles it's 50/50 whether they die or not
+                if (Random.value <= 0.5f)
+                    killed = false;
+            }
+
+            RecordCasualty(u_name, killed);
+        }
+
+        // Remove a sprite for each person who died
+        for (int x = 0; x < number_o_casualties; x++)
+        {
+            for (int y = 0; y < sprites.Count; y++)
+            {
+                sprites[y].gameObject.transform.parent.transform.parent = null;
+                sprites[y].gameObject.transform.parent.gameObject.AddComponent<RotateSideways>();
+                sprites.Remove(sprites[y]);
+                break;
+            }
+        }
+    }
+    // Records the results in persistent battle settings dictionaries
+    public void RecordCasualty(string human_readable_name, bool dead)
+    {
+        Casualty casualty;
+        // Found value in dictionary. Update value
+        if (PersistentBattleSettings.battle_settings.casualties[this.owner.faction_ID].TryGetValue(u_name, out casualty))
+        {
+            if (dead)
+                casualty.num_killed++;
+            else
+                casualty.num_wounded++;
+        }
+        else
+        {
+            // Did not find value. Add to dictionary
+            casualty = new Casualty();
+            casualty.name = u_name;
+            if (dead)
+                casualty.num_killed++;
+            else
+                casualty.num_wounded++;
+            PersistentBattleSettings.battle_settings.casualties[this.owner.faction_ID].Add(u_name, casualty);
+        }
     }
 
     // Returns how much damage the attacker would do to this unit

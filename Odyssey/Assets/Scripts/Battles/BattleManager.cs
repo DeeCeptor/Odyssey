@@ -13,6 +13,7 @@ public class BattleManager : MonoBehaviour
     public int round_number = 0;     // How long has this battle been going
     public bool human_turn = false;     // Is the human playing?
     public Faction player_faction;
+    public Faction enemy_faction;
 
     public Faction current_player;     // Whose turn it currently is
     Queue<Faction> players_waiting_for_turn = new Queue<Faction>();     // FIFO queue showing what player's are waiting to do their turn this round
@@ -89,6 +90,7 @@ public class BattleManager : MonoBehaviour
         // Set up the enemy AI faction
         Faction enemy_team = new Faction("Enemies", false, 2, Color.red, new Color(197f / 255f, 119f / 255f, 119f / 255f));
         factions.Add(enemy_team);
+        enemy_faction = enemy_team;
 
         foreach (PotentialUnit unit in HexMap.hex_map.parser.units_to_be_spawned)
         {

@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+public class Casualty
+{
+    public string name;
+    public int num_wounded = 0;
+    public int num_killed = 0;
+}
+
 // Class that contains pre battle information, and will be populated with post battle information after it is done.
 // Create this object before the battle, load the battle level, when the battle is finished we will load back the overworld and can analyze the battle results.
 // This object persists between level loads. Destroy this object when done analyzing post battle info.
@@ -31,7 +38,8 @@ public class PersistentBattleSettings : MonoBehaviour
     public int[] individuals_retreated;  
     
     // Specific units statistics
-    public Dictionary<string, int>[] specific_individuals_lost;
+    // Accessed by faction ID and u_name
+    public Dictionary<string, Casualty>[] casualties;
 
 
     void Awake ()
@@ -60,7 +68,10 @@ public class PersistentBattleSettings : MonoBehaviour
         units_retreated = new int[BattleManager.battle_manager.factions.Count + 1];
         individuals_retreated = new int[BattleManager.battle_manager.factions.Count + 1];
 
-        specific_individuals_lost = new Dictionary<string, int>[BattleManager.battle_manager.factions.Count + 1];
+        casualties = new Dictionary<string, Casualty>[BattleManager.battle_manager.factions.Count + 1];
+
+        for (int x = 0; x < casualties.Length; x++)
+            casualties[x] = new Dictionary<string, Casualty>();
     }
 
 
