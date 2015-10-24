@@ -441,7 +441,7 @@ MonoBehaviour:
   maximum_health: 200
   normal_defence: .100000001
   normal_ranged_defence: .200000003
-  normal_attack_range: 1
+  normal_attack_range: 3
   normal_damage: 30
   normal_piercing_damage: 15
   normal_movement: 5
@@ -472,6 +472,7 @@ MonoBehaviour:
   prefab_name: CentaurMarksman
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
+  projectile_sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!212 &21237784
 SpriteRenderer:
   m_ObjectHideFlags: 1

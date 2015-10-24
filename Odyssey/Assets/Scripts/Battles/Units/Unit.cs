@@ -103,6 +103,7 @@ public class Unit : MonoBehaviour
     [HideInInspector]
     public GameObject unit_menu;
     public GameObject unit_sprite;
+    public Sprite projectile_sprite;
 
     public Faction owner; 
 
@@ -278,7 +279,6 @@ public class Unit : MonoBehaviour
     }
     public void SetSpritesFacing(int facing)
     {
-        Debug.Log(facing);
         // Should be facing left, -1
         if (facing < 180)
         {
@@ -660,7 +660,6 @@ public class Unit : MonoBehaviour
         Debug.Log(u_name + " took " + modified_damage + " damage, " + " Flanking: " + !IsFacing(attacker) + ", " + GetHealth() + " HP remaining from " + attacker.u_name);
 
         // Show floating damage text
-        PlayerInterface.player_interface.CreateFloatingText(this.transform.position + new Vector3(0, 0.5f, 0), "<i>" + modified_damage + "</i>", true, 3.0f);
         int num_died = 0;
 
         if (is_squad)
@@ -670,7 +669,7 @@ public class Unit : MonoBehaviour
             remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
             num_died = prev_remaining_individuals - remaining_individuals;
 
-            SetKilledOrWounded(num_died);
+            SetKilledOrWounded(num_died, attacker, modified_damage);
 
             PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
 
@@ -683,7 +682,7 @@ public class Unit : MonoBehaviour
             {
                 // Everyone is down
                 num_died = remaining_individuals;
-                SetKilledOrWounded(remaining_individuals);
+                SetKilledOrWounded(remaining_individuals, attacker, modified_damage);
                 remaining_individuals = 0;
             }
         }
@@ -711,7 +710,7 @@ public class Unit : MonoBehaviour
 
 
     // Changes the troop manager and records the casualties
-    public void SetKilledOrWounded(int number_o_casualties)
+    public void SetKilledOrWounded(int number_o_casualties, Unit attacker, float damage)
     {
         for (int x = 0; x < number_o_casualties; x++)
         {
@@ -755,17 +754,7 @@ public class Unit : MonoBehaviour
             RecordCasualty(u_name, killed);
         }
 
-        // Remove a sprite for each person who died
-        for (int x = 0; x < number_o_casualties; x++)
-        {
-            for (int y = 0; y < sprites.Count; y++)
-            {
-                sprites[y].gameObject.transform.parent.transform.parent = null;
-                sprites[y].gameObject.transform.parent.gameObject.AddComponent<RotateSideways>();
-                sprites.Remove(sprites[y]);
-                break;
-            }
-        }
+        AnimateCasualties(number_o_casualties, attacker, damage);
     }
     // Records the results in persistent battle settings dictionaries
     public void RecordCasualty(string human_readable_name, bool dead)
@@ -789,6 +778,41 @@ public class Unit : MonoBehaviour
             else
                 casualty.num_wounded++;
             PersistentBattleSettings.battle_settings.casualties[this.owner.faction_ID].Add(u_name, casualty);
+        }
+    }
+
+    // Creates projectiles if there are any and attack object
+    public void AnimateCasualties(int num_killed, Unit attacker, float damage)
+    {
+        GameObject attack = PlayerInterface.player_interface.CreateAttackObject(attacker.transform.position, new Vector3(0, 0.5f, 0), this.location, 8, damage + "", 2.5f);
+        AttackObject attack_obj = attack.GetComponent<AttackObject>();
+
+        // Remove a sprite for each person who died
+        for (int x = 0; x < num_killed; x++)
+        {
+            for (int y = 0; y < sprites.Count; y++)
+            {
+                sprites[y].gameObject.transform.parent.transform.parent = BattleManager.battle_manager.universal_battle_parent.transform;
+                //sprites[y].gameObject.transform.parent.gameObject.AddComponent<RotateSideways>();
+                attack_obj.dead_sprites.Add(sprites[y].gameObject.transform.parent.gameObject);
+                sprites.Remove(sprites[y]);
+                break;
+            }
+        }
+
+
+        // Create projectiles from the attacker if there are any
+        if (attacker.projectile_sprite != null)
+        {
+            // Create one projectile per unit in the squad
+            foreach (SpriteAnimInstruct spr in attacker.sprites)
+            {
+                GameObject instance = Instantiate(Resources.Load("Battles/Projectile", typeof(GameObject))) as GameObject;
+                instance.transform.position = spr.transform.position;
+                instance.transform.parent = attack.transform;
+                // Set rotation
+                instance.GetComponent<SpriteRenderer>().sprite = attacker.projectile_sprite;
+            }
         }
     }
 

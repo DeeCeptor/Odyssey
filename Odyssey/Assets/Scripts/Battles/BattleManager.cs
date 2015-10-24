@@ -347,6 +347,8 @@ public class BattleManager : MonoBehaviour
 
     public void EndPreBattleDeployment()
     {
+        PreBattleDeployment.pre_battle_deployment.deployable_sprite.gameObject.SetActive(false);
+
         // Remove drag and drop script from all units
         foreach (Faction faction in factions)
         {

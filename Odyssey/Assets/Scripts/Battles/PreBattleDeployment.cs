@@ -73,6 +73,7 @@ public class PreBattleDeployment : MonoBehaviour
             deployable_units.Add("Minotaur", 4);
             deployable_units.Add("CentaurWarrior", 4);
             deployable_units.Add("CentaurMarksman", 4);
+            deployable_units.Add("Peltast", 4);
         }
 
 
