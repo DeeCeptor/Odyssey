@@ -54,7 +54,7 @@ public class OverworldButtonFunctions : MonoBehaviour {
 	
 	public void Anchor()
 	{
-	playerControl.togglePause();
+	playerControl.toggleAnchor();
 	resources.toggleAnchor();
 	}
 }

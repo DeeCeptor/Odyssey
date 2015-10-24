@@ -209,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 732.808289, y: 2222.30737, z: 27200.2793}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 463704}
@@ -561,9 +561,10 @@ MonoBehaviour:
   slowSpeed: .5
   turnSpeed: .200000003
   minDistToPoint: 0
-  encounterRange: 5
+  encounterRange: 15
   resource: {fileID: 0}
   islandParkedAt: {fileID: 0}
+  anchored: 0
   vertexIndex: 0
   vertexDist: .100000001
   dir: {x: 0, y: 0}
@@ -648,9 +649,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  m_Positions: []
   m_Parameters:
     startWidth: 1
     endWidth: 1
@@ -737,6 +736,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: maxNPCDistance
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: encounterRange
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -9,7 +9,7 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
     public float maxWeatherDistance = 20f;
     public bool paused = false;
     public Collider2D[] collidingWith;
-    public Collider[] collidingWithWeather;
+    public Collider2D[] collidingWithWeather;
     //random int to get a random element of an array
     private int randInt;
 
@@ -63,7 +63,7 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
         Vector3 randPoint = transform.position + (new Vector3(rando.x, rando.y, 0).normalized * Random.Range(minNPCDistance, maxNPCDistance));
         if (npcs.Length > 0)
         {
-            collidingWith = Physics2D.OverlapCircleAll(randPoint, npcs[randInt].GetComponent<Collider>().bounds.size.x, mask);
+            collidingWith = Physics2D.OverlapCircleAll(randPoint, npcs[randInt].GetComponent<Collider2D>().bounds.size.x, mask);
         }
         if (collidingWith.Length > 0)
         {
@@ -71,7 +71,7 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
             return;
         }
         GameObject npc = (GameObject)Instantiate(npcs[randInt],randPoint, transform.rotation);
-        npc.transform.Rotate(transform.right,90);
+        npc.transform.Rotate(transform.forward, Random.Range(0, 360), Space.Self);
         npc.transform.parent = GameObject.FindGameObjectWithTag("UniversalParent").transform;
         
     }
@@ -83,7 +83,7 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
         randInt = Random.Range(0, weather.Length);
         mask = 1 << 10;
         Vector3 randPoint = transform.position + (new Vector3(rando.x, rando.y, 0).normalized * Random.Range(0, maxWeatherDistance));
-        collidingWithWeather = Physics.OverlapSphere(randPoint, npcs[randInt].GetComponent<Collider>().bounds.size.x, mask);
+        collidingWithWeather = Physics2D.OverlapCircleAll(randPoint, weather[randInt].GetComponent<Collider2D>().bounds.size.x, mask);
         if (collidingWith.Length > 0)
         {
             return;

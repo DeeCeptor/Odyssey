@@ -27,9 +27,11 @@ public class OverworldEnemyScript : MonoBehaviour {
 	{
 		if((transform.position - player.transform.position).magnitude < sightLine)
 		{
-			transform.LookAt(player.transform.position,transform.up);
-			
-		}
+                Vector3 diff = player.transform.position - transform.position;
+                float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+
+            }
 		
 		else
 		{
@@ -41,23 +43,23 @@ public class OverworldEnemyScript : MonoBehaviour {
 			}
 			if(direction == 0)
 			{
-				transform.Rotate((randomDegreesToTurn/randomMovingChange)*transform.up);
+				transform.Rotate((randomDegreesToTurn/randomMovingChange)*transform.forward);
 			}
 			if(direction == 3)
 			{
-				transform.Rotate((-randomDegreesToTurn/randomMovingChange)*transform.up);
+				transform.Rotate((-randomDegreesToTurn/randomMovingChange)*transform.forward);
 			}
 			randomMovingCounter = randomMovingCounter + 1;
 		}
 		
-		gameObject.GetComponent<Rigidbody>().velocity = speed*transform.forward;
+		gameObject.GetComponent<Rigidbody2D>().velocity = speed*transform.up;
 	}
 	}
 	
 	public void Pause()
 	{
 		paused = true;
-		gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+		gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0,0,0);
 	}
 	
 	public void Unpause()
@@ -65,7 +67,7 @@ public class OverworldEnemyScript : MonoBehaviour {
 		paused = false;
 	}
 	
-	void OnCollisionEnter(Collision collide)
+	void OnCollisionEnter2D(Collision2D collide)
 	{
 	if(collide.gameObject.tag.Equals("Player"))
 	{
