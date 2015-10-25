@@ -55,4 +55,9 @@ public class PopulateShop : MonoBehaviour {
 
 
     }
+
+    public void Refresh()
+    {
+        OnEnable();
+    }
 }

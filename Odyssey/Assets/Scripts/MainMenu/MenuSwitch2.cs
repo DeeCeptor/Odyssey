@@ -22,6 +22,7 @@ public class MenuSwitch2 : MonoBehaviour {
     public Dictionary<string,int> unitsAvailable;
     public ChangeUnitStats changer;
     public GameObject notEnoughRoomMessage;
+    public GameObject Content;
 
     // Use this for initialization
     void Start()
@@ -74,19 +75,19 @@ public class MenuSwitch2 : MonoBehaviour {
         cost = 1;
         if (!float.TryParse(foodInput.text, out result))
         {
-            Instantiate(errorMessage, transform.position, transform.rotation);
+            errorMessage.SetActive(true);
             return;
         }
 
         if (result * cost > ResourceManager.playerResources.gold)
         {
-            Instantiate(notEnoughGoldMessage, transform.position, transform.rotation);
+            notEnoughGoldMessage.SetActive(true);
             return;
         }
 
         if(ResourceManager.playerResources.checkIfOver(result))
         {
-            Instantiate(notEnoughRoomMessage, transform.position, transform.rotation);
+            notEnoughRoomMessage.SetActive(true);
             return;
         }
 
@@ -101,19 +102,19 @@ public class MenuSwitch2 : MonoBehaviour {
         cost = 1;
         if (!int.TryParse(waterInput.text, out result))
         {
-            Instantiate(errorMessage, transform.position, transform.rotation);
+            errorMessage.SetActive(true);
             return;
         }
 
         if (result * cost > ResourceManager.playerResources.gold)
         {
-            Instantiate(notEnoughGoldMessage, transform.position, transform.rotation);
+            notEnoughGoldMessage.SetActive(true);
             return;
         }
 
         if (ResourceManager.playerResources.checkIfOver(result))
         {
-            Instantiate(notEnoughRoomMessage, transform.position, transform.rotation);
+            notEnoughRoomMessage.SetActive(true);
             return;
         }
 
@@ -128,19 +129,19 @@ public class MenuSwitch2 : MonoBehaviour {
         int modCost = cost - (1 * TroopManager.playerTroops.getHaggling());
         if (!int.TryParse(foodInput.text, out result))
         {
-            Instantiate(errorMessage, transform.position, transform.rotation);
+            errorMessage.SetActive(true);
             return;
         }
 
         if (result * cost > ResourceManager.playerResources.gold)
         {
-            Instantiate(notEnoughGoldMessage, transform.position, transform.rotation);
+            notEnoughGoldMessage.SetActive(true);
             return;
         }
 
         if (ResourceManager.playerResources.sailors + result > ResourceManager.playerResources.maxSailors)
         {
-            Instantiate(notEnoughRoomMessage, transform.position, transform.rotation);
+            notEnoughRoomMessage.SetActive(true);
             return;
         }
 
@@ -158,26 +159,28 @@ public class MenuSwitch2 : MonoBehaviour {
         int result = 0;
         if(!int.TryParse(playerInput.text,out result))
         {
-            Instantiate(errorMessage,transform.position,transform.rotation);
+            errorMessage.SetActive(true);
             return;
         }
 
         if(result*modCost > ResourceManager.playerResources.gold)
         {
-            Instantiate(notEnoughGoldMessage, transform.position, transform.rotation);
+            notEnoughGoldMessage.SetActive(true);
             return;
         }
 
         if (result> unitsAvailable[unitName])
         {
-            Instantiate(notEnoughUnitsMessage, transform.position, transform.rotation);
+            notEnoughUnitsMessage.SetActive(true);
             return;
         }
 
         ResourceManager.playerResources.gold = ResourceManager.playerResources.gold - (result*modCost);
         unitsAvailable[unitSelected] = TroopManager.playerTroops.healthy[unitSelected] - result;
         TroopManager.playerTroops.healthy[unitSelected] = TroopManager.playerTroops.healthy[unitSelected] + result;
-        Debug.Log(TroopManager.playerTroops.healthy[unitSelected]);
+        Content.GetComponent<PopulateShop>().Refresh();
+        Debug.Log(TroopManager.playerTroops.healthy[unitSelected].ToString());
+
     }   
 
     public void Leave()
