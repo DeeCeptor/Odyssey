@@ -26,4 +26,9 @@ public class SpriteAnimInstruct : MonoBehaviour {
 	{
 		animator.SetTrigger ("triggerAttack");
 	}
+
+	public void StopAnim()
+	{
+		animator.SetTrigger ("triggerStop");
+	}
 }
