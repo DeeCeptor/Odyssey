@@ -438,13 +438,13 @@ MonoBehaviour:
   is_moving: 0
   has_attacked: 0
   dead: 0
-  maximum_health: 300
+  maximum_health: 250
   normal_defence: .300000012
   normal_ranged_defence: .300000012
   normal_attack_range: 1
   normal_damage: 60
   normal_piercing_damage: 20
-  normal_movement: 5
+  normal_movement: 6
   normal_flanking_bonus: .5
   normal_bonus_vs_melee: 0
   normal_bonus_vs_cavalry: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
   unit_type: 1
   is_ranged_unit: 0
   counter_attacks: 1
-  counter_attack_radius: 60
+  counter_attack_radius: 120
   attacks_are_counterable: 1
   offensive_AI_score: 1
   flanking_factor: 3
@@ -464,14 +464,16 @@ MonoBehaviour:
   rotating: 0
   hero: 0
   is_squad: 1
-  normal_squad_size: 3
-  remaining_individuals: 3
+  normal_squad_size: 2
+  remaining_individuals: 2
   u_name: Centaur Warrior
-  u_description: CENTAUR!
+  u_description: Centaurs are fierce when provoked, and are extremely fleet of hoof.
+    This makes for a dangerous combination.
   portrait: {fileID: 21300000, guid: ac2b2a1b4070d29429f869add55ebe43, type: 3}
   prefab_name: CentaurWarrior
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
+  projectile_sprite: {fileID: 0}
 --- !u!212 &21203070
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -548,7 +550,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f02b85e90bd6a3b47a47b3cfd529dafb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 409e63383ac81604abeafba4d984a784, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21282514
 SpriteRenderer:

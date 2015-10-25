@@ -16,5 +16,8 @@ public class HitAndRun : Ability
 
         caster.active = true;
         caster.has_moved = false;
+
+		BattleManager.battle_manager.SetMovableTilesOfUnit(caster);
+		caster.HighlightHexesWeCanMoveTo(true);
     }
 }

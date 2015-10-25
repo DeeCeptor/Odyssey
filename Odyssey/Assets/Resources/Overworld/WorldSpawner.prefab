@@ -43,16 +43,19 @@ MonoBehaviour:
   player: {fileID: 108032, guid: c456ed9be89e54d44ad9638fbab50b85, type: 2}
   islands:
   - {fileID: 141242, guid: f752992635bbcb14f868ee155f6f573b, type: 2}
+  - {fileID: 107116, guid: e87f5520f06ca9d4cadc4546d97f85bb, type: 2}
   goal: {fileID: 137356, guid: fb64bfe8cb316ac4299f3661432cc4d2, type: 2}
   npcs:
   - {fileID: 157454, guid: b8e5e5d0cbee6db488ea612187e115fa, type: 2}
   eventController: {fileID: 103382, guid: f7e7eb57f029f7141a018271a4232959, type: 2}
   ui: {fileID: 166864, guid: fe84df81a27859d47ab5cf4d6e4d0db2, type: 2}
   UniversalParent: {fileID: 0}
+  map: {fileID: 109064, guid: e0ae6c3b54903e045a2d7a9b46e802ef, type: 2}
   maxIslands: 40
-  islandSpace: 20
+  islandSpace: 100
   goalSpace: 100
   maxIterationFactor: 100
+  islandsPlaced: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -9,23 +9,24 @@ public class PlayerBoatController : MonoBehaviour {
 	public float turnSpeed = 0.2f;
 	private int moveRate = 1;
     public float minDistToPoint;
-	public float encounterRange = 5;
+	public float encounterRange = 15;
+    public float visionRange = 50;
 	public ResourceManager resource;
 	public GameObject islandParkedAt;
+    public bool anchored;
     // vertices in a line the boat must follow
     public Queue<Vector3> vertices;
     public int vertexIndex = 0;
     //distance to vertex for it to be counted as explored
     public float vertexDist = 0.1f;
     public Vector2 dir;
-   
-
-	
-	public bool paused = false;
+    public GameObject[] islands;
+    public bool paused = false;
 	
 	// Use this for initialization
 	void Start () {
 	    resource = GetComponent<ResourceManager>();
+        vertices = new Queue<Vector3>();
     }
 	
     void Update()
@@ -52,8 +53,24 @@ public class PlayerBoatController : MonoBehaviour {
     }
 	// Update is called once per frame
 	void FixedUpdate () {
-	    if(!paused)
+	    if(!paused && !anchored)
 	    {
+            if(islands.Length == 0)
+            {
+                islands = EventManagement.gameController.islands;
+            }
+
+            for (int i = 0; i < islands.Length; i++)
+            {
+                if (islands[i]!=null)
+                {
+                    if ((islands[i].transform.position - transform.position).magnitude <= visionRange)
+                    {
+                        islands[i].gameObject.SetActive(true);
+                    }
+                }
+            }
+
             if (0 < vertices.Count)
             {
                 dir = (vertices.Peek() - transform.position);
@@ -125,26 +142,36 @@ public class PlayerBoatController : MonoBehaviour {
 	}
 	
 	//used for anchoring
-	public void togglePause()
+	public void toggleAnchor()
 	{
-		if(paused)
+		if(anchored)
 		{
-			paused = false;
+			anchored = false;
 		}
 		
-		else if(!paused)
+		else if(!anchored)
 		{
-			paused = true;
-			Collider[] objectsNear = Physics.OverlapSphere(transform.position, encounterRange);
+			anchored = true;
+			Collider2D[] objectsNear = Physics2D.OverlapCircleAll(transform.position, encounterRange);
 			for(int i = 0; i< objectsNear.Length;i++)
 			{
 				if (objectsNear[i].gameObject.tag.Equals("Island"))
 				{
 				islandParkedAt = objectsNear[i].gameObject;
 				islandParkedAt.GetComponent<IslandEventScript>().HaveEvent();
-				}
+                }
 			
 			}
+
+            objectsNear = Physics2D.OverlapCircleAll(transform.position, visionRange);
+            for (int i = 0; i < objectsNear.Length; i++)
+            {
+                if (objectsNear[i].gameObject.tag.Equals("Island"))
+                {
+                    objectsNear[i].GetComponent<SpriteRenderer>().enabled = true;
+                }
+
+            }
 		}
 	}
 }

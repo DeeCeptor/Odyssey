@@ -137,7 +137,9 @@ MonoBehaviour:
   g_score: 0
   came_from: {fileID: 0}
   h_name: 
-  h_description: 
+  h_description: 'Relatively flat grassland. Provides no strategic bonus.
+
+    Costs 1 movement to enter.'
   cost_to_enter_hex: 1
   impassable: 0
   deployment_zone: 0
@@ -234,6 +236,12 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Radius
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: h_description
+      value: 'Relatively flat grassland. Provides no strategic bonus.
+
+        Costs 1 movement to enter.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

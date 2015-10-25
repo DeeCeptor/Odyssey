@@ -20,7 +20,7 @@ public class IslandEventFunctions : MonoBehaviour {
 	
 	}
 	
-	public void Camp()
+	public void Upgrade()
 	{
 		
 	}

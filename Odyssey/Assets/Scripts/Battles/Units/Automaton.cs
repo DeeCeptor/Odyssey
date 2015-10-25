@@ -9,6 +9,6 @@ public class Automaton : Unit
     {
         base.AssignAbilities();
 
-        //abilities.Add(new HorseOfPoseidon(this));
+        abilities.Add(new Overload(this));
     }
 }

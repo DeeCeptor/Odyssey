@@ -9,6 +9,6 @@ public class Slinger : Unit
     {
         base.AssignAbilities();
 
-        abilities.Add(new ShotOfLegends(this));
+        abilities.Add(new HitAndRun(this));
     }
 }

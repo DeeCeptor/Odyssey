@@ -9,6 +9,6 @@ public class CentaurWarrior : Unit
     {
         base.AssignAbilities();
 
-        abilities.Add(new BullCharge(this));
+        abilities.Add(new HorseOfPoseidon(this));
     }
 }

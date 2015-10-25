@@ -73,6 +73,7 @@ public class PreBattleDeployment : MonoBehaviour
             deployable_units.Add("Minotaur", 4);
             deployable_units.Add("CentaurWarrior", 4);
             deployable_units.Add("CentaurMarksman", 4);
+            deployable_units.Add("Peltast", 4);
         }
 
 
@@ -86,7 +87,7 @@ public class PreBattleDeployment : MonoBehaviour
             string unit_name = pair.Key;
             button.onClick.AddListener(() => SelectUnitFromDeploymentMenu(unit_name, button));
             Text text = newButton.GetComponentInChildren<Text>();
-            text.text = pair.Key + " x " + pair.Value;
+			text.text = pair.Value + "";//pair.Key + " x " + pair.Value;
             newButton.transform.SetParent(deployable_panel);
             newButton.transform.localScale = new Vector3(1, 1, 1);
 
@@ -126,7 +127,8 @@ public class PreBattleDeployment : MonoBehaviour
         if (Input.GetMouseButtonDown(1)
             && !EventSystem.current.IsPointerOverGameObject()
             && PlayerInterface.player_interface.highlighted_hex != null
-            && PlayerInterface.player_interface.highlighted_hex.occupying_unit != null)
+            && PlayerInterface.player_interface.highlighted_hex.occupying_unit != null
+			&& PlayerInterface.player_interface.highlighted_hex.occupying_unit.owner == BattleManager.battle_manager.player_faction)
         {
             UndeployUnit();
         }
@@ -206,7 +208,7 @@ public class PreBattleDeployment : MonoBehaviour
 
     public void SetDeployButtonText(string unit_name, int number_available)
     {
-        deployable_panel.FindChild(unit_name).GetComponentInChildren<Text>().text = unit_name + " x " + number_available;
+        deployable_panel.FindChild(unit_name).GetComponentInChildren<Text>().text = "" + number_available;
     }
 
 

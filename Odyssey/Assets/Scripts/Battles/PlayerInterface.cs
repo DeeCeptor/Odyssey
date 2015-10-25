@@ -18,6 +18,7 @@ public class PlayerInterface : MonoBehaviour
     public GameObject pause_menu;
     public GameObject summary_screen;
     public Text summary_screen_title;
+	public Text summary_screen_summary;
 
     // Battle prediction panel
     public GameObject battle_prediction_panel;
@@ -53,6 +54,13 @@ public class PlayerInterface : MonoBehaviour
     public Unit selected_unit;
     [HideInInspector]
     public Hex highlighted_hex;
+
+	public Color highlight_hex_movement;
+	public Color highlight_non_hex_movement;
+	public Color highlight_hex_attack;
+	public Color highlight_non_hex_attack;
+
+	public Color mouse_highlight_color;
 
     private bool can_select = true;
     private bool is_rotating_unit = false;
@@ -135,14 +143,14 @@ public class PlayerInterface : MonoBehaviour
             {
                 if (HexMap.hex_map.InRange(unit.location, enemy.location, unit.GetRange()))
                 {
-                    enemy.location.HighlightAttackableHex();
+                    enemy.location.HighlightAttackableHex(!unit.has_attacked && unit.active);
                 }
             }
         }
 
         UnhighlightHexes();
 
-        unit.HighlightHexesWeCanMoveTo();
+        unit.HighlightHexesWeCanMoveTo(unit.has_moved);
 
         HighlightAttacksFrom(unit, unit.location);
     }
@@ -184,6 +192,8 @@ public class PlayerInterface : MonoBehaviour
             text.text = ability.ability_name;
             newButton.transform.SetParent(ability_panel.transform);
             newButton.transform.localScale = new Vector3(1, 1, 1);
+			AbilityButton a_button = newButton.GetComponent<AbilityButton>();
+			a_button.ability = ability;
 
             if (!ability.CanCastAbility())
                 button.interactable = false;
@@ -320,7 +330,7 @@ public class PlayerInterface : MonoBehaviour
             {
                 if (HexMap.hex_map.InRange(hex, enemy.location, unit.GetRange()))
                 {
-                    enemy.location.HighlightAttackableHex();
+                    enemy.location.HighlightAttackableHex(!unit.has_attacked && unit.active);
                 }
             }
         }
@@ -334,7 +344,7 @@ public class PlayerInterface : MonoBehaviour
                 if (HexMap.hex_map.InRange(hex, enemy.location, unit.GetRange())
                     || HexMap.hex_map.InRange(unit.location, enemy.location, unit.GetRange()))
                 {
-                    enemy.location.HighlightAttackableHex();
+                    enemy.location.HighlightAttackableHex(!unit.has_attacked && unit.active);
                 }
             }
         }
@@ -379,11 +389,24 @@ public class PlayerInterface : MonoBehaviour
     }
 
 
+    public GameObject CreateAttackObject(Vector3 position, Vector3 text_offset, Hex target,float velocity, string text, float time_to_die)
+    {
+        GameObject instance = Instantiate(Resources.Load("Battles/AttackObject", typeof(GameObject))) as GameObject;
+        instance.transform.parent = BattleManager.battle_manager.universal_battle_parent.transform;
+        instance.transform.position = position;
+        AttackObject obj = instance.GetComponent<AttackObject>();
+        obj.offset = text_offset;
+        obj.speed = velocity;
+        obj.string_to_display = text;
+        obj.text_duration = time_to_die;
+        obj.hex_to_go_towards = target;
+        return instance;
+    }
     public void CreateFloatingText(Vector3 position, string text, bool random_velocity, float time_to_die)
     {
         GameObject instance = Instantiate(Resources.Load("FloatingText", typeof(GameObject))) as GameObject;
         instance.transform.parent = BattleManager.battle_manager.universal_battle_parent.transform;
-        position.z = -6;
+        position.z = -8;
         instance.transform.position = position;
         instance.GetComponent<TextMesh>().text = text;
         instance.GetComponent<Rigidbody2D>().velocity = Vector2.up;
@@ -412,21 +435,38 @@ public class PlayerInterface : MonoBehaviour
         // Set the text of the casualties
         // Show the player casualties
         string text = "";
+        int total_casualties = 0;
+        int total_wounded = 0;
+        int total_killed = 0;
         foreach (KeyValuePair<string, Casualty> entry in PersistentBattleSettings.battle_settings.casualties[BattleManager.battle_manager.player_faction.faction_ID])
         {
             Casualty casualty = entry.Value;
             text += casualty.name + "\t" + casualty.num_wounded + " wounded, " + casualty.num_killed + " dead\n";
-            PlayerLosses.text = text;
+            total_casualties += casualty.num_wounded + casualty.num_killed;
+            total_killed += casualty.num_killed;
+            total_wounded += casualty.num_wounded;
         }
+        text += "\nTotal wounded: " + total_wounded + ", Total dead: " + total_killed + "\n";
+        text += "Total casualties: " + total_casualties;
+        PlayerLosses.text = text;
+
 
         // Show the enemy casualties
         text = "";
+        total_casualties = 0;
+        total_wounded = 0;
+        total_killed = 0;
         foreach (KeyValuePair<string, Casualty> entry in PersistentBattleSettings.battle_settings.casualties[BattleManager.battle_manager.enemy_faction.faction_ID])
         {
             Casualty casualty = entry.Value;
             text += casualty.name + "\t" + casualty.num_wounded + " wounded, " + casualty.num_killed + " dead\n";
-            EnemyLosses.text = text;
+            total_casualties += casualty.num_wounded + casualty.num_killed;
+            total_killed += casualty.num_killed;
+            total_wounded += casualty.num_wounded;
         }
+        text += "\nTotal wounded: " + total_wounded + ", Total dead: " + total_killed + "\n";
+        text += "Total casualties: " + total_casualties;
+        EnemyLosses.text = text;
 
         summary_screen.SetActive(true);
     }
