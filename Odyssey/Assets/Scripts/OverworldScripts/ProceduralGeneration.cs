@@ -11,6 +11,7 @@ public GameObject[] npcs;
 public GameObject eventController;
 public GameObject ui;
 public GameObject UniversalParent;
+    public GameObject map;
 
 public int maxIslands = 40;
 public float islandSpace = 50;
@@ -47,6 +48,8 @@ GameObject curIsland;
         GameObject newUI = (GameObject)Instantiate(ui, transform.position, transform.rotation);
         newUI.transform.parent = UniversalParent.transform;
         ocean = (GameObject)Instantiate(ocean, transform.position, transform.rotation);
+        GameObject cam = (GameObject)Instantiate(map, new Vector3(transform.position.x,transform.position.y,100), transform.rotation);
+        cam.transform.Rotate(transform.up,180);
         ocean.transform.parent = UniversalParent.transform;
         ocean.transform.Rotate(transform.right, 90, Space.Self);
         PlaceGoal();
