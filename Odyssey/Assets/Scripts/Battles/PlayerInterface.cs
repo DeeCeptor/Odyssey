@@ -41,6 +41,8 @@ public class PlayerInterface : MonoBehaviour
     public Slider defence_bar;
     public Text ranged_defence_text;
     public Slider ranged_defence_bar;
+	public Text attack_range_text;
+	public Slider attack_range_bar;
     public Text movement_text;
     public Slider movement_bar;
 
@@ -127,7 +129,7 @@ public class PlayerInterface : MonoBehaviour
     public void UnitSelected(Unit unit)
     {
         //UnitDeselected();
-
+		StopRotatingUnit();
         ShowUnitStatsPanel(unit);
 
         if (unit.owner == BattleManager.battle_manager.current_player)
@@ -187,6 +189,7 @@ public class PlayerInterface : MonoBehaviour
             GameObject newButton = Instantiate(Resources.Load("Battles/AbilityButton", typeof(GameObject))) as GameObject;
             newButton.name = ability.ability_name + "Button";
             Button button = newButton.GetComponent<Button>();
+			button.image.sprite = ability.icon;
             button.onClick.AddListener(() => ability.TryToCastAbility());
             Text text = newButton.GetComponentInChildren<Text>();
             text.text = ability.ability_name;
@@ -249,6 +252,7 @@ public class PlayerInterface : MonoBehaviour
         SetRangedDefenceText(unit);
         SetDamageText(unit);
         SetPiercingDamageText(unit);
+		SetRangeText(unit);
         SetMovementText(unit);
     }
     public void HideUnitStatsPanel()
@@ -291,6 +295,11 @@ public class PlayerInterface : MonoBehaviour
         piercing_damage_text.text = "Piercing Damage: " + unit.GetPiercingDamage();
         piercing_damage_bar.value = unit.GetPiercingDamage() / 200.0f;
     }
+	public void SetRangeText(Unit unit)
+	{
+		attack_range_text.text = "Attack Range: " + unit.GetRange();
+		attack_range_bar.value = (float) unit.GetRange() / 5.0f;
+	}
     public void SetMovementText(Unit unit)
     {
         movement_text.text = "Movement Speed: " + unit.GetMovement();

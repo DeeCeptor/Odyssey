@@ -43,7 +43,7 @@ public class PreBattleDeployment : MonoBehaviour
             foreach (KeyValuePair<string, int> pair in TroopManager.playerTroops.healthy)
             {
                 if (pair.Value > 0)
-                    deployable_units.Add(pair.Key, pair.Value / 10);
+                    deployable_units.Add(pair.Key, pair.Value);
             }
 
             // Add available non-wounded heroes to be deployed
@@ -64,37 +64,44 @@ public class PreBattleDeployment : MonoBehaviour
             // Setting up debug available units
             Debug.Log("Setting available debug units");
 
-            deployable_units.Add("Hoplite", 4);
-            deployable_units.Add("Cavalry", 4);
-            deployable_units.Add("Archer", 4);
-            deployable_units.Add("Slinger", 4);
-            deployable_units.Add("Swordsman", 4);
-            deployable_units.Add("Cyclops", 4);
-            deployable_units.Add("Minotaur", 4);
-            deployable_units.Add("CentaurWarrior", 4);
-            deployable_units.Add("CentaurMarksman", 4);
-            deployable_units.Add("Peltast", 4);
+            deployable_units.Add("Hoplite", 10);
+            deployable_units.Add("Cavalry", 10);
+            deployable_units.Add("Archer", 10);
+            deployable_units.Add("Slinger", 10);
+            deployable_units.Add("Swordsman", 10);
+            deployable_units.Add("Cyclops", 10);
+            deployable_units.Add("Minotaur", 10);
+            deployable_units.Add("CentaurWarrior", 10);
+            deployable_units.Add("CentaurMarksman", 10);
+            deployable_units.Add("Peltast", 10);
         }
 
 
         // Populate the buttons to spawn units
-        foreach (KeyValuePair<string, int> pair in deployable_units)
+		// At the start the value of the pair is the number of healthy individuals of that category
+        
+		Dictionary<string, int> temp_units = new Dictionary<string, int>();
+		foreach (KeyValuePair<string, int> pair in deployable_units)
         {
             GameObject newButton = Instantiate(deploy_unit_button) as GameObject;
             newButton.name = pair.Key;
             Button button = newButton.GetComponent<Button>();
-            Debug.Log(pair.Key + " x " + pair.Value);
-            string unit_name = pair.Key;
+
+			Debug.Log(pair.Key + " x " + pair.Value);
+			string unit_name = pair.Key;
+
+			// Set the button image by instantiating a unit and then grabbing its sprite
+			GameObject instance = Instantiate(Resources.Load("Battles/Units/" + unit_name, typeof(GameObject))) as GameObject;
+			Unit unit = instance.GetComponent<Unit>();
+			button.image.sprite = unit.portrait;
+			int num_deployable_squads = pair.Value / unit.normal_squad_size;
+			temp_units.Add(pair.Key, num_deployable_squads);
+
             button.onClick.AddListener(() => SelectUnitFromDeploymentMenu(unit_name, button));
             Text text = newButton.GetComponentInChildren<Text>();
-			text.text = pair.Value + "";//pair.Key + " x " + pair.Value;
+			text.text = num_deployable_squads + "";//pair.Key + " x " + pair.Value;
             newButton.transform.SetParent(deployable_panel);
             newButton.transform.localScale = new Vector3(1, 1, 1);
-
-            // Set the button image by instantiating a unit and then grabbing its sprite
-            GameObject instance = Instantiate(Resources.Load("Battles/Units/" + unit_name, typeof(GameObject))) as GameObject;
-            Unit unit = instance.GetComponent<Unit>();
-            button.image.sprite = unit.portrait;
 
             GameObject.Destroy(instance);
 
@@ -102,6 +109,7 @@ public class PreBattleDeployment : MonoBehaviour
                 button.interactable = false;
         }
 
+		deployable_units = temp_units;
         SetUnitsRemainingText();
     }
 
