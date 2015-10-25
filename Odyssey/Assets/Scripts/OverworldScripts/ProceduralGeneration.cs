@@ -23,6 +23,7 @@ float islandYWidth;
 int islandCounter = 0;
 Vector3 curPosition;
 GameObject curIsland;
+    public GameObject[] islandsPlaced;
 
 
 	
@@ -31,6 +32,7 @@ GameObject curIsland;
 
 	// Use this for initialization
 	void Start () {
+        islandsPlaced = new GameObject[maxIslands + 1];
         UniversalParent = GameObject.FindGameObjectWithTag("UniversalParent");
 	    GenerateWorld();
 	}
@@ -50,7 +52,8 @@ GameObject curIsland;
         PlaceGoal();
 	    PlaceIslands();
 	    PlacePlayer();
-    	Instantiate(eventController);
+    	GameObject eventHandler = (GameObject)Instantiate(eventController);
+        eventHandler.GetComponent<EventManagement>().islands = islandsPlaced;
 	    
     }
 	
@@ -64,6 +67,7 @@ GameObject curIsland;
         goal = (GameObject)Instantiate(goal, curPosition, transform.rotation);
         goal.transform.parent = UniversalParent.transform;
         islandCounter = islandCounter + 1;
+        islandsPlaced[0] = goal;
     }
 
     public void PlacePlayer()
@@ -117,20 +121,22 @@ GameObject curIsland;
 		islandYWidth = curIsland.GetComponent<Renderer>().bounds.extents.y;
 		curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 5);
 
-            Collider2D[] objectsNear = Physics2D.OverlapCircleAll(curPosition, islandSpace);
-            for (int x = 0; x< objectsNear.Length;x++)
-		{
-			if (objectsNear[x].gameObject.tag.Equals("Island"))
-			{
-				noGood = true;
-			}
-		}
-		
-		if(!noGood)
+            for (int x = 0; x < islandsPlaced.Length; x++)
+            {
+                if (islandsPlaced[x] != null)
+                {
+                    if ((islandsPlaced[x].transform.position - curPosition).magnitude <= islandSpace)
+                    {
+                        noGood = true;
+                    }
+                }
+            }
+        if (!noGood)
 		{
                 GameObject newIsland = (GameObject)Instantiate(curIsland, curPosition, transform.rotation);
                 newIsland.transform.parent = UniversalParent.transform;
                 islandCounter = islandCounter+1;
+                islandsPlaced[islandCounter] = newIsland;
 		}
 		
 		noGood = false;

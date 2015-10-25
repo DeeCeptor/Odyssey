@@ -27,6 +27,7 @@ public class HeroStats : MonoBehaviour
 	public int spear = 0;
 	public int sword = 0;
 	public int bow = 0;
+    public int experience = 0;
     public Hero_Weapon_Skill_Types weaponType = Hero_Weapon_Skill_Types.Ranged;     // For the demo at least, each hero is limited to 1 type of wapon they used, and gain abilities based on that category
 	
 	

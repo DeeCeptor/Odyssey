@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class TroopManager : MonoBehaviour {
-    public int totalTroops = 100;
-    public int startingHoplite = 20;
-    public int startingSwordsman = 20;
+    public int totalTroops = 60;
+    public int startingHoplite = 10;
+    public int startingSwordsman = 10;
     public int startingArcher = 10;
     public int startingCavalry = 10;
     public int startingSlinger = 10;
+    public int startingPeltast = 10;
     public Dictionary<string, int> healthy = new Dictionary<string, int>();
     public Dictionary<string, int> wounded = new Dictionary<string, int>();
     public GameObject[] heroes;
@@ -22,12 +23,14 @@ public class TroopManager : MonoBehaviour {
         healthy.Add("Swordsman", startingSwordsman);
         healthy.Add("Cavalry", startingCavalry);
         healthy.Add("Slinger", startingSlinger);
+        healthy.Add("Peltast", startingPeltast);
 
         wounded.Add("Hoplite", 0);
         wounded.Add("Archer", 0);
         wounded.Add("Swordsman", 0);
         wounded.Add("Cavalry", 0);
         wounded.Add("Slinger", 0);
+        wounded.Add("Peltast", 0);
     }
 	
 	// Update is called once per frame
@@ -42,12 +45,14 @@ public class TroopManager : MonoBehaviour {
         Dictionary<string, int>.ValueCollection woundedUnits = wounded.Values;
         troopNums = new int[healthyUnits.Count + woundedUnits.Count];
         healthyUnits.CopyTo(troopNums, 0);
-        woundedUnits.CopyTo(troopNums, troopNums.Length);
+        woundedUnits.CopyTo(troopNums, troopNums.Length-1);
         for(int i = 0; i < troopNums.Length;i++)
         {
             troops = troops + troopNums[i];
         }
+        totalTroops = troops;
         return troops;
+
     }
 
     public int getWoundedTroopNum()
@@ -412,5 +417,10 @@ public class TroopManager : MonoBehaviour {
         {
             return false;
         }
+    }
+
+    public void GiveExperience(int Experience)
+    {
+
     }
 }

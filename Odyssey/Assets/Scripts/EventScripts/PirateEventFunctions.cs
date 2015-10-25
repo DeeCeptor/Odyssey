@@ -54,6 +54,7 @@ public class PirateEventFunctions : MonoBehaviour {
 		}
 		else if(sucessCheck > 0 && sucessCheck <=70)
 		{
+            Fight();
 			choiceManager.Change_Conversation(failureConversation.GetComponent<ConversationManager>());
 		}
 	}

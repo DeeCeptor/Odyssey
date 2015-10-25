@@ -14,24 +14,36 @@ public class OverworldEnemyScript : MonoBehaviour {
 	public int direction = 1;
 	public bool paused = false;
 	public EventManagement eventHandler;
+    public PlayerBoatController playerStats;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		eventHandler = GameObject.FindGameObjectWithTag("EventController").GetComponent<EventManagement>();
+        playerStats = player.GetComponent<PlayerBoatController>();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 	if(!paused)
 	{
-		if((transform.position - player.transform.position).magnitude < sightLine)
+        if ((transform.position - player.transform.position).magnitude < playerStats.visionRange)
+        {
+             GetComponent<Renderer>().enabled = true;
+        }
+
+        else
+        {
+            GetComponent<Renderer>().enabled = false;
+        }
+
+        if ((transform.position - player.transform.position).magnitude < sightLine)
 		{
                 Vector3 diff = player.transform.position - transform.position;
                 float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
 
-            }
+        }
 		
 		else
 		{

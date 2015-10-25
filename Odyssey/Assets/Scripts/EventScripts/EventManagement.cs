@@ -16,6 +16,7 @@ public class EventManagement : MonoBehaviour {
 	public GameObject[] forestExploreEventList;
 	public GameObject[] desertExploreEventList;
 	public GameObject[] tropicalExploreEventList;
+    public GameObject[] islands;
 	
 	public int framesPerCheckRegular = 240;
 	public int framesPerCheck = 240;

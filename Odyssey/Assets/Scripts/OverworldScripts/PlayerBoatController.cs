@@ -10,6 +10,7 @@ public class PlayerBoatController : MonoBehaviour {
 	private int moveRate = 1;
     public float minDistToPoint;
 	public float encounterRange = 15;
+    public float visionRange = 50;
 	public ResourceManager resource;
 	public GameObject islandParkedAt;
     public bool anchored;
@@ -19,10 +20,8 @@ public class PlayerBoatController : MonoBehaviour {
     //distance to vertex for it to be counted as explored
     public float vertexDist = 0.1f;
     public Vector2 dir;
-   
-
-	
-	public bool paused = false;
+    public GameObject[] islands;
+    public bool paused = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -56,6 +55,22 @@ public class PlayerBoatController : MonoBehaviour {
 	void FixedUpdate () {
 	    if(!paused && !anchored)
 	    {
+            if(islands.Length == 0)
+            {
+                islands = EventManagement.gameController.islands;
+            }
+
+            for (int i = 0; i < islands.Length; i++)
+            {
+                if (islands[i]!=null)
+                {
+                    if ((islands[i].transform.position - transform.position).magnitude <= visionRange)
+                    {
+                        islands[i].gameObject.SetActive(true);
+                    }
+                }
+            }
+
             if (0 < vertices.Count)
             {
                 dir = (vertices.Peek() - transform.position);
@@ -144,11 +159,19 @@ public class PlayerBoatController : MonoBehaviour {
 				{
 				islandParkedAt = objectsNear[i].gameObject;
 				islandParkedAt.GetComponent<IslandEventScript>().HaveEvent();
-                    Debug.Log(objectsNear[i].gameObject.name);
                 }
 			
 			}
-            Debug.Log(objectsNear.Length.ToString());
+
+            objectsNear = Physics2D.OverlapCircleAll(transform.position, visionRange);
+            for (int i = 0; i < objectsNear.Length; i++)
+            {
+                if (objectsNear[i].gameObject.tag.Equals("Island"))
+                {
+                    objectsNear[i].GetComponent<SpriteRenderer>().enabled = true;
+                }
+
+            }
 		}
 	}
 }

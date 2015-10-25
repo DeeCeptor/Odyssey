@@ -17,7 +17,10 @@ public class PopulateScrollView : MonoBehaviour {
 	
 	// Update is called once per frame
 	void OnEnable () {
-        
+        var children = new List<GameObject>();
+        foreach (Transform child in transform) children.Add(child.gameObject);
+        children.ForEach(child => Destroy(child));
+
         Dictionary<string, int>.KeyCollection keys = TroopManager.playerTroops.healthy.Keys;
         Dictionary<string, int>.ValueCollection healthyUnits = TroopManager.playerTroops.healthy.Values;
         Dictionary<string, int>.ValueCollection woundedUnits = TroopManager.playerTroops.wounded.Values;
@@ -36,7 +39,11 @@ public class PopulateScrollView : MonoBehaviour {
             button.transform.SetParent(transform,false);
             GameObject unit = (GameObject)Resources.Load("Battles/Units/" + curKey);
             Unit unitStats = unit.GetComponent<Unit>();
-            button.GetComponent<Button>().onClick.AddListener(() => ChangeUnitStats.unitPanel.changeStats(curKey));
+            string unitName = curKey;
+            button.GetComponent<Button>().onClick.AddListener(() => ChangeUnitStats.unitPanel.changeStats(unitName));
+            button.GetComponent<Image>().sprite = unitStats.portrait;
+            button.transform.FindChild("UnitName").GetComponent<Text>().text = unitStats.u_name;
+            button.transform.FindChild("TroopNums").GetComponent<Text>().text = healthyTroopNums[i].ToString() + "/" + woundedTroopNums[i].ToString() + "/" + (woundedTroopNums[i] + healthyTroopNums[i]).ToString();
         }
 
 
