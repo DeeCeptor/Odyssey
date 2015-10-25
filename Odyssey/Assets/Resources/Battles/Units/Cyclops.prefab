@@ -352,11 +352,13 @@ MonoBehaviour:
   normal_squad_size: 1
   remaining_individuals: 1
   u_name: Cyclops
-  u_description: CYCLOPS!
+  u_description: This hulking brute needs no weapons to brush aside pesky humans,
+    although some armour wouldn't go amiss.
   portrait: {fileID: 21300000, guid: aba8f6a17d028bb4cbcba0d7dbbc5621, type: 3}
   prefab_name: Cyclops
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
+  projectile_sprite: {fileID: 0}
 --- !u!212 &21201656
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -9,6 +9,6 @@ public class Javelinmen : Unit
     {
         base.AssignAbilities();
 
-        abilities.Add(new PiercingShot(this));
+        abilities.Add(new ShotOfLegends(this));
     }
 }

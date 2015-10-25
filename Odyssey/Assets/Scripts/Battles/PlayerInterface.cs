@@ -18,6 +18,7 @@ public class PlayerInterface : MonoBehaviour
     public GameObject pause_menu;
     public GameObject summary_screen;
     public Text summary_screen_title;
+	public Text summary_screen_summary;
 
     // Battle prediction panel
     public GameObject battle_prediction_panel;
@@ -53,6 +54,13 @@ public class PlayerInterface : MonoBehaviour
     public Unit selected_unit;
     [HideInInspector]
     public Hex highlighted_hex;
+
+	public Color highlight_hex_movement;
+	public Color highlight_non_hex_movement;
+	public Color highlight_hex_attack;
+	public Color highlight_non_hex_attack;
+
+	public Color mouse_highlight_color;
 
     private bool can_select = true;
     private bool is_rotating_unit = false;
@@ -135,14 +143,14 @@ public class PlayerInterface : MonoBehaviour
             {
                 if (HexMap.hex_map.InRange(unit.location, enemy.location, unit.GetRange()))
                 {
-                    enemy.location.HighlightAttackableHex();
+                    enemy.location.HighlightAttackableHex(!unit.has_attacked && unit.active);
                 }
             }
         }
 
         UnhighlightHexes();
 
-        unit.HighlightHexesWeCanMoveTo();
+        unit.HighlightHexesWeCanMoveTo(unit.has_moved);
 
         HighlightAttacksFrom(unit, unit.location);
     }
@@ -184,6 +192,8 @@ public class PlayerInterface : MonoBehaviour
             text.text = ability.ability_name;
             newButton.transform.SetParent(ability_panel.transform);
             newButton.transform.localScale = new Vector3(1, 1, 1);
+			AbilityButton a_button = newButton.GetComponent<AbilityButton>();
+			a_button.ability = ability;
 
             if (!ability.CanCastAbility())
                 button.interactable = false;
@@ -320,7 +330,7 @@ public class PlayerInterface : MonoBehaviour
             {
                 if (HexMap.hex_map.InRange(hex, enemy.location, unit.GetRange()))
                 {
-                    enemy.location.HighlightAttackableHex();
+                    enemy.location.HighlightAttackableHex(!unit.has_attacked && unit.active);
                 }
             }
         }
@@ -334,7 +344,7 @@ public class PlayerInterface : MonoBehaviour
                 if (HexMap.hex_map.InRange(hex, enemy.location, unit.GetRange())
                     || HexMap.hex_map.InRange(unit.location, enemy.location, unit.GetRange()))
                 {
-                    enemy.location.HighlightAttackableHex();
+                    enemy.location.HighlightAttackableHex(!unit.has_attacked && unit.active);
                 }
             }
         }

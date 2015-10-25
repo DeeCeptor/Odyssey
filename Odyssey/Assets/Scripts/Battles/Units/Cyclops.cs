@@ -9,6 +9,6 @@ public class Cyclops : Unit
     {
         base.AssignAbilities();
 
-        abilities.Add(new BullCharge(this));
+        abilities.Add(new Sweep(this));
     }
 }

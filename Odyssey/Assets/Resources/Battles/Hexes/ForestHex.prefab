@@ -137,8 +137,8 @@ MonoBehaviour:
   g_score: 0
   came_from: {fileID: 0}
   h_name: Forest
-  h_description: A thick grove of trees that provides excellent cover against ranged
-    attacks.
+  h_description: "A thick grove of trees that provides excellent cover against ranged
+    attacks.\n+10% Defence and 50% Ranged Defence. \nCosts 2 movement to enter."
   cost_to_enter_hex: 2
   impassable: 0
   deployment_zone: 0
@@ -238,7 +238,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: h_description
-      value: A thick grove of trees that provides excellent cover against ranged attacks.
+      value: "A thick grove of trees that provides excellent cover against ranged
+        attacks.\n+10% Defence and 50% Ranged Defence. \nCosts 2 movement to enter."
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: melee_score

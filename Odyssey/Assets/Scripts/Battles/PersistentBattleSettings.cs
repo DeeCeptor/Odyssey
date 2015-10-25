@@ -28,7 +28,8 @@ public class PersistentBattleSettings : MonoBehaviour
 
     // POST BATTLE INFORMATION
     public bool victory;    // Did we win?
-    public bool hero_went_down; // Did our hero die? Perhaps used to write different after-battle reports.
+	public bool game_over = false;	// Did this battle result in all units being casualties while Odysseus was deployed?
+	public bool hero_went_down = false; // Did our hero die? Perhaps used to write different after-battle reports.
 
     // Overall statistics
     // Accessed by using the faction's ID in the arrays below. Player faction is always 1. Enemy faction is 2. 0 is unused.

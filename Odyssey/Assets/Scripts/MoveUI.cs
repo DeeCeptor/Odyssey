@@ -21,7 +21,13 @@ public class MoveUI : MonoBehaviour
 
     void Awake ()
     {
-        transition_UI = this;
+		if (MoveUI.transition_UI == null)
+        	transition_UI = this;
+		else 
+		{
+			// There's another moveUI, destroy this one
+			Destroy(this.transform.parent.gameObject);
+		}
     }
 
 

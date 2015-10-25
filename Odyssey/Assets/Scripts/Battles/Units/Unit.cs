@@ -97,6 +97,7 @@ public class Unit : MonoBehaviour
     public int remaining_individuals = 5;   // Heroes and some myth units only ever have 1 guy
 
     public string u_name = ""; // Name at the top of the unit panel
+	[TextArea(3,10)]
     public string u_description = "";  // Short description of the unit
     public Sprite portrait;    // Unit portrait
     public string prefab_name;  // Exact name needed to load the prefab
@@ -394,6 +395,7 @@ public class Unit : MonoBehaviour
     public void RetreatUnit()
     {
         Debug.Log("Retreating unit " + u_name);
+		BattleManager.battle_manager.none_retreated = false;
 
         // Change status to having retreated
         PersistentBattleSettings.battle_settings.units_retreated[this.owner.faction_ID]++;
@@ -463,11 +465,11 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void HighlightHexesWeCanMoveTo()
+    public void HighlightHexesWeCanMoveTo(bool can_move)
     {
         foreach (Hex hex in this.tiles_I_can_move_to)
         {
-            hex.HighlightMoveHex();
+			hex.HighlightMoveHex(!this.has_moved && active);
         }
     }
 
@@ -634,6 +636,7 @@ public class Unit : MonoBehaviour
             if (remaining_attacks_this_turn <= 0)
             {
                 has_attacked = true;
+				has_moved = true;
                 //active = false;
             }
 
@@ -649,6 +652,7 @@ public class Unit : MonoBehaviour
             && HexMap.hex_map.InRange(this.location, victim.location, attack_range))
         {
             victim.TakeHit(this, false);
+			AttackAnimation();
         }
     }
     public float TakeHit(Unit attacker, bool attack_is_counterable)
@@ -657,7 +661,7 @@ public class Unit : MonoBehaviour
 
         int modified_damage = (int) CalculateDamage(attacker, attacker.location);
         health -= (int) modified_damage;
-        Debug.Log(u_name + " took " + modified_damage + " damage, " + " Flanking: " + !IsFacing(attacker) + ", " + GetHealth() + " HP remaining from " + attacker.u_name);
+        //Debug.Log(u_name + " took " + modified_damage + " damage, " + " Flanking: " + !IsFacing(attacker) + ", " + GetHealth() + " HP remaining from " + attacker.u_name);
 
         // Show floating damage text
         int num_died = 0;
@@ -673,7 +677,7 @@ public class Unit : MonoBehaviour
 
             PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
 
-            Debug.Log(modified_damage + ", HP per individual: " + HP_per_individual + " num died: " + num_died);
+            //Debug.Log(modified_damage + ", HP per individual: " + HP_per_individual + " num died: " + num_died);
         }
         else
         {

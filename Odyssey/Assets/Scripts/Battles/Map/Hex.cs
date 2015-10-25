@@ -18,9 +18,6 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     public Unit occupying_unit;     // Unit that's on this hex, if there is one
 
     private SpriteRenderer aura;
-	private Color highlighted_move_color = Color.blue;
-    private Color highlighted_attack_color = Color.red;
-    private Color mouse_highlighted_color = Color.green;
 	private Color previous_color;
 	Color regular_color = Color.white;
 
@@ -34,6 +31,7 @@ public class Hex : MonoBehaviour, IComparable<Hex>
 
     // Properties
     public string h_name;
+	[TextArea(3,10)]
     public string h_description;
     public int cost_to_enter_hex = 1;
     public bool impassable = false;     // If set to true, no unit can ever traverse this hex
@@ -114,15 +112,22 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     }
 
 
-    public void HighlightMoveHex()
+    public void HighlightMoveHex(bool can_currently_move)
     {
         aura.gameObject.SetActive(true);
-		aura.color = highlighted_move_color;
+
+		if (can_currently_move)
+			aura.color = PlayerInterface.player_interface.highlight_hex_movement;
+		else
+			aura.color = PlayerInterface.player_interface.highlight_non_hex_movement;
     }
-    public void HighlightAttackableHex()
+    public void HighlightAttackableHex(bool can_currently_attack)
     {
         aura.gameObject.SetActive(true);
-        aura.color = highlighted_attack_color;
+		if (can_currently_attack)
+			aura.color = PlayerInterface.player_interface.highlight_hex_attack;
+		else
+			aura.color = PlayerInterface.player_interface.highlight_non_hex_attack;
     }
     public void UnhighlightHex()
     {
@@ -131,7 +136,7 @@ public class Hex : MonoBehaviour, IComparable<Hex>
     public void MouseHighlight()
     {
 		previous_color = this.GetComponent<SpriteRenderer>().color;
-		this.GetComponent<SpriteRenderer>().color = mouse_highlighted_color;
+		this.GetComponent<SpriteRenderer>().color = PlayerInterface.player_interface.mouse_highlight_color;
         //previous_material = this.GetComponent<MeshRenderer>().material;
         //this.GetComponent<MeshRenderer>().material = mouse_highlighted_material;
     }

@@ -137,7 +137,10 @@ MonoBehaviour:
   g_score: 0
   came_from: {fileID: 0}
   h_name: Mountain
-  h_description: A tall mountain with sheer cliffs. Impossible to climb and move through.
+  h_description: 'A tall mountain with sheer cliffs. Impossible to climb and move
+    through.
+
+    Units cannot enter this space.'
   cost_to_enter_hex: 99
   impassable: 1
   deployment_zone: 0
@@ -242,7 +245,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: h_description
-      value: A tall mountain with sheer cliffs. Impossible to climb and move through.
+      value: 'A tall mountain with sheer cliffs. Impossible to climb and move through.
+
+        Units cannot enter this space.'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

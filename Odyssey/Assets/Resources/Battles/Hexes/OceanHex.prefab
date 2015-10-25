@@ -137,7 +137,9 @@ MonoBehaviour:
   g_score: 0
   came_from: {fileID: 0}
   h_name: Water
-  h_description: Water too deep to move through.
+  h_description: 'Water that is too deep to swim in while under threat of attack.
+
+    Units cannot enter this space.'
   cost_to_enter_hex: 99
   impassable: 1
   deployment_zone: 0
@@ -230,7 +232,17 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: h_description
+      value: 'Water that is too deep to swim in while under threat of attack.
+
+        Units cannot enter this space.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: h_name
+      value: Water
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152906}

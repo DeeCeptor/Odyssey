@@ -442,10 +442,10 @@ MonoBehaviour:
   normal_defence: .100000001
   normal_ranged_defence: .200000003
   normal_attack_range: 3
-  normal_damage: 30
+  normal_damage: 40
   normal_piercing_damage: 15
-  normal_movement: 5
-  normal_flanking_bonus: .5
+  normal_movement: 6
+  normal_flanking_bonus: 0
   normal_bonus_vs_melee: 0
   normal_bonus_vs_cavalry: 0
   normal_bonus_vs_ranged: 0
@@ -464,10 +464,11 @@ MonoBehaviour:
   rotating: 0
   hero: 0
   is_squad: 1
-  normal_squad_size: 3
-  remaining_individuals: 3
+  normal_squad_size: 2
+  remaining_individuals: 2
   u_name: Centaur Marksman
-  u_description: CENTAUR!
+  u_description: The literal definition of horse archer. Able fire and move away before
+    the enemy realizes what is happening.
   portrait: {fileID: 21300000, guid: 903eda29a33dea64b8dc5ae369678b47, type: 3}
   prefab_name: CentaurMarksman
   unit_menu: {fileID: 0}

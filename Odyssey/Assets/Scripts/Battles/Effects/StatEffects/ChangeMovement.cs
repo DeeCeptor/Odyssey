@@ -21,7 +21,7 @@ public class ChangeMovement : Effect
         Debug.Log("Applying " + receiver.u_name + " for movement " + offset);
         receiver.AdjustMovement((int) offset);
         BattleManager.battle_manager.SetMovableTilesOfUnit(receiver);
-        receiver.HighlightHexesWeCanMoveTo();
+        receiver.HighlightHexesWeCanMoveTo(receiver.has_moved);
 
         base.ApplyEffect();
     }

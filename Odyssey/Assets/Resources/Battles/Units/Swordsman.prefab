@@ -670,7 +670,7 @@ MonoBehaviour:
   normal_defence: .200000003
   normal_ranged_defence: .100000001
   normal_attack_range: 1
-  normal_damage: 100
+  normal_damage: 90
   normal_piercing_damage: 10
   normal_movement: 3
   normal_flanking_bonus: 0
@@ -701,6 +701,7 @@ MonoBehaviour:
   prefab_name: Swordsman
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
+  projectile_sprite: {fileID: 0}
 --- !u!114 &11438388
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -137,7 +137,9 @@ MonoBehaviour:
   g_score: 0
   came_from: {fileID: 0}
   h_name: Swamp
-  h_description: Dense swamp that slows down movement.
+  h_description: 'Dense swamp that is difficult to move through
+
+    Costs 2 movement to enter.'
   cost_to_enter_hex: 2
   impassable: 0
   deployment_zone: 0
@@ -237,7 +239,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: h_description
-      value: Dense swamp that slows down movement.
+      value: 'Dense swamp that is difficult to move through
+
+        Costs 2 movement to enter.'
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Radius

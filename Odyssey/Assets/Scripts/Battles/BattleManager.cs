@@ -18,6 +18,9 @@ public class BattleManager : MonoBehaviour
     public Faction current_player;     // Whose turn it currently is
     Queue<Faction> players_waiting_for_turn = new Queue<Faction>();     // FIFO queue showing what player's are waiting to do their turn this round
     public List<Faction> factions = new List<Faction>();   // The sides that are fighting in this fight
+	public bool main_hero_deployed = false;
+	public bool none_retreated = true;
+	public bool match_over = false;
 
     void Awake()
     {
@@ -45,7 +48,9 @@ public class BattleManager : MonoBehaviour
         // Undarken hexes we can deploy on
         HexMap.hex_map.UndarkenDeploymentHexes();
 
-        Faction player_team = new Faction("Player", true, 1, Color.green, Color.white);
+        Faction player_team = new Faction("Player", true, 1, 
+		    new Color(255 / 255f, 119f / 153, 0), 
+		    Color.white);
         factions.Add(player_team);
         PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
         player_faction = player_team;
@@ -79,6 +84,19 @@ public class BattleManager : MonoBehaviour
         // All factions created, populate battle statistics
         PersistentBattleSettings.battle_settings.PopulateBattleStatistics();
 
+		// Was Odysseus deployed?
+		foreach(Unit unit in player_faction.units)
+		{
+			if (unit.prefab_name == "Odysseus")
+			{
+				Debug.Log("Odysseus was deployed");
+				main_hero_deployed = true;
+				break;
+			}
+		}
+		if(!main_hero_deployed)
+			Debug.Log("Odysseus was not deployed");
+
         // Start the game
         StartRound();
     }
@@ -88,7 +106,9 @@ public class BattleManager : MonoBehaviour
     public void SpawnUnitsPlacedOnMap()
     {
         // Set up the enemy AI faction
-        Faction enemy_team = new Faction("Enemies", false, 2, Color.red, new Color(197f / 255f, 119f / 255f, 119f / 255f));
+		Faction enemy_team = new Faction("Enemies", false, 2, 
+			new Color(197f / 255f, 119f / 255f, 119f / 255f), 
+		    new Color(197f / 255f, 119f / 255f, 119f / 255f));
         factions.Add(enemy_team);
         enemy_faction = enemy_team;
 
@@ -195,7 +215,7 @@ public class BattleManager : MonoBehaviour
                 unit.EndTurn();
             }
 
-            if (!CheckVictoryAndDefeat())
+            if (!CheckVictoryAndDefeat() && !match_over)
             {
                 if (players_waiting_for_turn.Count > 0)
                 {
@@ -287,10 +307,11 @@ public class BattleManager : MonoBehaviour
     // Return true if the game is over, false otherwise
     public bool CheckVictoryAndDefeat()
     {
-        if (!pre_battle_deployment)
+        if (!pre_battle_deployment&& !match_over)
         {
             foreach (Faction faction in factions)
             {
+				// If there are no units, the match is over
                 if (faction.units.Count <= 0)
                 {
                     Debug.Log(faction.faction_name + " has been defeated");
@@ -299,8 +320,8 @@ public class BattleManager : MonoBehaviour
                     else
                         Victory();
 
-                    // Common stuff that happens regardless of who won
-                    PlayerInterface.player_interface.ShowSummaryScreen();
+					match_over = true;
+					StartCoroutine(EndMatch());
 
                     return true;
                 }
@@ -312,7 +333,29 @@ public class BattleManager : MonoBehaviour
     public void Defeat()
     {
         Debug.Log("Player defeated");
-        PlayerInterface.player_interface.summary_screen_title.text = "Defeat";
+
+		// No player units left. Did any retreat? Was Odysseus in the fight?
+		// Game over if all units were casualties and Odysseus was in the fight
+		if (main_hero_deployed && none_retreated)
+		{
+			// GAME OVER. Odysseus and all soldiers were casualties
+			PlayerInterface.player_interface.summary_screen_title.text = "Catastrophic Defeat";
+			PlayerInterface.player_interface.summary_screen_summary.text = 
+				"None of your men managed to retreat, and your force completely slaughtered. Worse yet, your leader Odysseus was killed in the battle. This battle marks the end of the story of Odysseus.";
+			PersistentBattleSettings.battle_settings.game_over = true;
+			PersistentBattleSettings.battle_settings.hero_went_down = true;
+		}
+		else if (!main_hero_deployed && none_retreated)
+		{
+        	PlayerInterface.player_interface.summary_screen_title.text = "Defeat";
+			PlayerInterface.player_interface.summary_screen_summary.text = 
+				"Your force was completely slaughtered, with only the wounded returning to the ship. Luckily your leader Odysseus was not in the battle, else he might have been killed.";
+		}
+		else
+		{
+			PlayerInterface.player_interface.summary_screen_title.text = "Minor Defeat";
+		}
+
         PersistentBattleSettings.battle_settings.victory = false;
     }
     public void Victory()
@@ -321,12 +364,24 @@ public class BattleManager : MonoBehaviour
         PlayerInterface.player_interface.summary_screen_title.text = "Victory";
         PersistentBattleSettings.battle_settings.victory = true;
     }
+	// Waits a few seconds then shows the summary screen
+	IEnumerator EndMatch()
+	{
+		yield return new WaitForSeconds(2);
+
+		MoveUI.transition_UI.TransitionOut();
+		yield return new WaitForSeconds(1);
+		MoveUI.transition_UI.TransitionIn();
+
+		// Common stuff that happens regardless of who won
+		PlayerInterface.player_interface.ShowSummaryScreen();
+	}
+
+
     public void LoadOverworld()
     {
         Debug.Log("Loading Overworld");
         StartCoroutine(LoadingScreenToWorld());
-
-        
     }
     IEnumerator LoadingScreenToWorld()
     {
