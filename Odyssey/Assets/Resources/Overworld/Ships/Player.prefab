@@ -504,6 +504,7 @@ MonoBehaviour:
   food: 100
   water: 100
   sailors: 50
+  maxSailors: 100
   stamina: 100
   morale: 100
   health: 100
@@ -551,15 +552,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalTroops: 100
-  startingHoplite: 15
-  startingSwordsman: 10
-  startingArcher: 10
-  startingCavalry: 10
+  startingHoplite: 20
+  startingSwordsman: 20
+  startingArcher: 20
+  startingCavalry: 20
   startingSlinger: 10
   startingPeltast: 10
   heroes:
   - {fileID: 145506}
   troopNums: 
+  godFavour: 0
 --- !u!114 &11431212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -650,6 +652,8 @@ MonoBehaviour:
   minDistance: 3
   LayerToNotDrawThrough: 11
   player: {fileID: 0}
+  X: {fileID: 123868, guid: 2334ce71db8b993429c451b1dcb99423, type: 2}
+  lastX: {fileID: 0}
 --- !u!114 &11492990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -698,14 +702,14 @@ LineRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116642}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: a307bb23d95355046af2068a71ed5809, type: 2}
+  - {fileID: 2100000, guid: ee6081c1d59ee544c87b8bf34a56fed4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 0
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
@@ -721,10 +725,10 @@ LineRenderer:
     endWidth: 1
     m_StartColor:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 4278190251
     m_EndColor:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 4278190268
   m_UseWorldSpace: 1
 --- !u!122 &12274960
 Halo:
@@ -796,15 +800,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: startingHoplite
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: startingCavalry
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: startingArcher
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: minNPCDistance
@@ -820,7 +824,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: startingSwordsman
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

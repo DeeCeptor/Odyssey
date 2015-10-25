@@ -441,6 +441,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &148200
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 489948}
+  - 114: {fileID: 11474812}
+  m_Layer: 0
+  m_Name: EndEventNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &151248
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +695,22 @@ GameObject:
   - 114: {fileID: 11433276}
   m_Layer: 0
   m_Name: BattleDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &174008
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 463480}
+  - 114: {fileID: 11498066}
+  m_Layer: 0
+  m_Name: EndEventNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1166,6 +1198,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 449332}
   m_RootOrder: 0
+--- !u!4 &463480
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 496706}
+  m_RootOrder: 2
 --- !u!4 &472654
 Transform:
   m_ObjectHideFlags: 1
@@ -1179,6 +1223,8 @@ Transform:
   - {fileID: 456556}
   - {fileID: 453480}
   - {fileID: 473166}
+  - {fileID: 489948}
+  - {fileID: 477712}
   m_Father: {fileID: 417794}
   m_RootOrder: 3
 --- !u!4 &473166
@@ -1239,8 +1285,8 @@ Transform:
   m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 496706}
-  m_RootOrder: 2
+  m_Father: {fileID: 472654}
+  m_RootOrder: 4
 --- !u!4 &478724
 Transform:
   m_ObjectHideFlags: 1
@@ -1305,6 +1351,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 425396}
   m_RootOrder: 0
+--- !u!4 &489948
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148200}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 472654}
+  m_RootOrder: 3
 --- !u!4 &494486
 Transform:
   m_ObjectHideFlags: 1
@@ -1329,7 +1387,7 @@ Transform:
   m_Children:
   - {fileID: 443904}
   - {fileID: 430066}
-  - {fileID: 477712}
+  - {fileID: 463480}
   m_Father: {fileID: 417794}
   m_RootOrder: 1
 --- !u!114 &11402922
@@ -2211,6 +2269,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11474812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventController: {fileID: 0}
 --- !u!114 &11477874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2457,7 +2527,7 @@ MonoBehaviour:
   textbox_title: 
   text: As you scramble to flee the cyclopes grab as many men as they can catch, many
     are eaten, more are injured.
-  clear_text_after: 0
+  clear_text_after: 1
 --- !u!114 &11489976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2538,6 +2608,18 @@ MonoBehaviour:
   textbox_title: 
   text: The mountain seems threatening, you and your troops prepare to leave
   clear_text_after: 0
+--- !u!114 &11498066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventController: {fileID: 0}
 --- !u!114 &11498134
 MonoBehaviour:
   m_ObjectHideFlags: 1

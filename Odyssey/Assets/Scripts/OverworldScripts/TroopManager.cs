@@ -15,6 +15,7 @@ public class TroopManager : MonoBehaviour {
     public GameObject[] heroes;
     public static TroopManager playerTroops;
     public int[] troopNums;
+    public int godFavour;
     // Use this for initialization
     void Start () {
         playerTroops = this;

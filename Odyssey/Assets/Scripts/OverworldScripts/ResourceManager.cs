@@ -58,10 +58,12 @@ public float healthGainFromCamping = 1f;
 public float food = 100f;
 public float water = 100f;
 public int sailors = 50;
+    public int maxSailors = 100;
 public float stamina = 100f;
 public float morale = 100f;
 public float health = 100f;
-public int gold = 50;
+public int gold = 250;
+    private float goldWeight = 0.1f;
 public int shipHealth = 100;
 public float weight = 200f;
 public float maxWeight = 500;
@@ -88,9 +90,11 @@ public GameObject foodAquiredSymbol;
 public GameObject islandToPlunder;
 public Collider[] currentWeather;
 public WeatherScript weatherAtIndex;
+    public static ResourceManager playerResources;
 
 	// Use this for initialization
 	void Start () {
+    playerResources = this;
 	waterText = GameObject.Find("WaterMonitor");
 	foodText = GameObject.Find("FoodMonitor");
 	moraleText = GameObject.Find("MoraleMonitor");
@@ -361,7 +365,7 @@ public WeatherScript weatherAtIndex;
 		}
 		weight = weight + food;
 		weight = weight + water;
-		weight = weight + gold;
+		weight = weight + (gold*goldWeight);
 	}
 	
 	public void AddCargo(GameObject cargoToAdd)

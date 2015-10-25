@@ -11,6 +11,8 @@ public class drawBehind : MonoBehaviour {
     private bool hit = false;
     public PlayerBoatController player;
     public Queue<Vector3> vertices;
+    public GameObject X;
+    public GameObject lastX;
     // Use this for initialization
     void Start () {
 	mask = 1 << LayerToNotDrawThrough;
@@ -25,6 +27,7 @@ public class drawBehind : MonoBehaviour {
             BackOnMap();
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                Destroy(lastX);
                 transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.position.z);
                 GetComponent<SpriteRenderer>().enabled = true;
                 numberOfPoints = 0;
@@ -35,6 +38,11 @@ public class drawBehind : MonoBehaviour {
             }
             else if (Physics2D.OverlapCircle(transform.position, minDistance, mask))
             {
+                if (GetComponent<SpriteRenderer>().enabled ==true)
+                {
+                   lastX = (GameObject)Instantiate(X, transform.position, transform.rotation);
+                    lastX.transform.parent = GameObject.Find("UniversalParent").transform;
+                }
                 transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.position.z);
                 GetComponent<SpriteRenderer>().enabled = false;
                 hit = true;
@@ -54,10 +62,16 @@ public class drawBehind : MonoBehaviour {
             {
                 if (EventManagement.gameController.paused)
                 {
+                    if (GetComponent<SpriteRenderer>().enabled == true)
+                    {
+                        lastX = (GameObject)Instantiate(X, transform.position, transform.rotation);
+                        lastX.transform.parent = GameObject.Find("UniversalParent").transform;
+                    }
                     EventManagement.gameController.Unpause();
                     player.vertices = vertices;
                     player.vertexIndex = 0;
                     GetComponent<SpriteRenderer>().enabled = false;
+                    
                     Debug.Log(vertices.Count.ToString());
                 }
 
