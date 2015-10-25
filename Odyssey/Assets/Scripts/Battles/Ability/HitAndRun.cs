@@ -4,7 +4,8 @@ using System.Collections;
 public class HitAndRun : Ability
 {
     public HitAndRun(Unit owner)
-        : base("Hit & Run", "Allows the unit to move once again after attacking. Lasts 1 turn.", owner, 1, true)
+        : base("Hit & Run", "Allows the unit to move once again after attacking. Lasts 1 turn.", 
+		       owner, 1, true, "PowerHitRun")
     {
         cast_after_attack = true;
         effects_self = false;
@@ -19,5 +20,6 @@ public class HitAndRun : Ability
 
 		BattleManager.battle_manager.SetMovableTilesOfUnit(caster);
 		caster.HighlightHexesWeCanMoveTo(true);
+		caster.UntransparentUnit();
     }
 }

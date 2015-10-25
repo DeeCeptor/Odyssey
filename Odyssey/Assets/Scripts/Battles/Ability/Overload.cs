@@ -4,7 +4,8 @@ using System.Collections;
 public class Overload : Ability
 {
     public Overload(Unit owner)
-        : base("Kill Order", "The automaton is ordered to kill. Boosts damage that decreases over time. Lasts 3 turns.", owner, 1, true)
+        : base("Kill Order", "The automaton is ordered to kill. Boosts damage that decreases over time. Lasts 3 turns.", 
+		       owner, 1, true, "PowerKill")
     {
         effects_of_ability.Add(new ChangeDamage(owner, 30, 0, 3));
         effects_of_ability.Add(new ChangeDamage(owner, 30, 0, 2));

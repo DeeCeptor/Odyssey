@@ -38,7 +38,8 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("Initializing prebattle deployment");
 
-        yield return new WaitForSeconds(0.2f);
+       	yield return new WaitForSeconds(0.2f);
+
         pre_battle_deployment = true;
 
         // Set deployment interfaces
@@ -58,6 +59,8 @@ public class BattleManager : MonoBehaviour
         // If the battle setting lets us see the enemy positions before deploying
         if (PersistentBattleSettings.battle_settings.show_enemy_units_in_deployment)
             SpawnUnitsPlacedOnMap();
+
+		yield return null;
     }
 
     IEnumerator InitializeBattle()

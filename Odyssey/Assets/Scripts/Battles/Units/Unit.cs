@@ -166,13 +166,20 @@ public class Unit : MonoBehaviour
 			instruct.MoveAnim();
 		}
 	}
+	public void StopMovementAnimation()
+	{
+		foreach (SpriteAnimInstruct instruct in sprites)
+		{
+			instruct.StopAnim();
+		}
+	}
 	public void AttackAnimation()
 	{
         PlayAttackSound();
 
         foreach (SpriteAnimInstruct instruct in sprites)
 		{
-            //yield return new WaitForSeconds(Random.value / 50);
+			instruct.StopAnim();
 			instruct.AttackAnim();
 		}
 	}
@@ -209,7 +216,7 @@ public class Unit : MonoBehaviour
                 if (movement_path.Count == 1)
                 {
                     location = movement_path[0];
-
+					StopMovementAnimation();
                     if (attack_target == null)  // is_moving is a flag used to know when the AI unit is finished its turn
                         is_moving = false;
                 }
@@ -323,9 +330,33 @@ public class Unit : MonoBehaviour
     public virtual void EndTurn()
     {
         if (owner.human_controlled)
+		{
+			UntransparentUnit();
             active = false;
+		}
         ready_to_be_controlled = false;
     }
+
+
+	public void TransparentCheck()
+	{
+		if (this.has_attacked || (has_moved && has_attacked))
+			TransparentUnit();
+	}
+	public void TransparentUnit()
+	{
+		foreach(SpriteAnimInstruct sprite in sprites)
+		{
+			sprite.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.7f);
+		}
+	}
+	public void UntransparentUnit()
+	{
+		foreach(SpriteAnimInstruct sprite in sprites)
+		{
+			sprite.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f);
+		}
+	}
 
 
     // Used for setting the facing of the unit
@@ -485,6 +516,7 @@ public class Unit : MonoBehaviour
             if (hex.occupying_unit == null && hex != location && !this.has_moved)
             {
                 HumanMovedTo(hex);
+				TransparentCheck();
                 PlayerInterface.player_interface.UnhighlightHexes();
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
@@ -617,10 +649,15 @@ public class Unit : MonoBehaviour
     public void HumanAttacked(Unit victim, bool attack_is_counterable)
     {
         if (Attack(victim, attack_is_counterable))
+		{
             AttackAnimation();
+			TransparentCheck();
+			PlayerInterface.player_interface.UnhighlightHexes();
+			PlayerInterface.player_interface.UnhightlightEnemyHexes();
+			PlayerInterface.player_interface.HideEstimatedDamagePanel();
+		}
 
         PlayerInterface.player_interface.ReevaluateCastableAbilities(this);
-        PlayerInterface.player_interface.HideEstimatedDamagePanel();
     }
     // Whether attack was actually initiated
     public bool Attack(Unit victim, bool attack_is_counterable)

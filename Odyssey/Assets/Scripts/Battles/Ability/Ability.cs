@@ -14,23 +14,27 @@ public class Ability
     public bool cast_before_attack = false; // Cannot cast if unit has attacked
     public bool cast_after_attack = false;  // Can only cast after the unit has attacked
     public int cost;    // How much god favour it costs to use this ability
+	public bool targetable = false;     // Whether this ability needs a target or not. No target means the effect goes off immediately after clicking the ability button.
     public Unit caster; // Unit whose ability menu we're using to cast this ability
-    public string ability_name; // Human readable name that shows when the user mouses over
+    
+	public string ability_name; // Human readable name that shows when the user mouses over
     public string ability_description;  // Human readable description that shows when the user mouses over
-    public bool targetable = false;     // Whether this ability needs a target or not. No target means the effect goes off immediately after clicking the ability button.
+	public Sprite icon;
 
     public bool effects_self = true;    // If set to true, then this ability will simply apply effect_of_ability to the caster of this ability.
     public List<Effect> effects_of_ability = new List<Effect>();    // Many abilities simply add effects onto the current unit, or an AOE buff. Place those effects here.
 
     
     // Extend the constructor and a abilitys_effect if this ability simply adds an effect.
-    public Ability(string name, string description, Unit owner, int favour_cost, bool applies_effect_to_self)
+    public Ability(string name, string description, Unit owner, int favour_cost, bool applies_effect_to_self, string path_to_icon)
     {
         ability_name = name;
         ability_description = description;
         caster = owner;
         cost = favour_cost;
         effects_self = applies_effect_to_self;
+		//icon = (Sprite) Resources.Load("Battle/AbilityArt/" + path_to_icon, typeof(Sprite));
+		icon = (Sprite) Resources.Load<Sprite>("Battles/AbilityArt/" + path_to_icon);
     }
 
 

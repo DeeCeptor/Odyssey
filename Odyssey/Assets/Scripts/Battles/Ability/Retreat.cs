@@ -6,7 +6,8 @@ using System.Collections;
 public class Retreat : Ability
 {
     public Retreat(Unit owner)
-		: base("Retreat", "There is no honour in pointless defeat. Retreats this unit from combat.", owner, 0, false)
+		: base("Retreat", "There is no honour in pointless defeat. Retreats this unit from combat.", owner, 0, false,
+		       "PowerSmash")
     {
         cast_before_attack = true;
         effects_self = false;
