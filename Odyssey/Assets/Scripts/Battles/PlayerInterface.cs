@@ -406,7 +406,7 @@ public class PlayerInterface : MonoBehaviour
     {
         GameObject instance = Instantiate(Resources.Load("FloatingText", typeof(GameObject))) as GameObject;
         instance.transform.parent = BattleManager.battle_manager.universal_battle_parent.transform;
-        position.z = -6;
+        position.z = -8;
         instance.transform.position = position;
         instance.GetComponent<TextMesh>().text = text;
         instance.GetComponent<Rigidbody2D>().velocity = Vector2.up;

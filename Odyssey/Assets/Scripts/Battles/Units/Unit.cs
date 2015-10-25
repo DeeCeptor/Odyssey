@@ -673,8 +673,6 @@ public class Unit : MonoBehaviour
             remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
             num_died = prev_remaining_individuals - remaining_individuals;
 
-            SetKilledOrWounded(num_died, attacker, modified_damage);
-
             PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
 
             //Debug.Log(modified_damage + ", HP per individual: " + HP_per_individual + " num died: " + num_died);
@@ -686,11 +684,12 @@ public class Unit : MonoBehaviour
             {
                 // Everyone is down
                 num_died = remaining_individuals;
-                SetKilledOrWounded(remaining_individuals, attacker, modified_damage);
                 remaining_individuals = 0;
             }
         }
         
+		SetKilledOrWounded(num_died, attacker, modified_damage);
+
         if (health <= 0)
             Die();
 
