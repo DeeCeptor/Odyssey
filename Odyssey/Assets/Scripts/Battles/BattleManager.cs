@@ -147,11 +147,11 @@ public class BattleManager : MonoBehaviour
         current_player = players_waiting_for_turn.Dequeue();
         round_number++;
 
-        StartTurn();
+        StartCoroutine(StartTurn());
     }
 
 
-    public void StartTurn()
+    public IEnumerator StartTurn()
     {
         foreach (Unit unit in current_player.units)
         {
@@ -167,6 +167,8 @@ public class BattleManager : MonoBehaviour
 			NewPlayerTurnAnimation();
 		else
 			NewEnemyTurnAnimation();
+
+		yield return new WaitForSeconds(2);
 
         if (!current_player.human_controlled || current_player.use_ai)
         {
@@ -209,14 +211,16 @@ public class BattleManager : MonoBehaviour
 	public void NewPlayerTurnAnimation()
 	{
 		GameObject instance = Instantiate(Resources.Load("Battles/HeroNewTurn", typeof(GameObject))) as GameObject;
+		instance.transform.localPosition = Vector2.zero;
 		instance.transform.parent = PlayerInterface.player_interface.new_turn_parent.transform;
-		instance.transform.position = Vector3.zero;
+		instance.transform.localPosition = Vector2.zero;
 	}
 	public void NewEnemyTurnAnimation()
 	{
 		GameObject instance = Instantiate(Resources.Load("Battles/EnemyNewTurn", typeof(GameObject))) as GameObject;
+		instance.transform.localPosition = Vector2.zero;
 		instance.transform.parent = PlayerInterface.player_interface.new_turn_parent.transform;
-		instance.transform.position = Vector3.zero;
+		instance.transform.localPosition = Vector2.zero;
 	}
 
 
@@ -242,7 +246,7 @@ public class BattleManager : MonoBehaviour
                 {
                     // Set the next player's turn
                     current_player = players_waiting_for_turn.Dequeue();
-                    StartTurn();
+                    StartCoroutine(StartTurn());
                 }
                 else
                 {

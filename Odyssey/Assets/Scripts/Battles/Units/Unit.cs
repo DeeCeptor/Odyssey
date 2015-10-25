@@ -411,7 +411,6 @@ public class Unit : MonoBehaviour
     {
         if (this.transform.Find("UnitMenuCanvas") != null)
         {
-            Debug.Log("Removing parent");
             PlayerInterface.player_interface.unit_menu_canvas.transform.parent = null;  // Remove parent, so we don't destroy this game object
             PlayerInterface.player_interface.UnitDeselected();
         }
