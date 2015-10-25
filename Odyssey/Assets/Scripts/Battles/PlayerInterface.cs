@@ -25,6 +25,7 @@ public class PlayerInterface : MonoBehaviour
     public Slider enemy_hp_slider;
     public Slider estimated_damage_slider;
 
+	public GameObject new_turn_parent;
     public Text turn_text;
     public Text favour_remaining_text;
 

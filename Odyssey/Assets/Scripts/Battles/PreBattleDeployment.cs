@@ -64,6 +64,11 @@ public class PreBattleDeployment : MonoBehaviour
             // Setting up debug available units
             Debug.Log("Setting available debug units");
 
+			deployable_units.Add("Odysseus", 1);
+			//deployable_heroes
+			deployable_units.Add("Daedalus", 1);
+			//deployable_heroes
+			deployable_units.Add("Automaton", 10);
             deployable_units.Add("Hoplite", 10);
             deployable_units.Add("Cavalry", 10);
             deployable_units.Add("Archer", 10);

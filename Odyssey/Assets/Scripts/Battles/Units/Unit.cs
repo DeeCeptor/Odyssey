@@ -336,11 +336,13 @@ public class Unit : MonoBehaviour
         ready_to_be_controlled = false;
     }
 
-
-	public void TransparentCheck()
+	public IEnumerator TransparentCheck()
 	{
 		if (this.has_attacked || (has_moved && has_attacked))
+		{
+			yield return new WaitForSeconds(1);
 			TransparentUnit();
+		}
 	}
 	public void TransparentUnit()
 	{
@@ -515,7 +517,7 @@ public class Unit : MonoBehaviour
             if (hex.occupying_unit == null && hex != location && !this.has_moved)
             {
                 HumanMovedTo(hex);
-				TransparentCheck();
+				StartCoroutine(TransparentCheck());
                 PlayerInterface.player_interface.UnhighlightHexes();
             }
             else if (hex.occupying_unit != null && this.owner.IsEnemy(hex.occupying_unit) && !this.has_attacked)
@@ -650,7 +652,7 @@ public class Unit : MonoBehaviour
         if (Attack(victim, attack_is_counterable))
 		{
             AttackAnimation();
-			TransparentCheck();
+			StartCoroutine(TransparentCheck());
 			PlayerInterface.player_interface.UnhighlightHexes();
 			PlayerInterface.player_interface.UnhightlightEnemyHexes();
 			PlayerInterface.player_interface.HideEstimatedDamagePanel();
@@ -851,7 +853,12 @@ public class Unit : MonoBehaviour
                 instance.transform.position = spr.transform.position;
                 instance.transform.parent = attack.transform;
                 // Set rotation
-                instance.GetComponent<SpriteRenderer>().sprite = attacker.projectile_sprite;
+				Vector3 moveDirection = this.location.world_coordinates - instance.transform.position; 
+				float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+				instance.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+				//	instance.transform.rotation = Quaternion.LookRotation(Vector2 (attacker.transform.position) - Vector2(this.transform.position));
+                
+				instance.GetComponent<SpriteRenderer>().sprite = attacker.projectile_sprite;
             }
         }
     }

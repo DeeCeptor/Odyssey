@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 492482}
   - 212: {fileID: 21293548}
   - 95: {fileID: 9598670}
+  - 114: {fileID: 11458354}
   m_Layer: 0
   m_Name: AutomatonDrawn
   m_TagString: Untagged
@@ -46,6 +47,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11458354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a0c6f06c6a24f4dbb429fe06b6b513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21293548
 SpriteRenderer:
   m_ObjectHideFlags: 1

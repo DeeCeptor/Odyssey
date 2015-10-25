@@ -162,6 +162,12 @@ public class BattleManager : MonoBehaviour
         human_turn = (current_player.human_controlled && !current_player.use_ai);
         PlayerInterface.player_interface.turn_text.text = current_player.faction_name + ", Round " + round_number;
 
+		// Show new turn icon, wait a second
+		if (current_player == player_faction)
+			NewPlayerTurnAnimation();
+		else
+			NewEnemyTurnAnimation();
+
         if (!current_player.human_controlled || current_player.use_ai)
         {
             Do_AI_Turn();
@@ -200,6 +206,18 @@ public class BattleManager : MonoBehaviour
         current_player.use_ai = true;
         Do_AI_Turn();
     }
+	public void NewPlayerTurnAnimation()
+	{
+		GameObject instance = Instantiate(Resources.Load("Battles/HeroNewTurn", typeof(GameObject))) as GameObject;
+		instance.transform.parent = PlayerInterface.player_interface.new_turn_parent.transform;
+		instance.transform.position = Vector3.zero;
+	}
+	public void NewEnemyTurnAnimation()
+	{
+		GameObject instance = Instantiate(Resources.Load("Battles/EnemyNewTurn", typeof(GameObject))) as GameObject;
+		instance.transform.parent = PlayerInterface.player_interface.new_turn_parent.transform;
+		instance.transform.position = Vector3.zero;
+	}
 
 
     public void EndTurn()

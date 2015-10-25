@@ -7,7 +7,7 @@ public class Sweep : Ability
 	
 	public Sweep(Unit owner)
 		: base("Sweep", "Allows the unit to attack a total of 3 times this turn.", 
-		       owner, 1, false, "PowerSweep")
+		       owner, 1, false, "PowerSmash")
 	{
 		cast_before_attack = true;
 	}
