@@ -11,6 +11,7 @@ public class drawBehind : MonoBehaviour {
     private bool hit = false;
     public PlayerBoatController player;
     public Queue<Vector3> vertices;
+    public GameObject X;
     // Use this for initialization
     void Start () {
 	mask = 1 << LayerToNotDrawThrough;
@@ -38,6 +39,7 @@ public class drawBehind : MonoBehaviour {
                 transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.position.z);
                 GetComponent<SpriteRenderer>().enabled = false;
                 hit = true;
+                Instantiate(X, transform.position, transform.rotation);
             }
             else if (Input.GetKey(KeyCode.Mouse0))
             {
@@ -58,6 +60,7 @@ public class drawBehind : MonoBehaviour {
                     player.vertices = vertices;
                     player.vertexIndex = 0;
                     GetComponent<SpriteRenderer>().enabled = false;
+                    Instantiate(X,transform.position,transform.rotation);
                     Debug.Log(vertices.Count.ToString());
                 }
 

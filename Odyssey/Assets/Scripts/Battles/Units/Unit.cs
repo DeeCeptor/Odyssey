@@ -97,6 +97,7 @@ public class Unit : MonoBehaviour
     public int remaining_individuals = 5;   // Heroes and some myth units only ever have 1 guy
 
     public string u_name = ""; // Name at the top of the unit panel
+    public int cost = 10;
 	[TextArea(3,10)]
     public string u_description = "";  // Short description of the unit
     public Sprite portrait;    // Unit portrait
