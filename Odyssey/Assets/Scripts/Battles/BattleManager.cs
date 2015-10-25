@@ -349,11 +349,13 @@ public class BattleManager : MonoBehaviour
 		{
         	PlayerInterface.player_interface.summary_screen_title.text = "Defeat";
 			PlayerInterface.player_interface.summary_screen_summary.text = 
-				"Your force was completely slaughtered, with only the wounded returning to the ship. Luckily your leader Odysseus was not in the battle, else he might have been killed.";
+				"Your force was defeated, with only the wounded returning to the ship. Luckily your leader Odysseus was not in the battle, else he might have been killed.";
 		}
 		else
 		{
 			PlayerInterface.player_interface.summary_screen_title.text = "Minor Defeat";
+			PlayerInterface.player_interface.summary_screen_summary.text = 
+				"Although defeated, some of your forces managed to retreat.";
 		}
 
         PersistentBattleSettings.battle_settings.victory = false;
@@ -362,6 +364,8 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("Player victory");
         PlayerInterface.player_interface.summary_screen_title.text = "Victory";
+		PlayerInterface.player_interface.summary_screen_summary.text = 
+			"Your forces were victorious in defeating all enemies. Surely the gods will be impressed.";
         PersistentBattleSettings.battle_settings.victory = true;
     }
 	// Waits a few seconds then shows the summary screen
