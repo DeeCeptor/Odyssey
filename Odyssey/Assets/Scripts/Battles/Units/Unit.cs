@@ -106,6 +106,7 @@ public class Unit : MonoBehaviour
     public GameObject unit_menu;
     public GameObject unit_sprite;
     public Sprite projectile_sprite;
+    public AudioSource[] soundEffects;
 
     public Faction owner; 
 
@@ -146,16 +147,18 @@ public class Unit : MonoBehaviour
 
         unit_menu = this.transform.FindChild("UnitMenu").gameObject;
         unit_sprite = this.transform.FindChild("UnitSprite").gameObject;
+
+        soundEffects = gameObject.GetComponents<AudioSource>();
     }
 
 
     public void PlayAttackSound()
     {
-
+        soundEffects[1].Play();
     }
     public void PlayMovingSound()
     {
-
+        soundEffects[0].Play();
     }
 
     public void MoveAnimation()
