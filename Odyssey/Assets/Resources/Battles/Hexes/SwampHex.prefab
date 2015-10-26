@@ -145,9 +145,9 @@ MonoBehaviour:
   deployment_zone: 0
   retreat_zone: 0
   hex_score: 0
-  ranged_score: 0
-  melee_score: 0
-  cavalry_score: 0
+  ranged_score: -1
+  melee_score: -1
+  cavalry_score: -1
 --- !u!212 &21239088
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -249,6 +249,18 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ranged_score
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: melee_score
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cavalry_score
       value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

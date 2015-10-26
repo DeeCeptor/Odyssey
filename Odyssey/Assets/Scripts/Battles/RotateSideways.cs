@@ -43,7 +43,7 @@ public class RotateSideways : MonoBehaviour
 
             // Destroy when completely transparent
             if (color.a <= 0)
-                GameObject.Destroy(this);
+                GameObject.Destroy(this.gameObject);
         }
     }
 }

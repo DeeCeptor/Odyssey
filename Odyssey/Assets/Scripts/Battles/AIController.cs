@@ -97,7 +97,7 @@ public class AI_Turn_Thread
                         // Check if we're in range. If we're not in range, we can't attack the unit
                         if (distance <= unit.GetRange())
                         {
-                            float cur_score = enemy.CalculateDamage(unit, best_hex);
+                            float cur_score = enemy.CalculateDamage(unit, best_hex) / 15;
 
                             if (cur_score > best_target_score)
                             {
