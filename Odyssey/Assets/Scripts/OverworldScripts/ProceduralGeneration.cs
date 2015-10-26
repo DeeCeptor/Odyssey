@@ -82,9 +82,8 @@ GameObject curIsland;
 	while(noGood)
 		{
 			noGood = false;
-			curIsland = islands[Random.Range (0,islands.Length)];
-			islandXWidth = curIsland.GetComponent<Renderer>().bounds.extents.x;
-			islandYWidth = curIsland.GetComponent<Renderer>().bounds.extents.y;
+			islandXWidth = 10;
+			islandYWidth = 10;
 			curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z);
 			
 			Collider2D[] objectsNear = Physics2D.OverlapCircleAll(curPosition, islandSpace/5);
@@ -122,8 +121,8 @@ GameObject curIsland;
 	while(islandCounter<maxIslands && i < maxIslands*maxIterationFactor)
 	{
 		curIsland = islands[Random.Range (0,islands.Length)];
-		islandXWidth = curIsland.GetComponent<Renderer>().bounds.extents.x;
-		islandYWidth = curIsland.GetComponent<Renderer>().bounds.extents.y;
+		islandXWidth = curIsland.transform.FindChild("IslandTerrain").GetComponent<SpriteRenderer>().bounds.extents.x;
+		islandYWidth = curIsland.transform.FindChild("IslandTerrain").GetComponent<SpriteRenderer>().bounds.extents.y;
 		curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 5);
 
             for (int x = 0; x < islandsPlaced.Length; x++)

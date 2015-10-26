@@ -29,12 +29,9 @@ public class PopulateShop : MonoBehaviour {
 
         Dictionary<string, int>.KeyCollection keys = unitList.Keys;
         Dictionary<string, int>.ValueCollection healthyUnits = unitList.Values;
-        Dictionary<string, int>.ValueCollection woundedUnits = unitList.Values;
         string[] keyArray = new string[keys.Count];
         string curKey;
         int[] healthyTroopNums = new int[healthyUnits.Count];
-        int[] woundedTroopNums = new int[woundedUnits.Count];
-        woundedUnits.CopyTo(woundedTroopNums, 0);
         healthyUnits.CopyTo(healthyTroopNums, 0);
         keys.CopyTo(keyArray, 0);
         GetComponent<RectTransform>().sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x, (buttonHeight + buttonSpace) * keys.Count);
@@ -49,8 +46,8 @@ public class PopulateShop : MonoBehaviour {
             button.GetComponent<Button>().onClick.AddListener(() => ChangeUnitStats.unitPanel.changeStats(unitName));
             button.GetComponent<Image>().sprite = unitStats.portrait;
             button.transform.FindChild("UnitName").GetComponent<Text>().text = unitStats.u_name;
-            button.transform.FindChild("TroopNums").GetComponent<Text>().text = unitList[curKey].ToString();
-            button.transform.FindChild("Cost").GetComponent<Text>().text = unitStats.cost.ToString();
+            button.transform.FindChild("TroopNums").GetComponent<Text>().text = unitList[curKey].ToString() + "/" + TroopManager.playerTroops.healthy[curKey].ToString();
+            button.transform.FindChild("Cost").GetComponent<Text>().text = (unitStats.cost-(1*TroopManager.playerTroops.getHaggling())).ToString();
         }
 
 

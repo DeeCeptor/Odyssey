@@ -127,7 +127,7 @@ public class MenuSwitch2 : MonoBehaviour {
         int result = 0;
         cost = 5;
         int modCost = cost - (1 * TroopManager.playerTroops.getHaggling());
-        if (!int.TryParse(foodInput.text, out result))
+        if (!int.TryParse(sailorInput.text, out result))
         {
             errorMessage.SetActive(true);
             return;
@@ -151,7 +151,7 @@ public class MenuSwitch2 : MonoBehaviour {
 
     public void BuyUnits()
     {
-        string unitName = UnitPanel.transform.FindChild("UnitName").GetComponent<Text>().text;
+        string unitName = UnitPanel.GetComponent<ChangeUnitStats>().unitPrefab;
         GameObject unit = (GameObject)Resources.Load("Battles/Units/" + unitName);
         Unit unitStats = unit.GetComponent<Unit>();
         cost = unitStats.cost;
@@ -176,10 +176,10 @@ public class MenuSwitch2 : MonoBehaviour {
         }
 
         ResourceManager.playerResources.gold = ResourceManager.playerResources.gold - (result*modCost);
-        unitsAvailable[unitSelected] = TroopManager.playerTroops.healthy[unitSelected] - result;
-        TroopManager.playerTroops.healthy[unitSelected] = TroopManager.playerTroops.healthy[unitSelected] + result;
+        unitsAvailable[unitName] = unitsAvailable[unitName] - result;
+        TroopManager.playerTroops.healthy[unitName] = TroopManager.playerTroops.healthy[unitName] + result;
         Content.GetComponent<PopulateShop>().Refresh();
-        Debug.Log(TroopManager.playerTroops.healthy[unitSelected].ToString());
+        Debug.Log(TroopManager.playerTroops.healthy[unitName].ToString());
 
     }   
 

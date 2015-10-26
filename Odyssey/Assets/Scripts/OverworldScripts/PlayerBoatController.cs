@@ -74,6 +74,8 @@ public class PlayerBoatController : MonoBehaviour {
             if (0 < vertices.Count)
             {
                 dir = (vertices.Peek() - transform.position);
+                float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
                 if (moveRate == 0)
                 {
                     gameObject.GetComponent<Rigidbody2D>().velocity = dir.normalized*slowSpeed * ((resource.stamina + 50f) / 100f) * (1 + (resource.poseidonsFavour / 500f));

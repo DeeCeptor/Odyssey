@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class ChangeUnitStats : MonoBehaviour {
+    public string unitPrefab;
     public Text unitNameText;
     public Text unitDescription;
     public Text health;
@@ -49,6 +50,6 @@ public class ChangeUnitStats : MonoBehaviour {
         piercingDamageBar.value = unitStats.GetPiercingDamage() / 200.0f;
         movement.text = "Movement Speed: " + unitStats.GetMovement();
         movementBar.value = (float)unitStats.GetMovement() / 10.0f;
-
+        unitPrefab = unitName;
     }
 }
