@@ -10,6 +10,7 @@ public class FadeTextMesh : MonoBehaviour
     void Start()
     {
         curColor = transform.GetComponent<TextMesh>().color;
+        transform.GetComponent<MeshRenderer>().sortingOrder = 4;
     }
 
     void Update()

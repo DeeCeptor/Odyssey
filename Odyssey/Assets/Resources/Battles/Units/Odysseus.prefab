@@ -179,7 +179,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.359999686, y: 2.71000004, z: 0}
+  m_LocalPosition: {x: -.0299999993, y: 1.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 456008}
@@ -256,7 +256,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 137898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .409999996, y: -.889999986, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .75, y: .75, z: 1}
   m_Children: []
   m_Father: {fileID: 408298}
@@ -367,7 +367,7 @@ MonoBehaviour:
   normal_attacks_per_turn: 1
   unit_type: 2
   is_ranged_unit: 1
-  counter_attacks: 1
+  counter_attacks: 0
   counter_attack_radius: 60
   attacks_are_counterable: 1
   offensive_AI_score: 1
@@ -380,13 +380,14 @@ MonoBehaviour:
   normal_squad_size: 1
   remaining_individuals: 1
   u_name: Odysseus
+  cost: 10
   u_description: Famous for his archery and intelligence, Odysseus is the very definition
     of a hero.
   portrait: {fileID: 21300000, guid: ab6b8f9121bb60847820252fd6bad70d, type: 3}
   prefab_name: Odysseus
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
-  projectile_sprite: {fileID: 21300000, guid: 5e3ac5e96e7fc3549aab9f89f967f241, type: 3}
+  projectile_sprite: {fileID: 21300000, guid: 665698a5b2b7e8345bdcf9e9a784b517, type: 3}
 --- !u!212 &21202078
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -514,7 +515,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ab6b8f9121bb60847820252fd6bad70d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000

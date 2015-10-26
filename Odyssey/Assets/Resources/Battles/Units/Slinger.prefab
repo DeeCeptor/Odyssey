@@ -673,6 +673,7 @@ MonoBehaviour:
   normal_squad_size: 5
   remaining_individuals: 5
   u_name: "Sphendonet\xE8s"
+  cost: 10
   u_description: Whether the target be nobles or peasants, rocks thrown at high speeds
     are dangerous. These slingers are highly accurate, but lack the piercing power
     of arrows to go through armour.
@@ -680,7 +681,7 @@ MonoBehaviour:
   prefab_name: Slinger
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
-  projectile_sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  projectile_sprite: {fileID: 21300000, guid: 5d4537d9ea5119f4db33bd7e09d6b7a6, type: 3}
 --- !u!114 &11449938
 MonoBehaviour:
   m_ObjectHideFlags: 1

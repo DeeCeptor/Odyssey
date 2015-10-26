@@ -16,12 +16,14 @@ public class PlayerInterface : MonoBehaviour
     public Button end_turn_button;
     public Button AI_turn_button;
     public GameObject pause_menu;
+    public GameObject help_menu;
     public GameObject summary_screen;
     public Text summary_screen_title;
 	public Text summary_screen_summary;
 
     // Battle prediction panel
     public GameObject battle_prediction_panel;
+    public Text estimated_damage_text;
     public Slider enemy_hp_slider;
     public Slider estimated_damage_slider;
 
@@ -233,7 +235,9 @@ public class PlayerInterface : MonoBehaviour
         enemy_hp_slider.value = target.GetHealth() / target.GetMaxHealth();
 
         // Estimate the amount of damage the selected unit will do to the target
-        estimated_damage_slider.value = target.CalculateDamage(selected_unit, selected_unit.location) / target.GetMaxHealth();
+        float damage = target.CalculateDamage(selected_unit, selected_unit.location);
+        estimated_damage_slider.value = damage / target.GetMaxHealth();
+        estimated_damage_text.text = "Estimated damage: " + (int)damage;
     }
     public void HideEstimatedDamagePanel()
     {
@@ -303,7 +307,7 @@ public class PlayerInterface : MonoBehaviour
 	}
     public void SetMovementText(Unit unit)
     {
-        movement_text.text = "Movement Speed: " + unit.GetMovement();
+        movement_text.text = "Movement: " + unit.GetMovement();
         movement_bar.value = (float) unit.GetMovement() / 10.0f;
     }
 
@@ -391,7 +395,7 @@ public class PlayerInterface : MonoBehaviour
 
         // Set the hex title, description
         terrain_name.text = hex.h_name;
-        terrain_description.text = "<i>" + hex.h_description + hex.coordinate + "</i>";
+        terrain_description.text = "<i>" + hex.h_description + "</i>";
     }
     public void HideTerrainStatsPanel()
     {
@@ -438,7 +442,10 @@ public class PlayerInterface : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        pause_menu.SetActive(!pause_menu.activeSelf);
+        if (this.help_menu.activeSelf)
+            help_menu.SetActive(false);
+        else
+            pause_menu.SetActive(!pause_menu.activeSelf);
     }
     public void ShowSummaryScreen()
     {

@@ -717,13 +717,14 @@ MonoBehaviour:
   normal_squad_size: 5
   remaining_individuals: 5
   u_name: Peltast
+  cost: 10
   u_description: Short range javelins excel at skewering enemies cowering behind shields.
     The same javelins can also be used as spears in a pinch.
   portrait: {fileID: 21300000, guid: aff71a0c5c2848f44b65f0cb312a1e2d, type: 3}
   prefab_name: Peltast
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
-  projectile_sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  projectile_sprite: {fileID: 21300000, guid: b04d3bd676b0d3241882b2fcde73805e, type: 3}
 --- !u!114 &11480690
 MonoBehaviour:
   m_ObjectHideFlags: 1

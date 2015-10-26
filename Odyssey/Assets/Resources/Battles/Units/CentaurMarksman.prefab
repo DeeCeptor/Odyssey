@@ -467,13 +467,14 @@ MonoBehaviour:
   normal_squad_size: 2
   remaining_individuals: 2
   u_name: Centaur Marksman
+  cost: 10
   u_description: The literal definition of horse archer. Able fire and move away before
     the enemy realizes what is happening.
   portrait: {fileID: 21300000, guid: 903eda29a33dea64b8dc5ae369678b47, type: 3}
   prefab_name: CentaurMarksman
   unit_menu: {fileID: 0}
   unit_sprite: {fileID: 0}
-  projectile_sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  projectile_sprite: {fileID: 21300000, guid: 665698a5b2b7e8345bdcf9e9a784b517, type: 3}
 --- !u!212 &21237784
 SpriteRenderer:
   m_ObjectHideFlags: 1
