@@ -25,6 +25,7 @@ public class PersistentBattleSettings : MonoBehaviour
     public bool player_goes_first = true;   // If the player is ambusdhing the enemy or has an advantage, check this so the player goes first and has an advantage
     public bool show_enemy_units_in_deployment = false;     // If the player is ambusdhing the enemy or has an advantage, check this so the player has maximum information when deploying
     public int number_of_deployable_units;  // How many guys can we bring to this brawl? Leadership will affect this
+    public float enemy_agressiveness = 1;   // 1 means agressive. 0 means defensive. Set to whether or not the player is defending or attacking
 
     // POST BATTLE INFORMATION
     public bool victory;    // Did we win?

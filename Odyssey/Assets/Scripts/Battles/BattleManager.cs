@@ -21,6 +21,7 @@ public class BattleManager : MonoBehaviour
 	public bool main_hero_deployed = false;
 	public bool none_retreated = true;
 	public bool match_over = false;
+    public bool AI_turn = false;    // AI for enemies, or player using AI
 
     void Awake()
     {
@@ -51,7 +52,7 @@ public class BattleManager : MonoBehaviour
 
         Faction player_team = new Faction("Player", true, 1, 
 		    new Color(255 / 255f, 119f / 153, 0), 
-		    Color.white);
+		    Color.white, 1);
         factions.Add(player_team);
         PreBattleDeployment.pre_battle_deployment.player_faction = player_team;
         player_faction = player_team;
@@ -100,6 +101,13 @@ public class BattleManager : MonoBehaviour
 		if(!main_hero_deployed)
 			Debug.Log("Odysseus was not deployed");
 
+        // Determine turn order
+        if (!PersistentBattleSettings.battle_settings.player_goes_first)
+        {
+            factions.Remove(player_faction);
+            factions.Add(player_faction);
+        }
+
         // Start the game
         StartRound();
     }
@@ -111,7 +119,8 @@ public class BattleManager : MonoBehaviour
         // Set up the enemy AI faction
 		Faction enemy_team = new Faction("Enemies", false, 2, 
 			new Color(197f / 255f, 119f / 255f, 119f / 255f), 
-		    new Color(197f / 255f, 119f / 255f, 119f / 255f));
+		    new Color(197f / 255f, 119f / 255f, 119f / 255f), 
+            PersistentBattleSettings.battle_settings.enemy_agressiveness);
         factions.Add(enemy_team);
         enemy_faction = enemy_team;
 
@@ -194,6 +203,7 @@ public class BattleManager : MonoBehaviour
     IEnumerator Wait_For_AI_Turn_To_End()
     {
         Debug.ClearDeveloperConsole();
+        AI_turn = true;
         current_player.GetAI().Do_Turn();
 
         // Wait for the AI turn to finish
@@ -201,6 +211,7 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
 
         // AI turn is over, end it
+        AI_turn = false;
         EndTurn();
     }
     public void Do_Player_AI_Turn()

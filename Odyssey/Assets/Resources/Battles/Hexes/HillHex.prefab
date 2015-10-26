@@ -137,9 +137,8 @@ MonoBehaviour:
   g_score: 0
   came_from: {fileID: 0}
   h_name: Hill
-  h_description: "Provides elevation that increases the range and power of ranged
-    units.\n+1 Attack Range, +40% Damage and Piercing Damage for Ranged units. \nCosts
-    1 movement to enter."
+  h_description: "Provides elevation that increases the power of ranged units.\n+40%
+    Damage and Piercing Damage for Ranged units. \nCosts 1 movement to enter."
   cost_to_enter_hex: 1
   impassable: 0
   deployment_zone: 0
@@ -239,9 +238,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: h_description
-      value: "Provides elevation that increases the range and power of ranged units.\n+1
-        Attack Range, +40% Damage and Piercing Damage for Ranged units. \nCosts 1
-        movement to enter."
+      value: "Provides elevation that increases the power of ranged units.\n+40% Damage
+        and Piercing Damage for Ranged units. \nCosts 1 movement to enter."
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ranged_score

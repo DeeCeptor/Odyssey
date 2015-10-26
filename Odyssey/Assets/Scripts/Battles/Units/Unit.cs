@@ -705,29 +705,30 @@ public class Unit : MonoBehaviour
         // Show floating damage text
         int num_died = 0;
 
-        if (is_squad)
+        // If dead, all remaining are casualties
+        if (GetHealth() <= 0)
         {
-            // We didn't die, calculate how many individuals we lost
+            num_died = remaining_individuals;
+            remaining_individuals = 0;
+        }
+        else if (is_squad)
+        {
             int HP_per_individual = (int) GetMaxHealth() / normal_squad_size;
-            remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
-            num_died = prev_remaining_individuals - remaining_individuals;
 
-            PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
+            // Still at full health
+            if (GetHealth() == GetMaxHealth())
+                remaining_individuals = prev_remaining_individuals;
+            // Not at full health. Round up
+            else
+                remaining_individuals = ((int) GetHealth() / HP_per_individual) + 1;
+
+            num_died = prev_remaining_individuals - remaining_individuals;
 
             //Debug.Log(modified_damage + ", HP per individual: " + HP_per_individual + " num died: " + num_died);
         }
-        else
-        {
-            // Not a squad. Is individual. Only dies if HP <= 0
-            if (GetHealth() <= 0)
-            {
-                // Everyone is down
-                num_died = remaining_individuals;
-                remaining_individuals = 0;
-            }
-        }
-        
-		SetKilledOrWounded(num_died, attacker, modified_damage);
+
+        PersistentBattleSettings.battle_settings.individuals_lost[this.owner.faction_ID] += (num_died);
+        SetKilledOrWounded(num_died, attacker, modified_damage);
 
         if (health <= 0)
             Die();
@@ -803,23 +804,28 @@ public class Unit : MonoBehaviour
     {
         Casualty casualty;
         // Found value in dictionary. Update value
-        if (PersistentBattleSettings.battle_settings.casualties[this.owner.faction_ID].TryGetValue(u_name, out casualty))
+        if (PersistentBattleSettings.battle_settings.casualties[this.owner.faction_ID].TryGetValue(human_readable_name, out casualty))
         {
             if (dead)
                 casualty.num_killed++;
             else
                 casualty.num_wounded++;
+
+            Debug.Log("Casualty found: " + human_readable_name + dead);
         }
         else
         {
             // Did not find value. Add to dictionary
             casualty = new Casualty();
-            casualty.name = u_name;
+            casualty.name = human_readable_name;
             if (dead)
                 casualty.num_killed++;
             else
                 casualty.num_wounded++;
-            PersistentBattleSettings.battle_settings.casualties[this.owner.faction_ID].Add(u_name, casualty);
+
+            Debug.Log("Casualty new: " + human_readable_name + dead);
+
+            PersistentBattleSettings.battle_settings.casualties[this.owner.faction_ID].Add(human_readable_name, casualty);
         }
     }
 

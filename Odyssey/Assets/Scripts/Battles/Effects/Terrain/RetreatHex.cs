@@ -25,7 +25,8 @@ public class RetreatHex : Effect
         }
 
         // Add the retreat ability to the unit
-        receiver.abilities.Add(new Retreat(receiver));
+        if (receiver.owner == BattleManager.battle_manager.player_faction || !BattleManager.battle_manager.AI_turn)
+            receiver.abilities.Add(new Retreat(receiver));
     }
 
 

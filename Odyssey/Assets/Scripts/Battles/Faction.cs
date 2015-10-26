@@ -11,11 +11,13 @@ public class Faction
     private AIController AI;
     public bool use_ai = false;
 
+    public float offensive_ai_score;  // 0 means defensive. 1 means agressive
     public Color faction_color;	// Colour of the facing aura
 	public Color unit_color;	// Colour tinting of the unit itself. White is default.
 
-    public Faction(string name, bool controlled_by_human, int ID, Color aura_colour, Color unit_tint)
+    public Faction(string name, bool controlled_by_human, int ID, Color aura_colour, Color unit_tint, float ai_offense_score)
     {
+        offensive_ai_score = ai_offense_score;
         faction_ID = ID;
         human_controlled = controlled_by_human;
         faction_name = name;

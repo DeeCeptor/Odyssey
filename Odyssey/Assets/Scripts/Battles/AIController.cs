@@ -123,7 +123,7 @@ public class AI_Turn_Thread
                 }              
             }
             catch (Exception e)
-            { Debug.Log("Exception executing " + faction.faction_name + " " + unit.u_name + "'s turn: " + e.Message);    }
+            { Debug.Log("Exception executing " + faction.faction_name + " " + unit.u_name + "'s turn: " + e.Message + e.StackTrace);    }
 
             // Wait until the unit is done moving before moving onto the next unit
             // This is done so the collection of enemy units is not modified by others attacking and killing enemies while trying to evaluate them
@@ -181,7 +181,7 @@ public class AI_Turn_Thread
         }
 
         // If we can't attack someone from this hex, 
-        if ((score == 0 && cur_unit.offensive_AI_score > 0))
+        if ((score == 0 && cur_unit.owner.offensive_ai_score > 0))
         {
             float closest_enemy_distance = 100000;
             // Find the closest enemy unit, and make this score higher the closer we are to it
@@ -195,7 +195,7 @@ public class AI_Turn_Thread
 
             // Move towards enemies if we have no target
             if (score == 0 && closest_enemy_distance < 100000)
-                score = (20f - closest_enemy_distance) / 5f;
+                score = (20f - closest_enemy_distance) / 3f;
 
 
             // This section is for ranged units. They should move to their max range to stay away from enemy melee
