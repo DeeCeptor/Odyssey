@@ -398,11 +398,11 @@ MonoBehaviour:
   is_moving: 0
   has_attacked: 0
   dead: 0
-  maximum_health: 150
+  maximum_health: 200
   normal_defence: .949999988
   normal_ranged_defence: .949999988
   normal_attack_range: 1
-  normal_damage: 20
+  normal_damage: 30
   normal_piercing_damage: 0
   normal_movement: 3
   normal_flanking_bonus: 0
@@ -427,6 +427,7 @@ MonoBehaviour:
   normal_squad_size: 2
   remaining_individuals: 2
   u_name: Automaton
+  cost: 10
   u_description: Forged with incredible skill, these machines will obey their master
     no matter the cost.
   portrait: {fileID: 21300000, guid: 1a549b5cb58d3094681b4e9a566da4eb, type: 3}
@@ -581,7 +582,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: normal_damage
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maximum_health
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 198650}

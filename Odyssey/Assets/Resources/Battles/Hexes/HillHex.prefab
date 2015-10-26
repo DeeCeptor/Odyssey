@@ -144,7 +144,7 @@ MonoBehaviour:
   deployment_zone: 0
   retreat_zone: 0
   hex_score: 0
-  ranged_score: 1.5
+  ranged_score: 1.24000001
   melee_score: 0
   cavalry_score: 0
 --- !u!212 &21221528
@@ -243,7 +243,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ranged_score
-      value: 1.5
+      value: 1.24000001
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Radius

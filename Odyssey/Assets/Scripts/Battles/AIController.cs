@@ -97,7 +97,7 @@ public class AI_Turn_Thread
                         // Check if we're in range. If we're not in range, we can't attack the unit
                         if (distance <= unit.GetRange())
                         {
-                            float cur_score = enemy.CalculateDamage(unit, best_hex) / 15;
+                            float cur_score = enemy.CalculateDamage(unit, best_hex) / 10;
 
                             if (cur_score > best_target_score)
                             {
@@ -181,7 +181,7 @@ public class AI_Turn_Thread
         }
 
         // If we can't attack someone from this hex, 
-        if ((score == 0 && cur_unit.owner.offensive_ai_score > 0))
+        if ((score == 0 && cur_unit.owner.offensive_ai_score > 0) || cur_unit.GetRange() > 1)
         {
             float closest_enemy_distance = 100000;
             // Find the closest enemy unit, and make this score higher the closer we are to it
@@ -195,7 +195,7 @@ public class AI_Turn_Thread
 
             // Move towards enemies if we have no target
             if (score == 0 && closest_enemy_distance < 100000)
-                score = (20f - closest_enemy_distance) / 3f;
+                score = (20f - closest_enemy_distance) / 2f;
 
 
             // This section is for ranged units. They should move to their max range to stay away from enemy melee

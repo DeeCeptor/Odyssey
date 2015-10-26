@@ -26,7 +26,8 @@ public class Effect
     // Called to apply the effect to the unit. Often changes the stats of the unit. OVerride this when creating a new effect.
     public virtual void ApplyEffect()
     {
-        PlayerInterface.player_interface.RefreshStatsPanel(receiver);
+        if (!BattleManager.battle_manager.AI_turn)
+            PlayerInterface.player_interface.RefreshStatsPanel(receiver);
     }
 
 

@@ -119,9 +119,6 @@ public class Unit : MonoBehaviour
         //this.SetRotation(new Vector3(0, 0, 0));
         health = maximum_health;
 
-        // Set aura so we can tell which faction this player belongs to
-        this.transform.FindChild("UnitSprite/Facing").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
-
         //ResetStats();
         AssignAbilities();
 
@@ -130,6 +127,10 @@ public class Unit : MonoBehaviour
 		{
 			instructs.GetComponent<SpriteRenderer>().color = owner.unit_color;
 		}
+
+        // Set aura so we can tell which faction this player belongs to
+        if (unit_sprite.transform.childCount > 0)
+            this.transform.FindChild("UnitSprite/Facing").GetComponent<SpriteRenderer>().color = this.owner.faction_color;
     }
 
 
@@ -810,8 +811,6 @@ public class Unit : MonoBehaviour
                 casualty.num_killed++;
             else
                 casualty.num_wounded++;
-
-            Debug.Log("Casualty found: " + human_readable_name + dead);
         }
         else
         {
@@ -822,8 +821,6 @@ public class Unit : MonoBehaviour
                 casualty.num_killed++;
             else
                 casualty.num_wounded++;
-
-            Debug.Log("Casualty new: " + human_readable_name + dead);
 
             PersistentBattleSettings.battle_settings.casualties[this.owner.faction_ID].Add(human_readable_name, casualty);
         }
