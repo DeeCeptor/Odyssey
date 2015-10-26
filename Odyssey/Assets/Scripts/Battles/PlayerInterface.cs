@@ -206,6 +206,7 @@ public class PlayerInterface : MonoBehaviour
         }
 
         this.unit_menu_canvas.transform.position = unit.transform.position;
+        this.unit_menu_canvas.transform.position = new Vector3(unit.transform.position.x, unit.transform.position.y, -5);   // Have it appear above units
         this.unit_menu_canvas.transform.parent = unit.transform;
         this.unit_menu_canvas.SetActive(true);
     }

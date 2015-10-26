@@ -6,7 +6,7 @@ public class Phalanx : Ability
     public static float defence_bonus = 0.10f;
 
     public Phalanx(Unit owner)
-        : base("Phalanx", "Nearby squads form up as one, granting all adjacent friendly units +" + defence_bonus + "% defence.",
+        : base("Phalanx", "Nearby squads form up as one, granting all adjacent friendly units +" + (defence_bonus * 10) + "% defence.",
 		       owner, 1, false, "PowerPhalanx")
     {
 
