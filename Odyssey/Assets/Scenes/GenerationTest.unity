@@ -23,9 +23,9 @@ RenderSettings:
   m_AmbientSkyColor: {r: .211999997, g: .226999998, b: .259000003, a: 1}
   m_AmbientEquatorColor: {r: .114, g: .125, b: .133000001, a: 1}
   m_AmbientGroundColor: {r: .0469999984, g: .0430000015, b: .0350000001, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0
   m_AmbientMode: 0
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 5a7919d2ea518c34fbf8c72ce7e9f2af, type: 2}
   m_HaloStrength: .5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -85,6 +85,52 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &35158916
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2014561146}
+    m_Modifications:
+    - target: {fileID: 404486, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404486, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404486, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 404486, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404486, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404486, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404486, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404486, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19848534, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+      propertyPath: InitialModule.startColor.maxColor.rgba
+      value: 2969567231
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0669028dcefa6584fb3fa7abc1fe5cbe, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &50254516
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +180,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -548,10 +594,10 @@ Transform:
   m_GameObject: {fileID: 499498531}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: .100000001}
-  m_LocalScale: {x: 55, y: 55, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 2014561146}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &612700032
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,10 +1199,6 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1592876145}
-    - target: {fileID: 166864, guid: fe84df81a27859d47ab5cf4d6e4d0db2, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fe84df81a27859d47ab5cf4d6e4d0db2, type: 2}
   m_IsPrefabParent: 0
@@ -2083,7 +2125,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 413632, guid: 91c3223c32167c7409cb08b0de74a56b, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11456292, guid: 91c3223c32167c7409cb08b0de74a56b, type: 2}
       propertyPath: dont_stray
