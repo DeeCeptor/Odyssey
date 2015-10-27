@@ -56,6 +56,25 @@ public class HelpMenu : MonoBehaviour
         + "\n\nFor example, forests give units significant ranged defence, cust take 2 movement to move into."
         ;
 
+    private string overworld_controls =
+        "Something something left click draw"
+        ;
+    private string food_water =
+    "Something something left click draw"
+    ;
+    private string exploration =
+    "Something something left click draw"
+    ;
+    private string objective =
+    "Something something left click draw"
+    ;
+    private string gods =
+    "Something something left click draw"
+    ;
+    private string heroes =
+    "Something something left click draw"
+    ;
+
     public void SetText(string category)
     {
         switch (category)
@@ -80,6 +99,24 @@ public class HelpMenu : MonoBehaviour
                 break;
             case "Terrain":
                 help_text.text = terrain;
+                break;
+            case "OverworldControls":
+                help_text.text = overworld_controls;
+                break;
+            case "Food & Water":
+                help_text.text = food_water;
+                break;
+            case "Exploration":
+                help_text.text = exploration;
+                break;
+            case "Objective":
+                help_text.text = objective;
+                break;
+            case "Gods":
+                help_text.text = gods;
+                break;
+            case "Heroes":
+                help_text.text = heroes;
                 break;
         }
     }

@@ -79,13 +79,14 @@ public class PreBattleDeployment : MonoBehaviour
             deployable_units.Add("CentaurWarrior", 10);
             deployable_units.Add("CentaurMarksman", 10);
             deployable_units.Add("Peltast", 10);
+            deployable_units.Add("Wolves", 10);
         }
 
 
         // Populate the buttons to spawn units
-		// At the start the value of the pair is the number of healthy individuals of that category
-        
-		Dictionary<string, int> temp_units = new Dictionary<string, int>();
+        // At the start the value of the pair is the number of healthy individuals of that category
+
+        Dictionary<string, int> temp_units = new Dictionary<string, int>();
 		foreach (KeyValuePair<string, int> pair in deployable_units)
         {
             GameObject newButton = Instantiate(deploy_unit_button) as GameObject;
