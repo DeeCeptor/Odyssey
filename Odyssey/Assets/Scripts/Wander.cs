@@ -8,10 +8,12 @@ public class Wander : MonoBehaviour
     public bool dont_stray = true;  // If set to false, the birds will wander incredibly far in random directions
     Vector2 center;
     Vector2 destination;
+    private float z;
 
 	void Start ()
     {
         center = this.transform.position;
+        z = this.transform.position.z;
         SetDestination();
     }
 	
@@ -19,6 +21,7 @@ public class Wander : MonoBehaviour
     {
         //transform.LookAt(destination);
         this.transform.position = Vector2.MoveTowards(transform.position, destination, Time.deltaTime * movement_speed);
+        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, z);
 
         if (Vector2.Distance(transform.position, destination) <= 1)
         {

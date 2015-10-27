@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class drawBehind : MonoBehaviour {
     public LineRenderer lineRender;
@@ -25,7 +26,8 @@ public class drawBehind : MonoBehaviour {
         if (EventManagement.gameController.currentEvent==null)
         {
             BackOnMap();
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.Mouse0)
+                && !EventSystem.current.IsPointerOverGameObject())
             {
                 Destroy(lastX);
                 transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.position.z);
