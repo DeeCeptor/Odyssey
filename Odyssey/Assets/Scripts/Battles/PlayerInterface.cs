@@ -179,7 +179,7 @@ public class PlayerInterface : MonoBehaviour
     {
         // Destroy all previous ability buttons
         int childs = ability_panel.transform.childCount;
-        for (int i = childs - 1; i > 0; i--)
+        for (int i = childs - 1; i >= 0; i--)
         {
             GameObject.Destroy(ability_panel.transform.GetChild(i).gameObject);
         }

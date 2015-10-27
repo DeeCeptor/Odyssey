@@ -494,11 +494,14 @@ public class Unit : MonoBehaviour
     }
     void OnMouseDown()      // Left clicked on unit
     {
-        // Deselect other unit
-        PlayerInterface.player_interface.UnitDeselected();
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            // Deselect other unit
+            PlayerInterface.player_interface.UnitDeselected();
 
-        // Select the unit
-        PlayerInterface.player_interface.UnitSelected(this);
+            // Select the unit
+            PlayerInterface.player_interface.UnitSelected(this);
+        }
     }
 
 
