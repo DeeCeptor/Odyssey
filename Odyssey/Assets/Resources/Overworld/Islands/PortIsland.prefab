@@ -49,7 +49,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &167408
 GameObject:
   m_ObjectHideFlags: 1
@@ -59,6 +59,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 405256}
   - 212: {fileID: 21237542}
+  - 114: {fileID: 11461998}
   m_Layer: 11
   m_Name: WaterTerrain
   m_TagString: Untagged
@@ -158,6 +159,17 @@ MonoBehaviour:
   eventToCall: {fileID: 199232, guid: 1a9c361566bbb4e40b473487d5066a4a, type: 2}
   eventToCallExplored: {fileID: 199232, guid: 1a9c361566bbb4e40b473487d5066a4a, type: 2}
   eventHandler: {fileID: 0}
+--- !u!114 &11461998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28b617612b49aaa43ad18528078401fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21237542
 SpriteRenderer:
   m_ObjectHideFlags: 1

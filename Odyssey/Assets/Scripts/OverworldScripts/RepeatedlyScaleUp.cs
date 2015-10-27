@@ -4,8 +4,9 @@ using System.Collections;
 public class RepeatedlyScaleUp : MonoBehaviour
 {
     private Vector3 initial_scale;
-    float expand_speed = 0.5f;
+    float expand_speed = 0.2f;
     float fade_speed = 0.5f;
+    float start_transparency_at_scale = 1.5f;
     SpriteRenderer sprite;
 
     void Start()
@@ -29,7 +30,7 @@ public class RepeatedlyScaleUp : MonoBehaviour
             this.transform.localScale = initial_scale;
         }
         // Become transparent
-        else if (cur_scale.x > initial_scale.x * 2)
+        else if (cur_scale.x > initial_scale.x * start_transparency_at_scale)
         {
             Color c = sprite.color;
             c.a -= Time.deltaTime * fade_speed;
