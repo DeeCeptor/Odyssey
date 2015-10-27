@@ -67,9 +67,10 @@ public class drawBehind : MonoBehaviour {
                         lastX = (GameObject)Instantiate(X, transform.position, transform.rotation);
                         lastX.transform.parent = GameObject.Find("UniversalParent").transform;
                     }
+                    vertices.Dequeue();
                     EventManagement.gameController.Unpause();
                     player.vertices = vertices;
-                    player.vertexIndex = 0;
+                    player.vertexIndex = 1;
                     GetComponent<SpriteRenderer>().enabled = false;
                     
                     Debug.Log(vertices.Count.ToString());
