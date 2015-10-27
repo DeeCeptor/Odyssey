@@ -21,7 +21,6 @@ public class RepeatedlyScaleUp : MonoBehaviour
         cur_scale.x += Time.deltaTime * expand_speed;
         cur_scale.y += Time.deltaTime * expand_speed;
         this.transform.localScale = cur_scale;
-        Debug.Log(transform.localScale);
 
         // Reset if transparent
         if (sprite.color.a <= 0)
