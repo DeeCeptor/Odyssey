@@ -8,11 +8,27 @@ public class RepeatedlyScaleUp : MonoBehaviour
     float fade_speed = 0.5f;
     float start_transparency_at_scale = 1.5f;
     SpriteRenderer sprite;
-
+    SpriteRenderer[] children;
     void Start()
     {
         initial_scale = this.transform.localScale;
         sprite = this.GetComponent<SpriteRenderer>();
+        float s_z = 0.1f;
+        // Spawn additional smaller ripples
+        for (float x = 0.9f; x > 0.5;)
+        {
+            GameObject obj = new GameObject("Ripples");
+            obj.transform.position = this.transform.position;
+            obj.transform.parent = this.transform;
+            obj.transform.Translate(0, 0, s_z);
+            obj.transform.localScale = new Vector3(x, x, 1);
+            obj.AddComponent<SpriteRenderer>();
+            obj.GetComponent<SpriteRenderer>().sprite = this.GetComponent<SpriteRenderer>().sprite;
+            x -= 0.1f;
+            s_z += 0.1f;
+        }
+
+        children = this.GetComponentsInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -27,6 +43,10 @@ public class RepeatedlyScaleUp : MonoBehaviour
         if (sprite.color.a <= 0)
         {
             sprite.color = Color.white;
+            foreach (SpriteRenderer s in children)
+            {
+                s.color = Color.white;
+            }
             this.transform.localScale = initial_scale;
         }
         // Become transparent
@@ -35,6 +55,11 @@ public class RepeatedlyScaleUp : MonoBehaviour
             Color c = sprite.color;
             c.a -= Time.deltaTime * fade_speed;
             sprite.color = c;
+
+            foreach (SpriteRenderer s in children)
+            {
+                s.color = c;
+            }
         }
     }
 }
