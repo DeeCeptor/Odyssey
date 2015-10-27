@@ -15,8 +15,13 @@ public class OverworldButtonFunctions : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () {
+	if(player==null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            resources = player.GetComponent<ResourceManager>();
+            playerControl = player.GetComponent<PlayerBoatController>();
+        }
 	}
 	
 	public void LowRations()

@@ -9,7 +9,7 @@ public GameObject[] islands;
 public GameObject goal;
 public GameObject[] npcs;
 public GameObject eventController;
-public GameObject ui;
+//public GameObject ui;
 public GameObject UniversalParent;
     public GameObject map;
 
@@ -46,8 +46,8 @@ GameObject curIsland;
 	
 	public void GenerateWorld()
 	{
-        GameObject newUI = (GameObject)Instantiate(ui, transform.position, transform.rotation);
-        newUI.transform.parent = UniversalParent.transform;
+        //GameObject newUI = (GameObject)Instantiate(ui, transform.position, transform.rotation);
+       // newUI.transform.parent = UniversalParent.transform;
         ocean = (GameObject)Instantiate(ocean, transform.position, transform.rotation);
         GameObject cam = (GameObject)Instantiate(map, new Vector3(transform.position.x,transform.position.y,100), transform.rotation);
         cam.transform.Rotate(transform.up,180);

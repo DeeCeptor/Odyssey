@@ -6,6 +6,7 @@ using System.Collections;
 public class FinalEventFunctions : IslandEventFunctions {
     public GameObject scyllaConversation;
     public GameObject charybdisConversation;
+    public GameObject charybdisFailConversation;
     public GameObject toGreeceConversation;
     public GameObject initialSuitorConversation;
     public GameObject beggarConversation;
@@ -18,6 +19,7 @@ public class FinalEventFunctions : IslandEventFunctions {
     public GameObject diplomacyPassConversation;
     public GameObject diplomacyFailConversation;
     public GameObject disgraceConversation;
+    public string battleToHave;
 
     // Use this for initialization
     void Start () {
@@ -39,5 +41,18 @@ public class FinalEventFunctions : IslandEventFunctions {
 
     }
 
-    
+    public void Disguise()
+    {
+
+    }
+
+    public void Battle()
+    {
+        eventHandler.StartBattle(battleToHave,false,false,12);
+    }
+
+    public void Announce()
+    {
+
+    }
 }
