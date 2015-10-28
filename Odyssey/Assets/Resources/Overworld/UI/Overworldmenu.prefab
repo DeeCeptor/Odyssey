@@ -13312,6 +13312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bea9df083353684eb3895a3a11d0f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitPrefab: 
   unitNameText: {fileID: 11403554}
   unitDescription: {fileID: 11489850}
   health: {fileID: 11434384}
@@ -14763,6 +14764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bea9df083353684eb3895a3a11d0f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitPrefab: 
   unitNameText: {fileID: 11421532}
   unitDescription: {fileID: 11465770}
   health: {fileID: 11483516}
@@ -16272,6 +16274,7 @@ MonoBehaviour:
   forestExploreEventList: []
   desertExploreEventList: []
   tropicalExploreEventList: []
+  islands: []
   framesPerCheckRegular: 240
   framesPerCheck: 240
   eventChance: 25
@@ -24974,7 +24977,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 179976}
