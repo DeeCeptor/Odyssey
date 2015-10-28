@@ -14,8 +14,8 @@ public class PortEventFunctions : IslandEventFunctions{
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        eventHandler = GameObject.FindGameObjectWithTag("EventController").GetComponent<EventManagement>();
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -24,7 +24,9 @@ public class PortEventFunctions : IslandEventFunctions{
 
     public void Port()
     {
+
         GameObject shopMenu = Instantiate(PortMenu);
+        MenuSwitch2 shopScript = shopMenu.GetComponent<MenuSwitch2>();
         Destroy(gameObject);
     }
 

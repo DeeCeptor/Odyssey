@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 456116}
   - 58: {fileID: 5857270}
-  - 114: {fileID: 11432046}
   - 114: {fileID: 11423562}
   - 114: {fileID: 11409552}
   m_Layer: 11
@@ -143,6 +142,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46017669bc7c1344995aba70a8c466ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explored: 0
+  eventToCall: {fileID: 0}
+  eventToCallExplored: {fileID: 0}
+  eventHandler: {fileID: 0}
+  maxUnits: 10
+  maxAdjust: 10
+  numberToAdd: 1
+  rand: 0
+  resupplyTime: 800
 --- !u!114 &11423562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,21 +164,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   percentGathered: 0
   amount: 2
---- !u!114 &11432046
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf0a12de889828c4ab543f8f0416323e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explored: 0
-  eventToCall: {fileID: 199232, guid: 1a9c361566bbb4e40b473487d5066a4a, type: 2}
-  eventToCallExplored: {fileID: 199232, guid: 1a9c361566bbb4e40b473487d5066a4a, type: 2}
-  eventHandler: {fileID: 0}
 --- !u!114 &11461998
 MonoBehaviour:
   m_ObjectHideFlags: 1

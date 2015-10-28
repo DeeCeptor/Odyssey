@@ -27,10 +27,7 @@ public class MenuSwitch2 : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        unitsAvailable = new Dictionary<string, int>();
-        unitsAvailable.Add("Hoplite",10);
-        unitsAvailable.Add("Archer", 10);
-        unitsAvailable.Add("Swordsman", 10);
+        unitsAvailable = EventManagement.gameController.islandEventIsOn.GetComponent<PortIslandEventScript>().units;
     }
 
     public void SetUnitsAvailable(Dictionary<string,int> unitList)
