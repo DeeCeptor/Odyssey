@@ -74,8 +74,12 @@ public class PlayerBoatController : MonoBehaviour {
             if (0 < vertices.Count)
             {
                 dir = (vertices.Peek() - transform.position);
+
+                //transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
                 float rot_z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+                // Rotate smoothly to desired rotation
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rot_z - 90), Time.deltaTime);
+
                 if (moveRate == 0)
                 {
                     gameObject.GetComponent<Rigidbody2D>().velocity = dir.normalized*slowSpeed * ((resource.stamina + 50f) / 100f) * (1 + (resource.poseidonsFavour / 500f));
