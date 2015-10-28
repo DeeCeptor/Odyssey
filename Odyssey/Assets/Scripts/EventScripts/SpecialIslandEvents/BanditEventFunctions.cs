@@ -10,8 +10,7 @@ public class BanditEventFunctions : IslandEventFunctions {
     public GameObject battleConversation;
     public GameObject tipConversation;
     public GameObject leaveConversation;
-
-    public int tipOffReward = 10;
+    public int tipOffReward = 20;
 
     // Use this for initialization
     void Start () {

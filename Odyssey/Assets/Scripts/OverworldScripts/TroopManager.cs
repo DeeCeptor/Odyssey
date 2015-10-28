@@ -420,6 +420,61 @@ public class TroopManager : MonoBehaviour {
         }
     }
 
+    public void killRandom(int numToKill)
+    {
+        int troops = 0;
+        Dictionary<string, int>.KeyCollection keys = TroopManager.playerTroops.healthy.Keys;
+        Dictionary<string, int>.ValueCollection healthyUnits = TroopManager.playerTroops.healthy.Values;
+        Dictionary<string, int>.ValueCollection woundedUnits = TroopManager.playerTroops.wounded.Values;
+        string[] keyArray = new string[keys.Count];
+        string curKey;
+        int[] healthyTroopNums = new int[healthyUnits.Count];
+        int[] woundedTroopNums = new int[woundedUnits.Count];
+        healthyUnits.CopyTo(healthyTroopNums, 0);
+        woundedUnits.CopyTo(woundedTroopNums, 0);
+        keys.CopyTo(keyArray, 0);
+        troops = getTroopNum();
+        //if there are troops to injure
+
+        //for each injury
+        for (int i = 0; i < numToKill; i++)
+        {
+            troops = getTroopNum();
+            if (troops > 0)
+            {
+
+                //find a random number corresponding to an individual troop
+                int randInt = Random.Range(0, troops);
+                //find which unit that number belongs to
+                int numsSearched = 0;
+                for (int x = 0; x < healthyTroopNums.Length + woundedTroopNums.Length; x++)
+                {
+                    if (x < healthyTroopNums.Length)
+                    {
+                        numsSearched = numsSearched + healthyTroopNums[x];
+                        if (randInt < numsSearched)
+                        {
+                            healthyTroopNums[x] = healthyTroopNums[x] - 1;
+                            curKey = keyArray[x];
+                            healthy[curKey] = healthy[curKey] - 1;
+                        }
+                    }
+                    else
+                    {
+                        //if it wounds a wounded troop it kills it
+                        numsSearched = numsSearched + woundedTroopNums[x];
+                        if (randInt < numsSearched)
+                        {
+                            woundedTroopNums[x] = woundedTroopNums[x] - 1;
+                            curKey = keyArray[x];
+                            wounded[curKey] = wounded[curKey] - 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void GiveExperience(int Experience)
     {
 

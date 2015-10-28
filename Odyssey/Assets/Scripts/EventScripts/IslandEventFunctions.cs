@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class IslandEventFunctions : MonoBehaviour {
-
+    //a boolean to use for islands that need to set a flag for certain accomplishments
+    public bool complete;
 	public GameObject eventToCall;
 	public EventManagement eventHandler;
 	// Use this for initialization

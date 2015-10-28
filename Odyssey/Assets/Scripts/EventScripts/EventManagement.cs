@@ -157,6 +157,22 @@ public class EventManagement : MonoBehaviour {
         paused = true;
     }
 
+    public void StartBattle(string battleToStart, bool retreat, bool mustUsehero, int deployNumber,bool firstTurn,int AIagressiveness)
+    {
+        Instantiate(Resources.Load("ScrollTransitionCanvas"));
+        OverworldParent.SetActive(false);
+        GameObject battleSettings = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
+        PersistentBattleSettings battleScript = battleSettings.GetComponent<PersistentBattleSettings>();
+        battleScript.path_to_battle_file = battleToStart;
+        battleScript.number_of_deployable_units = deployNumber + TroopManager.playerTroops.getLeadership();
+        battleScript.must_include_main_hero = mustUsehero;
+        battleScript.can_retreat = retreat;
+        battleScript.player_goes_first = firstTurn;
+        battleScript.enemy_agressiveness = AIagressiveness;
+        Application.LoadLevelAdditive("TacticalBattle");
+        paused = true;
+    }
+
     public void EndBattle()
     {
         //destroy battle

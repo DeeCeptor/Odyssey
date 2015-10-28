@@ -68,11 +68,43 @@ GameObject curIsland;
         oceanYWidth = ocean.GetComponent<Renderer>().bounds.extents.y;
         islandXWidth = goal.GetComponent<Renderer>().bounds.extents.x;
         islandYWidth = goal.GetComponent<Renderer>().bounds.extents.y;
-        curPosition = new Vector3(Random.Range(-oceanXWidth + islandXWidth, oceanXWidth - islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth) ,transform.position.z + 5);
-        goal = (GameObject)Instantiate(goal, curPosition, transform.rotation);
-        goal.transform.parent = UniversalParent.transform;
-        islandCounter = islandCounter + 1;
-        islandsPlaced[0] = goal;
+        //1 is top 2 is right 3 is bottom 4 is left
+        int RandEdge = Random.Range(1,5);
+        if (RandEdge==1)
+        {
+            curPosition = new Vector3(Random.Range(-oceanXWidth + islandXWidth, oceanXWidth - islandXWidth), oceanYWidth, transform.position.z + 5);
+            goal = (GameObject)Instantiate(goal, curPosition, transform.rotation);
+            goal.transform.parent = UniversalParent.transform;
+            islandCounter = islandCounter + 1;
+            islandsPlaced[0] = goal;
+        }
+
+        if (RandEdge == 2)
+        {
+            curPosition = new Vector3(oceanXWidth, Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 5);
+            goal = (GameObject)Instantiate(goal, curPosition, transform.rotation);
+            goal.transform.parent = UniversalParent.transform;
+            islandCounter = islandCounter + 1;
+            islandsPlaced[0] = goal;
+        }
+
+        if (RandEdge == 1)
+        {
+            curPosition = new Vector3(Random.Range(-oceanXWidth + islandXWidth, oceanXWidth - islandXWidth), -oceanYWidth, transform.position.z + 5);
+            goal = (GameObject)Instantiate(goal, curPosition, transform.rotation);
+            goal.transform.parent = UniversalParent.transform;
+            islandCounter = islandCounter + 1;
+            islandsPlaced[0] = goal;
+        }
+
+        if (RandEdge == 4)
+        {
+            curPosition = new Vector3(-oceanXWidth, Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 5);
+            goal = (GameObject)Instantiate(goal, curPosition, transform.rotation);
+            goal.transform.parent = UniversalParent.transform;
+            islandCounter = islandCounter + 1;
+            islandsPlaced[0] = goal;
+        }
     }
 
     public void PlacePlayer()

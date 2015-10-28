@@ -41,7 +41,7 @@ GameObject:
   - 4: {fileID: 455534}
   - 114: {fileID: 11436394}
   m_Layer: 0
-  m_Name: SuccessBowDialogue
+  m_Name: SuccessProveDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,22 +65,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &110134
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 495894}
-  - 114: {fileID: 11456166}
-  m_Layer: 0
-  m_Name: EndEventNode
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &111416
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +75,7 @@ GameObject:
   - 4: {fileID: 475292}
   - 114: {fileID: 11452788}
   m_Layer: 0
-  m_Name: FeastConversation
+  m_Name: CharybdisSuccessConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,23 +91,7 @@ GameObject:
   - 4: {fileID: 499210}
   - 114: {fileID: 11479518}
   m_Layer: 0
-  m_Name: ExploreDialogue (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &113600
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 490068}
-  - 114: {fileID: 11469574}
-  m_Layer: 0
-  m_Name: BattleNode
+  m_Name: ScyllaPull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,7 +107,23 @@ GameObject:
   - 4: {fileID: 424980}
   - 114: {fileID: 11488354}
   m_Layer: 0
-  m_Name: FailBowDialogue
+  m_Name: FailProveDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &116136
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 416850}
+  - 114: {fileID: 11494600}
+  m_Layer: 0
+  m_Name: ExploreDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,7 +139,7 @@ GameObject:
   - 4: {fileID: 400772}
   - 114: {fileID: 11459556}
   m_Layer: 0
-  m_Name: CaveConversation
+  m_Name: BackConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,6 +157,22 @@ GameObject:
   - 114: {fileID: 11428760}
   m_Layer: 5
   m_Name: Choices
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &117828
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 470878}
+  - 114: {fileID: 11408898}
+  m_Layer: 0
+  m_Name: EndEventNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,7 +236,7 @@ GameObject:
   - 4: {fileID: 458398}
   - 114: {fileID: 11434630}
   m_Layer: 0
-  m_Name: CaveDialogue
+  m_Name: BackDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,6 +338,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &128406
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 489650}
+  - 114: {fileID: 11446196}
+  m_Layer: 0
+  m_Name: SuitorChoice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &129198
 GameObject:
   m_ObjectHideFlags: 1
@@ -348,7 +364,7 @@ GameObject:
   - 4: {fileID: 474920}
   - 114: {fileID: 11402964}
   m_Layer: 0
-  m_Name: SuccessCunningDialogue
+  m_Name: SuccessDiplomacyDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -371,17 +387,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &131092
+--- !u!1 &130204
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 406506}
-  - 114: {fileID: 11419818}
+  - 4: {fileID: 471580}
+  - 114: {fileID: 11437334}
   m_Layer: 0
-  m_Name: EndEventNode
+  m_Name: CharybdisPull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -414,7 +430,7 @@ GameObject:
   - 4: {fileID: 481044}
   - 114: {fileID: 11440326}
   m_Layer: 0
-  m_Name: FailureCunning
+  m_Name: FailureDiplomacy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -436,6 +452,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &136966
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 446874}
+  - 114: {fileID: 11401326}
+  m_Layer: 0
+  m_Name: BattleNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &137292
 GameObject:
   m_ObjectHideFlags: 1
@@ -446,7 +478,7 @@ GameObject:
   - 4: {fileID: 408386}
   - 114: {fileID: 11431324}
   m_Layer: 0
-  m_Name: CaveDialogue (1)
+  m_Name: BackDialogue2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -559,9 +591,41 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 499128}
-  - 114: {fileID: 11484696}
+  - 114: {fileID: 11417660}
   m_Layer: 0
-  m_Name: ExploreDialogue
+  m_Name: ChangeNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &148732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 487548}
+  - 114: {fileID: 11403756}
+  m_Layer: 0
+  m_Name: CharybdisConversation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &150168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 414792}
+  - 114: {fileID: 11457552}
+  m_Layer: 0
+  m_Name: DisguiseConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -577,7 +641,7 @@ GameObject:
   - 4: {fileID: 461498}
   - 114: {fileID: 11409742}
   m_Layer: 0
-  m_Name: FailureCunningDialogue
+  m_Name: FailureDiplomacyDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -609,7 +673,7 @@ GameObject:
   - 4: {fileID: 476530}
   - 114: {fileID: 11429608}
   m_Layer: 0
-  m_Name: FailBow
+  m_Name: FailProve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -666,33 +730,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!1 &161270
+--- !u!1 &162138
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 497798}
-  - 114: {fileID: 11443290}
+  - 4: {fileID: 466750}
+  - 114: {fileID: 11476850}
   m_Layer: 0
-  m_Name: Choice
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &163288
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 443248}
-  - 114: {fileID: 11452398}
-  m_Layer: 0
-  m_Name: EndEventNode
+  m_Name: CharybdisPull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -726,7 +774,23 @@ GameObject:
   - 4: {fileID: 486078}
   - 114: {fileID: 11426726}
   m_Layer: 0
-  m_Name: SuccessCunning
+  m_Name: SuccessDiplomacy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &165210
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 464290}
+  - 114: {fileID: 11422586}
+  m_Layer: 0
+  m_Name: ChangeNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -742,7 +806,7 @@ GameObject:
   - 4: {fileID: 484798}
   - 114: {fileID: 11483528}
   m_Layer: 0
-  m_Name: CaveChoice
+  m_Name: SuitorChoice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -846,17 +910,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &178014
+--- !u!1 &177108
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 457576}
-  - 114: {fileID: 11452170}
+  - 4: {fileID: 423436}
+  - 114: {fileID: 11447332}
   m_Layer: 0
-  m_Name: ScamperSucessDialogue
+  m_Name: ChangeNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &177966
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 469716}
+  - 114: {fileID: 11489740}
+  m_Layer: 0
+  m_Name: SuitorChoice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -888,7 +968,7 @@ GameObject:
   - 4: {fileID: 405622}
   - 114: {fileID: 11441054}
   m_Layer: 0
-  m_Name: GatherFoodConversation
+  m_Name: AnnounceConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -926,6 +1006,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &189566
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 490878}
+  - 114: {fileID: 11455422}
+  m_Layer: 0
+  m_Name: BackDialogue3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &192612
 GameObject:
   m_ObjectHideFlags: 1
@@ -954,7 +1050,23 @@ GameObject:
   - 4: {fileID: 427376}
   - 114: {fileID: 11440198}
   m_Layer: 0
-  m_Name: SuccesBow
+  m_Name: SuccesProve
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &195178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 413296}
+  - 114: {fileID: 11403624}
+  m_Layer: 0
+  m_Name: ScyllaConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1001,12 +1113,11 @@ Transform:
   m_Children:
   - {fileID: 458398}
   - {fileID: 408386}
-  - {fileID: 484798}
-  - {fileID: 457576}
+  - {fileID: 490878}
+  - {fileID: 469716}
   - {fileID: 416562}
-  - {fileID: 443248}
   m_Father: {fileID: 476040}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!4 &405622
 Transform:
   m_ObjectHideFlags: 1
@@ -1018,21 +1129,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444608}
-  - {fileID: 495894}
+  - {fileID: 484798}
   m_Father: {fileID: 476040}
-  m_RootOrder: 4
---- !u!4 &406506
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131092}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 475292}
-  m_RootOrder: 3
+  m_RootOrder: 12
 --- !u!4 &407466
 Transform:
   m_ObjectHideFlags: 1
@@ -1045,9 +1144,9 @@ Transform:
   m_Children:
   - {fileID: 491724}
   - {fileID: 433350}
-  - {fileID: 424762}
+  - {fileID: 470878}
   m_Father: {fileID: 476040}
-  m_RootOrder: 1
+  m_RootOrder: 3
 --- !u!4 &408386
 Transform:
   m_ObjectHideFlags: 1
@@ -1060,6 +1159,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 400772}
   m_RootOrder: 1
+--- !u!4 &413296
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195178}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 499210}
+  - {fileID: 423436}
+  m_Father: {fileID: 476040}
+  m_RootOrder: 0
+--- !u!4 &414792
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 416850}
+  - {fileID: 489650}
+  m_Father: {fileID: 476040}
+  m_RootOrder: 6
 --- !u!4 &416562
 Transform:
   m_ObjectHideFlags: 1
@@ -1072,6 +1199,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 400772}
   m_RootOrder: 4
+--- !u!4 &416850
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116136}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 414792}
+  m_RootOrder: 0
+--- !u!4 &423436
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177108}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 413296}
+  m_RootOrder: 1
 --- !u!4 &424762
 Transform:
   m_ObjectHideFlags: 1
@@ -1079,11 +1230,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
+  m_LocalPosition: {x: -81.9769745, y: 79.5928192, z: -31.3696556}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 407466}
-  m_RootOrder: 2
+  m_Father: {fileID: 427376}
+  m_RootOrder: 1
 --- !u!4 &424980
 Transform:
   m_ObjectHideFlags: 1
@@ -1107,9 +1258,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 455534}
-  - {fileID: 490068}
+  - {fileID: 424762}
   m_Father: {fileID: 476040}
-  m_RootOrder: 6
+  m_RootOrder: 8
 --- !u!4 &433350
 Transform:
   m_ObjectHideFlags: 1
@@ -1122,18 +1273,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 407466}
   m_RootOrder: 1
---- !u!4 &443248
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400772}
-  m_RootOrder: 5
 --- !u!4 &444608
 Transform:
   m_ObjectHideFlags: 1
@@ -1146,6 +1285,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 405622}
   m_RootOrder: 0
+--- !u!4 &446874
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136966}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 461390}
+  m_RootOrder: 1
 --- !u!4 &451302
 Transform:
   m_ObjectHideFlags: 1
@@ -1153,10 +1304,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -27.3258743, y: 26.5309391, z: -10.4565563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 461390}
+  m_Father: {fileID: 476530}
   m_RootOrder: 1
 --- !u!4 &455534
 Transform:
@@ -1170,18 +1321,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 427376}
   m_RootOrder: 0
---- !u!4 &457576
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 178014}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400772}
-  m_RootOrder: 3
 --- !u!4 &458398
 Transform:
   m_ObjectHideFlags: 1
@@ -1205,9 +1344,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 489792}
-  - {fileID: 451302}
+  - {fileID: 446874}
   m_Father: {fileID: 476040}
-  m_RootOrder: 5
+  m_RootOrder: 7
 --- !u!4 &461498
 Transform:
   m_ObjectHideFlags: 1
@@ -1219,6 +1358,66 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481044}
+  m_RootOrder: 0
+--- !u!4 &464290
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165210}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 487548}
+  m_RootOrder: 1
+--- !u!4 &466750
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 475292}
+  m_RootOrder: 0
+--- !u!4 &469716
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177966}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400772}
+  m_RootOrder: 3
+--- !u!4 &470878
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117828}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 407466}
+  m_RootOrder: 2
+--- !u!4 &471580
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 487548}
   m_RootOrder: 0
 --- !u!4 &474920
 Transform:
@@ -1242,12 +1441,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 499210}
-  - {fileID: 497798}
+  - {fileID: 466750}
   - {fileID: 499128}
-  - {fileID: 406506}
   m_Father: {fileID: 476040}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &476040
 Transform:
   m_ObjectHideFlags: 1
@@ -1258,16 +1455,19 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 413296}
   - {fileID: 475292}
+  - {fileID: 487548}
   - {fileID: 407466}
   - {fileID: 22489906}
   - {fileID: 400772}
-  - {fileID: 405622}
+  - {fileID: 414792}
   - {fileID: 461390}
   - {fileID: 427376}
   - {fileID: 476530}
   - {fileID: 486078}
   - {fileID: 481044}
+  - {fileID: 405622}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &476530
@@ -1281,8 +1481,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 424980}
+  - {fileID: 451302}
   m_Father: {fileID: 476040}
-  m_RootOrder: 7
+  m_RootOrder: 9
 --- !u!4 &481044
 Transform:
   m_ObjectHideFlags: 1
@@ -1296,7 +1497,7 @@ Transform:
   - {fileID: 461498}
   - {fileID: 400684}
   m_Father: {fileID: 476040}
-  m_RootOrder: 9
+  m_RootOrder: 11
 --- !u!4 &484798
 Transform:
   m_ObjectHideFlags: 1
@@ -1307,8 +1508,8 @@ Transform:
   m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 400772}
-  m_RootOrder: 2
+  m_Father: {fileID: 405622}
+  m_RootOrder: 1
 --- !u!4 &486078
 Transform:
   m_ObjectHideFlags: 1
@@ -1322,7 +1523,33 @@ Transform:
   - {fileID: 474920}
   - {fileID: 499454}
   m_Father: {fileID: 476040}
-  m_RootOrder: 8
+  m_RootOrder: 10
+--- !u!4 &487548
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 471580}
+  - {fileID: 464290}
+  m_Father: {fileID: 476040}
+  m_RootOrder: 2
+--- !u!4 &489650
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 414792}
+  m_RootOrder: 1
 --- !u!4 &489792
 Transform:
   m_ObjectHideFlags: 1
@@ -1335,18 +1562,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 461390}
   m_RootOrder: 0
---- !u!4 &490068
+--- !u!4 &490878
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 113600}
+  m_GameObject: {fileID: 189566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 427376}
-  m_RootOrder: 1
+  m_Father: {fileID: 400772}
+  m_RootOrder: 2
 --- !u!4 &491724
 Transform:
   m_ObjectHideFlags: 1
@@ -1359,30 +1586,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 407466}
   m_RootOrder: 0
---- !u!4 &495894
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110134}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 405622}
-  m_RootOrder: 1
---- !u!4 &497798
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 161270}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 475292}
-  m_RootOrder: 1
 --- !u!4 &499128
 Transform:
   m_ObjectHideFlags: 1
@@ -1394,7 +1597,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 475292}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &499210
 Transform:
   m_ObjectHideFlags: 1
@@ -1405,7 +1608,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 475292}
+  m_Father: {fileID: 413296}
   m_RootOrder: 0
 --- !u!4 &499454
 Transform:
@@ -1419,6 +1622,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 486078}
   m_RootOrder: 1
+--- !u!114 &11401326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1635757d8f3441a4caade22c0feeb5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleToHave: SuitorBattle.txt
+  retreat: 0
+  mustUseHero: 0
+  troopsToDeploy: 10
 --- !u!114 &11402964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1432,9 +1650,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: You and your troops manage to hide amongst a flock of sheep, you manage to
-    sneak out of the cave by hiding under the bellies of the sheep. The Cyclopes with
-    thei tall stature do not notice you
+  text: Through your strength of diplomacy and leadership you recount your story convincingly.
+    By the end of your tale all of the suitors know that you are truly Oddyseus, they
+    leave peacefully, you have reclaimed your rightfull place
   clear_text_after: 0
 --- !u!114 &11403106
 MonoBehaviour:
@@ -1463,6 +1681,28 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11403624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11403756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11405382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1474,10 +1714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1635757d8f3441a4caade22c0feeb5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleToHave: CyclopsBattle.txt
+  battleToHave: SuitorBattle.txt
   retreat: 0
   mustUseHero: 0
-  troopsToDeploy: 7
+  troopsToDeploy: 12
 --- !u!114 &11405462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1494,6 +1734,18 @@ MonoBehaviour:
   choice_panel: {fileID: 160048}
   background: {fileID: 11457862}
   foreground: {fileID: 11403106}
+--- !u!114 &11408898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventController: {fileID: 0}
 --- !u!114 &11409742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1507,8 +1759,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: you attempt to hide in the caves but the group of cyclopes notice you almost
-    immediately
+  text: The suitors believe that you are a liar and a scoundrel. It seems the only
+    thing they will believe is the blade
   clear_text_after: 0
 --- !u!114 &11411052
 MonoBehaviour:
@@ -1654,6 +1906,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11417660
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dba8ebeeac6fa14d90358a78deed2dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conversation_to_start: {fileID: 11459556}
 --- !u!114 &11417748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1738,18 +2002,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &11419818
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventController: {fileID: 0}
 --- !u!114 &11421052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1765,6 +2017,18 @@ MonoBehaviour:
   textbox_title: 
   text: The mountain seems threatening, you and your troops prepare to leave
   clear_text_after: 0
+--- !u!114 &11422586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dba8ebeeac6fa14d90358a78deed2dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conversation_to_start: {fileID: 11459556}
 --- !u!114 &11426726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1900,8 +2164,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: This is it you are on the path to Greece it is only a few hours away. Finally
-    your travels are over.
+  text: The shores of Greece are ahead, your home beckons you closer. As your ship
+    pulls ashore you can feel your heart drum furiously. Questions flood your mind,
+    what has happened during your abscence?
   clear_text_after: 1
 --- !u!114 &11432012
 MonoBehaviour:
@@ -1943,9 +2208,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: You hit a cyclops stright in the eye taking him out of the fight. Now there
-    are only two more
+  text: You string the bow and shoot through 13 axe heads, all the suitors are impressed
+    by your feat and have no choice but to acknowledge who you are
   clear_text_after: 0
+--- !u!114 &11437334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: 
+  textbox_title: 
+  text: The Whirlpool draws your boat towards the center, gigantic waves crash into
+    your ship. The fury of charybdis tears at your ship damaging the hull severly
+    and knocking many sailors overboard
+  clear_text_after: 1
 --- !u!114 &11440198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2011,25 +2293,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11443290
+--- !u!114 &11446196
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 161270}
+  m_GameObject: {fileID: 128406}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choice_text: While you and your men gorged themselves a group of cyclopes have snuck
-    up on you
-  button_1_text: Flee
+  choice_text: When your turn to string the bow of apollo you
+  button_1_text: Prove yourself
   Button_1_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Sacrifice
+      - m_Target: {fileID: 11451528}
+        m_MethodName: Prove
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2041,12 +2322,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_2_text: fight
+  button_2_text: Sneak attack the suitors
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: BattleConversation
+      - m_Target: {fileID: 11451528}
+        m_MethodName: Battle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2058,40 +2339,30 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_3_text: hide
+  button_3_text: 
   Button_3_Events:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Cunning
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_4_text: Shoot one in the eye
+  button_4_text: 
   Button_4_Events:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Bow
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11447332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dba8ebeeac6fa14d90358a78deed2dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conversation_to_start: {fileID: 11459556}
 --- !u!114 &11449282
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2103,10 +2374,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1635757d8f3441a4caade22c0feeb5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleToHave: CyclopsBattle.txt
+  battleToHave: SuitorBattle.txt
   retreat: 0
   mustUseHero: 0
-  troopsToDeploy: 7
+  troopsToDeploy: 12
 --- !u!114 &11451192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2133,48 +2404,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventToCall: {fileID: 0}
   eventHandler: {fileID: 0}
-  scyllaConversation: {fileID: 0}
-  charybdisConversation: {fileID: 0}
-  toGreeceConversation: {fileID: 0}
+  resourceManager: {fileID: 0}
+  defaultConversation: {fileID: 185074}
+  conManager: {fileID: 0}
+  choiceManager: {fileID: 0}
+  scyllaConversation: {fileID: 195178}
+  charybdisConversation: {fileID: 111416}
+  charybdisFailConversation: {fileID: 148732}
+  toGreeceConversation: {fileID: 116454}
   initialSuitorConversation: {fileID: 0}
-  beggarConversation: {fileID: 0}
-  boldConversation: {fileID: 0}
-  suitorBattleConversation: {fileID: 0}
-  bowPassConversation: {fileID: 0}
-  bowFailConversation: {fileID: 0}
-  sneakPassConversation: {fileID: 0}
-  sneakFailConversation: {fileID: 0}
-  diplomacyPassConversation: {fileID: 0}
-  diplomacyFailConversation: {fileID: 0}
+  beggarConversation: {fileID: 150168}
+  boldConversation: {fileID: 182428}
+  suitorBattleConversation: {fileID: 117974}
+  provePassConversation: {fileID: 193104}
+  proveFailConversation: {fileID: 156636}
+  diplomacyPassConversation: {fileID: 165154}
+  diplomacyFailConversation: {fileID: 133450}
   disgraceConversation: {fileID: 0}
---- !u!114 &11452170
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 178014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actor: 
-  textbox_title: 
-  text: You and your troops manage to grab a great deal of provisions before leaving
-    the cave
-  clear_text_after: 0
---- !u!114 &11452398
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventController: {fileID: 0}
+  battleToHave: 
+  SoldiersInjureFromCharybdis: 15
+  hullFromCharybdis: 70
 --- !u!114 &11452788
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2186,6 +2435,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11455422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: 
+  textbox_title: 
+  text: As you approach your home you hear a commotion, it seems that there is a crowd
+    near your house
+  clear_text_after: 1
 --- !u!114 &11455806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2213,18 +2478,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11456166
+--- !u!114 &11457552
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110134}
+  m_GameObject: {fileID: 150168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventController: {fileID: 0}
 --- !u!114 &11457862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2432,23 +2696,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: you begin gathering
+  text: You loudly announce your presence and that you have returned, The rest of
+    the suitors do not believe that you could have survived. It seems something must
+    be done
   clear_text_after: 0
---- !u!114 &11469574
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 113600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1635757d8f3441a4caade22c0feeb5ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  battleToHave: CyclopsAdvantagedBattle.txt
-  retreat: 0
-  mustUseHero: 0
-  troopsToDeploy: 7
 --- !u!114 &11476572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2481,6 +2732,22 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!114 &11476850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: 
+  textbox_title: 
+  text: The Whirlpool draws your boat towards the center, gigantic waves crash into
+    your ship. With exceptional skill you navigate through the whirpool safely
+  clear_text_after: 1
 --- !u!114 &11476950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2526,7 +2793,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: You begin to grab as much food as you can
+  text: The monster Scylla sees your ship. It outstretches it's tentacles towards
+    your ship and each of it's six tentacles pulls a screaming soldier off of your
+    ship.
   clear_text_after: 1
 --- !u!114 &11481484
 MonoBehaviour:
@@ -2566,14 +2835,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choice_text: This feast must have been laid out by someone who could be back at
-    any moment, what do we do?
-  button_1_text: Eat your fill
+  choice_text: When your turn to string the bow of apollo you
+  button_1_text: Convince Them
   Button_1_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Feast
+      - m_Target: {fileID: 11451528}
+        m_MethodName: Diplomacy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2585,12 +2853,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_2_text: Grab what you can and leave
+  button_2_text: Win the contest
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Scamper
+      - m_Target: {fileID: 11451528}
+        m_MethodName: Prove
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2602,12 +2870,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_3_text: Leave, it belongs to someone else
+  button_3_text: Assault the suitors
   Button_3_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Leave
+      - m_Target: {fileID: 11451528}
+        m_MethodName: Battle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2637,22 +2905,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventController: {fileID: 0}
---- !u!114 &11484696
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actor: 
-  textbox_title: 
-  text: As you scramble to flee the cyclopes grab as many men as they can catch, many
-    are eaten, more are injured.
-  clear_text_after: 1
 --- !u!114 &11488272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2666,8 +2918,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: You prepare to do battle with the gigantic beasts
-  clear_text_after: 0
+  text: These suitors are disrespectful upstarts who don't even recognize their own
+    king, you prepare to cut them down
+  clear_text_after: 1
 --- !u!114 &11488354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2681,7 +2934,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: You miss the cyclops, they laugh as your arrow flies wide
+  text: You cannot even string your bow, it seems your months at sea have weakened
+    you now you have no choice but to fight
   clear_text_after: 0
 --- !u!114 &11488550
 MonoBehaviour:
@@ -2699,6 +2953,76 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &11489740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choice_text: It seems that everyone thinks you died in the battle of troy. There
+    is a host of suitors here to compete for the hand of your wife!
+  button_1_text: Come disguised
+  Button_1_Events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11451528}
+        m_MethodName: Disguise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  button_2_text: Announce Yourself
+  Button_2_Events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11451528}
+        m_MethodName: Announce
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  button_3_text: Kill them
+  Button_3_Events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11451528}
+        m_MethodName: Battle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  button_4_text: 
+  Button_4_Events:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &11493928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2753,6 +3077,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11494600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: 
+  textbox_title: 
+  text: You show up disguised to find that the suitors must string and fire the bow
+    of Apollo
+  clear_text_after: 0
 --- !u!114 &11497176
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3320,7 +3660,7 @@ RectTransform:
   - {fileID: 22403762}
   - {fileID: 22410104}
   m_Father: {fileID: 476040}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}

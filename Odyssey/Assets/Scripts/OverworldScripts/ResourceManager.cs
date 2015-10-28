@@ -75,6 +75,7 @@ public float zeusFavour = 0f;
 public float hadesFavour = 0f;
 public float athenasFavour = 0f;
 public float aresFavour = 0f;
+    public float hermesFavour = 0f;
 
 //gathering variables
 //how many frames before resources
@@ -474,4 +475,28 @@ public WeatherScript weatherAtIndex;
 			anchored = true;
 		}
 	}
+
+    public void AddFood(float foodToAdd)
+    {
+        if(checkIfOver(foodToAdd))
+        {
+            food = food + (maxWeight - weight);
+        }
+    }
+
+    public void AddWater(float waterToAdd)
+    {
+        if (checkIfOver(waterToAdd))
+        {
+            water = water + (maxWeight - weight);
+        }
+    }
+
+    public void AddTreasure(float goldToAdd)
+    {
+        if (checkIfOver(goldToAdd))
+        {
+            gold = gold + (int)((maxWeight - weight)*goldWeight);
+        }
+    }
 }
