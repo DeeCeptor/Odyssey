@@ -143,14 +143,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explored: 0
-  eventToCall: {fileID: 0}
-  eventToCallExplored: {fileID: 0}
+  eventToCall: {fileID: 199232, guid: 1a9c361566bbb4e40b473487d5066a4a, type: 2}
+  eventToCallExplored: {fileID: 199232, guid: 1a9c361566bbb4e40b473487d5066a4a, type: 2}
   eventHandler: {fileID: 0}
   maxUnits: 10
   maxAdjust: 10
   numberToAdd: 1
   rand: 0
   resupplyTime: 800
+  raided: 0
 --- !u!114 &11423562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -259,7 +260,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: eventToCall
+      value: 
+      objectReference: {fileID: 199232, guid: 1a9c361566bbb4e40b473487d5066a4a, type: 2}
+    - target: {fileID: 0}
+      propertyPath: eventToCallExplored
+      value: 
+      objectReference: {fileID: 199232, guid: 1a9c361566bbb4e40b473487d5066a4a, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 162004}

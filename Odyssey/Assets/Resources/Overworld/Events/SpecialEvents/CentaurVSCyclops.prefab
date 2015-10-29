@@ -384,7 +384,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 438694}
-  - 114: {fileID: 11461918}
+  - 114: {fileID: 11422714}
   m_Layer: 0
   m_Name: CentaurVSCyclops
   m_TagString: Untagged
@@ -402,7 +402,7 @@ GameObject:
   - 4: {fileID: 457366}
   - 114: {fileID: 11449898}
   m_Layer: 0
-  m_Name: BanditConversation
+  m_Name: FightConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -910,7 +910,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: you see a man watching a path
+  text: You see that there is a battle raging on between a tribe of centaurs and some
+    cyclops
   clear_text_after: 1
 --- !u!114 &11402060
 MonoBehaviour:
@@ -1096,6 +1097,32 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Button
+--- !u!114 &11422714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1289e5831b6af408a6f8bdb5e02034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  complete: 0
+  eventToCall: {fileID: 0}
+  eventHandler: {fileID: 0}
+  resourceManager: {fileID: 0}
+  defaultConversation: {fileID: 195638}
+  conManager: {fileID: 0}
+  choiceManager: {fileID: 0}
+  centaurWarriorToGet: CentaurWarrior
+  centaurArcherToGet: CentaurMarksman
+  centaursToGet: 4
+  cyclopsToGet: Cyclops
+  cyclopsNumToGet: 2
+  cyclopsFight: CyclopsInCycVSCentBattle.txt
+  centaurFight: CentaurInCycVSCentBattle.txt
+  FightConversation: {fileID: 151848}
 --- !u!114 &11429884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1134,13 +1161,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choice_text: This island is sparsely populated and you see the occasional person
-    pass by
+  choice_text: You hear the sounds of a fierce battle coming from the interior of
+    the island
   button_1_text: Gather supplies
   Button_1_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11461918}
+      - m_Target: {fileID: 11422714}
         m_MethodName: Gather
         m_Mode: 1
         m_Arguments:
@@ -1157,7 +1184,7 @@ MonoBehaviour:
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11461918}
+      - m_Target: {fileID: 11422714}
         m_MethodName: Upgrade
         m_Mode: 1
         m_Arguments:
@@ -1174,8 +1201,8 @@ MonoBehaviour:
   Button_3_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11461918}
-        m_MethodName: Travel
+      - m_Target: {fileID: 11422714}
+        m_MethodName: ExploreForest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1191,8 +1218,8 @@ MonoBehaviour:
   Button_4_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11461918}
-        m_MethodName: Leave
+      - m_Target: {fileID: 11422714}
+        m_MethodName: End
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1538,29 +1565,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &11461918
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 151404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52d99fa36e23f6040ba82d064d543720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  complete: 0
-  eventToCall: {fileID: 0}
-  eventHandler: {fileID: 0}
-  resourceManager: {fileID: 0}
-  defaultConversation: {fileID: 195638}
-  conManager: {fileID: 0}
-  choiceManager: {fileID: 0}
-  banditConversation: {fileID: 151848}
-  battleConversation: {fileID: 162936}
-  tipConversation: {fileID: 151848}
-  leaveConversation: {fileID: 105928}
-  tipOffReward: 20
 --- !u!114 &11462868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1628,14 +1632,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choice_text: When pressed he says he is a scout for a group of bandits, and that
-    they were planning on raiding a caravan set to pass through
-  button_1_text: Tip off the merchants
+  choice_text: If we help one of the sides they might be gratefull. We might gain
+    some troops from them
+  button_1_text: Help Centaurs
   Button_1_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11461918}
-        m_MethodName: TipOff
+      - m_Target: {fileID: 11422714}
+        m_MethodName: FightCyclops
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1647,12 +1651,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_2_text: Raid the Caravan yourself
+  button_2_text: Help Cyclops
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11461918}
-        m_MethodName: Rob
+      - m_Target: {fileID: 11422714}
+        m_MethodName: FightCentaur
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1668,8 +1672,8 @@ MonoBehaviour:
   Button_3_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11461918}
-        m_MethodName: Leave
+      - m_Target: {fileID: 11422714}
+        m_MethodName: End
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

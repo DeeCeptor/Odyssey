@@ -13,6 +13,7 @@ public class TroopManager : MonoBehaviour {
     public Dictionary<string, int> healthy = new Dictionary<string, int>();
     public Dictionary<string, int> wounded = new Dictionary<string, int>();
     public GameObject[] heroes;
+    public string startingHero = "Odysseus";
     public static TroopManager playerTroops;
     public int[] troopNums;
     public int godFavour;
@@ -71,6 +72,7 @@ public class TroopManager : MonoBehaviour {
 
     public void AddHero(GameObject hero)
 	{
+        hero = (GameObject)Instantiate(hero);
 		hero.transform.SetParent(transform);
 		heroes[heroes.Length] = hero;
 	}
@@ -475,8 +477,26 @@ public class TroopManager : MonoBehaviour {
         }
     }
 
+    public bool FindHero(string heroName)
+    {
+        if(transform.Find(heroName)!=null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void GiveExperience(int Experience)
     {
+        HeroStats curHero;
 
+        for (int i = 0; i < heroes.Length; i++)
+        {
+            curHero = heroes[i].GetComponent<HeroStats>();
+            curHero.experience = curHero.experience + Experience;
+        }
     }
 }

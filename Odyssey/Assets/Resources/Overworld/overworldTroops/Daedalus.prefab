@@ -1,39 +1,39 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &162892
+--- !u!1 &164404
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 437412}
-  - 114: {fileID: 11411340}
+  - 4: {fileID: 450540}
+  - 114: {fileID: 11471094}
   m_Layer: 0
-  m_Name: Odysseus
+  m_Name: Daedalus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &437412
+--- !u!4 &450540
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162892}
+  m_GameObject: {fileID: 164404}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -47.5060196, y: 87.0314636, z: -160.839066}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11411340
+--- !u!114 &11471094
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162892}
+  m_GameObject: {fileID: 164404}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5e7b08df3195da438823820b78cebd3, type: 3}
@@ -47,22 +47,22 @@ MonoBehaviour:
   weapon: {fileID: 0}
   armour: {fileID: 0}
   accessory: {fileID: 0}
-  leadership: 3
-  engineering: 1
+  leadership: 1
+  engineering: 5
   scavenging: 1
-  seamanship: 2
+  seamanship: 1
   diplomacy: 1
-  piety: 2
-  cunning: 3
-  medicene: 0
+  piety: 1
+  cunning: 4
+  medicene: 3
   strength: 0
   haggling: 1
   animalHandling: 0
-  spear: 0
+  spear: 1
   sword: 0
-  bow: 3
+  bow: 0
   experience: 0
-  weaponType: 0
+  weaponType: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -72,41 +72,41 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: leadership
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: engineering
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: scavenging
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: seamanship
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: diplomacy
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: piety
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: bow
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: haggling
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: cunning
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: medicene
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bow
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spear
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weaponType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 162892}
+  m_RootGameObject: {fileID: 164404}
   m_IsPrefabParent: 1

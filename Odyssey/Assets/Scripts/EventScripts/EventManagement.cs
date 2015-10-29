@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EventManagement : MonoBehaviour {
 	
@@ -17,6 +18,17 @@ public class EventManagement : MonoBehaviour {
 	public GameObject[] desertExploreEventList;
 	public GameObject[] tropicalExploreEventList;
     public GameObject[] islands;
+    public GameObject persistentBattleObject;
+    public PersistentBattleSettings persistentBattleSettings;
+
+    //variables to store battleReward
+    public bool rewardClaimed = false;
+    public float rewardFood = 0f;
+    public float rewardWater = 0f;
+    public int rewardGold = 0;
+    public int rewardSailors = 0;
+    public Dictionary<string,int>unitsReward;
+    public GameObject heroReward;
 	
 	public int framesPerCheckRegular = 240;
 	public int framesPerCheck = 240;
@@ -25,6 +37,8 @@ public class EventManagement : MonoBehaviour {
 	public bool paused = false;
     public static EventManagement gameController;
     public GameObject OverworldParent;
+
+    public bool battleChecked = true;
 
 	// Use this for initialization
 	void Start () {
@@ -145,30 +159,34 @@ public class EventManagement : MonoBehaviour {
 
     public void StartBattle(string battleToStart,bool retreat,bool mustUsehero,int deployNumber)
     {
+        rewardClaimed = false;
+        battleChecked = false;
         Instantiate(Resources.Load("ScrollTransitionCanvas"));
         OverworldParent.SetActive(false);
-        GameObject battleSettings = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
-        PersistentBattleSettings battleScript = battleSettings.GetComponent<PersistentBattleSettings>();
-        battleScript.path_to_battle_file = battleToStart;
-        battleScript.number_of_deployable_units = deployNumber + TroopManager.playerTroops.getLeadership();
-        battleScript.must_include_main_hero = mustUsehero;
-        battleScript.can_retreat = retreat;
+        persistentBattleObject = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
+        persistentBattleSettings = persistentBattleObject.GetComponent<PersistentBattleSettings>();
+        persistentBattleSettings.path_to_battle_file = battleToStart;
+        persistentBattleSettings.number_of_deployable_units = deployNumber + TroopManager.playerTroops.getLeadership();
+        persistentBattleSettings.must_include_main_hero = mustUsehero;
+        persistentBattleSettings.can_retreat = retreat;
         Application.LoadLevelAdditive("TacticalBattle");
         paused = true;
     }
 
     public void StartBattle(string battleToStart, bool retreat, bool mustUsehero, int deployNumber,bool firstTurn,int AIagressiveness)
     {
+        rewardClaimed = false;
+        battleChecked = false;
         Instantiate(Resources.Load("ScrollTransitionCanvas"));
         OverworldParent.SetActive(false);
-        GameObject battleSettings = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
-        PersistentBattleSettings battleScript = battleSettings.GetComponent<PersistentBattleSettings>();
-        battleScript.path_to_battle_file = battleToStart;
-        battleScript.number_of_deployable_units = deployNumber + TroopManager.playerTroops.getLeadership();
-        battleScript.must_include_main_hero = mustUsehero;
-        battleScript.can_retreat = retreat;
-        battleScript.player_goes_first = firstTurn;
-        battleScript.enemy_agressiveness = AIagressiveness;
+        persistentBattleObject = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
+        persistentBattleSettings = persistentBattleObject.GetComponent<PersistentBattleSettings>();
+        persistentBattleSettings.path_to_battle_file = battleToStart;
+        persistentBattleSettings.number_of_deployable_units = deployNumber + TroopManager.playerTroops.getLeadership();
+        persistentBattleSettings.must_include_main_hero = mustUsehero;
+        persistentBattleSettings.can_retreat = retreat;
+        persistentBattleSettings.player_goes_first = firstTurn;
+        persistentBattleSettings.enemy_agressiveness = AIagressiveness;
         Application.LoadLevelAdditive("TacticalBattle");
         paused = true;
     }
@@ -176,8 +194,64 @@ public class EventManagement : MonoBehaviour {
     public void EndBattle()
     {
         //destroy battle
+        battleChecked = true;
         paused = false;
         OverworldParent.SetActive(true);
+        if(persistentBattleSettings.game_over)
+        {
+            GameOver();
+        }
+        Dictionary<string, Casualty>.KeyCollection keys = persistentBattleSettings.casualties[0].Keys;
+        Dictionary<string, Casualty>.ValueCollection woundedUnits = persistentBattleSettings.casualties[0].Values;
+        Casualty[] woundedTroopNums = new Casualty[woundedUnits.Count];
+        string[] keyArray = new string[keys.Count];
+        string curKey;
+        woundedUnits.CopyTo(woundedTroopNums, 0);
+        keys.CopyTo(keyArray, 0);
+        for(int i = 0; i < woundedTroopNums.Length;i++)
+        {
+            curKey = keyArray[i];
+            TroopManager.playerTroops.healthy[curKey] = TroopManager.playerTroops.healthy[curKey] - woundedTroopNums[i].num_killed - woundedTroopNums[i].num_wounded;
+            TroopManager.playerTroops.wounded[curKey] = TroopManager.playerTroops.wounded[curKey] + woundedTroopNums[i].num_wounded;
+        }
+
+        if(!rewardClaimed && persistentBattleSettings.victory)
+        {
+            rewardClaimed = true;
+            resourceController.AddFood(rewardFood);
+            resourceController.AddWater(rewardWater);
+            resourceController.AddTreasure(rewardGold);
+            resourceController.AddTreasure(rewardGold);
+            TroopManager.playerTroops.AddHero(heroReward);
+            Dictionary<string, int>.KeyCollection rewardKeys = unitsReward.Keys;
+            keyArray = new string[keys.Count];
+            rewardKeys.CopyTo(keyArray, 0);
+            for (int i = 0; i < unitsReward.Count; i++)
+            {
+                curKey = keyArray[i];
+                if(TroopManager.playerTroops.healthy.ContainsKey(curKey))
+                {
+                    TroopManager.playerTroops.healthy[curKey] += unitsReward[curKey];
+                }
+                else
+                {
+                    TroopManager.playerTroops.healthy.Add(curKey, unitsReward[curKey]);
+                }
+                
+            }
+            rewardFood = 0f;
+            rewardWater = 0f;
+            rewardGold = 0;
+            rewardSailors = 0;
+            unitsReward = new Dictionary<string, int>();
+            heroReward = null;
+            
+        }
+        
     }
 	
+    public void GameOver()
+    {
+
+    }
 }

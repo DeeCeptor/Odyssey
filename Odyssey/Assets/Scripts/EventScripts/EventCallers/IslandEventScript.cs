@@ -19,6 +19,13 @@ public EventManagement eventHandler;
 	
 	public void HaveEvent()
 	{
-		eventHandler.HaveIslandEvent(eventToCall,gameObject);
+        if (!explored)
+        {
+            eventHandler.HaveIslandEvent(eventToCall, gameObject);
+        }
+        else
+        {
+            eventHandler.HaveIslandEvent(eventToCallExplored, gameObject);
+        }
 	}
 }

@@ -15,6 +15,7 @@ public class OverworldEnemyScript : MonoBehaviour {
 	public bool paused = false;
 	public EventManagement eventHandler;
     public PlayerBoatController playerStats;
+    public float dieDistance = 150;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +32,11 @@ public class OverworldEnemyScript : MonoBehaviour {
         {
              GetComponent<Renderer>().enabled = true;
         }
+
+            if((transform.position - player.transform.position).magnitude > dieDistance)
+            {
+                Destroy(gameObject);
+            }
 
         else
         {

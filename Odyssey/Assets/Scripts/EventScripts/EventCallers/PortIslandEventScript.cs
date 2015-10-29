@@ -11,6 +11,7 @@ public class PortIslandEventScript : IslandEventScript {
     public int rand;
     public int resupplyTime = 800;
     private int resupplyTimer = 0;
+    public bool raided = false;
 
 	// Use this for initialization
 	void Start () {

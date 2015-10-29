@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BanditEventFunctions : IslandEventFunctions {
+public class BanditAmbushFunctions :IslandEventFunctions{
     public ResourceManager resourceManager;
     public GameObject defaultConversation;
     public ConversationManager conManager;
     public ChoicesManager choiceManager;
-    public GameObject banditConversation;
-    public GameObject battleConversation;
-    public GameObject tipConversation;
-    public GameObject leaveConversation;
-    public int tipOffReward = 20;
-
+    public GameObject bribeConversation;
+    public int goldReward = 70;
+    public string battle = "BanditBattle.txt";
     // Use this for initialization
     void Start () {
         resourceManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ResourceManager>();
@@ -25,25 +22,17 @@ public class BanditEventFunctions : IslandEventFunctions {
 	
 	}
 
-    public void Travel()
+    public void Attack()
     {
         eventHandler.islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
-        choiceManager.Change_Conversation(banditConversation.GetComponent<ConversationManager>());
+        eventHandler.rewardGold = goldReward;
+        eventHandler.StartBattle(battle,true,false,5);
     }
 
-    public void TipOff()
+    public void bribe()
     {
-        resourceManager.gold = resourceManager.gold + tipOffReward;
-        choiceManager.Continue_Conversation();
-    }
-
-    public void Leave()
-    {
-        choiceManager.Change_Conversation(leaveConversation.GetComponent<ConversationManager>());
-    }
-
-    public void Rob()
-    {
-        choiceManager.Change_Conversation(battleConversation.GetComponent<ConversationManager>());
+        eventHandler.islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
+        resourceManager.gold = resourceManager.gold - 20;
+        End();
     }
 }

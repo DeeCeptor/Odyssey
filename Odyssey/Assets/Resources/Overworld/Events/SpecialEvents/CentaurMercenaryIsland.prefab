@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &102594
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 456590}
+  - 114: {fileID: 11446254}
+  m_Layer: 0
+  m_Name: EndEventNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &103102
 GameObject:
   m_ObjectHideFlags: 1
@@ -15,17 +31,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &106278
+--- !u!1 &104916
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 467172}
-  - 114: {fileID: 11494022}
+  - 4: {fileID: 408380}
+  - 114: {fileID: 11474254}
   m_Layer: 0
-  m_Name: BattleConversation
+  m_Name: ExploreDialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,22 +97,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &110426
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 490010}
-  - 114: {fileID: 11432226}
-  m_Layer: 0
-  m_Name: ExploreDialogue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &115330
 GameObject:
   m_ObjectHideFlags: 1
@@ -123,7 +123,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 471882}
-  - 114: {fileID: 11430624}
+  - 114: {fileID: 11482532}
   m_Layer: 0
   m_Name: CentaurMercenaryIsland
   m_TagString: Untagged
@@ -165,6 +165,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &119702
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 422302}
+  - 114: {fileID: 11430358}
+  m_Layer: 0
+  m_Name: ExploreDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &122152
 GameObject:
   m_ObjectHideFlags: 1
@@ -209,22 +225,6 @@ GameObject:
   - 114: {fileID: 11458826}
   m_Layer: 5
   m_Name: DialogueCanvas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &126600
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 449964}
-  - 114: {fileID: 11402846}
-  m_Layer: 0
-  m_Name: BattleNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -298,49 +298,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &137832
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 499502}
-  - 114: {fileID: 11491798}
-  m_Layer: 0
-  m_Name: EndEventNode
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &137864
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 421682}
-  - 114: {fileID: 11418502}
-  m_Layer: 0
-  m_Name: ExploreDialogue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &139988
+--- !u!1 &138970
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 425670}
-  - 114: {fileID: 11495256}
+  - 4: {fileID: 495358}
+  - 114: {fileID: 11478034}
   m_Layer: 0
-  m_Name: BanditConversation
+  m_Name: HireConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,22 +415,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &167422
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 497496}
-  - 114: {fileID: 11442514}
-  m_Layer: 0
-  m_Name: ExploreDialogue (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &167628
 GameObject:
   m_ObjectHideFlags: 1
@@ -473,6 +425,22 @@ GameObject:
   - 224: {fileID: 22488012}
   m_Layer: 5
   m_Name: MIDDLE
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &171046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 419532}
+  - 114: {fileID: 11470262}
+  m_Layer: 0
+  m_Name: NotEnoughGoldConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -561,22 +529,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &178632
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 442506}
-  - 114: {fileID: 11481270}
-  m_Layer: 0
-  m_Name: banditChoice
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &179954
 GameObject:
   m_ObjectHideFlags: 1
@@ -657,6 +609,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &194460
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 443436}
+  - 114: {fileID: 11421872}
+  m_Layer: 0
+  m_Name: EndEventNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &195018
 GameObject:
   m_ObjectHideFlags: 1
@@ -701,6 +669,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 492552}
   m_RootOrder: 2
+--- !u!4 &408380
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104916}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 419532}
+  m_RootOrder: 0
 --- !u!4 &409406
 Transform:
   m_ObjectHideFlags: 1
@@ -715,18 +695,32 @@ Transform:
   - {fileID: 448662}
   m_Father: {fileID: 471882}
   m_RootOrder: 0
---- !u!4 &421682
+--- !u!4 &419532
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137864}
+  m_GameObject: {fileID: 171046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 210.90802, y: 215.254166, z: -1149.98792}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 408380}
+  - {fileID: 443436}
+  m_Father: {fileID: 471882}
+  m_RootOrder: 3
+--- !u!4 &422302
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 119702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 425670}
-  m_RootOrder: 2
+  m_Father: {fileID: 495358}
+  m_RootOrder: 0
 --- !u!4 &424272
 Transform:
   m_ObjectHideFlags: 1
@@ -739,22 +733,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 409406}
   m_RootOrder: 0
---- !u!4 &425670
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 139988}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 497496}
-  - {fileID: 442506}
-  - {fileID: 421682}
-  - {fileID: 499502}
-  m_Father: {fileID: 471882}
-  m_RootOrder: 3
 --- !u!4 &439538
 Transform:
   m_ObjectHideFlags: 1
@@ -767,17 +745,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 492552}
   m_RootOrder: 0
---- !u!4 &442506
+--- !u!4 &443436
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 178632}
+  m_GameObject: {fileID: 194460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 425670}
+  m_Father: {fileID: 419532}
   m_RootOrder: 1
 --- !u!4 &448662
 Transform:
@@ -791,32 +769,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 409406}
   m_RootOrder: 1
---- !u!4 &449964
+--- !u!4 &456590
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 126600}
+  m_GameObject: {fileID: 102594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 467172}
+  m_Father: {fileID: 495358}
   m_RootOrder: 1
---- !u!4 &467172
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 106278}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 490010}
-  - {fileID: 449964}
-  m_Father: {fileID: 471882}
-  m_RootOrder: 2
 --- !u!4 &471882
 Transform:
   m_ObjectHideFlags: 1
@@ -829,22 +793,10 @@ Transform:
   m_Children:
   - {fileID: 409406}
   - {fileID: 492552}
-  - {fileID: 467172}
-  - {fileID: 425670}
   - {fileID: 22443770}
+  - {fileID: 419532}
+  - {fileID: 495358}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
---- !u!4 &490010
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110426}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 467172}
   m_RootOrder: 0
 --- !u!4 &492552
 Transform:
@@ -861,6 +813,20 @@ Transform:
   - {fileID: 406746}
   m_Father: {fileID: 471882}
   m_RootOrder: 1
+--- !u!4 &495358
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138970}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 210.90802, y: 215.254166, z: -1149.98792}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 422302}
+  - {fileID: 456590}
+  m_Father: {fileID: 471882}
+  m_RootOrder: 4
 --- !u!4 &495612
 Transform:
   m_ObjectHideFlags: 1
@@ -873,45 +839,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 492552}
   m_RootOrder: 1
---- !u!4 &497496
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167422}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 425670}
-  m_RootOrder: 0
---- !u!4 &499502
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137832}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 425670}
-  m_RootOrder: 3
---- !u!114 &11402846
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 126600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1635757d8f3441a4caade22c0feeb5ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  battleToHave: CaravanAmbushBattle
-  retreat: 0
-  mustUseHero: 0
-  troopsToDeploy: 10
 --- !u!114 &11403330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -992,21 +919,6 @@ MonoBehaviour:
   textbox_title: 
   text: None of this is your business, you head back to the ship
   clear_text_after: 0
---- !u!114 &11418502
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actor: 
-  textbox_title: 
-  text: You tip off the merchants and they give you 20 gold as a reward
-  clear_text_after: 1
 --- !u!114 &11418668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1048,6 +960,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11421872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventController: {fileID: 0}
 --- !u!114 &11422462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1139,35 +1063,12 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11430624
+--- !u!114 &11430358
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52d99fa36e23f6040ba82d064d543720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  complete: 0
-  eventToCall: {fileID: 0}
-  eventHandler: {fileID: 0}
-  resourceManager: {fileID: 0}
-  defaultConversation: {fileID: 123174}
-  conManager: {fileID: 0}
-  choiceManager: {fileID: 0}
-  banditConversation: {fileID: 139988}
-  battleConversation: {fileID: 106278}
-  tipConversation: {fileID: 139988}
-  leaveConversation: {fileID: 188910}
-  tipOffReward: 20
---- !u!114 &11432226
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110426}
+  m_GameObject: {fileID: 119702}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
@@ -1175,8 +1076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: You lay wait over the road and as the caravan passes through you get the jump
-    on them
+  text: The centaurs agree to work for you (+4 Centaur warriors +4 Centaur marksmen)
   clear_text_after: 1
 --- !u!114 &11436338
 MonoBehaviour:
@@ -1218,21 +1118,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11442514
+--- !u!114 &11446254
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167422}
+  m_GameObject: {fileID: 102594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actor: 
-  textbox_title: 
-  text: you see a man watching a path
-  clear_text_after: 1
+  eventController: {fileID: 0}
 --- !u!114 &11447840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1445,6 +1342,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11470262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11474138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1477,6 +1385,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Button
+--- !u!114 &11474254
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: 
+  textbox_title: 
+  text: The centaurs laugh and say that you do not have nearly enough gold
+  clear_text_after: 1
 --- !u!114 &11475432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1520,6 +1443,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: A choice!
+--- !u!114 &11478034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11479132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1541,76 +1475,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &11481270
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 178632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  choice_text: When pressed he says he is a scout for a group of bandits, and that
-    they were planning on raiding a caravan set to pass through
-  button_1_text: Tip off the merchants
-  Button_1_Events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11430624}
-        m_MethodName: TipOff
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  button_2_text: Raid the Caravan yourself
-  Button_2_Events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11430624}
-        m_MethodName: Rob
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  button_3_text: Leave
-  Button_3_Events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11430624}
-        m_MethodName: Leave
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  button_4_text: 
-  Button_4_Events:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &11481410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1638,6 +1502,30 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11482532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f5acaf698231d44896f3fee9a316ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  complete: 0
+  eventToCall: {fileID: 0}
+  eventHandler: {fileID: 0}
+  resourceManager: {fileID: 0}
+  centaurWarriorToGet: CentaurWarrior
+  centaurArcherToGet: CentaurMarksman
+  centaursToGet: 4
+  hireCost: 100
+  defaultConversation: {fileID: 123174}
+  conManager: {fileID: 0}
+  choiceManager: {fileID: 0}
+  notEnoughGoldConversation: {fileID: 171046}
+  hireConversation: {fileID: 138970}
 --- !u!114 &11483256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1740,18 +1628,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Button
---- !u!114 &11491798
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 137832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventController: {fileID: 0}
 --- !u!114 &11492504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1779,17 +1655,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11494022
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 106278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11494104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1801,13 +1666,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choice_text: This island is sparsely populated and you see the occasional person
-    pass by
+  choice_text: The island seems unexceptional except that there are a tribe of centaurs,
+    some of them offer to work for you for 100 gold
   button_1_text: Gather supplies
   Button_1_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11430624}
+      - m_Target: {fileID: 11482532}
         m_MethodName: Gather
         m_Mode: 1
         m_Arguments:
@@ -1824,7 +1689,7 @@ MonoBehaviour:
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11430624}
+      - m_Target: {fileID: 11482532}
         m_MethodName: Upgrade
         m_Mode: 1
         m_Arguments:
@@ -1837,12 +1702,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_3_text: Travel Inland
+  button_3_text: Hire(100 gold)
   Button_3_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11430624}
-        m_MethodName: Travel
+      - m_Target: {fileID: 11482532}
+        m_MethodName: hire
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1858,8 +1723,8 @@ MonoBehaviour:
   Button_4_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11430624}
-        m_MethodName: Leave
+      - m_Target: {fileID: 11482532}
+        m_MethodName: End
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1871,17 +1736,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &11495256
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 139988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11495408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2178,7 +2032,7 @@ RectTransform:
   - {fileID: 22416878}
   - {fileID: 22478760}
   m_Father: {fileID: 471882}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}

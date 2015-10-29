@@ -142,7 +142,7 @@ GameObject:
   - 4: {fileID: 426658}
   - 114: {fileID: 11481128}
   m_Layer: 0
-  m_Name: Conversation
+  m_Name: CompleteConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,6 +276,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &130248
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 496398}
+  - 114: {fileID: 11421024}
+  m_Layer: 0
+  m_Name: ExploreDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &133240
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 443838}
+  - 114: {fileID: 11483140}
+  m_Layer: 0
+  m_Name: EndEventNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &136052
 GameObject:
   m_ObjectHideFlags: 1
@@ -288,22 +320,6 @@ GameObject:
   - 114: {fileID: 11438060}
   m_Layer: 5
   m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &138432
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 458422}
-  - 114: {fileID: 11443248}
-  m_Layer: 0
-  m_Name: LeaveConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,7 +349,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 498284}
-  - 114: {fileID: 11447942}
+  - 114: {fileID: 11478364}
   m_Layer: 0
   m_Name: MinotaurEvent
   m_TagString: Untagged
@@ -489,17 +505,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &168812
+--- !u!1 &169046
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 403084}
-  - 114: {fileID: 11465712}
+  - 4: {fileID: 498978}
+  - 114: {fileID: 11498460}
   m_Layer: 0
-  m_Name: EndEventNode
+  m_Name: Conversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -522,22 +538,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &170896
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 425640}
-  - 114: {fileID: 11434198}
-  m_Layer: 0
-  m_Name: ExploreDialogue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &173536
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +548,23 @@ GameObject:
   - 4: {fileID: 404952}
   - 114: {fileID: 11404206}
   m_Layer: 0
-  m_Name: BattleConversation
+  m_Name: ExploreConversation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &173960
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 432992}
+  - 114: {fileID: 11472680}
+  m_Layer: 0
+  m_Name: Choice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -689,18 +705,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &403084
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 168812}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 458422}
-  m_RootOrder: 1
 --- !u!4 &404952
 Transform:
   m_ObjectHideFlags: 1
@@ -712,9 +716,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 455246}
+  - {fileID: 468314}
   - {fileID: 473718}
   m_Father: {fileID: 498284}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &415602
 Transform:
   m_ObjectHideFlags: 1
@@ -739,18 +744,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 464824}
   m_RootOrder: 3
---- !u!4 &425640
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170896}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 458422}
-  m_RootOrder: 0
 --- !u!4 &426658
 Transform:
   m_ObjectHideFlags: 1
@@ -761,11 +754,22 @@ Transform:
   m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 468314}
   - {fileID: 455028}
   - {fileID: 447602}
   m_Father: {fileID: 498284}
-  m_RootOrder: 1
+  m_RootOrder: 4
+--- !u!4 &432992
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 498978}
+  m_RootOrder: 0
 --- !u!4 &433632
 Transform:
   m_ObjectHideFlags: 1
@@ -778,6 +782,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 464824}
   m_RootOrder: 1
+--- !u!4 &443838
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133240}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -54.6511002, y: 53.061882, z: -20.9130993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 498978}
+  m_RootOrder: 2
 --- !u!4 &447602
 Transform:
   m_ObjectHideFlags: 1
@@ -789,7 +805,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 426658}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &455028
 Transform:
   m_ObjectHideFlags: 1
@@ -801,7 +817,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 426658}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &455246
 Transform:
   m_ObjectHideFlags: 1
@@ -813,20 +829,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 404952}
-  m_RootOrder: 0
---- !u!4 &458422
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138432}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 425640}
-  - {fileID: 403084}
-  m_Father: {fileID: 498284}
   m_RootOrder: 0
 --- !u!4 &464824
 Transform:
@@ -843,7 +845,7 @@ Transform:
   - {fileID: 476226}
   - {fileID: 418000}
   m_Father: {fileID: 498284}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &468314
 Transform:
   m_ObjectHideFlags: 1
@@ -854,8 +856,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 426658}
-  m_RootOrder: 0
+  m_Father: {fileID: 404952}
+  m_RootOrder: 1
 --- !u!4 &473718
 Transform:
   m_ObjectHideFlags: 1
@@ -867,7 +869,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 404952}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &476226
 Transform:
   m_ObjectHideFlags: 1
@@ -880,6 +882,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 464824}
   m_RootOrder: 2
+--- !u!4 &496398
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130248}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 498978}
+  m_RootOrder: 1
 --- !u!4 &498284
 Transform:
   m_ObjectHideFlags: 1
@@ -890,12 +904,27 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 458422}
-  - {fileID: 426658}
+  - {fileID: 498978}
   - {fileID: 404952}
   - {fileID: 464824}
   - {fileID: 22473940}
+  - {fileID: 426658}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &498978
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 432992}
+  - {fileID: 496398}
+  - {fileID: 443838}
+  m_Father: {fileID: 498284}
   m_RootOrder: 0
 --- !u!114 &11403784
 MonoBehaviour:
@@ -914,7 +943,7 @@ MonoBehaviour:
   Button_1_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11447942}
+      - m_Target: {fileID: 0}
         m_MethodName: TipOff
         m_Mode: 1
         m_Arguments:
@@ -931,7 +960,7 @@ MonoBehaviour:
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11447942}
+      - m_Target: {fileID: 0}
         m_MethodName: Rob
         m_Mode: 1
         m_Arguments:
@@ -948,7 +977,7 @@ MonoBehaviour:
   Button_3_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11447942}
+      - m_Target: {fileID: 0}
         m_MethodName: Leave
         m_Mode: 1
         m_Arguments:
@@ -1220,6 +1249,21 @@ MonoBehaviour:
   retreat: 0
   mustUseHero: 0
   troopsToDeploy: 10
+--- !u!114 &11421024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actor: 
+  textbox_title: 
+  text: you got many fiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiish
+  clear_text_after: 0
 --- !u!114 &11425090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1288,21 +1332,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11434198
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 170896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actor: 
-  textbox_title: 
-  text: None of this is your business, you head back to the ship
-  clear_text_after: 0
 --- !u!114 &11435142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1367,40 +1396,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Button
---- !u!114 &11443248
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11447942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 139496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52d99fa36e23f6040ba82d064d543720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  complete: 0
-  eventToCall: {fileID: 0}
-  eventHandler: {fileID: 0}
-  resourceManager: {fileID: 0}
-  defaultConversation: {fileID: 113898}
-  conManager: {fileID: 0}
-  choiceManager: {fileID: 0}
-  banditConversation: {fileID: 138542}
-  battleConversation: {fileID: 173536}
-  tipConversation: {fileID: 138542}
-  leaveConversation: {fileID: 138432}
-  tipOffReward: 20
 --- !u!114 &11449530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1446,20 +1441,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: you got many fiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiish
+  text: Unfortunately it seems you've done all you can at this island
   clear_text_after: 0
---- !u!114 &11465712
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 168812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventController: {fileID: 0}
 --- !u!114 &11466494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1583,6 +1566,87 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11472680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choice_text: This island seems to have many inhabitants. They seem to be gathered
+    in a central village
+  button_1_text: Gather supplies
+  Button_1_Events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11478364}
+        m_MethodName: Gather
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  button_2_text: Upgrade Ship
+  Button_2_Events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11478364}
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  button_3_text: Explore village
+  Button_3_Events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11478364}
+        m_MethodName: ExploreVillage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  button_4_text: Leave
+  Button_4_Events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11478364}
+        m_MethodName: End
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &11472748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1626,7 +1690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ecca48de848e64d8d760211f3764da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starting_conversation: {fileID: 11481128}
+  starting_conversation: {fileID: 11498460}
   current_music: {fileID: 0}
 --- !u!114 &11475858
 MonoBehaviour:
@@ -1677,6 +1741,29 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11478364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b25b539bf554c544b2cd9e7bc1479a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  complete: 0
+  eventToCall: {fileID: 0}
+  eventHandler: {fileID: 0}
+  resourceManager: {fileID: 0}
+  defaultConversation: {fileID: 169046}
+  conManager: {fileID: 0}
+  choiceManager: {fileID: 0}
+  explored: 0
+  battleSaveMinotaur: 
+  battleKillMinotaur: 
+  Theseus: {fileID: 0}
+  MinotaurConversation: {fileID: 173536}
 --- !u!114 &11480894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1730,6 +1817,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11483140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441b85c5ff983974b8455c4c4652be9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventController: {fileID: 0}
 --- !u!114 &11483660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1743,8 +1842,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: You lay wait over the road and as the caravan passes through you get the jump
-    on them
+  text: The Village seems to be in a bustle you see a large crowd in the center of
+    the island. Several are weeping. It seems they mean to send sacrifices into a
+    labyrinth to satiate a powerfull beast trapped within
   clear_text_after: 1
 --- !u!114 &11487748
 MonoBehaviour:
@@ -1789,14 +1889,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choice_text: This island is sparsely populated and you see the occasional person
-    pass by
-  button_1_text: Gather supplies
+  choice_text: What shall we do?
+  button_1_text: Kill the beast
   Button_1_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11447942}
-        m_MethodName: Gather
+      - m_Target: {fileID: 11478364}
+        m_MethodName: Fight
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1808,12 +1907,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_2_text: Upgrade Ship
+  button_2_text: Free the beast
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11447942}
-        m_MethodName: Upgrade
+      - m_Target: {fileID: 11478364}
+        m_MethodName: Save
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1825,12 +1924,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_3_text: Travel Inland
+  button_3_text: Leave
   Button_3_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11447942}
-        m_MethodName: Travel
+      - m_Target: {fileID: 11478364}
+        m_MethodName: End
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1842,12 +1941,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_4_text: Leave
+  button_4_text: 
   Button_4_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11447942}
-        m_MethodName: Leave
+      - m_Target: {fileID: 0}
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1902,6 +2001,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &11498460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7598fdb9cbb025c4293438a58006c68f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11499214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2299,7 +2409,7 @@ RectTransform:
   - {fileID: 22453244}
   - {fileID: 22478884}
   m_Father: {fileID: 498284}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}

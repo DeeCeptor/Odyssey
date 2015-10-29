@@ -29,6 +29,7 @@ public class IcarusIslandFunctions : IslandEventFunctions {
     public void ExploreClearing()
     {
         complete = true;
+        eventHandler.islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
     }
 
     public void Diplomacy()

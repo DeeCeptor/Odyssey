@@ -105,14 +105,14 @@ public WeatherScript weatherAtIndex;
 	hullText = GameObject.Find("HullMonitor");
 	goldText = GameObject.Find("GoldMonitor");
 	
-	waterText.GetComponent<Text>().text = "water: " + water.ToString("F1") + "L";
-	foodText.GetComponent<Text>().text = "food: " + food.ToString("F1") + "Kg";
-	moraleText.GetComponent<Text>().text = "morale: " + morale.ToString() + "%";
-	staminaText.GetComponent<Text>().text = "stamina: " + stamina.ToString() + "%";
-	sailorText.GetComponent<Text>().text = "sailors: " + sailors.ToString();
-	healthText.GetComponent<Text>().text = "health: " + health.ToString() + "%";
-	hullText.GetComponent<Text>().text = "hull: " + shipHealth.ToString() + "%";
-	goldText.GetComponent<Text>().text = "gold: " + gold.ToString();
+	waterText.GetComponent<Text>().text = water.ToString("F0") + "L";
+	foodText.GetComponent<Text>().text = food.ToString("F0") + "Kg";
+	moraleText.GetComponent<Text>().text = morale.ToString() + "%";
+	staminaText.GetComponent<Text>().text = stamina.ToString() + "%";
+	sailorText.GetComponent<Text>().text = sailors.ToString();
+	healthText.GetComponent<Text>().text = health.ToString() + "%";
+	hullText.GetComponent<Text>().text = shipHealth.ToString() + "%";
+	goldText.GetComponent<Text>().text = gold.ToString();
 	troopManager = GameObject.FindGameObjectWithTag("TroopManager").GetComponent<TroopManager>();
 	}
 	
@@ -137,14 +137,14 @@ public WeatherScript weatherAtIndex;
 			Gather();
 		}
 		frameIterator = frameIterator + 1;
-		waterText.GetComponent<Text>().text = "water: " + water.ToString("F1") + "L";
-		foodText.GetComponent<Text>().text = "food: " + food.ToString("F1") + "Kg";
-		moraleText.GetComponent<Text>().text = "morale: " + morale.ToString() + "%";
-		staminaText.GetComponent<Text>().text = "stamina: " + stamina.ToString() + "%";
-		sailorText.GetComponent<Text>().text = "sailors: " + sailors.ToString();
-		healthText.GetComponent<Text>().text = "health: " + health.ToString() + "%";
-		hullText.GetComponent<Text>().text = "hull: " + shipHealth.ToString() + "%";
-		goldText.GetComponent<Text>().text = "gold: " + gold.ToString();
+		waterText.GetComponent<Text>().text = water.ToString("F0") + "L";
+		foodText.GetComponent<Text>().text = food.ToString("F0") + "Kg";
+		moraleText.GetComponent<Text>().text = morale.ToString() + "%";
+		staminaText.GetComponent<Text>().text = stamina.ToString() + "%";
+		sailorText.GetComponent<Text>().text = sailors.ToString();
+		healthText.GetComponent<Text>().text = health.ToString() + "%";
+		hullText.GetComponent<Text>().text = shipHealth.ToString() + "%";
+		goldText.GetComponent<Text>().text = gold.ToString();
 	}
 	}
 
