@@ -419,12 +419,19 @@ public class PlayerInterface : MonoBehaviour
     }
     public void CreateFloatingText(Vector3 position, string text, bool random_velocity, float time_to_die)
     {
-        GameObject instance = Instantiate(Resources.Load("FloatingText", typeof(GameObject))) as GameObject;
+        GameObject instance = Instantiate(Resources.Load("Battles/FloatingText", typeof(GameObject))) as GameObject;
         instance.transform.parent = BattleManager.battle_manager.universal_battle_parent.transform;
         position.z = -8;
         instance.transform.position = position;
         instance.GetComponent<TextMesh>().text = text;
         instance.GetComponent<Rigidbody2D>().velocity = Vector2.up;
+    }
+    public void CreateFloatingIcon(Vector3 position, Sprite image)
+    {
+        GameObject instance = Instantiate(Resources.Load("Battles/FloatingIcon", typeof(GameObject))) as GameObject;
+        instance.transform.parent = BattleManager.battle_manager.universal_battle_parent.transform;
+        instance.GetComponent<SpriteRenderer>().sprite = image;
+        instance.transform.position = position;
     }
 
 

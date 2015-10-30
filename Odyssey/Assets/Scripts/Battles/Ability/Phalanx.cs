@@ -24,6 +24,7 @@ public class Phalanx : Ability
             {
                 edge.destination.occupying_unit.AddEffectToUnit(new ChangeDefence(edge.destination.occupying_unit, 0.1f, 1));
                 edge.destination.occupying_unit.AddEffectToUnit(new ChangeRangedDefence(edge.destination.occupying_unit, 0.1f, 1));
+                PlayerInterface.player_interface.CreateFloatingIcon(edge.destination.occupying_unit.transform.position, icon);
             }
         }
     }

@@ -80,7 +80,7 @@ public class Ability
     // Ability has actually been cast. Override this method to implement more complex abilities.
     public virtual void CastAbility()
     {
-        // Simplest ability. Just adds an effect to change the untis stats
+        // Simplest ability. Just adds an effect to change the units stats
         if (effects_self)
         {
             foreach (Effect effect in effects_of_ability)
@@ -88,5 +88,8 @@ public class Ability
                 caster.AddEffectToUnit(effect.Clone(caster));
             }
         }
+
+        // Create a floating fading icon the ability icon
+        PlayerInterface.player_interface.CreateFloatingIcon(caster.transform.position, icon);
     }
 }
