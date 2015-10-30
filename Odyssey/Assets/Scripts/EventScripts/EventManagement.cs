@@ -16,7 +16,7 @@ public class EventManagement : MonoBehaviour {
 	public GameObject[] campingEventList;
 	public GameObject[] forestExploreEventList;
 	public GameObject[] desertExploreEventList;
-	public GameObject[] tropicalExploreEventList;
+	public GameObject[] gatherEventList;
     public GameObject[] islands;
     public GameObject persistentBattleObject;
     public PersistentBattleSettings persistentBattleSettings;
@@ -63,7 +63,14 @@ public class EventManagement : MonoBehaviour {
 				framesPerCheck = framesPerCheckRegular + Random.Range(0,121);
 				if(Random.Range (0,100) <eventChance)
 				{
-					HaveEvent(seaEventList[Random.Range (0,seaEventList.Length)]);
+                    if (!resourceController.gathering)
+                    {
+                        HaveEvent(seaEventList[Random.Range(0, seaEventList.Length)]);
+                    }
+                    else
+                    {
+                        HaveEvent(gatherEventList[Random.Range(0, seaEventList.Length)]);
+                    }
 				}
 				
 				}
@@ -99,13 +106,7 @@ public class EventManagement : MonoBehaviour {
 		islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
 		HaveEvent(desertExploreEventList[Random.Range (0,desertExploreEventList.Length)]);
 	}
-	
-	public void ExploreTropicalIsland()
-	{
-		islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
-		HaveEvent(tropicalExploreEventList[Random.Range (0,tropicalExploreEventList.Length)]);
-	}
-	
+
 	public void CampEvent()
 	{
 		HaveEvent(campingEventList[Random.Range (0,campingEventList.Length)]);

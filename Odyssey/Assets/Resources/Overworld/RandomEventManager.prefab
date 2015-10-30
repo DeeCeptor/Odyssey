@@ -5704,10 +5704,15 @@ MonoBehaviour:
   islandEventIsOn: {fileID: 0}
   seaEventList:
   - {fileID: 130888, guid: d8ac96ee9472e2d41b883f8c104e0968, type: 2}
+  - {fileID: 169720, guid: a5ce42dc4e86dfc49957080fe95653fb, type: 2}
+  - {fileID: 154220, guid: dde5fca44ef68044fb53249a73369c9e, type: 2}
+  - {fileID: 100368, guid: 2e22d971ac255124287fff544ef2e169, type: 2}
   campingEventList: []
   forestExploreEventList: []
   desertExploreEventList: []
-  tropicalExploreEventList: []
+  gatherEventList:
+  - {fileID: 154304, guid: 6d20303284007f24d8ea318119cb3827, type: 2}
+  - {fileID: 117008, guid: 6d53a2fcb86c5ef4db9ff05d01834a46, type: 2}
   islands: []
   persistentBattleObject: {fileID: 0}
   persistentBattleSettings: {fileID: 0}
@@ -5717,6 +5722,8 @@ MonoBehaviour:
   rewardGold: 0
   rewardSailors: 0
   heroReward: {fileID: 0}
+  gameOverIfLose: 0
+  victoryIfWin: 0
   framesPerCheckRegular: 500
   framesPerCheck: 500
   eventChance: 25
