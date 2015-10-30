@@ -33,8 +33,9 @@ public class Ability
         caster = owner;
         cost = favour_cost;
         effects_self = applies_effect_to_self;
-		//icon = (Sprite) Resources.Load("Battle/AbilityArt/" + path_to_icon, typeof(Sprite));
-		icon = (Sprite) Resources.Load<Sprite>("Battles/AbilityArt/" + path_to_icon);
+
+        if (!BattleManager.battle_manager.AI_turn)
+		    icon = (Sprite) Resources.Load<Sprite>("Battles/AbilityArt/" + path_to_icon);
     }
 
 

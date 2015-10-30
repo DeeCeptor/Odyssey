@@ -8,7 +8,7 @@ public class GodsManager : MonoBehaviour
     public static GodsManager gods_manager;
 
     public int favour_remaining; // Favor is used to activate abilities.
-
+    AudioSource audio;
 
 	void Awake ()
     {
@@ -17,6 +17,7 @@ public class GodsManager : MonoBehaviour
     void Start ()
     {
         SetFavourRemainingText();
+        audio = this.GetComponent<AudioSource>();
     }
 	
 
@@ -24,6 +25,7 @@ public class GodsManager : MonoBehaviour
     {
         favour_remaining = Mathf.Max(favour_remaining + amount, 0);   // Can't have negative favor
         SetFavourRemainingText();
+        audio.Play();
     }
     // Returns true if there's enough favor_remaining to cast this ability
     public bool CanCast(int cost)
