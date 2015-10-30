@@ -30,6 +30,7 @@ public class CircesIslandEventFunctions : IslandEventFunctions {
 
     public void ExploreClearing()
     {
+        eventHandler.islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
         choiceManager.Change_Conversation(cottageConversation.GetComponent<ConversationManager>());
     }
 

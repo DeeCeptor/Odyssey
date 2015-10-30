@@ -33,6 +33,7 @@ public class CyclopsIslandEventFunctions : IslandEventFunctions {
 
     public void ExploreCave()
     {
+        eventHandler.islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
         choiceManager.Change_Conversation(caveConversation.GetComponent<ConversationManager>());
     }
 
