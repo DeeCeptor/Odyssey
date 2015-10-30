@@ -66,7 +66,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &405356
 Transform:
   m_ObjectHideFlags: 1
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explored: 0
   eventToCall: {fileID: 158012, guid: 151c41c48d7668e49bf3809e5d52cb2a, type: 2}
-  eventToCallExplored: {fileID: 158012, guid: 151c41c48d7668e49bf3809e5d52cb2a, type: 2}
+  eventToCallExplored: {fileID: 198194, guid: 53b03bbc6fd9323499a2770e85c08334, type: 2}
   eventHandler: {fileID: 0}
 --- !u!212 &21255340
 SpriteRenderer:
@@ -254,7 +254,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: eventToCallExplored
+      value: 
+      objectReference: {fileID: 198194, guid: 53b03bbc6fd9323499a2770e85c08334, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 184484}

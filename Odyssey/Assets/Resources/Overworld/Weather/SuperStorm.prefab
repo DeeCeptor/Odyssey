@@ -1,69 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &110408
+--- !u!1 &100470
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 428878}
-  - 114: {fileID: 11458648}
-  - 61: {fileID: 6188810}
+  - 4: {fileID: 416476}
+  - 114: {fileID: 11472750}
+  - 61: {fileID: 6105486}
   m_Layer: 10
-  m_Name: Waves
+  m_Name: SuperStorm
   m_TagString: Weather
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &428878
+--- !u!4 &416476
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110408}
+  m_GameObject: {fileID: 100470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!61 &6188810
+--- !u!61 &6105486
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110408}
+  m_GameObject: {fileID: 100470}
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 30, y: 30}
---- !u!114 &11458648
+  m_Size: {x: 1, y: 1}
+--- !u!114 &11472750
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 110408}
+  m_GameObject: {fileID: 100470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72159b796dd61894da0d15437310033c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7146802cb9daa104097d612abc04fd52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weatherType: 
-  weatherDamage: 0
+  weatherType: Storm
+  weatherDamage: 2
   LifeSpan: 1800
-  ReplaceWith: {fileID: 0}
+  ReplaceWith: {fileID: 100470}
   paused: 0
-  weatherSpeedDown: .899999976
-  weatherStaminaDrain: .5
+  weatherSpeedDown: .600000024
+  weatherStaminaDrain: 1
   weatherDirection: {x: 0, y: 0, z: 0}
-  weatherMoraleDrain: 0
-  weatherHeight: 40
-  weatherSpeed: .200000003
+  weatherMoraleDrain: 1
+  weatherHeight: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -72,42 +71,34 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
-      propertyPath: weatherSpeed
-      value: .200000003
+      propertyPath: weatherType
+      value: Storm
       objectReference: {fileID: 0}
     - target: {fileID: 0}
-      propertyPath: weatherStaminaDrain
-      value: .5
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.x
-      value: .707106829
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalRotation.w
-      value: .707106709
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_IsTrigger
-      value: 1
+      propertyPath: LifeSpan
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: weatherSpeedDown
-      value: .899999976
+      value: .600000024
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weatherStaminaDrain
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weatherMoraleDrain
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: weatherDamage
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 110408}
+  m_RootGameObject: {fileID: 100470}
   m_IsPrefabParent: 1

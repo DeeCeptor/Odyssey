@@ -120,6 +120,10 @@ public WeatherScript weatherAtIndex;
 	void FixedUpdate () {
 	if(paused == false)
 	{
+         if (shipHealth == 0)
+         {
+                EventManagement.gameController.GameOver();
+         }
 		if(frameIterator>framesPerConsuption)
 		{
 			frameIterator = 0;
@@ -339,8 +343,13 @@ public WeatherScript weatherAtIndex;
 		{
 			health = 0;
 		}
-		
-		if(stamina > 100)
+
+        if (shipHealth < 0)
+        {
+            shipHealth = 0;
+        }
+
+        if (stamina > 100)
 		{
 			stamina = 100;
 		}

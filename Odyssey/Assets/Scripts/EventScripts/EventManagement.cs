@@ -29,6 +29,8 @@ public class EventManagement : MonoBehaviour {
     public int rewardSailors = 0;
     public Dictionary<string,int>unitsReward;
     public GameObject heroReward;
+    public bool gameOverIfLose = false;
+    public bool victoryIfWin = false;
 	
 	public int framesPerCheckRegular = 240;
 	public int framesPerCheck = 240;
@@ -71,7 +73,6 @@ public class EventManagement : MonoBehaviour {
 	
 	public void HaveEvent(GameObject eventToHave)
 	{
-        
 		currentEvent = Instantiate(eventToHave);
         currentEvent.transform.parent = GameObject.FindGameObjectWithTag("UniversalParent").transform;
 		Pause();
