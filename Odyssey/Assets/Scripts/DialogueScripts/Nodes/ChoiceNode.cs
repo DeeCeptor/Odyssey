@@ -19,6 +19,7 @@ public class ChoiceNode : Node
 	public Button.ButtonClickedEvent Button_3_Events;
 	public string button_4_text;
 	public Button.ButtonClickedEvent Button_4_Events;
+    public GameObject textPanel;
 
 	
 	public override void Run_Node()
@@ -32,33 +33,36 @@ public class ChoiceNode : Node
 		// add call to Finis_Node() on the OnClick() listener and hook up the choices buttons to the events on this node
 		if (Button_1_Events.GetPersistentEventCount() > 0)
 		{
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice1").gameObject.SetActive(true);	// Make visible
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice1").GetComponent<Button>().GetComponentInChildren<Text>().text = button_1_text;	// Set button text
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").Find("Choice1").gameObject.SetActive(true);	// Make visible
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").Find("Choice1").GetComponent<Button>().GetComponentInChildren<Text>().text = button_1_text;	// Set button text
 			Button_1_Events.AddListener(Clear_Choices);	// Add call to finish this node and hide UI to event listener
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice1").GetComponent<Button>().onClick = Button_1_Events;	// Set events
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").Find("Choice1").GetComponent<Button>().onClick = Button_1_Events;	// Set events
 		}
 		if (Button_2_Events.GetPersistentEventCount() > 0)
 		{
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice2").gameObject.SetActive(true);
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice2").GetComponent<Button>().GetComponentInChildren<Text>().text = button_2_text;
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").Find("Choice2").gameObject.SetActive(true);
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").Find("Choice2").GetComponent<Button>().GetComponentInChildren<Text>().text = button_2_text;
 			Button_2_Events.AddListener(Clear_Choices);
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice2").GetComponent<Button>().onClick = Button_2_Events;
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice2").GetComponent<Button>().onClick = Button_2_Events;
 		}
 		if (Button_3_Events.GetPersistentEventCount() > 0)
 		{
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice3").gameObject.SetActive(true);
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice3").GetComponent<Button>().GetComponentInChildren<Text>().text = button_3_text;
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice3").gameObject.SetActive(true);
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice3").GetComponent<Button>().GetComponentInChildren<Text>().text = button_3_text;
 			Button_3_Events.AddListener(Clear_Choices);
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice3").GetComponent<Button>().onClick = Button_3_Events;
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice3").GetComponent<Button>().onClick = Button_3_Events;
 		}		
 		if (Button_4_Events.GetPersistentEventCount() > 0)
 		{
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice4").gameObject.SetActive(true);
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice4").GetComponent<Button>().GetComponentInChildren<Text>().text = button_4_text;
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice4").gameObject.SetActive(true);
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice4").GetComponent<Button>().GetComponentInChildren<Text>().text = button_4_text;
 			Button_4_Events.AddListener(Clear_Choices);
-			UIManager.ui_manager.choice_panel.transform.FindChild("Choice4").GetComponent<Button>().onClick = Button_4_Events;
+			UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice4").GetComponent<Button>().onClick = Button_4_Events;
 		}
-	}
+        //disable text box
+        textPanel = GameObject.Find("DialogueTextPanel");
+        textPanel.SetActive(false);
+    }
 	
 
 	public override void Button_Pressed()
@@ -70,21 +74,22 @@ public class ChoiceNode : Node
 	public void Clear_Choices()
 	{
 		// Remove event listeners from buttons
-		UIManager.ui_manager.choice_panel.transform.FindChild("Choice1").GetComponent<Button>().onClick = null;
-		UIManager.ui_manager.choice_panel.transform.FindChild("Choice2").GetComponent<Button>().onClick = null;
-		UIManager.ui_manager.choice_panel.transform.FindChild("Choice3").GetComponent<Button>().onClick = null;
-		UIManager.ui_manager.choice_panel.transform.FindChild("Choice4").GetComponent<Button>().onClick = null;
+		UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice1").GetComponent<Button>().onClick = null;
+		UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice2").GetComponent<Button>().onClick = null;
+		UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice3").GetComponent<Button>().onClick = null;
+		UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice4").GetComponent<Button>().onClick = null;
 
 		// Set all choice buttons to inactive
-		UIManager.ui_manager.choice_panel.transform.FindChild("Choice1").gameObject.SetActive(false);
-		UIManager.ui_manager.choice_panel.transform.FindChild("Choice2").gameObject.SetActive(false);
-		UIManager.ui_manager.choice_panel.transform.FindChild("Choice3").gameObject.SetActive(false);
-		UIManager.ui_manager.choice_panel.transform.FindChild("Choice4").gameObject.SetActive(false);
+		UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice1").gameObject.SetActive(false);
+		UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice2").gameObject.SetActive(false);
+		UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice3").gameObject.SetActive(false);
+		UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice4").gameObject.SetActive(false);
 
-
-		// Hide choice UI
-		UIManager.ui_manager.choice_panel.SetActive(false);
-	}
+        UIManager.ui_manager.choice_panel.transform.FindChild("ButtonGrouping").FindChild("Choice4").gameObject.SetActive(false);
+        // Hide choice UI
+        //re-enable text box
+        textPanel.SetActive(true);
+    }
 
 
 	public override void Finish_Node()

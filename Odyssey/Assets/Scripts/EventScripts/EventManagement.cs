@@ -48,6 +48,7 @@ public class EventManagement : MonoBehaviour {
 	enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
         gameController = this;
         OverworldParent = GameObject.FindGameObjectWithTag("UniversalParent");
+        unitsReward = new Dictionary<string, int>();
     }
 	
 	// Update is called once per frame
@@ -243,7 +244,7 @@ public class EventManagement : MonoBehaviour {
             rewardWater = 0f;
             rewardGold = 0;
             rewardSailors = 0;
-            unitsReward = new Dictionary<string, int>();
+            unitsReward.Clear();
             heroReward = null;
             
         }

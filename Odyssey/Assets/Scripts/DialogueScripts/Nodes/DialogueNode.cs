@@ -13,7 +13,8 @@ public class DialogueNode : Node {
 
 	public override void Run_Node()
 	{
-		UIManager.ui_manager.dialogue_text_panel.text = "";
+        
+        UIManager.ui_manager.dialogue_text_panel.text = "";
 		UIManager.ui_manager.speaker_text_panel.text = textbox_title;
 		StartCoroutine(animateText(text, VNProperties.delay_per_character));
 

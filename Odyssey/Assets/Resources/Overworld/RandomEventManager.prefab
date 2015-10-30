@@ -5709,11 +5709,20 @@ MonoBehaviour:
   desertExploreEventList: []
   tropicalExploreEventList: []
   islands: []
-  framesPerCheckRegular: 240
-  framesPerCheck: 240
+  persistentBattleObject: {fileID: 0}
+  persistentBattleSettings: {fileID: 0}
+  rewardClaimed: 0
+  rewardFood: 0
+  rewardWater: 0
+  rewardGold: 0
+  rewardSailors: 0
+  heroReward: {fileID: 0}
+  framesPerCheckRegular: 500
+  framesPerCheck: 500
   eventChance: 25
   paused: 0
   OverworldParent: {fileID: 0}
+  battleChecked: 1
 --- !u!114 &11410564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11146,6 +11155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bea9df083353684eb3895a3a11d0f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitPrefab: 
   unitNameText: {fileID: 11494820}
   unitDescription: {fileID: 11458682}
   health: {fileID: 11416516}
@@ -12326,7 +12336,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: a307bb23d95355046af2068a71ed5809, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -17827,8 +17837,8 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 399.5, y: 287.5}
-  m_SizeDelta: {x: 799, y: 575}
+  m_AnchoredPosition: {x: 326.5, y: 493.5}
+  m_SizeDelta: {x: 653, y: 987}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22469592
 RectTransform:
