@@ -25,6 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 406986}
   - 212: {fileID: 21238908}
+  - 114: {fileID: 11408582}
   m_Layer: 0
   m_Name: HexAura
   m_TagString: Untagged
@@ -118,6 +119,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &11408582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387aba9aa8f82ca45bccb1b0e72a7d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11458316
 MonoBehaviour:
   m_ObjectHideFlags: 1

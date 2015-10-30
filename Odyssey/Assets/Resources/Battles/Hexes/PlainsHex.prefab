@@ -25,6 +25,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 479996}
   - 212: {fileID: 21273050}
+  - 114: {fileID: 11488004}
   m_Layer: 0
   m_Name: HexAura
   m_TagString: Untagged
@@ -148,6 +149,17 @@ MonoBehaviour:
   ranged_score: 0
   melee_score: 0
   cavalry_score: 0
+--- !u!114 &11488004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387aba9aa8f82ca45bccb1b0e72a7d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21216592
 SpriteRenderer:
   m_ObjectHideFlags: 1
