@@ -23,11 +23,9 @@ public class drawBehind : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (EventManagement.gameController.currentEvent==null)
+        if (EventManagement.gameController.currentEvent==null && Input.mousePosition.y > Screen.height/7)
         {
-            BackOnMap();
-            if (Input.GetKeyDown(KeyCode.Mouse0)
-                && !EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Destroy(lastX);
                 transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.position.z);
@@ -81,9 +79,5 @@ public class drawBehind : MonoBehaviour {
             }
         }
     }
-
-    public void BackOnMap()
-    {
-
-    }
+    
 }

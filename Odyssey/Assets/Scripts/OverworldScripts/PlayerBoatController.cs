@@ -174,7 +174,7 @@ public class PlayerBoatController : MonoBehaviour {
             {
                 if (objectsNear[i].gameObject.tag.Equals("Island"))
                 {
-                    objectsNear[i].GetComponent<SpriteRenderer>().enabled = true;
+                    objectsNear[i].gameObject.SetActive(true);
                 }
 
             }

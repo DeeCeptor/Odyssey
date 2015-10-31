@@ -8,10 +8,11 @@ public class MinotaurEventFunctions : IslandEventFunctions {
     public ConversationManager conManager;
     public ChoicesManager choiceManager;
     public bool explored;
-    public string battleSaveMinotaur;
     public string battleKillMinotaur;
+    public GameObject HireMinotaurConversation;
     public GameObject Theseus;
     public GameObject MinotaurConversation;
+    public int MinotaurCost = 150;
 	// Use this for initialization
 	void Start () {
         resourceManager = GameObject.FindGameObjectWithTag("Player").GetComponent<ResourceManager>();
@@ -27,9 +28,16 @@ public class MinotaurEventFunctions : IslandEventFunctions {
 
     public void Save()
     {
-        eventHandler.unitsReward = new Dictionary<string,int>();
-        eventHandler.unitsReward.Add("Minotaur",1);
-        eventHandler.StartBattle(battleSaveMinotaur,true,false,4);
+
+        if (TroopManager.playerTroops.healthy.ContainsKey("Minotaur"))
+        {
+            TroopManager.playerTroops.healthy["Minotaur"] += 1;
+        }
+        else
+        {
+            TroopManager.playerTroops.healthy.Add("Minotaur", 1);
+        }
+        choiceManager.Change_Conversation(HireMinotaurConversation.GetComponent<ConversationManager>());
     }
 
     public void Fight()

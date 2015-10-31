@@ -18,22 +18,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &105758
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 415602}
-  - 114: {fileID: 11412198}
-  m_Layer: 0
-  m_Name: ExploreDialogue (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &107818
 GameObject:
   m_ObjectHideFlags: 1
@@ -157,22 +141,6 @@ GameObject:
   - 224: {fileID: 22402578}
   m_Layer: 5
   m_Name: MIDDLE
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &116948
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 433632}
-  - 114: {fileID: 11403784}
-  m_Layer: 0
-  m_Name: banditChoice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,7 +304,7 @@ GameObject:
   - 4: {fileID: 464824}
   - 114: {fileID: 11476526}
   m_Layer: 0
-  m_Name: BanditConversation
+  m_Name: HireConversation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -754,18 +722,6 @@ Transform:
   - {fileID: 473718}
   m_Father: {fileID: 498284}
   m_RootOrder: 2
---- !u!4 &415602
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 105758}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 464824}
-  m_RootOrder: 0
 --- !u!4 &418000
 Transform:
   m_ObjectHideFlags: 1
@@ -777,7 +733,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 464824}
-  m_RootOrder: 3
+  m_RootOrder: 1
 --- !u!4 &426658
 Transform:
   m_ObjectHideFlags: 1
@@ -804,18 +760,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 498978}
   m_RootOrder: 0
---- !u!4 &433632
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116948}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 464824}
-  m_RootOrder: 1
 --- !u!4 &443838
 Transform:
   m_ObjectHideFlags: 1
@@ -874,8 +818,6 @@ Transform:
   m_LocalPosition: {x: 27.3258743, y: -26.5309391, z: 10.4565563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 415602}
-  - {fileID: 433632}
   - {fileID: 476226}
   - {fileID: 418000}
   m_Father: {fileID: 498284}
@@ -927,7 +869,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 464824}
-  m_RootOrder: 2
+  m_RootOrder: 0
 --- !u!4 &496398
 Transform:
   m_ObjectHideFlags: 1
@@ -972,77 +914,6 @@ Transform:
   - {fileID: 443838}
   m_Father: {fileID: 498284}
   m_RootOrder: 1
---- !u!114 &11403784
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  choice_text: When pressed he says he is a scout for a group of bandits, and that
-    they were planning on raiding a caravan set to pass through
-  button_1_text: Tip off the merchants
-  Button_1_Events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: TipOff
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  button_2_text: Raid the Caravan yourself
-  Button_2_Events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Rob
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  button_3_text: Leave
-  Button_3_Events:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Leave
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  button_4_text: 
-  Button_4_Events:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  textPanel: {fileID: 0}
 --- !u!114 &11404206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1078,21 +949,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventController: {fileID: 0}
---- !u!114 &11412198
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 105758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b40beeb965e5d9419bf817d6f7d59bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actor: 
-  textbox_title: 
-  text: you see a man watching a path
-  clear_text_after: 1
 --- !u!114 &11415020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1820,10 +1676,11 @@ MonoBehaviour:
   conManager: {fileID: 0}
   choiceManager: {fileID: 0}
   explored: 0
-  battleSaveMinotaur: 
   battleKillMinotaur: 
+  HireMinotaurConversation: {fileID: 138542}
   Theseus: {fileID: 0}
   MinotaurConversation: {fileID: 173536}
+  MinotaurCost: 150
 --- !u!114 &11480894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1837,7 +1694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actor: 
   textbox_title: 
-  text: You tip off the merchants and they give you 20 gold as a reward
+  text: The minotaur scoops up the pile of treasure and ambles aboard your ship.
   clear_text_after: 1
 --- !u!114 &11481128
 MonoBehaviour:
@@ -1949,7 +1806,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1156cefd0bdce0a428360bd86ae0f9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  choice_text: What shall we do?
+  choice_text: We could aid them in killing the beast. Or with enough treasure perhaps
+    we could get the monster to work for us. A young swordsman named Theseus has agreed
+    to join us if we slay the beast.
   button_1_text: Kill the beast
   Button_1_Events:
     m_PersistentCalls:
@@ -1967,7 +1826,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  button_2_text: Free the beast
+  button_2_text: Hire(150 gold)
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
