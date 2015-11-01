@@ -1,75 +1,83 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &121586
+--- !u!1 &188192
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 462170}
-  - 114: {fileID: 11405882}
-  - 61: {fileID: 6166074}
-  - 212: {fileID: 21233354}
-  m_Layer: 10
-  m_Name: SuperCloud
-  m_TagString: Weather
+  - 4: {fileID: 402652}
+  - 212: {fileID: 21209892}
+  - 114: {fileID: 11475968}
+  m_Layer: 0
+  m_Name: Rows 1
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &462170
+--- !u!1 &188758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 447146}
+  m_Layer: 0
+  m_Name: Oars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &402652
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 121586}
+  m_GameObject: {fileID: 188192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 275, y: 250, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 447146}
   m_RootOrder: 0
---- !u!61 &6166074
-BoxCollider2D:
+--- !u!4 &447146
+Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 121586}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 8, y: 5}
---- !u!114 &11405882
+  m_GameObject: {fileID: 188758}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.910000026, y: 1.28999996, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 402652}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11475968
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 121586}
+  m_GameObject: {fileID: 188192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7146802cb9daa104097d612abc04fd52, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bd78e930481a7646a61cbc4a61c75f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weatherType: Cloud
-  weatherDamage: 0
-  LifeSpan: 600
-  ReplaceWith: {fileID: 100470, guid: 364881b382cf04648996203611a2528f, type: 2}
-  paused: 0
-  weatherSpeedDown: 1
-  weatherStaminaDrain: 0
-  weatherDirection: {x: 0, y: 0, z: 0}
-  weatherMoraleDrain: 0
-  weatherHeight: 0
---- !u!212 &21233354
+  angleRotated: 0
+  maxAngle: 0
+  left: 0
+  forward: 0
+--- !u!212 &21209892
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 121586}
+  m_GameObject: {fileID: 188192}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -88,7 +96,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9ea1c9589043b084aba6738652e908a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 841f09c04d55bee4d9a38fa8e1ae1ac7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
@@ -96,12 +104,8 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: ReplaceWith
-      value: 
-      objectReference: {fileID: 100470, guid: 364881b382cf04648996203611a2528f, type: 2}
+    m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 121586}
+  m_RootGameObject: {fileID: 188758}
   m_IsPrefabParent: 1

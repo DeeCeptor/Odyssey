@@ -5,6 +5,7 @@ public class menuSwitchScript : MonoBehaviour {
     public GameObject mainMenu;
     public GameObject unitMenu;
     public GameObject shipMenu;
+    public GameObject heroesMenu;
     //1 is main, 2 is unit, 3 is ship
     public int menuOn = 1;
 
@@ -30,6 +31,11 @@ public class menuSwitchScript : MonoBehaviour {
 
             else if (menuOn == 3)
             {
+                HeroesOn();
+            }
+
+            else if (menuOn == 4)
+            {
                 MainOn();
             }
         }
@@ -41,6 +47,7 @@ public class menuSwitchScript : MonoBehaviour {
         mainMenu.SetActive(false);
         shipMenu.SetActive(false);
         unitMenu.SetActive(true);
+        heroesMenu.SetActive(false);
     }
 
     public void ShipOn()
@@ -49,6 +56,7 @@ public class menuSwitchScript : MonoBehaviour {
         mainMenu.SetActive(false);
         shipMenu.SetActive(true);
         unitMenu.SetActive(false);
+        heroesMenu.SetActive(false);
     }
 
     public void MainOn()
@@ -57,5 +65,15 @@ public class menuSwitchScript : MonoBehaviour {
         mainMenu.SetActive(true);
         shipMenu.SetActive(false);
         unitMenu.SetActive(false);
+        heroesMenu.SetActive(false);
+    }
+
+    public void HeroesOn()
+    {
+        menuOn = 4;
+        mainMenu.SetActive(false);
+        shipMenu.SetActive(false);
+        unitMenu.SetActive(false);
+        heroesMenu.SetActive(true);
     }
 }
