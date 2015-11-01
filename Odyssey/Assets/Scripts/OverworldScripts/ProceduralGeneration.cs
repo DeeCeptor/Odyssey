@@ -51,7 +51,7 @@ GameObject curIsland;
         ocean = (GameObject)Instantiate(ocean, transform.position, transform.rotation);
         GameObject cam = (GameObject)Instantiate(map, new Vector3(transform.position.x,transform.position.y,100), transform.rotation);
         cam.transform.Rotate(transform.up,180);
-        cam.transform.parent = UniversalParent.transform;
+       // cam.transform.parent = UniversalParent.transform;
         ocean.transform.parent = UniversalParent.transform;
         ocean.transform.Rotate(transform.right, 90, Space.Self);
         PlaceGoal();
@@ -116,7 +116,7 @@ GameObject curIsland;
 			noGood = false;
 			islandXWidth = 10;
 			islandYWidth = 10;
-			curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 10);
+			curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 20);
 			
 			Collider2D[] objectsNear = Physics2D.OverlapCircleAll(curPosition, islandSpace/5);
 			for(int x = 0; x< objectsNear.Length;x++)

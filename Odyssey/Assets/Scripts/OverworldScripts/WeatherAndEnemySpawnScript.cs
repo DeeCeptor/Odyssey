@@ -40,6 +40,7 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
 
             if (npcCounter > npcSpawnDelay)
             {
+                enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
                 SpawnNPC();
             }
            
@@ -50,22 +51,23 @@ public class WeatherAndEnemySpawnScript : MonoBehaviour {
 
     public void SpawnNPC()
     {
-        enemies = GameObject.FindGameObjectsWithTag("OverworldEnemy");
+        
         if(enemies.Length >= npcNumber)
         {
             return;
         }
         npcCounter = 0;
-        rando = Random.insideUnitCircle;
+        rando = Random.insideUnitCircle.normalized * Random.Range(minNPCDistance, maxNPCDistance);
         randInt = Random.Range(0, npcs.Length);
-        mask = 1 << 10;
+        mask = 1 << 12;
         mask = ~(mask);
-        Vector3 randPoint = transform.position + (new Vector3(rando.x, rando.y, 0).normalized * Random.Range(minNPCDistance, maxNPCDistance));
+        Vector3 randPoint = transform.position + (new Vector3(rando.x, rando.y,transform.position.z));
+
         if (npcs.Length > 0)
         {
-            collidingWith = Physics2D.OverlapCircleAll(randPoint, npcs[randInt].GetComponent<Collider2D>().bounds.size.x, mask);
+            collidingWith = Physics2D.OverlapCircleAll(randPoint, npcs[randInt].GetComponent<Collider2D>().bounds.extents.x, mask);
         }
-        if (collidingWith.Length > 0)
+        if (collidingWith.Length > 1)
         {
             SpawnNPC();
             return;

@@ -20,9 +20,9 @@ public class RotateOars : MonoBehaviour {
                 //rotate forward or backward
                 if (forward)
                 {
-                    angleRotated += (22.5f * Time.deltaTime * (ResourceManager.playerResources.moveRate + 1));
+                    angleRotated += (45f * Time.deltaTime * (ResourceManager.playerResources.moveRate + 1));
                     transform.RotateAround(new Vector3(transform.parent.position.x, transform.parent.position.y,transform.parent.position.z)
-                        ,transform.forward,22.5f*Time.deltaTime*(ResourceManager.playerResources.moveRate + 1));
+                        ,transform.forward,45f*Time.deltaTime*(ResourceManager.playerResources.moveRate + 1));
                 }
                 else
                 {
@@ -45,9 +45,9 @@ public class RotateOars : MonoBehaviour {
             {
                 if (forward)
                 {
-                    angleRotated += (22.5f * Time.deltaTime * (ResourceManager.playerResources.moveRate + 1));
+                    angleRotated += (45f * Time.deltaTime * (ResourceManager.playerResources.moveRate + 1));
                     transform.RotateAround(new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z)
-                        , transform.forward, 22.5f * Time.deltaTime * (ResourceManager.playerResources.moveRate + 1));
+                        , transform.forward, 45f * Time.deltaTime * (ResourceManager.playerResources.moveRate + 1));
                 }
                 else
                 {

@@ -537,7 +537,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 9}
+  m_LocalPosition: {x: 0, y: 0, z: -.660000026}
   m_LocalScale: {x: 5, y: 5, z: .200000003}
   m_Children: []
   m_Father: {fileID: 426528}
@@ -1365,15 +1365,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c6e30fe091e99438d9e3ce0611ba20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weather:
-  - {fileID: 160574, guid: 3026c58ccd7dfaa42b3bc65114babd1c, type: 2}
-  - {fileID: 110408, guid: 8c5f29d02aa001143bd4a5e9dd305ed6, type: 2}
-  - {fileID: 128276, guid: 498056a8c3845974a80761215a9326ab, type: 2}
+  weather: []
   npcs:
   - {fileID: 157454, guid: b8e5e5d0cbee6db488ea612187e115fa, type: 2}
   enemies: []
-  minNPCDistance: 40
-  maxNPCDistance: 60
+  minNPCDistance: 50
+  maxNPCDistance: 100
   maxWeatherDistance: 60
   paused: 0
   collidingWith: []

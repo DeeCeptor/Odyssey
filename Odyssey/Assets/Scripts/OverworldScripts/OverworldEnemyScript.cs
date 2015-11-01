@@ -30,17 +30,17 @@ public class OverworldEnemyScript : MonoBehaviour {
 	{
         if ((transform.position - player.transform.position).magnitude < playerStats.visionRange)
         {
-             GetComponent<Renderer>().enabled = true;
+             GetComponent<SpriteRenderer>().enabled = true;
         }
 
-            if((transform.position - player.transform.position).magnitude > dieDistance)
-            {
-                Destroy(gameObject);
-            }
+        else if((transform.position - player.transform.position).magnitude > dieDistance)
+        {
+            Destroy(gameObject);
+        }
 
         else
         {
-            GetComponent<Renderer>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
         }
 
         if ((transform.position - player.transform.position).magnitude < sightLine)

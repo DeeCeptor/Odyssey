@@ -11,6 +11,7 @@ public class EventManagement : MonoBehaviour {
 	public PlayerBoatController playerController;
 	public GameObject currentEvent;
 	public GameObject islandEventIsOn;
+    public GameObject ScrollTransition;
 
 	public GameObject[] seaEventList;
 	public GameObject[] campingEventList;
@@ -160,19 +161,29 @@ public class EventManagement : MonoBehaviour {
         player.GetComponentInChildren<WeatherAndEnemySpawnScript>().Unpause();
     }
 
+    public IEnumerator Scroll()
+    {
+        OverworldParent.SetActive(false);
+        MoveUI.transition_UI.TransitionOut();
+        yield return new WaitForSeconds(1);
+        GameObject.Find("MapCamera(Clone)").SetActive(false);
+        Application.LoadLevelAdditive("TacticalBattle");
+        MoveUI.transition_UI.TransitionIn();
+    }
+
     public void StartBattle(string battleToStart,bool retreat,bool mustUsehero,int deployNumber)
     {
         rewardClaimed = false;
         battleChecked = false;
-        Instantiate(Resources.Load("ScrollTransitionCanvas"));
-        OverworldParent.SetActive(false);
+        //ScrollTransition =  (GameObject)Instantiate(Resources.Load("ScrollTransitionCanvas"));
+        
         persistentBattleObject = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
         persistentBattleSettings = persistentBattleObject.GetComponent<PersistentBattleSettings>();
         persistentBattleSettings.path_to_battle_file = battleToStart;
         persistentBattleSettings.number_of_deployable_units = deployNumber + TroopManager.playerTroops.getLeadership();
         persistentBattleSettings.must_include_main_hero = mustUsehero;
         persistentBattleSettings.can_retreat = retreat;
-        Application.LoadLevelAdditive("TacticalBattle");
+        StartCoroutine(Scroll());
         paused = true;
     }
 
@@ -180,8 +191,7 @@ public class EventManagement : MonoBehaviour {
     {
         rewardClaimed = false;
         battleChecked = false;
-        Instantiate(Resources.Load("ScrollTransitionCanvas"));
-        OverworldParent.SetActive(false);
+        //ScrollTransition = (GameObject)Instantiate(Resources.Load("ScrollTransitionCanvas"));
         persistentBattleObject = (GameObject)Instantiate(Resources.Load("Battles/PersistentBattleSettings"));
         persistentBattleSettings = persistentBattleObject.GetComponent<PersistentBattleSettings>();
         persistentBattleSettings.path_to_battle_file = battleToStart;
@@ -190,7 +200,8 @@ public class EventManagement : MonoBehaviour {
         persistentBattleSettings.can_retreat = retreat;
         persistentBattleSettings.player_goes_first = firstTurn;
         persistentBattleSettings.enemy_agressiveness = AIagressiveness;
-        Application.LoadLevelAdditive("TacticalBattle");
+        StartCoroutine(Scroll());
+        
         paused = true;
     }
 
@@ -211,7 +222,9 @@ public class EventManagement : MonoBehaviour {
         string curKey;
         woundedUnits.CopyTo(woundedTroopNums, 0);
         keys.CopyTo(keyArray, 0);
-        for(int i = 0; i < woundedTroopNums.Length;i++)
+        GameObject.Find("MapCamera(Clone)").SetActive(true);
+        
+        for (int i = 0; i < woundedTroopNums.Length;i++)
         {
             curKey = keyArray[i];
             TroopManager.playerTroops.healthy[curKey] = TroopManager.playerTroops.healthy[curKey] - woundedTroopNums[i].num_killed - woundedTroopNums[i].num_wounded;
