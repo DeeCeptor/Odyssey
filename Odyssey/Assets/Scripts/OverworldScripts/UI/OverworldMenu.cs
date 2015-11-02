@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
 public class OverworldMenu : MonoBehaviour {
 
     public GameObject overUi;
@@ -22,6 +21,7 @@ public class OverworldMenu : MonoBehaviour {
             overUi.SetActive(false);
             menuUI.gameObject.SetActive(true);
             mainUI.gameObject.SetActive(true);
+            gameObject.GetComponent<EventManagement>().Pause();
             Time.timeScale = 0f;
         }
         if(errorPopup.gameObject.activeInHierarchy ==true && Input.anyKey)

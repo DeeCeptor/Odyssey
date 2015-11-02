@@ -21,6 +21,7 @@ public class EventManagement : MonoBehaviour {
     public GameObject[] islands;
     public GameObject persistentBattleObject;
     public PersistentBattleSettings persistentBattleSettings;
+    public GameObject MapCamera;
 
     //variables to store battleReward
     public bool rewardClaimed = false;
@@ -52,6 +53,7 @@ public class EventManagement : MonoBehaviour {
         gameController = this;
         OverworldParent = GameObject.FindGameObjectWithTag("UniversalParent");
         unitsReward = new Dictionary<string, int>();
+        Debug.Log(gameObject.name);
     }
 	
 	// Update is called once per frame
@@ -166,7 +168,8 @@ public class EventManagement : MonoBehaviour {
         
         MoveUI.transition_UI.TransitionOut();
         yield return new WaitForSeconds(1);
-        GameObject.Find("MapCamera(Clone)").SetActive(false);
+        MapCamera = GameObject.Find("MapCamera(Clone)");
+        MapCamera.SetActive(false);
         Application.LoadLevelAdditive("TacticalBattle");
         OverworldParent.SetActive(false);
         MoveUI.transition_UI.TransitionIn();
@@ -208,6 +211,7 @@ public class EventManagement : MonoBehaviour {
 
     public void EndBattle()
     {
+        
         //destroy battle
         battleChecked = true;
         paused = false;
@@ -223,7 +227,7 @@ public class EventManagement : MonoBehaviour {
         string curKey;
         woundedUnits.CopyTo(woundedTroopNums, 0);
         keys.CopyTo(keyArray, 0);
-        GameObject.Find("MapCamera(Clone)").SetActive(true);
+        MapCamera.SetActive(true);
         
         for (int i = 0; i < woundedTroopNums.Length;i++)
         {
@@ -239,7 +243,10 @@ public class EventManagement : MonoBehaviour {
             resourceController.AddWater(rewardWater);
             resourceController.AddTreasure(rewardGold);
             resourceController.AddTreasure(rewardGold);
-            TroopManager.playerTroops.AddHero(heroReward);
+            if (heroReward != null)
+            {
+                TroopManager.playerTroops.AddHero(heroReward);
+            }
             Dictionary<string, int>.KeyCollection rewardKeys = unitsReward.Keys;
             keyArray = new string[keys.Count];
             rewardKeys.CopyTo(keyArray, 0);
@@ -262,7 +269,7 @@ public class EventManagement : MonoBehaviour {
             rewardSailors = 0;
             unitsReward.Clear();
             heroReward = null;
-            
+            EndEvent();
         }
         
     }

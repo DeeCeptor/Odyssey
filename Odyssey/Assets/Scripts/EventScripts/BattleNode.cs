@@ -18,7 +18,6 @@ public class BattleNode : Node {
 	}
     public override void Run_Node()
     {
-        EventManagement.gameController.EndEvent();
         EventManagement.gameController.StartBattle(battleToHave,retreat,mustUseHero,troopsToDeploy);
     }
 }

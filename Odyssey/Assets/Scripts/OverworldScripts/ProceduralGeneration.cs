@@ -57,7 +57,7 @@ GameObject curIsland;
         PlaceGoal();
 	    PlaceIslands();
 	    PlacePlayer();
-    	GameObject eventHandler = (GameObject)Instantiate(eventController);
+    	GameObject eventHandler = (GameObject)Instantiate(eventController,transform.position,transform.rotation);
         eventHandler.GetComponent<EventManagement>().islands = islandsPlaced;
 	    
     }

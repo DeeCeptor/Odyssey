@@ -26,7 +26,7 @@ public class MountedBanditEventFunctions : IslandEventFunctions {
 
     public void Travel()
     {
-        eventHandler.islandEventIsOn.GetComponent<PortIslandEventScript>().explored = true;
+        eventHandler.islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
         choiceManager.Change_Conversation(banditConversation.GetComponent<ConversationManager>());
     }
 
