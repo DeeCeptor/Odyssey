@@ -1325,7 +1325,7 @@ MonoBehaviour:
   Button_1_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11409022}
         m_MethodName: Gather
         m_Mode: 1
         m_Arguments:
@@ -1342,7 +1342,7 @@ MonoBehaviour:
   Button_2_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11409022}
         m_MethodName: Upgrade
         m_Mode: 1
         m_Arguments:
@@ -1359,8 +1359,8 @@ MonoBehaviour:
   Button_3_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Travel
+      - m_Target: {fileID: 11409022}
+        m_MethodName: ExploreForest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1376,8 +1376,8 @@ MonoBehaviour:
   Button_4_Events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Leave
+      - m_Target: {fileID: 11409022}
+        m_MethodName: End
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
