@@ -6410,7 +6410,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 209.057724, y: 305.983307, z: 817.949585}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22436396}
@@ -7969,6 +7969,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   currentEvent: {fileID: 0}
   islandEventIsOn: {fileID: 0}
+  ScrollTransition: {fileID: 0}
   seaEventList:
   - {fileID: 130888, guid: d8ac96ee9472e2d41b883f8c104e0968, type: 2}
   - {fileID: 169720, guid: a5ce42dc4e86dfc49957080fe95653fb, type: 2}
@@ -14197,7 +14198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollItemHeight: 0
-  buttonPrefab: {fileID: 0}
+  buttonPrefab: {fileID: 193920, guid: c3d64787cb37eae4c9f5ef10b8617785, type: 2}
   buttonHeight: 40
   buttonSpace: 5
   leftAdjust: 50
@@ -15634,6 +15635,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   currentEvent: {fileID: 0}
   islandEventIsOn: {fileID: 0}
+  ScrollTransition: {fileID: 0}
   seaEventList:
   - {fileID: 130888, guid: d8ac96ee9472e2d41b883f8c104e0968, type: 2}
   campingEventList: []
