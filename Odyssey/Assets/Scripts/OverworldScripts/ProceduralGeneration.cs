@@ -55,8 +55,9 @@ GameObject curIsland;
         ocean.transform.parent = UniversalParent.transform;
         ocean.transform.Rotate(transform.right, 90, Space.Self);
         PlaceGoal();
-	    PlaceIslands();
-	    PlacePlayer();
+        PlacePlayer();
+        PlaceIslands();
+	    
     	GameObject eventHandler = (GameObject)Instantiate(eventController,transform.position,transform.rotation);
         eventHandler.GetComponent<EventManagement>().islands = islandsPlaced;
 	    
@@ -116,7 +117,7 @@ GameObject curIsland;
 			noGood = false;
 			islandXWidth = 10;
 			islandYWidth = 10;
-			curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 20);
+			curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 50);
 			
 			Collider2D[] objectsNear = Physics2D.OverlapCircleAll(curPosition, islandSpace/5);
 			for(int x = 0; x< objectsNear.Length;x++)
@@ -153,9 +154,9 @@ GameObject curIsland;
 	while(islandCounter<maxIslands && i < maxIslands*maxIterationFactor)
 	{
 		curIsland = islands[Random.Range (0,islands.Length)];
-		islandXWidth = curIsland.transform.FindChild("IslandTerrain").GetComponent<SpriteRenderer>().bounds.extents.x;
-		islandYWidth = curIsland.transform.FindChild("IslandTerrain").GetComponent<SpriteRenderer>().bounds.extents.y;
-		curPosition = new Vector3(Random.Range(-oceanXWidth+islandXWidth,oceanXWidth-islandXWidth), Random.Range(-oceanYWidth + islandYWidth, oceanYWidth - islandYWidth), transform.position.z + 5);
+		//islandXWidth = curIsland.transform.FindChild("IslandTerrain").GetComponent<SpriteRenderer>().bounds.extents.x;
+		//islandYWidth = curIsland.transform.FindChild("IslandTerrain").GetComponent<SpriteRenderer>().bounds.extents.y;
+		curPosition = new Vector3(Random.Range(-oceanXWidth+ islandSpace, oceanXWidth-islandSpace), Random.Range(-oceanYWidth + islandSpace, oceanYWidth - islandSpace), transform.position.z + 5);
 
             for (int x = 0; x < islandsPlaced.Length; x++)
             {

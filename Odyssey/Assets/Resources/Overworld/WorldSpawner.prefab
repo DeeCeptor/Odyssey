@@ -42,7 +42,7 @@ MonoBehaviour:
   ocean: {fileID: 103618, guid: 97e6bcde765ee0f49afda390e7fbc9a0, type: 2}
   player: {fileID: 108032, guid: c456ed9be89e54d44ad9638fbab50b85, type: 2}
   islands:
-  - {fileID: 141242, guid: f752992635bbcb14f868ee155f6f573b, type: 2}
+  - {fileID: 107116, guid: e87f5520f06ca9d4cadc4546d97f85bb, type: 2}
   - {fileID: 107116, guid: e87f5520f06ca9d4cadc4546d97f85bb, type: 2}
   - {fileID: 162004, guid: 7e3bdf72b22baa042ac8f0a5a2bb5f6f, type: 2}
   - {fileID: 184484, guid: a1c9314c9c609e24ab0d50a6b6a0308b, type: 2}
@@ -63,7 +63,7 @@ MonoBehaviour:
   UniversalParent: {fileID: 0}
   map: {fileID: 109064, guid: e0ae6c3b54903e045a2d7a9b46e802ef, type: 2}
   maxIslands: 40
-  islandSpace: 100
+  islandSpace: 60
   goalSpace: 100
   maxIterationFactor: 100
   islandsPlaced: []

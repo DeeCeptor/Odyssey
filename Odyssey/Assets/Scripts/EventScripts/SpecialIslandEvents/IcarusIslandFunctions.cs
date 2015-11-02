@@ -30,6 +30,8 @@ public class IcarusIslandFunctions : IslandEventFunctions {
     {
         complete = true;
         eventHandler.islandEventIsOn.GetComponent<IslandEventScript>().explored = true;
+        choiceManager.Change_Conversation(CorpseConversation.GetComponent<ConversationManager>());
+
     }
 
     public void Diplomacy()

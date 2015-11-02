@@ -1240,6 +1240,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22403214}
+  - 114: {fileID: 11459366}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1868,7 +1869,6 @@ GameObject:
   - 114: {fileID: 11436858}
   - 222: {fileID: 22262204}
   - 114: {fileID: 11416504}
-  - 114: {fileID: 11468382}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -3871,7 +3871,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11471750}
         m_MethodName: Save
         m_Mode: 1
         m_Arguments:
@@ -4330,7 +4330,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11471750}
         m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
@@ -5766,7 +5766,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11471750}
         m_MethodName: Load
         m_Mode: 1
         m_Arguments:
@@ -6570,6 +6570,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11459366
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ef0bf4e78f3374eb001e50bd791db6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollItemHeight: 0
+  buttonPrefab: {fileID: 193920, guid: c3d64787cb37eae4c9f5ef10b8617785, type: 2}
+  buttonHeight: 40
+  buttonSpace: 5
+  leftAdjust: 50
 --- !u!114 &11459944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7441,22 +7457,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11468382
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 161850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29ef0bf4e78f3374eb001e50bd791db6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollItemHeight: 0
-  buttonPrefab: {fileID: 193920, guid: c3d64787cb37eae4c9f5ef10b8617785, type: 2}
-  buttonHeight: 40
-  buttonSpace: 5
-  leftAdjust: 50
 --- !u!114 &11468904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8672,7 +8672,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11471750}
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
