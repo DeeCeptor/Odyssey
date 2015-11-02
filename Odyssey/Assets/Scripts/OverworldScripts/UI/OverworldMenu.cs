@@ -16,14 +16,15 @@ public class OverworldMenu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(Input.GetKeyDown(KeyCode.Escape))
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             overUi.SetActive(false);
             menuUI.gameObject.SetActive(true);
             mainUI.gameObject.SetActive(true);
-            gameObject.GetComponent<EventManagement>().Pause();
-            Time.timeScale = 0f;
+            EventManagement.gameController.Pause();
         }
+        
         if(errorPopup.gameObject.activeInHierarchy ==true && Input.anyKey)
         {
             errorPopup.gameObject.SetActive(false);
@@ -35,8 +36,7 @@ public class OverworldMenu : MonoBehaviour {
         overUi.SetActive(true);
         menuUI.gameObject.SetActive(false);
         mainUI.gameObject.SetActive(false);
-        gameObject.GetComponent<EventManagement>().Unpause();
-        Time.timeScale = 1f;
+        EventManagement.gameController.Unpause();
     }
 
     public void Quit()

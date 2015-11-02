@@ -46,6 +46,10 @@ public class EventManagement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        if(gameController!=null)
+        {
+            Destroy(gameObject);
+        }
 	player = GameObject.FindGameObjectWithTag("Player");
 	resourceController = player.GetComponent<ResourceManager>();
 	playerController = player.GetComponent<PlayerBoatController>();
