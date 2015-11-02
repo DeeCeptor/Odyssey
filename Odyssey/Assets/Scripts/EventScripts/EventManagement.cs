@@ -163,11 +163,12 @@ public class EventManagement : MonoBehaviour {
 
     public IEnumerator Scroll()
     {
-        OverworldParent.SetActive(false);
+        
         MoveUI.transition_UI.TransitionOut();
         yield return new WaitForSeconds(1);
         GameObject.Find("MapCamera(Clone)").SetActive(false);
         Application.LoadLevelAdditive("TacticalBattle");
+        OverworldParent.SetActive(false);
         MoveUI.transition_UI.TransitionIn();
     }
 

@@ -1676,7 +1676,7 @@ MonoBehaviour:
   conManager: {fileID: 0}
   choiceManager: {fileID: 0}
   explored: 0
-  battleKillMinotaur: 
+  battleKillMinotaur: FightMinotaurBattle.txt
   HireMinotaurConversation: {fileID: 138542}
   Theseus: {fileID: 0}
   MinotaurConversation: {fileID: 173536}
@@ -2627,7 +2627,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: battleKillMinotaur
+      value: FightMinotaurBattle.txt
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 139496}
