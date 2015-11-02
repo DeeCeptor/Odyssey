@@ -57,7 +57,6 @@ public class EventManagement : MonoBehaviour {
         gameController = this;
         OverworldParent = GameObject.FindGameObjectWithTag("UniversalParent");
         unitsReward = new Dictionary<string, int>();
-        Debug.Log(gameObject.name);
     }
 	
 	// Update is called once per frame

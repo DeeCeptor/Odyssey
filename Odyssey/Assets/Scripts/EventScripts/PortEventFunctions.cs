@@ -62,6 +62,5 @@ public class PortEventFunctions : IslandEventFunctions{
         resourceManager.zeusFavour += favourToGain;
         eventHandler.islandEventIsOn.GetComponent<PortIslandEventScript>().raided = true;
         eventHandler.StartBattle(battleLevel,true,false,7,true,0);
-        eventHandler.EndEvent();
     }
 }
