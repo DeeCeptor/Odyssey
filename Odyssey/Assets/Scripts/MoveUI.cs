@@ -54,6 +54,7 @@ public class MoveUI : MonoBehaviour
             {
                 transition_in = false;
                 finished = true;
+                this.gameObject.SetActive(false);
             }
         }
         // Move from the far left to the center of the screen
@@ -65,6 +66,7 @@ public class MoveUI : MonoBehaviour
             {
                 transition_out = false;
                 finished = true;
+                this.gameObject.SetActive(false);
             }
         }
 	}
@@ -73,6 +75,7 @@ public class MoveUI : MonoBehaviour
     // Start out of sight on the left, and move until at center
     public void TransitionOut()
     {
+        this.gameObject.SetActive(true);
         rect.localPosition = left_pos;
         transition_out = true;
         cur_time = Time.time;
@@ -82,6 +85,7 @@ public class MoveUI : MonoBehaviour
     // Start at the center, and move to the right
     public void TransitionIn()
     {
+        this.gameObject.SetActive(true);
         transition_in = true;
         cur_time = 0;
         rect.localPosition = start_pos;
